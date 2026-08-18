@@ -139,3 +139,16 @@ Command `item-seed-import <archive-path>` đọc và kiểm định archive trư
 READY rồi bắt người vận hành nhập lại toàn bộ SHA-256. Chỉ sau khi checksum khớp mới gọi
 transactional importer. Command không chạy migration và sau import vẫn in
 `runtimeSnapshotPublished=false`.
+
+## Kết quả import local
+
+- Import command: SUCCESS.
+- `client_item_options`: 161 row, ID 0–160.
+- `client_item_templates`: 1213 row, ID 0–1212.
+- Tổng `upgradable=true`: 431.
+- Imported SHA-256: `abb320fb8a940fc28c49c6d0c5b84e09e83d28248130884881845b9dd5bea6f8`.
+- Runtime snapshot chưa publish.
+
+`item-seed-db-verify <archive-path>` là bước xác minh sau import. Command load lại toàn
+bộ bundle qua `JdbcItemAssetSource`, encode bằng codec thật và so count/length/SHA-256
+với manifest candidate. Nó chỉ đọc database và không publish runtime.
