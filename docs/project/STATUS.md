@@ -243,6 +243,18 @@ Phân tích và chốt SKILL payload layout; chỉ triển khai read model/codec
 
 Chốt MAP payload client 217 gồm map, NPC/menu và mob template; thiết kế read model không chứa zone/player state.
 
+## Checkpoint MAP asset codec
+
+- Đã đối chiếu parser MAP của client V7 build 217.
+- Read model chỉ chứa map name, NPC/menu và mob template tĩnh.
+- Zone, player position, mob instance và combat state không bị trộn vào asset bundle.
+- Codec dùng đúng unsigned map count, signed NPC/menu count và signed-short mob count.
+- Thêm 4 test; suite tích lũy mục tiêu 73, PENDING Maven verification.
+
+## Next exact action hiện tại
+
+Phân rã DATA payload thành năm block length-prefixed và các bảng progression/effect; chốt schema từng block trước khi code.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
