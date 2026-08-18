@@ -394,3 +394,24 @@ Pull the branch and run `mvn test`. After 16/16 pass, record the result and cont
 - Đã thêm mô tả trách nhiệm trực tiếp vào toàn bộ 25 type hiện tại.
 - Đã tạo docs/code-reference/protocol-session-network.md, ánh xạ class/method, hợp đồng, trạng thái, lỗi và test bảo vệ.
 - Tiếp tục bổ sung Javadoc chi tiết cho từng method; không thay đổi logic đã VERIFIED.
+
+
+## 2026-08-18 — Hoàn tất Javadoc tiếng Việt đến cấp method
+
+### Đã thực hiện
+
+- Bổ sung Javadoc tiếng Việt cho toàn bộ package, type, constructor, public API và helper có logic của protocol.compat, session và network.
+- Ghi rõ tác động state, giới hạn cấp phát, điều kiện cipher, vòng đời socket và quy tắc không log password/token.
+- Chuyển tài liệu tra cứu source sang tiếng Việt.
+- Cập nhật documentation-standard.md, packages/index.md và START-HERE.md để phiên AI sau không bỏ sót yêu cầu này.
+- Không sửa biểu thức, control flow, API hay cấu hình build.
+
+### Kiểm chứng
+
+- Không chạy lại Maven vì checkpoint chỉ thay đổi comment và Markdown.
+- Kết quả chức năng gần nhất vẫn là VERIFIED 16/16 do người dùng xác nhận.
+- Source hoặc build configuration chưa thay đổi kể từ lần xác minh đó.
+
+### Next exact action
+
+Triển khai application bootstrap tối thiểu với cấu hình TCP được kiểm tra, SecureRandomSessionKeyProvider và NetworkEventSink làm sạch; chưa kết nối database/gameplay.
