@@ -711,6 +711,15 @@ Xác minh 145/145 rồi chạy `item-seed-db-verify` trên Windows. Không nối
 
 Xác minh 165/165 rồi đóng gói command convert/dry-run SKILL để đối chiếu checksum trên Windows.
 
+## Checkpoint 165 VERIFIED — điểm bàn giao khi gần hết hạn mức Work
+
+- Người dùng xác nhận 165/165: 0 failure, 0 error, 0 skipped.
+- Full SKILL converter/read-model candidate: VERIFIED.
+- Candidate offline v26: 42402 byte; SHA-256 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- V003 chưa chạy; SKILL chưa import; database và runtime snapshot không thay đổi.
+- Việc kế tiếp duy nhất: xây `skill-seed-convert` và `skill-seed-dry-run`, thêm đúng năm test để hướng tới 170.
+- Sau 170/170 mới chạy convert/dry-run trên Windows và so checksum; tuyệt đối chưa migration/import.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
