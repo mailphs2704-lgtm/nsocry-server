@@ -610,3 +610,24 @@ Pull và chạy mvn test; sau 40/40 mới đóng gói lệnh vận hành và hư
 ### Next exact action
 
 Đóng gói runnable JAR đầy đủ dependency và chuẩn hóa lệnh server/create-admin trước khi thao tác MariaDB thật.
+
+
+## 2026-08-18 — Executable JAR và launcher
+
+### Đã triển khai
+
+- NsocryLauncher phân luồng server/create-admin/help.
+- Không args chỉ in help; command sai/quá nhiều args bị từ chối.
+- Maven Shade Plugin 3.6.2 tạo uber-JAR chứa runtime dependencies.
+- Loại signature files không còn hợp lệ sau khi gộp JAR.
+- Manifest trỏ đến NsocryLauncher.
+- Bốn parser test; mục tiêu suite 44.
+
+### Kiểm chứng
+
+- Provisioning trước đó VERIFIED 40/40.
+- Build/package mới PENDING.
+
+### Next exact action
+
+Chạy mvn package và java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help. Chưa chạy server/create-admin trước khi chuẩn bị database.
