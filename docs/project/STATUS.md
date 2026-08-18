@@ -157,8 +157,8 @@ Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người d
 - Authentication là port, chưa nối database.
 - TCP acceptor có max sessions, zero-capacity handoff, read timeout, named threads và graceful shutdown.
 - Network failure/rejection được đưa qua event sink, không bị nuốt im lặng.
-- Work compile: 23 main class files; manual session/payload/TCP loopback checks PASSED.
-- Test source dự kiến sau pull: 15 tests; cần người dùng chạy lại `mvn test`.
+- Work compile/manual checks PASSED; Windows Maven compiled 22 source + 7 test source and all 15 tests PASSED.
+- User-machine Maven verification: 15 tests, 0 failures, 0 errors, 0 skipped, BUILD SUCCESS.
 
 ## Next exact action
 
