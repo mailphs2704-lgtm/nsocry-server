@@ -30,3 +30,4 @@
 - [Tra cứu source protocol, session và network](../code-reference/protocol-session-network.md)
 - [Chuẩn documentation](../development/documentation-standard.md)
 - [Bootstrap, configuration và observability](bootstrap-configuration-observability.md)
+- [Thiết kế tài khoản và xác thực](../database/account-authentication.md)
