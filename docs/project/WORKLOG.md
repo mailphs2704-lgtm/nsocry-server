@@ -981,3 +981,23 @@ Xác minh 96 test rồi tạo công cụ sinh seed ITEM có đầu ra xác đị
 ### Next exact action
 
 Xác minh 100 test rồi thiết kế parser manifest và JDBC seed importer transactional; vẫn chưa chạy V002 hoặc import dữ liệu thật.
+
+## 2026-08-18 — Xác minh 100 test và JDBC ITEM seed importer
+
+### VERIFIED
+
+- Người dùng chạy 100 test: 0 failure, 0 error, 0 skipped.
+- Generator seed artifact xác định và defensive copy: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Parser manifest canonical, từ chối khóa thừa, sai thứ tự hoặc giá trị ngoài giới hạn.
+- Manifest nay khóa cả payload length bên cạnh version/count/SHA-256.
+- Importer kiểm định artifact trước khi mở database connection.
+- Thay seed bằng transaction SERIALIZABLE và prepared batch; lỗi rollback toàn bộ.
+- Importer không chạy migration, không tăng version và không publish snapshot.
+- Năm test mới; suite mục tiêu 105.
+
+### Next exact action
+
+Xác minh 105 test rồi tạo command xuất artifact ra file an toàn và dry-run import report; chưa chạy V002/import thật.
