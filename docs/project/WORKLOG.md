@@ -828,3 +828,22 @@ Triển khai ITEM asset codec đối xứng trước, sau đó mới đến SKIL
 ### Next exact action
 
 Đối chiếu MAP parser V7 và triển khai MAP asset codec sau khi chốt mọi count.
+
+## 2026-08-18 — MAP asset codec
+
+### Đã triển khai
+
+- `MapAssetBundle`, `NpcTemplateAsset`, `MobTemplateAsset`.
+- Menu NPC được sao chép sâu để giữ bất biến.
+- MAP encoder/parser đối xứng theo client 217.
+- Bốn test mới; suite tích lũy mục tiêu 73.
+
+### Ranh giới
+
+- Chỉ template tĩnh nằm trong asset.
+- Không chứa zone/player/mob instance/combat state.
+- Không thay đổi runtime hoặc database schema.
+
+### Next exact action
+
+Phân tích DATA payload theo từng block và xác định phần nào là client graphics, progression hay effect metadata.
