@@ -49,7 +49,8 @@ Codec chỉ giải mã cấu trúc wire. Giới hạn tên, số lượng nhân 
 |---|---|---|
 | Envelope và command con | Đã xác minh tĩnh | Có thể triển khai codec |
 | Thứ tự trường danh sách/chọn/tạo | Đã xác minh tĩnh | Có thể viết fixture và test |
-| Blob `UPDATE_VERSION` | Chưa đủ bằng chứng | Chưa tích hợp runtime |
+| Header `UPDATE_VERSION` | Đã xác minh bytecode client | 4 byte: data, map, skill, item |
+| Dữ liệu ngoại hình nối sau header | Đã xác minh vị trí, chưa dựng asset NSOCry | Chưa tích hợp runtime |
 | Tối đa 1 hay 3 nhân vật | Mã tham chiếu không nhất quán | Không sao chép quy tắc |
 | Regex và độ dài tên | Chỉ là hành vi tham chiếu | Chờ đặc tả nghiệp vụ NSOCry |
 
@@ -59,3 +60,25 @@ Codec chỉ giải mã cấu trúc wire. Giới hạn tên, số lượng nhân 
 - Tên nhân vật nhận từ client chưa phải dữ liệu đáng tin; tầng dịch vụ phải kiểm tra quyền sở hữu.
 - Decoder từ chối envelope sai, command con sai và byte dư.
 - Chưa nối codec vào session runtime cho đến khi hoàn tất trình tự `UPDATE_VERSION → CLIENT_OK`.
+
+## Bổ sung bằng chứng từ bytecode client V7
+
+Handler client của command con `UPDATE_VERSION (-123)` đọc lần lượt bốn signed byte:
+
+1. data version;
+2. map version;
+3. skill version;
+4. item version.
+
+Client so sánh từng byte với phiên bản đã lưu cục bộ. Nếu khác, client gửi một yêu cầu rỗng trong envelope `NOT_MAP (-28)`:
+
+| Bộ dữ liệu | Command yêu cầu |
+|---|---:|
+| Data | `-122` |
+| Map | `-121` |
+| Skill | `-120` |
+| Item | `-119` |
+
+Nếu data version đã khớp, client đọc ngay dữ liệu ngoại hình còn lại trong cùng payload. Khi một bộ dữ liệu được tải mới, client lưu raw response vào bộ nhớ cục bộ rồi cập nhật phiên bản tương ứng. Client chỉ gọi `CLIENT_OK (-101)` khi cả bốn phiên bản đã đồng bộ.
+
+Vì vậy NSOCry không được gửi bốn byte giả rồi bỏ qua phần asset. Bước tiếp theo là dựng asset pipeline tương thích cho data/map/skill/item và dữ liệu ngoại hình từ tài sản hợp pháp của dự án.
