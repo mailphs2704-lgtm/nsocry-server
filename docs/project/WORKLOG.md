@@ -131,3 +131,35 @@ Không gán server→client cho constant không có Controller case. Không đ�
 ### Next exact action
 
 Phân tích `MessageCollector`, key transform, `setClientType` và `login`; viết `docs/protocol/handshake-login.md`.
+
+## 2026-08-18 — Handshake và login server-side
+
+### Kết quả VERIFIED
+
+- First inbound frame trước key được đọc nhưng không dispatch; nó kích hoạt `sendKey()`.
+- Key response dùng `GET_SESSION_ID`, truyền key0 và XOR delta của các byte tiếp theo.
+- Sau handshake, command, 2-byte length và payload dùng rolling XOR với read/write cursor độc lập.
+- CLIENT_INFO có 13 field được đọc; 2 field chưa rõ semantics.
+- LOGIN có 7 field; 3 field chưa rõ semantics/use.
+- Login yêu cầu key + CLIENT_INFO trước, sau đó load User và gửi UPDATE_VERSION.
+- CLIENT_OK dẫn đến load và gửi character list.
+- Tạo `docs/protocol/handshake-login.md`.
+
+### Legacy defects không được copy
+
+- Log plaintext password.
+- So sánh plaintext password.
+- Key generation yếu/predictable.
+- Exception bị nuốt.
+- First frame bị discard ngầm.
+- Session state bằng nhiều boolean.
+- Login throttle chưa có bounded concurrency contract.
+- Sender queue không thread-safe/bounded.
+
+### Remaining UNKNOWN
+
+Client-side trigger/key behavior, unnamed payload fields, Server.version bytes, error response matrix, SELECT_PLAYER/enter-map.
+
+### Next exact action
+
+Decompile/inspect `V7_217_X1.jar`, đối chiếu handshake/login và tạo protocol fixture.

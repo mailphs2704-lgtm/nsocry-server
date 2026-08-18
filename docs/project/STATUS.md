@@ -49,10 +49,10 @@ Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Dis
 
 - [x] Inventory toàn bộ 311 constant command trong `CMD.java`.
 - [x] Ghép 126 command với nhánh xử lý trong `Controller.java`; 185 declaration còn cần truy usage.
-- [ ] Phân tích `MessageCollector`, sender queue và close/error behavior.
-- [ ] Phân tích handshake/key transform hai chiều.
-- [ ] Phân tích client metadata/client type.
-- [ ] Phân tích login và dependency đến `User`, `Char`, DAO, SQL.
+- [x] Phân tích `MessageCollector`, sender queue và close/error behavior ở mức server reference.
+- [x] Phân tích handshake/key transform phía server; phía client còn cần JAR/fixture.
+- [x] Lập layout 13 field CLIENT_INFO; 2 field vẫn UNKNOWN semantics.
+- [x] Lập layout LOGIN và luồng đến `User.login`; mapping SQL đầy đủ còn pending.
 - [ ] Phân tích client JAR để xác nhận protocol.
 - [ ] Ghép 44 bảng với class/method đọc ghi.
 - [ ] Lập bản đồ game data/map/mob/NPC/item/skill/task.
@@ -96,14 +96,26 @@ Không có blocker kỹ thuật. Quyết định merge Draft PR #1 thuộc ngư�
 - 69 giá trị byte có collision giữa nhiều symbol; scope/envelope là một phần của identity.
 - Tài liệu: `docs/protocol/command-inventory.md`.
 
+## Kết quả handshake/login server-side
+
+- Xác định first-frame trigger bị đọc nhưng không dispatch.
+- Xác định key frame GET_SESSION_ID và thuật toán reconstruction.
+- Xác định XOR rolling cipher với read/write cursor độc lập.
+- Xác định normal inbound frame và bất đối xứng FULL_SIZE.
+- Lập layout 13 field CLIENT_INFO.
+- Lập layout 7 field LOGIN.
+- Lập luồng User authentication, updateVersion, CLIENT_OK và character list.
+- Ghi 8 legacy defects không được copy, gồm plaintext credential logging/password comparison.
+- Tài liệu: `docs/protocol/handshake-login.md`.
+
 ## Next exact action
 
-Phân tích byte-level handshake/login theo thứ tự:
+Đối chiếu client `V7_217_X1.jar` để xác minh:
 
-1. `Session.MessageCollector` và hàm đọc message/key.
-2. `Session.setClientType(Message)`.
-3. `Session.login(Message)`.
-4. Các response tương ứng trong `Service`.
-5. Đối chiếu client JAR nếu source server không đủ.
+1. first trigger frame;
+2. key reconstruction/cursor;
+3. ý nghĩa hai UTF chưa đặt tên, random và server byte;
+4. cấu trúc `Server.version`;
+5. SELECT_PLAYER request và enter-map sequence.
 
-Tạo `docs/protocol/handshake-login.md` với frame, thứ tự field, kiểu dữ liệu, session state transition, lỗi và evidence. Không suy đoán field chưa đọc được.
+Cập nhật `docs/protocol/handshake-login.md` bằng evidence client-side hoặc ghi rõ phần không thể decompile. Sau đó mới thiết kế protocol fixture đầu tiên.
