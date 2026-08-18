@@ -108,3 +108,13 @@ Một module chỉ được DONE khi:
 - Có documentation.
 - STATUS và WORKLOG đã cập nhật.
 - Không làm hỏng module đã hoàn thành.
+
+
+## Console quản trị cục bộ
+
+- Trước khi có website, NSOCry phải có run.bat với trải nghiệm lệnh bài Admin bằng tiếng Việt.
+- Batch file chỉ là launcher; logic quản trị phải nằm trong Java và đi qua application/domain service.
+- Administrator có thể quản lý hệ thống, account, thông báo, sự kiện, vật phẩm và giftcode khi module nền tương ứng đã tồn tại.
+- Bắt buộc xác thực role ADMINISTRATOR, xác nhận thao tác nguy hiểm và audit mọi thay đổi.
+- Cấm hard-code master password, commit secret hoặc cung cấp SQL console tùy ý.
+- Thiết kế command/service phải tái sử dụng được cho website/API quản trị trong tương lai.
