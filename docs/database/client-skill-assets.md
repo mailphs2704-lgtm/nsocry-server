@@ -44,4 +44,21 @@ Read model giữ miền nghiệp vụ 0–255; việc chuyển sang signed byte 
 wire boundary sau khi fixture client xác nhận cách tương thích.
 
 Các số trên chưa phải manifest chính thức. V003 chưa chạy và chưa có seed/import SKILL.
-Mốc kiểm thử gần nhất do người dùng xác nhận là 155/155.
+Mốc kiểm thử gần nhất do người dùng xác nhận là 160/160.
+
+## Full converter candidate
+
+Converter mới dùng các row `clazz`, `skill_option`, `skill_template` và `skill` làm
+nguồn authoritative, rồi dựng đúng cây class → template → level → option. Cột JSON
+`skillTemplates` cũ chỉ là cache trùng lặp nên không được dùng làm nguồn runtime.
+
+Kết quả chạy offline trên dump thật với version candidate 26:
+
+- 72 option, 7 class, 91 template, 967 level, 3883 level-option.
+- Payload dài 42402 byte.
+- SHA-256: `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Encode/decode round-trip khớp hoàn toàn.
+- Bốn giá trị point 140/150 giữ nguyên bit raw-byte trên wire.
+
+Đây mới là candidate offline; cần Windows cross-platform verification trước khi tạo
+archive/manifest và trước mọi migration/import.
