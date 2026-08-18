@@ -757,3 +757,30 @@ Pull và chạy `mvn test`. Nếu 55/55 thành công, inventory nguồn tạo pa
 ### Next exact action
 
 Kiểm kê nguồn tạo data/map/skill/item/appearance và viết tài liệu byte layout trước khi thiết kế asset pipeline NSOCry.
+
+## 2026-08-18 — Asset pipeline foundation
+
+### Inventory
+
+- Appearance lấy từ metadata head/body/leg/mount.
+- DATA tổng hợp graphics paint, task-map, EXP, upgrade tables và effect template.
+- MAP gồm map name, NPC/menu và mob template; client 217 dùng `short` cho mob count.
+- SKILL gồm option, class, template, level và option từng level.
+- ITEM gồm item option và item template.
+
+### Thiết kế và triển khai
+
+- Chọn snapshot bất biến để session không truy SQL hoặc build byte.
+- Snapshot kiểm tra đủ bốn payload và version nhất quán.
+- Provider port yêu cầu thay snapshot nguyên tử khi reload.
+- Protocol codec có thể tạo response theo data request đã giải mã.
+- Thêm tài liệu pipeline tiếng Việt và 5 test; suite mục tiêu 60.
+
+### Kiểm chứng
+
+- Checkpoint trước: 55/55 VERIFIED.
+- Source mới: PENDING Maven verification vì người dùng đang dùng điện thoại.
+
+### Next exact action
+
+Triển khai ITEM asset codec đối xứng trước, sau đó mới đến SKILL, MAP, DATA và appearance.
