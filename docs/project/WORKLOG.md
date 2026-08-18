@@ -942,3 +942,23 @@ Xác minh 89 test rồi thiết kế JDBC adapter theo schema NSOCry, bắt đ�
 ### Next exact action
 
 Xác minh 92 test, sau đó tạo validator/import plan cho seed ITEM; chưa chạy V002 hoặc nhập dữ liệu khi chưa có checkpoint backup và count/checksum.
+
+## 2026-08-18 — Xác minh 92 test và ITEM seed validator
+
+### VERIFIED
+
+- Người dùng chạy 92 test: 0 failure, 0 error, 0 skipped.
+- JDBC ITEM source, transaction và mapping: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Manifest khóa version, option count, item count và payload SHA-256.
+- Validator encode bằng codec thật, parse round-trip và so checksum.
+- Kết quả validation chỉ chứa metadata vận hành, không lộ payload.
+- Viết kế hoạch import có backup, staging, transaction, rollback và kiểm tra sau load.
+- Không chạy V002 và không ghi database thật.
+- Bốn test mới; suite mục tiêu 96.
+
+### Next exact action
+
+Xác minh 96 test rồi tạo công cụ sinh seed ITEM có đầu ra xác định từ dữ liệu tĩnh được phê duyệt; chưa thực hiện import vào MariaDB.
