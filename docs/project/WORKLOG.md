@@ -685,3 +685,32 @@ Tạo database user/application administrator đầu tiên, rồi code Admin Con
 - ADR-0008 và console roadmap không còn coi Admin là phase độc lập.
 - Core service là nguồn sự thật; command admin chỉ là adapter theo sau.
 - Next exact action quay lại protocol character sau login.
+
+## 2026-08-18 — Codec danh sách/chọn/tạo nhân vật
+
+### Phân tích và quyết định
+
+- Chỉ phân tích tĩnh reference, không chạy hoặc test NSOKISS.
+- Xác minh server phải đi qua `UPDATE_VERSION`, chờ `CLIENT_OK`, rồi mới gửi danh sách nhân vật.
+- Xác minh bố cục wire của danh sách nhân vật, chọn theo tên và yêu cầu tạo mới.
+- Không sao chép quy tắc tối đa nhân vật hoặc regex tên vì reference có hành vi không nhất quán và đây là business rule của NSOCry.
+- Không sao chép hành vi log username/password dạng rõ của reference.
+
+### Đã triển khai
+
+- Thêm package `com.nsocry.character` với Javadoc tiếng Việt.
+- Thêm immutable character summary và create request.
+- Thêm codec encode danh sách, decode chọn và decode tạo nhân vật.
+- Thêm kiểm tra envelope/command/byte dư và giới hạn count một byte.
+- Thêm 6 unit test cùng byte vector cố định.
+- Thêm `docs/protocol/post-login-character-v1.md` mô tả byte layout, độ tin cậy và phần UNKNOWN.
+
+### Kiểm chứng
+
+- Mốc gần nhất: executable JAR VERIFIED 44/44 trên Windows.
+- Source mới: PENDING vì Work environment không có Maven/JDK compiler.
+- Suite mục tiêu sau pull: 50 test.
+
+### Next exact action
+
+Pull và chạy `mvn test`. Nếu 50/50 thành công, đánh dấu codec VERIFIED rồi phân tích client V7 để giải mã chính xác blob `UPDATE_VERSION` trước khi nối runtime.
