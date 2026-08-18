@@ -713,4 +713,14 @@ Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/di
 
 ## Next exact action hiện tại
 
-Xác minh 155/155 rồi tạo full SKILL converter/read model candidate và liệt kê chính xác bốn byte-value khác biệt. Không migration/import.
+Xác minh 160/160 rồi tạo full SKILL converter/read-model candidate. Bốn difference
+đã định danh chính xác; chưa chạy V003 và chưa import SKILL.
+
+## Checkpoint SKILL raw-byte differences
+
+- Người dùng xác nhận 155/155 test thành công.
+- Bốn difference đều nằm ở `level.point`: 957=150, 958=150, 962=140, 966=140.
+- Report trả danh sách immutable gồm entity/ID/field/value thay vì chỉ trả tổng số.
+- Giá trị ngoài raw-byte 0–255 bị từ chối; 128–255 được bảo toàn để xử lý tại wire boundary.
+- Năm test mới đang PENDING; suite mục tiêu 160.
+- V003 chưa chạy, database SKILL chưa tồn tại.
