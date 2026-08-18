@@ -11,11 +11,13 @@ public final class LegacyFrameReader {
     private final DataInputStream input;
     private final ProtocolLimits limits;
 
+    /** Khởi tạo bộ đọc từ stream đầu vào với giới hạn cấp phát bắt buộc. */
     public LegacyFrameReader(InputStream input, ProtocolLimits limits) {
         this.input = new DataInputStream(Objects.requireNonNull(input, "input"));
         this.limits = Objects.requireNonNull(limits, "limits");
     }
 
+    /** Đọc frame ngắn chưa mã hóa, hiện dùng cho trigger trao đổi khóa đầu phiên. */
     public ProtocolFrame readUnencryptedShortFrame() throws IOException {
         byte command = input.readByte();
         int length = input.readUnsignedShort();
@@ -23,6 +25,7 @@ public final class LegacyFrameReader {
         return new ProtocolFrame(command, readPayload(length, null));
     }
 
+    /** Đọc frame đã mã hóa, duy trì con trỏ cipher và có thể cấm frame full-size từ client. */
     public ProtocolFrame readEncryptedFrame(RollingXorCipher cipher, boolean allowFullSize) throws IOException {
         Objects.requireNonNull(cipher, "cipher");
         byte command = cipher.transform(input.readByte());
@@ -39,12 +42,14 @@ public final class LegacyFrameReader {
         return new ProtocolFrame(command, readPayload(length, cipher));
     }
 
+    /** Đọc trường độ dài unsigned-short qua cipher theo thứ tự big-endian. */
     private int readEncryptedUnsignedShort(RollingXorCipher cipher) throws IOException {
         int high = Byte.toUnsignedInt(cipher.transform(input.readByte()));
         int low = Byte.toUnsignedInt(cipher.transform(input.readByte()));
         return (high << 8) | low;
     }
 
+    /** Đọc trường độ dài int qua cipher theo thứ tự big-endian. */
     private int readEncryptedInt(RollingXorCipher cipher) throws IOException {
         int value = 0;
         for (int index = 0; index < Integer.BYTES; index++) {
@@ -53,6 +58,7 @@ public final class LegacyFrameReader {
         return value;
     }
 
+    /** Đọc đủ payload, sau đó giải mã tại chỗ khi cipher đã được kích hoạt. */
     private byte[] readPayload(int length, RollingXorCipher cipher) throws IOException {
         byte[] payload = new byte[length];
         input.readFully(payload);
