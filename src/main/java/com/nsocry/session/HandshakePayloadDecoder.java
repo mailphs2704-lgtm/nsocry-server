@@ -14,6 +14,7 @@ public final class HandshakePayloadDecoder {
     private HandshakePayloadDecoder() {
     }
 
+    /** Giải mã CLIENT_INFO theo thứ tự wire và từ chối mọi byte dư. */
     public static ClientInfo decodeClientInfo(ProtocolFrame frame) throws IOException {
         DataInputStream input = nestedPayload(frame, CLIENT_INFO_COMMAND);
         ClientInfo info = new ClientInfo(
@@ -34,6 +35,7 @@ public final class HandshakePayloadDecoder {
         return info;
     }
 
+    /** Giải mã LOGIN theo thứ tự wire; dữ liệu bí mật chỉ được giữ trong LoginRequest. */
     public static LoginRequest decodeLogin(ProtocolFrame frame) throws IOException {
         DataInputStream input = nestedPayload(frame, LOGIN_COMMAND);
         LoginRequest request = new LoginRequest(
@@ -48,6 +50,7 @@ public final class HandshakePayloadDecoder {
         return request;
     }
 
+    /** Mở payload lồng và xác minh envelope cùng command con được mong đợi. */
     private static DataInputStream nestedPayload(ProtocolFrame frame, byte expectedNested) throws IOException {
         if (frame.command() != NOT_LOGIN_ENVELOPE) {
             throw new IOException("unexpected handshake envelope");
@@ -60,6 +63,7 @@ public final class HandshakePayloadDecoder {
         return input;
     }
 
+    /** Bảo đảm decoder đã tiêu thụ toàn bộ payload, ngăn dữ liệu đuôi không xác định. */
     private static void requireFullyConsumed(DataInputStream input) throws IOException {
         if (input.available() != 0) {
             throw new IOException("unexpected trailing handshake payload bytes");
