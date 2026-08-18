@@ -268,3 +268,17 @@ Người dùng pull và chạy mvn test. Nếu 29/29 thành công, ghi VERIFIED 
 ## Next exact action hiện tại
 
 Triển khai JdbcAccountRepository bằng DataSource/prepared statement và unit test adapter; sau đó mới ghép MariaDB driver/pool vào bootstrap.
+
+
+## Checkpoint JdbcAccountRepository
+
+- Đã thêm package com.nsocry.persistence và Javadoc tiếng Việt.
+- JdbcAccountRepository chỉ phụ thuộc DataSource/java.sql, dùng prepared statement và try-with-resources.
+- Đã triển khai find credential, ghi login thành công và tăng bộ đếm thất bại.
+- AccountPersistenceException chỉ công bố mã thao tác cố định, không chứa SQL/credential.
+- Đã thêm 3 unit test bằng JDBC proxy; tổng mục tiêu 32.
+- Trạng thái: PENDING vì Java source mới đã được thêm.
+
+## Next exact action hiện tại
+
+Người dùng pull và chạy mvn test. Nếu 32/32 thành công, ghi VERIFIED rồi bổ sung MariaDB driver, DataSource configuration và composition; database credential chỉ lấy từ môi trường/config không commit.
