@@ -1,6 +1,6 @@
 package com.nsocry.protocol.compat;
 
-/** Validated allocation limits for short and full-size protocol payloads. */
+/** Giới hạn cấp phát đã kiểm tra cho payload dạng ngắn và dạng đầy đủ. */
 public record ProtocolLimits(int maxShortPayload, int maxFullPayload) {
     public static final ProtocolLimits DEFAULT = new ProtocolLimits(65_535, 1_048_576);
 
