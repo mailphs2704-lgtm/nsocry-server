@@ -500,3 +500,18 @@ Tạo các port và authentication service bằng fake repository, sau khi chố
 ### Next exact action
 
 Pull và chạy mvn test; sau 29/29 mới triển khai JdbcAccountRepository cho database nsocry.
+
+
+## 2026-08-18 — Windows xác minh authentication
+
+### VERIFIED
+
+- Tests run: 29.
+- Failures: 0.
+- Errors: 0.
+- Skipped: 0.
+- AuthenticationService, fake AccountRepository và Pbkdf2PasswordHasher đều qua test.
+
+### Next exact action
+
+Viết JdbcAccountRepository dựa trên DataSource, prepared statement và lỗi persistence đã làm sạch; chưa ghép credential database vào source.
