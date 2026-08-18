@@ -25,6 +25,7 @@ public final class TcpServer implements Closeable {
     private ServerSocket serverSocket;
     private Thread acceptThread;
 
+    /** Tạo TCP server cùng executor giới hạn theo cấu hình số phiên tối đa. */
     public TcpServer(
             TcpServerConfig config,
             SessionConnectionHandler handler,
@@ -42,6 +43,7 @@ public final class TcpServer implements Closeable {
                 new ThreadPoolExecutor.AbortPolicy());
     }
 
+    /** Bind listener và khởi chạy accept thread; từ chối nếu server đã chạy. */
     public synchronized void start() throws IOException {
         if (!running.compareAndSet(false, true)) {
             throw new IllegalStateException("server is already running");
@@ -58,10 +60,12 @@ public final class TcpServer implements Closeable {
         }
     }
 
+    /** Trả trạng thái hoạt động hiện tại của listener. */
     public boolean isRunning() {
         return running.get();
     }
 
+    /** Trả địa chỉ thực tế đã bind, bao gồm cổng tạm nếu cấu hình dùng cổng 0. */
     public synchronized InetSocketAddress localAddress() {
         if (serverSocket == null || !serverSocket.isBound()) {
             throw new IllegalStateException("server is not bound");
@@ -70,6 +74,7 @@ public final class TcpServer implements Closeable {
     }
 
     @Override
+    /** Dừng listener, chờ phiên kết thúc trong timeout và bảo toàn interrupt của thread gọi. */
     public void close() throws IOException {
         if (!running.compareAndSet(true, false)) {
             return;
@@ -94,6 +99,7 @@ public final class TcpServer implements Closeable {
         }
     }
 
+    /** Nhận socket liên tục khi server còn chạy và chuyển lỗi đến event sink. */
     private void acceptLoop() {
         while (running.get()) {
             try {
@@ -114,12 +120,14 @@ public final class TcpServer implements Closeable {
         }
     }
 
+    /** Áp dụng read timeout, TCP_NODELAY và keep-alive cho socket mới. */
     private void configure(Socket socket) throws SocketException {
         socket.setSoTimeout(config.readTimeoutMillis());
         socket.setTcpNoDelay(true);
         socket.setKeepAlive(true);
     }
 
+    /** Giao socket cho executor; từ chối và đóng ngay khi đã đạt giới hạn. */
     private void dispatch(Socket socket) throws IOException {
         try {
             sessions.execute(() -> {
@@ -135,12 +143,14 @@ public final class TcpServer implements Closeable {
         }
     }
 
+    /** Đóng listener nếu đã tồn tại và chưa đóng. */
     private void closeServerSocket() throws IOException {
         if (serverSocket != null && !serverSocket.isClosed()) {
             serverSocket.close();
         }
     }
 
+    /** Tạo thread factory đặt tên tuần tự để dễ chẩn đoán runtime. */
     private static ThreadFactory namedThreads(String prefix) {
         AtomicInteger sequence = new AtomicInteger();
         return task -> new Thread(task, prefix + sequence.incrementAndGet());
