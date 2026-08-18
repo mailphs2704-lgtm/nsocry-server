@@ -41,7 +41,7 @@
 
 ## Đang thực hiện
 
-Thiết kế protocol fixture đầu tiên cho NSOCry từ evidence server + client đã khóa. PR #1 vẫn là Draft và chưa merge.
+Protocol fixture đầu tiên đã hoàn thành và được đọc/parse lại từ GitHub. PR #1 vẫn là Draft và chưa merge.
 
 ## Chưa thực hiện
 
@@ -59,7 +59,7 @@ Thiết kế protocol fixture đầu tiên cho NSOCry từ evidence server + cli
 
 ### Thiết kế và xây dựng NSOCry
 
-- [ ] Chốt Java/build tool.
+- [ ] Chốt Java/build tool (next).
 - [ ] Chốt package/module architecture.
 - [ ] Chốt concurrency và session lifecycle.
 - [ ] Thiết kế schema `nsocry`, migration và seed.
@@ -119,15 +119,14 @@ Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người d
 - Tài liệu: `docs/protocol/client-jar-analysis.md`.
 - Không chạy client/server NSOKISS.
 
+## Protocol fixture checkpoint
+
+- Fixture: `docs/protocol/fixtures/handshake-login-v1.json`.
+- Dùng test key `CryTestKey` và credential tổng hợp, không có dữ liệu thật.
+- Có plain/encrypted bytes cho CLIENT_INFO, LOGIN, CLIENT_OK và SELECT_PLAYER.
+- Có trigger/key frame và vector full-size `-32` 32 KiB kèm SHA-256.
+- JSON đã được đọc và parse lại thành công từ GitHub.
+
 ## Next exact action
 
-Viết protocol fixture deterministic đầu tiên cho NSOCry:
-
-1. trigger `E5 00 00`;
-2. key response dùng test key cố định;
-3. reconstruction và rolling XOR với cursor độc lập;
-4. CLIENT_INFO đúng byte order thực tế của client;
-5. LOGIN, CLIENT_OK và SELECT_PLAYER;
-6. case full-size server→client command `-32`.
-
-Sau fixture, chốt Java/build/module skeleton dựa trên protocol đã kiểm chứng.
+Chốt Java/build/module skeleton cho NSOCry, sau đó tạo codec tối thiểu và automated tests đọc trực tiếp fixture `handshake-login-v1.json`. Không kết nối database/gameplay ở bước này.
