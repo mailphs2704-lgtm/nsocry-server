@@ -38,6 +38,14 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesItemSeedConvertDump() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"item-seed-convert", "source/database.sql"});
+        assertEquals(NsocryLauncher.LaunchCommand.ITEM_SEED_CONVERT, request.command());
+        assertEquals(Path.of("source/database.sql"), request.configurationPath());
+    }
+
+    @Test
     void rejectsUnknownOrExcessArguments() {
         assertThrows(IllegalArgumentException.class,
                 () -> NsocryLauncher.parse(new String[] {"unknown"}));
