@@ -27,7 +27,9 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Command inventory, handshake/login, client static analysis và fixture v1 đã hoàn thành.
 - Codec key/rolling-XOR/frame compatibility cùng fixture-based tests đã có.
 - Client V7 chưa bị chỉnh/repack vì không phát hiện tracking hoặc defect đủ bằng chứng.
-- Bước kỹ thuật tiếp theo: TCP session skeleton và explicit handshake state machine.
+- TCP/session/handshake loopback đã VERIFIED 16/16.
+- Toàn bộ package/type/method hiện tại đã được bổ sung Javadoc tiếng Việt; tài liệu tra cứu source đã có.
+- Bước kỹ thuật tiếp theo: bootstrap cấu hình và NetworkEventSink đã làm sạch.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
 
@@ -38,7 +40,7 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 3. Không copy hàng loạt class NSOKISS sang namespace mới rồi gọi đó là “viết lại”.
 4. Không bắt người dùng thực hiện lại kiểm tra đã được đánh dấu VERIFIED.
 5. Không viết module mới trước khi protocol/dependency cần thiết đã được hiểu.
-6. Mỗi thay đổi code phải cập nhật documentation và worklog.
+6. Mỗi thay đổi code phải cập nhật Javadoc tiếng Việt, documentation và worklog.
 7. Không tự quyết gameplay hoặc business rule chưa được người dùng mô tả.
 8. Không build/run/test NSOKISS; người dùng đã xác nhận reference hiện chạy tốt. Chỉ phân tích tĩnh khi cần bằng chứng protocol.
 9. Không sửa/repack client JAR chỉ dựa trên nghi ngờ; phải có evidence, checksum và compatibility plan.
