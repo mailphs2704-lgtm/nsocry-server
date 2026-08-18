@@ -218,6 +218,18 @@ Lập inventory nguồn tạo payload data/map/skill/item và appearance từ re
 
 Chốt ITEM byte layout và triển khai item asset read model + encoder/parser test đối xứng; tiếp tục làm việc trên GitHub, chưa cần người dùng pull.
 
+## Checkpoint ITEM asset codec
+
+- Đã chốt byte layout ITEM bằng đối chiếu server reference và parser client V7.
+- Đã tách `ItemAssetBundle`, option/template read model khỏi entity gameplay.
+- Encoder giới hạn option count theo unsigned byte và item count theo unsigned short.
+- Parser validator đọc lại toàn bộ payload và từ chối byte dư.
+- Thêm 5 test; suite tích lũy mục tiêu 65, đang PENDING Maven verification.
+
+## Next exact action hiện tại
+
+Phân tích và chốt SKILL payload layout; chỉ triển khai read model/codec khi toàn bộ vòng lặp và kiểu số đã được đối chiếu client.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
