@@ -129,3 +129,15 @@ Descriptor part là signed byte nên tối đa 41 layer. Ba biến thể head v�
 `ClientAssetSnapshotAssembler` mã hóa đủ DATA/MAP/SKILL/ITEM/appearance trong biến cục bộ rồi mới tạo snapshot. Lỗi ở bất kỳ codec nào làm toàn bộ thao tác thất bại, không thể sinh snapshot bán phần.
 
 `AtomicClientAssetSnapshotProvider` publish một snapshot hoàn chỉnh bằng `AtomicReference`. Session đang chạy luôn nhìn thấy snapshot cũ hoặc snapshot mới, không thấy trạng thái đang thay dở.
+
+## Cổng nguồn và điều phối rebuild
+
+Mỗi read model có một source port riêng: `DataAssetSource`, `MapAssetSource`,
+`SkillAssetSource`, `ItemAssetSource` và `AppearanceAssetSource`. Các cổng này không
+phụ thuộc JDBC nên có thể dùng implementation database, file hoặc fixture mà không đổi
+tầng codec và session.
+
+`ClientAssetSnapshotBuildService` đọc đủ năm nguồn, gọi assembler rồi mới publish qua
+`ClientAssetSnapshotPublisher`. Nếu một nguồn trả lỗi, trả `null` hoặc codec từ chối dữ
+liệu thì snapshot hiện hành được giữ nguyên. JDBC adapter ở giai đoạn sau chỉ hiện thực
+các source port; session tuyệt đối không gọi JDBC.
