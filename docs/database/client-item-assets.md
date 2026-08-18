@@ -71,3 +71,21 @@ Format hiện tại là `nsocry-item-seed-v1`. Cùng một bundle phải luôn t
 payload và manifest trên Windows/Linux. Importer tương lai sẽ parse payload bằng
 `ItemAssetCodec`, kiểm định manifest rồi insert bằng prepared statement. Nhờ đó tên và
 mô tả Unicode không được ghép trực tiếp vào câu SQL.
+
+## Parser và importer transaction
+
+`ItemAssetSeedManifestParser` chỉ chấp nhận format v1 canonical: đúng sáu khóa, đúng
+thứ tự, không có dòng thừa và bắt buộc LF cuối file. Version được biểu diễn 0–255 trong
+manifest rồi chuyển về byte wire.
+
+`JdbcItemAssetSeedImporter` kiểm định hoàn toàn trước khi gọi `DataSource`. Sau đó nó:
+
+1. mở transaction `SERIALIZABLE` và tắt auto-commit;
+2. xóa hai read-model table bằng DML trong transaction;
+3. batch insert option và template bằng prepared statement;
+4. yêu cầu driver trả đúng số kết quả và không có `EXECUTE_FAILED`;
+5. commit một lần; mọi SQLException/runtime failure đều rollback.
+
+Importer không chạy migration, không tự tăng version và không publish snapshot. Ba
+quyền này thuộc các bước vận hành riêng để tránh một lệnh vừa đổi schema, seed và
+runtime state.
