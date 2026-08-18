@@ -101,3 +101,14 @@ Các count mà client đọc bằng `readByte()` bị giới hạn 0–127. Clas
 7. Mỗi mob: `byte type`, `UTF name`, `int health`, `byte moveRange`, `byte speed`.
 
 Payload MAP chỉ chứa template tĩnh. Zone, tọa độ người chơi, mob instance và trạng thái chiến đấu thuộc runtime gameplay, không được đưa vào `MapAssetBundle`.
+
+## DATA container layout đã chốt
+
+1. `byte dataVersion`.
+2. Năm block theo thứ tự arrow, effect, image, part, skill-paint; mỗi block là `int length` + raw bytes.
+3. `signed byte taskGroupCount`; mỗi group có `signed byte routeCount`, sau đó các cặp `byte npcId`, `byte mapId`.
+4. `signed byte expCount`, lặp `long expThreshold`.
+5. Mười bảng `int`: mỗi bảng có `signed byte count`, rồi các giá trị `int`.
+6. Effect-template data nằm cuối payload và có schema nội bộ riêng.
+
+Mười bảng giữ thứ tự cố định: bốn requirement, bốn coin cost, gold cost và max-percent. `DataAssetCodec` chịu trách nhiệm container; parser chi tiết năm graphics block và effect-template sẽ được tách riêng để không tạo một class khổng lồ.
