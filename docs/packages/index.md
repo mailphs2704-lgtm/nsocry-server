@@ -1,31 +1,31 @@
 # Chỉ mục package/module NSOCry
 
-> Source NSOCry đã bắt đầu. Hai boundary protocol/session dưới đây là ACTIVE; các module nghiệp vụ còn lại vẫn PROPOSED.
+> Source NSOCry đã bắt đầu. Protocol, session và network hiện ACTIVE; các module nghiệp vụ còn lại vẫn PROPOSED.
 
 ## Chuẩn namespace
 
-- Implementation mới dùng namespace dự án `nsocry`; package root định hướng: `com.nsocry`.
-- Có thể dùng `cry` cho tên rút gọn khi hợp lý.
-- Không tạo package/class/method mới chứa `nsoz` hoặc `nsotien`.
-- Package trong bảng dưới là ranh giới nghiệp vụ, không sao chép cây package `com.nsoz`.
+- Implementation mới dùng package root com.nsocry.
+- Không tạo package/class/method mới chứa nsoz hoặc nsotien.
+- Không sao chép cây package reference sang namespace mới.
 
-| Module | Trách nhiệm | Dependency chính | Trạng thái tài liệu |
+| Module | Trách nhiệm | Dependency chính | Trạng thái |
 |---|---|---|---|
-| bootstrap | startup/shutdown/lifecycle | tất cả qua contract | proposed |
-| configuration | đọc/validate config | không phụ thuộc gameplay | proposed |
-| persistence | DB, transaction, repository | MariaDB driver | proposed |
-| `com.nsocry.protocol.compat` | key/frame/stream compatibility | Java I/O only | active |
-| `com.nsocry.session` | handshake state, payload decode, auth port | protocol.compat | active |
-| network.transport | production socket accept/session ownership | protocol/session | next |
-| authentication | login/session binding | player repository | pending |
-| player | account/character lifecycle | persistence, domain | pending |
-| game-data | static data loading | persistence/resources | pending |
-| world | map/zone/mob/NPC | game-data/player | pending |
-| scheduler | periodic jobs | application contracts | pending |
-| administration | maintenance/admin use cases | application | pending |
-| observability | log/metrics/trace | cross-cutting | pending |
+| bootstrap | Startup, shutdown và lifecycle | Các contract ứng dụng | next |
+| configuration | Đọc và kiểm tra config | Không phụ thuộc gameplay | next |
+| persistence | DB, transaction và repository | MariaDB driver | proposed |
+| com.nsocry.protocol.compat | Key, frame và stream compatibility | Java I/O | active |
+| com.nsocry.session | Handshake state, payload decode và auth port | protocol.compat | active |
+| com.nsocry.network | Socket accept, giới hạn và session ownership | protocol/session | active |
+| authentication | Login và session binding | player repository | pending |
+| player | Account và character lifecycle | persistence/domain | pending |
+| game-data | Static data loading | persistence/resources | pending |
+| world | Map, zone, mob và NPC | game-data/player | pending |
+| scheduler | Periodic jobs | application contracts | pending |
+| administration | Maintenance/admin use cases | application | pending |
+| observability | Log, metrics và trace | cross-cutting | next |
 
-Khi tạo package thật, thêm tài liệu riêng cho từng module theo [documentation-standard.md](../development/documentation-standard.md). Không đổi tên/ràng buộc module chỉ để giống package NSOKISS.
+## Tài liệu đang hoạt động
 
-
-Chi tiết implementation đang hoạt động: [protocol-session.md](protocol-session.md).
+- [Protocol và session](protocol-session.md)
+- [Tra cứu source protocol, session và network](../code-reference/protocol-session-network.md)
+- [Chuẩn documentation](../development/documentation-standard.md)
