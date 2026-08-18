@@ -12,6 +12,7 @@ public final class LoginRequest {
     private final String clientToken;
     private final byte serverId;
 
+    /** Tạo yêu cầu đăng nhập; mọi trường bắt buộc phải khác null. */
     public LoginRequest(
             String username,
             String password,
@@ -29,35 +30,43 @@ public final class LoginRequest {
         this.serverId = serverId;
     }
 
+    /** Trả tên đăng nhập cho port xác thực. */
     public String username() {
         return username;
     }
 
+    /** Trả mật khẩu cho port xác thực; không được ghi log giá trị này. */
     public String password() {
         return password;
     }
 
+    /** Trả phiên bản client đã khai báo. */
     public String version() {
         return version;
     }
 
+    /** Trả trường UTF dự phòng thứ nhất để giữ tương thích wire. */
     public String reservedUtf1() {
         return reservedUtf1;
     }
 
+    /** Trả trường UTF dự phòng thứ hai để giữ tương thích wire. */
     public String reservedUtf2() {
         return reservedUtf2;
     }
 
+    /** Trả token client cho port xác thực; không được ghi log giá trị này. */
     public String clientToken() {
         return clientToken;
     }
 
+    /** Trả mã server mà client yêu cầu. */
     public byte serverId() {
         return serverId;
     }
 
     @Override
+    /** Trả mô tả an toàn, luôn che mật khẩu và token. */
     public String toString() {
         return "LoginRequest[username=" + username
                 + ", password=<redacted>"
