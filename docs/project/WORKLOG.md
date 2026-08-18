@@ -631,3 +631,21 @@ Pull và chạy mvn test; sau 40/40 mới đóng gói lệnh vận hành và hư
 ### Next exact action
 
 Chạy mvn package và java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help. Chưa chạy server/create-admin trước khi chuẩn bị database.
+
+
+## 2026-08-18 — Windows xác minh executable JAR
+
+### VERIFIED
+
+- Tests run: 44.
+- Failures: 0.
+- Errors: 0.
+- Skipped: 0.
+- mvn package BUILD SUCCESS trong 3.874 giây.
+- Executable JAR được tạo.
+- Lệnh help chạy và in đúng ba command.
+- Shade warning chỉ liên quan MANIFEST trùng khi gộp dependency; launcher hoạt động chứng minh manifest cuối đúng.
+
+### Next exact action
+
+Chuẩn bị database nsocry cục bộ và administrator đầu tiên bằng migration/tool mới; không chạy hoặc sửa database reference.
