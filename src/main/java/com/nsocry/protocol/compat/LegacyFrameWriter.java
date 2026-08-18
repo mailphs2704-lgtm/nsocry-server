@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Objects;
 
-/** Writes and flushes bounded frames while preserving the outbound cipher cursor. */
+/** Ghi, flush frame có giới hạn và duy trì liên tục con trỏ mã hóa chiều ra. */
 public final class LegacyFrameWriter {
     private final OutputStream output;
     private final ProtocolLimits limits;
