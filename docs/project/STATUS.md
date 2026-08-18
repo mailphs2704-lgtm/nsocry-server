@@ -163,3 +163,17 @@ Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người d
 ## Next exact action
 
 Wire accepted socket → `LegacySessionTransport` → `HandshakeProcessor`, thêm secure key-provider port và integration test trigger → CLIENT_INFO → LOGIN trên loopback. Dùng fake authentication; chưa kết nối database/gameplay.
+
+
+## Checkpoint: TCP handshake integration implemented
+
+- Added `SessionKeyProvider` and bounded `SecureRandomSessionKeyProvider`.
+- Added `LegacyHandshakeConnectionHandler` to compose accepted sockets with transport and handshake processing.
+- Added a real loopback integration test covering trigger → key reconstruction → CLIENT_INFO → LOGIN → fake authentication.
+- No database or gameplay coupling was introduced.
+- Expected suite after pull: 16 tests.
+- Verification state: source checkpoint committed; Windows Maven verification is PENDING because the Work environment has Java Runtime but no Maven/JDK compiler.
+
+## Next exact action
+
+Run `mvn test` once after pulling. If all 16 tests pass, mark this checkpoint VERIFIED and proceed to application composition/configuration plus sanitized network event reporting.
