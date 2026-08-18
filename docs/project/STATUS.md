@@ -598,3 +598,15 @@ Xác minh 105/105 rồi tạo command xuất artifact và báo cáo dry-run impo
 ## Next exact action hiện tại
 
 Xác minh 110/110 rồi xây bộ chuyển đổi dữ liệu ITEM tham chiếu sang read model NSOCry kèm báo cáo count/range/difference. Không import tự động.
+
+## Checkpoint ITEM reference converter
+
+- Người dùng xác nhận 110/110 test thành công; archive/dry-run: VERIFIED.
+- Converter offline chuẩn hóa row theo ID và kiểm tra mọi giới hạn wire.
+- Báo cáo count/range cùng fashion difference; fashion chưa bị coi là đã migrate.
+- Converter không biết JDBC/database/dump SQL và không ghi dữ liệu.
+- Năm test mới đang PENDING; suite mục tiêu 115.
+
+## Next exact action hiện tại
+
+Xác minh 115/115 rồi tạo parser xác định cho dữ liệu hai bảng ITEM trong dump được cung cấp, sinh bundle/artifact/report thực tế nhưng chưa import MariaDB.
