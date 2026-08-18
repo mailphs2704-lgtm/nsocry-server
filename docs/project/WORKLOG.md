@@ -439,3 +439,18 @@ Triển khai application bootstrap tối thiểu với cấu hình TCP được 
 ### Next exact action
 
 Người dùng chạy mvn test. Sau khi 23/23 VERIFIED, bắt đầu schema nsocry tối thiểu và authentication adapter.
+
+
+## 2026-08-18 — Windows xác minh checkpoint bootstrap
+
+### VERIFIED
+
+- Tests run: 23.
+- Failures: 0.
+- Errors: 0.
+- Skipped: 0.
+- Bootstrap, configuration, observability và 16 test protocol/session/network trước đó đều đạt.
+
+### Quy tắc liên tục
+
+Không chạy lại checkpoint 23 test nếu source hoặc pom.xml chưa thay đổi. Bước tiếp theo là migration database nsocry và contract authentication mới, không nhập dữ liệu tài khoản nhạy cảm từ reference.
