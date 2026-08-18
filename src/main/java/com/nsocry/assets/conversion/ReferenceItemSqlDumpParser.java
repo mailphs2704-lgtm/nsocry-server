@@ -17,8 +17,8 @@ public final class ReferenceItemSqlDumpParser {
     /** Parse hai statement bắt buộc; không thực thi SQL và không đọc bảng khác. */
     public static ReferenceItemDumpRows parse(String dump) {
         Objects.requireNonNull(dump, "dump");
-        List<List<String>> optionValues = parseStatement(dump, OPTION_MARKER);
-        List<List<String>> itemValues = parseStatement(dump, ITEM_MARKER);
+        List<List<String>> optionValues = parseValues(dump, OPTION_MARKER);
+        List<List<String>> itemValues = parseValues(dump, ITEM_MARKER);
         List<ReferenceItemOptionRow> options = new ArrayList<>(optionValues.size());
         for (List<String> values : optionValues) {
             requireArity(values, 3, "item_option");
@@ -46,7 +46,8 @@ public final class ReferenceItemSqlDumpParser {
     }
 
     /** Tách phần VALUES đến dấu chấm phẩy nằm ngoài chuỗi quoted. */
-    private static List<List<String>> parseStatement(String dump, String marker) {
+    /** Tái sử dụng state machine INSERT cho các parser asset tham chiếu cùng định dạng dump. */
+    static List<List<String>> parseValues(String dump, String marker) {
         int markerIndex = dump.indexOf(marker);
         if (markerIndex < 0 || dump.indexOf(marker, markerIndex + marker.length()) >= 0) {
             throw new IllegalArgumentException("Dump phải chứa đúng một statement: " + marker);
