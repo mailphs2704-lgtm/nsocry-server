@@ -1184,6 +1184,26 @@ Xác minh 145 test rồi package và chạy database payload verify trên Window
 
 Xác minh 150 test rồi xây parser/converter SKILL từ dump và tạo report thực tế; chưa chạy V003.
 
+## 2026-08-18 — Xác minh 150 test và SKILL dump inventory
+
+### VERIFIED
+
+- Người dùng chạy 150 test: 0 failure, 0 error, 0 skipped.
+- SKILL structural validator và V003 draft foundation: VERIFIED.
+
+### Inventory offline
+
+- 7 class, 72 option template, 91 skill template, 967 level.
+- 3883 level option; tối đa 6 option trong một level.
+- Template ID 0–90, level ID 0–966, reference đều hợp lệ.
+- Phát hiện 4 giá trị 128–255 trong field dùng raw byte; không loại hoặc truncate.
+- V003 point đổi thành SMALLINT UNSIGNED + CHECK <=255 để bảo toàn dữ liệu trước converter.
+- Năm parser test mới; suite mục tiêu 155.
+
+### Next exact action
+
+Xác minh 155 test rồi tạo converter SKILL và báo cáo chính xác bốn raw-byte overflow; chưa chạy V003.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
