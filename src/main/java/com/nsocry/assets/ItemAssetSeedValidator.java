@@ -23,6 +23,7 @@ public final class ItemAssetSeedValidator {
 
         try {
             byte[] payload = ItemAssetCodec.encode(bundle);
+            require(payload.length == manifest.payloadLength(), "Độ dài ITEM payload không khớp manifest");
             ItemAssetBundle decoded = ItemAssetCodec.decode(payload);
             require(bundle.equals(decoded), "ITEM payload không round-trip chính xác");
             String sha256 = sha256(payload);
