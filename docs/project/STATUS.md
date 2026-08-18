@@ -544,3 +544,16 @@ Xác minh 89/89, sau đó thiết kế JDBC adapter theo schema NSOCry cho ITEM 
 ## Next exact action hiện tại
 
 Xác minh 92/92 rồi thiết kế validator và kế hoạch import seed ITEM có count/checksum. Không chạy migration/import tự động và không sửa database reference.
+
+## Checkpoint ITEM seed validation
+
+- Người dùng xác nhận 92/92 test thành công; JDBC ITEM source: VERIFIED.
+- Manifest ITEM khóa version, hai count và SHA-256 payload.
+- Validator bắt buộc codec round-trip và checksum chính xác trước khi chấp nhận seed.
+- Import plan yêu cầu backup, staging, transaction và rollback toàn bộ khi lệch contract.
+- V002 vẫn chưa chạy; database thật chưa bị thay đổi.
+- Bốn test mới đang PENDING; suite mục tiêu 96.
+
+## Next exact action hiện tại
+
+Xác minh 96/96 rồi tạo generator seed ITEM có output xác định và manifest đi kèm. Chưa import MariaDB cho đến khi artifact seed được người dùng phê duyệt.
