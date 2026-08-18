@@ -297,3 +297,15 @@ Người dùng pull và chạy mvn test. Nếu 32/32 thành công, ghi VERIFIED 
 ## Next exact action hiện tại
 
 Người dùng pull và chạy mvn test. Nếu 36/36 thành công, ghi VERIFIED rồi thêm công cụ tạo account đầu tiên và kiểm tra migration trên database nsocry cục bộ, không đụng database reference.
+
+
+## Xác minh checkpoint MariaDB composition
+
+- Người dùng đã chạy Maven sau khi pull Connector/J và database composition.
+- Kết quả: 36 test, 0 failure, 0 error, 0 skipped.
+- DatabaseConfiguration, MariaDbDataSourceFactory và authentication bootstrap: VERIFIED.
+- Không chạy lại checkpoint 36 test nếu Java source hoặc pom.xml chưa thay đổi.
+
+## Next exact action hiện tại
+
+Tạo công cụ khởi tạo account đầu tiên: nhập password ẩn qua Console, hash bằng PasswordHashingPort và insert bằng prepared statement; không nhận password từ argument hoặc log.
