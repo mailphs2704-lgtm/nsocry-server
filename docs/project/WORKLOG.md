@@ -1099,6 +1099,25 @@ Xác minh 125 test rồi chạy convert + dry-run trên Windows để chứng mi
 
 Xác minh 130 test rồi thêm launcher preflight command dùng config database hiện có; command chỉ đọc schema và không chạy migration.
 
+## 2026-08-18 — Xác minh 130 test và launcher schema preflight
+
+### VERIFIED
+
+- Người dùng chạy 130 test: 0 failure, 0 error, 0 skipped.
+- V002 schema contract và JDBC information_schema inspector: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Launcher command `item-schema-preflight [config-path]`.
+- Dùng config mặc định `config/nsocry.properties` hoặc một path chỉ định.
+- In READY/NOT_READY, từng difference và `databaseChanged=false`.
+- NOT_READY làm command kết thúc lỗi để automation không hiểu nhầm là sẵn sàng.
+- Ba report test và hai launcher parser test; suite mục tiêu 135.
+
+### Next exact action
+
+Xác minh 135 test rồi package và chạy preflight trên database NSOCry hiện tại. Kỳ vọng NOT_READY vì V002 chưa chạy; không tự động migration.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
