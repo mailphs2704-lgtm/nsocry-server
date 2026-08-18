@@ -58,3 +58,16 @@ Import chưa được tự động chạy. Khi có seed đã duyệt, thực hi�
 
 Không dùng `DELETE`, `TRUNCATE` hoặc thay bảng hiện hành ngoài transaction import đã
 được duyệt. Không đưa inventory/player data vào hai bảng asset.
+
+## Định dạng seed artifact
+
+Generator không sinh SQL. Nó tạo hai nội dung logic:
+
+- payload `.bin`: chính là byte ITEM mà codec/client hiểu;
+- manifest UTF-8: `format`, `version`, `optionCount`, `itemCount`, `payloadLength`,
+  `sha256`, mỗi khóa một dòng và luôn dùng ký tự xuống dòng `LF`.
+
+Format hiện tại là `nsocry-item-seed-v1`. Cùng một bundle phải luôn tạo đúng cùng
+payload và manifest trên Windows/Linux. Importer tương lai sẽ parse payload bằng
+`ItemAssetCodec`, kiểm định manifest rồi insert bằng prepared statement. Nhờ đó tên và
+mô tả Unicode không được ghép trực tiếp vào câu SQL.
