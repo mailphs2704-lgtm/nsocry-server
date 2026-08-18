@@ -4,7 +4,8 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 
 /** Provider cho phép thay toàn bộ asset snapshot nguyên tử mà session đang chạy không bị khóa. */
-public final class AtomicClientAssetSnapshotProvider implements ClientAssetSnapshotProvider {
+public final class AtomicClientAssetSnapshotProvider
+        implements ClientAssetSnapshotProvider, ClientAssetSnapshotPublisher {
     private final AtomicReference<ClientAssetSnapshot> current;
 
     /** Khởi tạo provider bằng một snapshot hoàn chỉnh bắt buộc. */
@@ -19,6 +20,7 @@ public final class AtomicClientAssetSnapshotProvider implements ClientAssetSnaps
     }
 
     /** Publish snapshot hoàn chỉnh mới trong một thao tác nguyên tử. */
+    @Override
     public void publish(ClientAssetSnapshot snapshot) {
         current.set(Objects.requireNonNull(snapshot, "snapshot"));
     }
