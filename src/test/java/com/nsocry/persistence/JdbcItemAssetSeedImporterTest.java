@@ -36,7 +36,7 @@ class JdbcItemAssetSeedImporterTest {
         assertEquals(1, result.itemCount());
         assertEquals("Tang HP", jdbc.optionRows.get(0).get(2));
         assertEquals("Kiem", jdbc.itemRows.get(0).get(4));
-        assertEquals(-1, jdbc.itemRows.get(0).get(8));
+        assertEquals((short) -1, jdbc.itemRows.get(0).get(8));
         assertTrue(jdbc.committed);
         assertFalse(jdbc.rolledBack);
         assertFalse(jdbc.autoCommit);
