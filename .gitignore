@@ -1,5 +1,22 @@
+# IntelliJ IDEA
 .idea/
 *.iml
+
+# Build output
+target/
 out/
 build/
+
+# Runtime / temporary files
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local NSOCry generated files
+logs/
+
 .gradle/
+
+source-reference/NSOKISS.zip
