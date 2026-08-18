@@ -4,7 +4,7 @@ import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.util.Objects;
 
-/** Immutable validated TCP listener limits and timeout configuration. */
+/** Cấu hình bất biến đã kiểm tra cho địa chỉ lắng nghe, giới hạn và thời gian chờ TCP. */
 public record TcpServerConfig(
         InetSocketAddress bindAddress,
         int backlog,
