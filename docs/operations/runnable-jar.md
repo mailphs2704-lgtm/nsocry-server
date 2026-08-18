@@ -21,6 +21,7 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar ... create-admin [config-path] | Mở console tương tác tạo administrator đầu tiên |
 | java -jar ... item-seed-dry-run &lt;archive-path&gt; | Kiểm định ITEM seed archive, chỉ in metadata và không mở database |
 | java -jar ... item-seed-convert &lt;dump-path&gt; | Chuyển hai bảng ITEM trong dump thành candidate archive cạnh file nguồn |
+| java -jar ... item-schema-preflight [config-path] | Chỉ đọc information_schema và báo V002 READY/NOT_READY |
 
 Không có argument sẽ in help. Command lạ hoặc quá nhiều argument bị từ chối.
 
@@ -73,3 +74,14 @@ Nếu output đã tồn tại, command dừng thay vì ghi đè. Báo cáo luôn
 
 Sau khi convert, chạy dry-run trên đúng archive vừa tạo và đối chiếu SHA-256 với báo
 cáo candidate trước khi cân nhắc migration/import.
+
+## ITEM schema preflight
+
+```powershell
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar item-schema-preflight
+```
+
+Không truyền path sẽ dùng `config/nsocry.properties`; có thể truyền một config path
+khác giống command server/create-admin. Command chỉ đọc metadata và luôn in
+`databaseChanged=false`. Trước khi V002 được chạy, `NOT_READY` cùng danh sách cột thiếu
+là kết quả dự kiến; command không tự sửa schema.
