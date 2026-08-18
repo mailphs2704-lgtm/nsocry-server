@@ -89,3 +89,23 @@ manifest rồi chuyển về byte wire.
 Importer không chạy migration, không tự tăng version và không publish snapshot. Ba
 quyền này thuộc các bước vận hành riêng để tránh một lệnh vừa đổi schema, seed và
 runtime state.
+
+## Chuyển đổi dữ liệu tham chiếu
+
+`ReferenceItemAssetConverter` chỉ nhận các row đã đọc sẵn và không biết JDBC, tên
+database hoặc cú pháp dump SQL. Nó sắp xếp theo ID rồi kiểm tra:
+
+- ID liên tục từ 0 và không trùng;
+- option count tối đa 255, item count tối đa 32767;
+- type/gender/level vừa signed byte;
+- icon/part vừa signed short;
+- cờ nâng cấp chỉ nhận 0 hoặc 1.
+
+Report ghi count, min/max type, min/max icon, số item nâng cấp được và số row có
+`fashion != -1`. Fashion không thuộc wire ITEM nên không đưa vào
+`client_item_templates`; report giữ chênh lệch này để checkpoint appearance/gameplay
+sau xử lý có chủ đích, không được âm thầm coi là dữ liệu đã chuyển xong.
+
+Dump tham chiếu được cung cấp mô tả khoảng 161 option và 1213 item. Đây mới là số liệu
+inventory tĩnh; count/checksum chính thức chỉ được chốt sau khi parser nguồn tạo bundle
+và artifact validator chạy thành công.
