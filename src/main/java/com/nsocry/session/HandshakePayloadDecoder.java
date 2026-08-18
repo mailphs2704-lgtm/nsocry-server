@@ -5,6 +5,7 @@ import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 
+/** Strictly decodes CLIENT_INFO and LOGIN nested payloads in their verified wire order. */
 public final class HandshakePayloadDecoder {
     public static final byte NOT_LOGIN_ENVELOPE = -29;
     public static final byte CLIENT_INFO_COMMAND = -125;
