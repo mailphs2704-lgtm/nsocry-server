@@ -16,7 +16,7 @@
 | com.nsocry.protocol.compat | Key, frame và stream compatibility | Java I/O | active |
 | com.nsocry.session | Handshake state, payload decode và auth port | protocol.compat | active |
 | com.nsocry.network | Socket accept, giới hạn và session ownership | protocol/session | active |
-| authentication | Login và session binding | player repository | pending |
+| com.nsocry.authentication | Password hash và quyết định đăng nhập | account repository port | active |
 | player | Account và character lifecycle | persistence/domain | pending |
 | game-data | Static data loading | persistence/resources | pending |
 | world | Map, zone, mob và NPC | game-data/player | pending |
@@ -31,3 +31,4 @@
 - [Chuẩn documentation](../development/documentation-standard.md)
 - [Bootstrap, configuration và observability](bootstrap-configuration-observability.md)
 - [Thiết kế tài khoản và xác thực](../database/account-authentication.md)
+- [Package authentication](authentication.md)
