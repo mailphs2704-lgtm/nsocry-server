@@ -1,6 +1,7 @@
 package com.nsocry.operations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.nsocry.assets.ItemAssetBundle;
@@ -73,6 +74,19 @@ class ItemAssetSeedArchiveServiceTest {
 
         assertThrows(ItemAssetSeedValidationException.class,
                 () -> new ItemAssetSeedArchiveService().dryRun(archive));
+    }
+
+    @Test
+    void validatedArchiveReturnsDefensivePayloadCopies() throws Exception {
+        ItemAssetSeedArtifact artifact = ItemAssetSeedArtifactGenerator.generate(fixture());
+        Path archive = directory.resolve("defensive.zip");
+        ItemAssetSeedArchiveService service = new ItemAssetSeedArchiveService();
+        service.export(artifact, archive);
+        ValidatedItemAssetSeedArchive validated = service.readValidated(archive);
+        byte[] changed = validated.payload();
+        changed[0] = 99;
+
+        assertNotEquals(99, validated.payload()[0]);
     }
 
     private static void write(ZipOutputStream output, String name, byte[] content) throws IOException {
