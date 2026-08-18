@@ -1204,6 +1204,32 @@ Xác minh 150 test rồi xây parser/converter SKILL từ dump và tạo report 
 
 Xác minh 155 test rồi tạo converter SKILL và báo cáo chính xác bốn raw-byte overflow; chưa chạy V003.
 
+## 2026-08-18 — Xác minh 155 test và định danh raw-byte SKILL
+
+### VERIFIED
+
+- Người dùng chạy 155 test: 0 failure, 0 error, 0 skipped.
+- SKILL dump inventory foundation: VERIFIED.
+
+### Raw-byte differences
+
+- `level[957].point=150`.
+- `level[958].point=150`.
+- `level[962].point=140`.
+- `level[966].point=140`.
+- Không có difference trong template, maxFight hoặc requiredLevel.
+
+### Đã triển khai tiếp
+
+- Inventory report mang danh sách difference immutable với entity/ID/field/value.
+- Parser từ chối giá trị ngoài 0–255 và bảo toàn giá trị 128–255.
+- Năm test mới bao phủ nhận diện, giới hạn raw-byte và defensive copy; suite mục tiêu 160.
+- Chưa chạy V003, chưa import SKILL và chưa publish runtime snapshot.
+
+### Next exact action
+
+Xác minh 160 test rồi xây full SKILL converter/read-model candidate và fixture wire tương thích.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
