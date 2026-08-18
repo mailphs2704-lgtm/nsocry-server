@@ -1002,6 +1002,25 @@ Xác minh 100 test rồi thiết kế parser manifest và JDBC seed importer tra
 
 Xác minh 105 test rồi tạo command xuất artifact ra file an toàn và dry-run import report; chưa chạy V002/import thật.
 
+## 2026-08-18 — Xác minh 105 test và ITEM seed archive dry-run
+
+### VERIFIED
+
+- Người dùng chạy lại 105 test: 0 failure, 0 error, 0 skipped.
+- Manifest parser và transactional JDBC importer: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Archive service đóng gói payload/manifest trong một ZIP và xuất bằng atomic move.
+- Không ghi đè archive đã tồn tại; file tạm được dọn trong finally.
+- Reader chỉ nhận đúng hai entry, chống entry lạ/trùng và giới hạn kích thước giải nén.
+- Thêm launcher command `item-seed-dry-run`, chỉ in metadata và không mở database.
+- Bốn archive test và một launcher parser test; suite mục tiêu 110.
+
+### Next exact action
+
+Xác minh 110 test rồi thiết kế bộ chuyển đổi dữ liệu ITEM tham chiếu thành read model NSOCry có báo cáo khác biệt; chưa import database.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
