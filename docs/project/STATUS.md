@@ -230,6 +230,19 @@ Chốt ITEM byte layout và triển khai item asset read model + encoder/parser 
 
 Phân tích và chốt SKILL payload layout; chỉ triển khai read model/codec khi toàn bộ vòng lặp và kiểu số đã được đối chiếu client.
 
+## Checkpoint SKILL asset codec
+
+- Đã đối chiếu toàn bộ SKILL encoder reference với parser bytecode client V7.
+- Đã thêm read model class/template/level/option tách khỏi gameplay entity.
+- Codec kiểm soát riêng signed-byte count (0–127) và unsigned class count (0–255).
+- Validator parser từ chối count âm và byte dư.
+- ITEM count được hiệu chỉnh theo bằng chứng client `readShort()`: tối đa 32767, không phải unsigned short.
+- Thêm 4 test; suite tích lũy mục tiêu 69, PENDING Maven verification.
+
+## Next exact action hiện tại
+
+Chốt MAP payload client 217 gồm map, NPC/menu và mob template; thiết kế read model không chứa zone/player state.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
