@@ -22,6 +22,7 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar ... item-seed-dry-run &lt;archive-path&gt; | Kiểm định ITEM seed archive, chỉ in metadata và không mở database |
 | java -jar ... item-seed-convert &lt;dump-path&gt; | Chuyển hai bảng ITEM trong dump thành candidate archive cạnh file nguồn |
 | java -jar ... item-schema-preflight [config-path] | Chỉ đọc information_schema và báo V002 READY/NOT_READY |
+| java -jar ... item-seed-import &lt;archive-path&gt; | Import tương tác sau validation, schema READY và xác nhận đủ SHA-256 |
 
 Không có argument sẽ in help. Command lạ hoặc quá nhiều argument bị từ chối.
 
@@ -85,3 +86,13 @@ Không truyền path sẽ dùng `config/nsocry.properties`; có thể truyền m
 khác giống command server/create-admin. Command chỉ đọc metadata và luôn in
 `databaseChanged=false`. Trước khi V002 được chạy, `NOT_READY` cùng danh sách cột thiếu
 là kết quả dự kiến; command không tự sửa schema.
+
+## ITEM seed import
+
+Command import luôn dùng `config/nsocry.properties`, yêu cầu terminal tương tác và không
+nhận checksum qua argument. Trình tự bắt buộc: archive validation → schema preflight →
+in metadata → nhập lại SHA-256 → transaction import. Sai hoặc hủy checksum dừng trước
+khi transaction ghi bắt đầu.
+
+Không chạy command này trước khi suite mục tiêu của checkpoint được VERIFIED và backup
+đã có size/checksum. Import thành công chưa tự publish runtime snapshot.
