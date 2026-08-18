@@ -1001,3 +1001,10 @@ Xác minh 100 test rồi thiết kế parser manifest và JDBC seed importer tra
 ### Next exact action
 
 Xác minh 105 test rồi tạo command xuất artifact ra file an toàn và dry-run import report; chưa chạy V002/import thật.
+
+### Sửa lỗi kiểm thử Windows
+
+- Lần chạy đầu đạt 104/105; importer không lỗi runtime.
+- Assertion của test mong `Integer(-1)` trong khi `PreparedStatement.setShort` bind đúng `Short(-1)`.
+- Đã sửa expected value sang `short`; không thay đổi production code hoặc contract database.
+- Suite mục tiêu vẫn là 105.
