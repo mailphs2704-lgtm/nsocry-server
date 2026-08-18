@@ -651,3 +651,22 @@ Chạy mvn package và java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help. C
 Chuẩn bị database nsocry cục bộ và administrator đầu tiên bằng migration/tool mới; không chạy hoặc sửa database reference.
 
 - Bổ sung .gitignore cho config/nsocry.properties trước khi hướng dẫn nhập database secret; không thay đổi source/build.
+
+
+## 2026-08-18 — Database V001 VERIFIED và yêu cầu lệnh bài Admin
+
+### VERIFIED
+
+- Database nsocry tồn tại.
+- Bảng accounts được tạo đúng V001 với primary key, unique username, password_hash, status, activated, role, lockout và timestamps.
+
+### Yêu cầu mới
+
+- Người dùng đề xuất run.bat có giao diện lệnh bài Admin trước khi có website.
+- Các chức năng định hướng: hệ thống, mở sự kiện, cấp vật phẩm, thông báo, giftcode và quản trị game.
+- Đã tạo ADR-0008 cùng administration roadmap.
+- Chọn kiến trúc batch launcher mỏng + Java admin console + application services + audit.
+
+### Next exact action
+
+Tạo database user/application administrator đầu tiên, rồi code Admin Console foundation; gameplay command chờ service nền.
