@@ -2,7 +2,7 @@ package com.nsocry.session;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-/** Thread-safe state machine that rejects illegal or out-of-order session transitions. */
+/** Máy trạng thái an toàn luồng, từ chối chuyển trạng thái sai hoặc không đúng thứ tự. */
 public final class HandshakeStateMachine {
     private final AtomicReference<SessionPhase> phase = new AtomicReference<>(SessionPhase.CONNECTED);
 
