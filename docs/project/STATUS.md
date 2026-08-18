@@ -519,3 +519,16 @@ Tạo database user nsocry riêng và administrator đầu tiên bằng công c�
 ## Next exact action hiện tại
 
 Phân tích tĩnh protocol sau đăng nhập của reference: danh sách nhân vật và chọn nhân vật; ghi fixture/evidence trước khi thiết kế character domain/schema mới.
+
+## Checkpoint asset source orchestration
+
+- Người dùng đã xác nhận 85/85 test thành công; snapshot assembler và atomic provider: VERIFIED.
+- Đã thêm source port riêng cho DATA, MAP, SKILL, ITEM và appearance.
+- Đã thêm publisher port và build service theo nguyên tắc tất cả hoặc không.
+- Session vẫn chỉ đọc snapshot; không phụ thuộc JDBC hoặc source implementation.
+- Lỗi đọc nguồn, kết quả null hoặc lỗi codec không được thay snapshot hiện hành.
+- Bốn test mới đang PENDING; suite mục tiêu 89.
+
+## Next exact action hiện tại
+
+Xác minh 89/89, sau đó thiết kế JDBC adapter theo schema NSOCry cho ITEM trước. Không đọc database reference trong runtime và không nối session trực tiếp với JDBC.
