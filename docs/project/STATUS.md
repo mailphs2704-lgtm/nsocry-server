@@ -36,6 +36,7 @@
 - [x] Tạo workflow, documentation standard và AI handoff.
 - [x] Tạo architecture overview và package index.
 - [x] Ghi bốn ADR nền tảng.
+- [x] Chốt chuẩn định danh dự án: chỉ dùng NSOCry/nsocry/Cry/cry; loại nsoz/nsotien khỏi source mới.
 - [x] Mở/cập nhật Draft PR #1.
 
 ## Đang thực hiện
@@ -65,6 +66,15 @@ Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Dis
 - [ ] Thiết kế logging/config/error handling.
 - [ ] Viết skeleton server và protocol tests.
 - [ ] Kết nối client thật.
+
+## Naming policy đang hiệu lực
+
+- Product: `NSOCry`.
+- Technical namespace: `nsocry`; package root định hướng: `com.nsocry`.
+- Short form được phép: `Cry`/`cry`.
+- `nsoz` và `nsotien` chỉ được tồn tại trong reference hoặc mô tả reference.
+- Mọi source/config/schema/artifact mới phải vượt legacy-name scan trước khi merge.
+- Đổi tên phải theo trách nhiệm mới, không chỉ search/replace.
 
 ## Không được làm lại nếu không có bằng chứng trạng thái đổi
 

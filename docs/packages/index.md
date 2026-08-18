@@ -2,6 +2,13 @@
 
 > Chưa có source NSOCry. Danh sách dưới đây là PROPOSED và sẽ được chốt sau Phase 1.
 
+## Chuẩn namespace
+
+- Implementation mới dùng namespace dự án `nsocry`; package root định hướng: `com.nsocry`.
+- Có thể dùng `cry` cho tên rút gọn khi hợp lý.
+- Không tạo package/class/method mới chứa `nsoz` hoặc `nsotien`.
+- Package trong bảng dưới là ranh giới nghiệp vụ, không sao chép cây package `com.nsoz`.
+
 | Module | Trách nhiệm | Dependency chính | Trạng thái tài liệu |
 |---|---|---|---|
 | bootstrap | startup/shutdown/lifecycle | tất cả qua contract | proposed |

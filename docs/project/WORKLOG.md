@@ -80,3 +80,22 @@ Cài Git/GitHub CLI, kiểm kê package/source, push ZIP và xác minh NSOKISS �
 ### Trạng thái bàn giao
 
 Checkpoint continuity hoàn tất. Phiên sau phải bắt đầu ở `docs/START-HERE.md` và không lặp các mục VERIFIED trong STATUS.
+
+## 2026-08-18 — Chốt chuẩn đặt tên NSOCry/Cry
+
+### Yêu cầu người dùng xác nhận
+
+- NSOCry được viết mới hoàn toàn dựa trên logic đã hiểu từ NSOKISS.
+- Mọi package, class, method và định danh liên quan đến `nsoz` hoặc `nsotien` trong source mới phải đổi.
+- `NSOCry`/`nsocry` hoặc `Cry`/`cry` là chuẩn nhận diện duy nhất của dự án.
+
+### Cập nhật
+
+- Bổ sung naming policy vào REQUIREMENTS và STATUS.
+- Bổ sung quy tắc kiểm tra legacy name vào documentation standard.
+- Ghi ADR-0005.
+- Xác định package root định hướng là `com.nsocry`.
+
+### Lưu ý
+
+Tên legacy vẫn được phép trong `source-reference/` và tài liệu trích dẫn reference; không được dùng làm namespace hoặc định danh implementation NSOCry.

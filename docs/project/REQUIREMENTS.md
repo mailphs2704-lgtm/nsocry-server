@@ -9,14 +9,26 @@
 - NSOCry phải có cấu trúc dễ hiểu, dễ bảo trì và có documentation chi tiết.
 - Ưu tiên khả năng tương thích với client thực tế hơn việc giữ nguyên tên/class/package của NSOKISS.
 
-### 1.2 Tách biệt hệ thống
+### 1.2 Chuẩn đặt tên NSOCry/Cry
+
+- Tên sản phẩm chuẩn: `NSOCry`.
+- Dạng kỹ thuật chữ thường: `nsocry`.
+- Tên rút gọn được phép khi phù hợp ngữ cảnh: `Cry` hoặc `cry`.
+- Source NSOCry phải được viết mới dựa trên **logic/hành vi đã hiểu** từ NSOKISS, không kế thừa tên định danh của source cũ.
+- Package mới không được chứa `nsoz` hoặc `nsotien`; package gốc định hướng là `com.nsocry`.
+- Class, interface, method, field, constant, cấu hình, environment variable, artifact, module, database object và tài liệu thuộc NSOCry không được mang tên `nsoz` hoặc `nsotien`.
+- Không đổi tên máy móc. Tên mới phải mô tả đúng trách nhiệm trong kiến trúc NSOCry; dùng `nsocry`/`cry` cho nhận diện dự án và tên miền phù hợp cho nghiệp vụ.
+- Tên legacy chỉ được xuất hiện khi trích dẫn hoặc mô tả reference NSOKISS, và phải được đánh dấu rõ là reference.
+- Trước khi merge code NSOCry, phải chạy kiểm tra tìm `nsoz|nsotien` ngoài `source-reference/` và các đoạn tài liệu reference được cho phép.
+
+### 1.3 Tách biệt hệ thống
 
 - Giữ NSOKISS đang chạy nguyên trạng để đối chiếu.
 - NSOCry sử dụng database riêng tên `nsocry`.
 - Không thao tác phá hủy hoặc migration trực tiếp trên database NSOKISS.
 - Reference phải nằm tách biệt khỏi source NSOCry.
 
-### 1.3 Documentation bắt buộc
+### 1.4 Documentation bắt buộc
 
 Người dùng phải có thể truy từ:
 
@@ -36,7 +48,7 @@ package
 
 Tài liệu không chỉ mô tả “code làm gì” mà phải giải thích “vì sao thiết kế như vậy” và tác động khi sửa.
 
-### 1.4 Cách cộng tác
+### 1.5 Cách cộng tác
 
 - Người dùng không phải lập trình viên; hướng dẫn phải rõ, tuần tự và không giả định kiến thức nền.
 - Không yêu cầu người dùng dán hàng nghìn dòng code khi repository/reference đã truy cập được.

@@ -4,7 +4,18 @@
 
 Tài liệu phải cho phép người dùng và AI mới hiểu hệ thống mà không đọc lại toàn bộ lịch sử chat hoặc reverse-engineer lại phần đã hoàn thành.
 
-## 2. Tài liệu cho package/module
+## 2. Chuẩn tên và namespace
+
+- Tên sản phẩm trong văn bản: `NSOCry`.
+- Dạng chữ thường cho namespace/artifact/database: `nsocry`.
+- Dạng ngắn: `Cry`/`cry` khi tên đầy đủ không phù hợp.
+- Package root dự kiến của implementation: `com.nsocry`.
+- Cấm `nsoz` và `nsotien` trong source/config/schema/artifact mới.
+- Không giữ tên class/method cũ nếu trách nhiệm đã được tách hoặc đổi.
+- Tên reference phải kèm ngữ cảnh NSOKISS/reference.
+- Review phải thực hiện legacy-name scan ngoài `source-reference/`.
+
+## 3. Tài liệu cho package/module
 
 Mỗi module cần:
 
@@ -22,7 +33,7 @@ Mỗi module cần:
 - Test/verification.
 - Các ADR liên quan.
 
-## 3. Tài liệu cho class
+## 4. Tài liệu cho class
 
 Mỗi class quan trọng cần:
 
@@ -36,7 +47,7 @@ Mỗi class quan trọng cần:
 - Điều kiện lifecycle.
 - Rủi ro khi sửa.
 
-## 4. Tài liệu cho method/flow
+## 5. Tài liệu cho method/flow
 
 Với method có logic nghiệp vụ hoặc protocol:
 
@@ -57,7 +68,7 @@ Với method có logic nghiệp vụ hoặc protocol:
 
 Không dựa duy nhất vào số dòng; luôn có symbol/method để tìm lại.
 
-## 5. Tài liệu protocol
+## 6. Tài liệu protocol
 
 Mỗi command cần:
 
@@ -74,7 +85,7 @@ Mỗi command cần:
 - Fixture hoặc cách tái hiện.
 - Trạng thái xác minh.
 
-## 6. Tài liệu database
+## 7. Tài liệu database
 
 Mỗi bảng cần:
 
@@ -89,7 +100,7 @@ Mỗi bảng cần:
 - Dữ liệu nhạy cảm.
 - Chênh lệch với schema NSOKISS.
 
-## 7. STATUS và WORKLOG
+## 8. STATUS và WORKLOG
 
 - STATUS là snapshot mới nhất, có thể sửa.
 - WORKLOG là lịch sử append-only.
@@ -97,6 +108,6 @@ Mỗi bảng cần:
 - STATUS chỉ có đúng một “Next exact action” ưu tiên cao nhất.
 - Mục DONE phải có bằng chứng kiểm chứng.
 
-## 8. ADR
+## 9. ADR
 
 Tạo ADR khi quyết định ảnh hưởng nhiều module, khó đảo ngược hoặc AI sau dễ tự thay đổi. ADR gồm Context, Decision, Consequences, Alternatives và Status.
