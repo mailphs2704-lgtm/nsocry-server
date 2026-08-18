@@ -1,6 +1,6 @@
 # NSOKISS handshake and login protocol
 
-> Status: server-side reference VERIFIED where explicitly stated. Client intent and unnamed fields remain UNKNOWN until client JAR/capture verification.
+> Status: server-side reference and the listed client-side behaviors are VERIFIED by static inspection. No NSOKISS runtime test was performed.
 
 ## 1. Session state model observed
 
@@ -48,7 +48,7 @@ byte[] payload
 
 After the first message is read, the collector checks `sendKeyComplete == false` and calls `sendKey()` instead of `processMessage(message)`.
 
-**VERIFIED consequence:** the first decoded client message is used only as a key-exchange trigger and is not dispatched to Controller. Its command/payload meaning is UNKNOWN from server source alone.
+**VERIFIED consequence:** the first decoded client message is used only as a key-exchange trigger and is not dispatched to Controller. Client bytecode confirms it intentionally sends command `GET_SESSION_ID (-27)` with a zero-length payload immediately after opening the streams.
 
 ### 2.2 Server key frame
 
@@ -113,7 +113,7 @@ Server decrypts in the same order and rejects `size > Config.messageSizeMax`.
 
 ### Limitation observed
 
-Inbound `readMessage()` always reads a two-byte length and does not implement the outbound `FULL_SIZE` four-byte form. Outbound `doSendMessage()` supports `FULL_SIZE` for payloads larger than `Short.MAX_VALUE`. Treat protocol symmetry as UNKNOWN until client behavior is checked.
+Server inbound `readMessage()` uses a two-byte length. Client static analysis confirms its outbound writer also uses two bytes. For server-to-client traffic, the client recognizes decoded command `-32` and reads a four-byte encrypted big-endian length. The earlier asymmetry is therefore intentional at wire level, although special commands `-31`/`-32` still need semantic names and boundary tests.
 
 ## 4. Envelope dispatch
 
@@ -151,13 +151,15 @@ Read once by `Session.setClientType`:
 | 6 | `readBoolean` | isQwert | VERIFIED |
 | 7 | `readBoolean` | isTouch | VERIFIED |
 | 8 | `readUTF` | platform (reference typo: `plastfrom`) | VERIFIED |
-| 9 | `readInt` | unnamedInt1 | UNKNOWN |
-| 10 | `readByte` | unnamedByte1 | UNKNOWN |
+| 9 | `readInt` | legacy combined field | SERVER READ VERIFIED; client writes byte `0` here |
+| 10 | `readByte` | legacy combined field | SERVER READ VERIFIED; client writes int `0` across positions 9–10 |
 | 11 | `readByte` | languageId | VERIFIED |
 | 12 | `readInt` | provider | VERIFIED name only |
 | 13 | `readUTF` | agent | VERIFIED name only |
 
 After parsing, language is resolved from `GameData` and `isSetClientType` becomes true.
+
+**Client compatibility note:** the inspected client writes a byte then an int for fields 9–10, while the server reads an int then a byte. Total width remains five bytes and both client values are zero, so later fields stay aligned. NSOCry must model the actual wire bytes in its compatibility adapter instead of copying these legacy field types.
 
 ## 6. LOGIN payload
 
@@ -168,10 +170,10 @@ Read by `Session.login`:
 | 1 | `readUTF().trim()` | username | VERIFIED |
 | 2 | `readUTF().trim()` | password | VERIFIED |
 | 3 | `readUTF().trim()` | version | VERIFIED |
-| 4 | `readUTF()` | unnamedUtf1, discarded | UNKNOWN |
-| 5 | `readUTF()` | unnamedUtf2, discarded | UNKNOWN |
-| 6 | `readUTF().trim()` | random | VERIFIED name only |
-| 7 | `readByte()` | server, read but unused locally | UNKNOWN |
+| 4 | `readUTF()` | empty string in this client build | CLIENT VERIFIED |
+| 5 | `readUTF()` | empty string in this client build | CLIENT VERIFIED |
+| 6 | `readUTF().trim()` | obfuscated helper result | Wire presence VERIFIED; semantics UNKNOWN |
+| 7 | `readByte()` | client global/server selection | Wire presence VERIFIED; mapping UNKNOWN |
 
 `DataInputStream.readUTF` uses Java modified UTF-8 with a two-byte unsigned encoded length.
 
@@ -254,7 +256,7 @@ repeat count:
   short leg
 ```
 
-Character selection request payload and transition into map are not yet documented here.
+Client bytecode confirms the character selection request is outer `NOT_MAP`, nested `SELECT_PLAYER`, then exactly one modified-UTF character name. Server `User.selectChar` loads/binds the character and eventually calls `MapManager.joinZone`; exact response ordering inside `loadAll()` and `joinZone()` remains pending.
 
 ## 11. Critical legacy defects — must not copy to NSOCry
 
@@ -283,13 +285,14 @@ These are findings about reference quality, not permission to change wire behavi
 
 ## 13. Remaining UNKNOWN / next work
 
-1. Identify exact first client trigger frame from client JAR.
-2. Identify the two unnamed UTF fields, random field semantics and server byte.
-3. Resolve `Server.version` payload.
-4. Trace error/dialog responses for each login rejection.
-5. Trace SELECT_PLAYER request and enter-map sequence.
-6. Cross-check client-side key reconstruction and cursor behavior.
-7. Produce protocol fixtures and NSOCry-safe symbol names.
+1. Resolve `Server.version` payload and client update negotiation.
+2. Identify LOGIN field 6 semantics and the selected-server byte mapping.
+3. Trace error/dialog responses for each login rejection.
+4. Trace exact packet ordering in `loadAll()` and `joinZone()`.
+5. Name and boundary-test special large-frame commands `-31`/`-32`.
+6. Implement the documented deterministic compatibility fixture.
+
+Full client evidence and fixture specification: [client-jar-analysis.md](client-jar-analysis.md).
 
 ## Evidence
 
@@ -299,3 +302,8 @@ These are findings about reference quality, not permission to change wire behavi
 - `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/network/AbsService.java`
 - `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/network/Service.java`
 - `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/model/User.java`
+
+
+## 14. Client-side verification checkpoint
+
+Static bytecode inspection verified the initial `-27` empty trigger, delta key reconstruction, independent rolling cursors, CLIENT_INFO/LOGIN construction, CLIENT_OK and SELECT_PLAYER request. See [client-jar-analysis.md](client-jar-analysis.md). The client and NSOKISS server were not executed.
