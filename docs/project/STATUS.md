@@ -532,3 +532,15 @@ Phân tích tĩnh protocol sau đăng nhập của reference: danh sách nhân v
 ## Next exact action hiện tại
 
 Xác minh 89/89, sau đó thiết kế JDBC adapter theo schema NSOCry cho ITEM trước. Không đọc database reference trong runtime và không nối session trực tiếp với JDBC.
+
+## Checkpoint JDBC ITEM asset source
+
+- Người dùng xác nhận 89/89 test thành công; asset source orchestration: VERIFIED.
+- Migration V002 tạo `client_item_options` và `client_item_templates`, không seed dữ liệu.
+- JDBC adapter đọc nhất quán, sắp theo ID và từ chối ID không liên tục từ 0.
+- Adapter không được session gọi trực tiếp; chỉ được build service gọi khi rebuild snapshot.
+- Ba test mới đang PENDING; suite mục tiêu 92.
+
+## Next exact action hiện tại
+
+Xác minh 92/92 rồi thiết kế validator và kế hoạch import seed ITEM có count/checksum. Không chạy migration/import tự động và không sửa database reference.
