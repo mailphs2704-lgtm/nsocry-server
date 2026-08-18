@@ -20,6 +20,7 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar ... server [config-path] | Nạp cấu hình, ghép database/auth và mở TCP listener |
 | java -jar ... create-admin [config-path] | Mở console tương tác tạo administrator đầu tiên |
 | java -jar ... item-seed-dry-run &lt;archive-path&gt; | Kiểm định ITEM seed archive, chỉ in metadata và không mở database |
+| java -jar ... item-seed-convert &lt;dump-path&gt; | Chuyển hai bảng ITEM trong dump thành candidate archive cạnh file nguồn |
 
 Không có argument sẽ in help. Command lạ hoặc quá nhiều argument bị từ chối.
 
@@ -56,5 +57,19 @@ Archive chứa đúng hai entry `item.bin` và `item.manifest`. Lệnh dry-run g
 count, length và SHA-256. Kết quả chỉ in version, count, length và checksum.
 
 `ItemAssetSeedArchiveService.export` ghi vào file tạm cùng thư mục rồi atomic move sang
-đích và không ghi đè file có sẵn. Đây mới là foundation để command export sau này nhận
-bundle từ nguồn được duyệt; chưa có command tự lấy dữ liệu reference hoặc database.
+đích và không ghi đè file có sẵn. Command convert dùng service này sau khi parser và
+validator đã chấp nhận bundle; không có command đọc trực tiếp database.
+
+## ITEM seed convert
+
+```powershell
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar item-seed-convert "source-reference\database.sql"
+```
+
+Command chỉ nhận regular file tối đa 64 MiB, dùng UTF-8 và version candidate 26. Với
+`database.sql`, output là `database-item-seed-v26-candidate.zip` trong cùng thư mục.
+Nếu output đã tồn tại, command dừng thay vì ghi đè. Báo cáo luôn có
+`databaseChanged=false` vì command không khởi tạo DataSource.
+
+Sau khi convert, chạy dry-run trên đúng archive vừa tạo và đối chiếu SHA-256 với báo
+cáo candidate trước khi cân nhắc migration/import.
