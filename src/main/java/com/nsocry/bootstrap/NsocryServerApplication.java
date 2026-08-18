@@ -2,18 +2,25 @@ package com.nsocry.bootstrap;
 
 import com.nsocry.configuration.ServerConfiguration;
 import com.nsocry.configuration.ServerConfigurationLoader;
+import com.nsocry.configuration.DatabaseConfiguration;
+import com.nsocry.configuration.DatabaseConfigurationLoader;
+import com.nsocry.authentication.AuthenticationService;
+import com.nsocry.authentication.Pbkdf2PasswordHasher;
 import com.nsocry.network.LegacyHandshakeConnectionHandler;
 import com.nsocry.network.NetworkEventSink;
 import com.nsocry.network.TcpServer;
 import com.nsocry.observability.SanitizedNetworkEventSink;
+import com.nsocry.persistence.JdbcAccountRepository;
+import com.nsocry.persistence.MariaDbDataSourceFactory;
 import com.nsocry.protocol.compat.ProtocolLimits;
-import com.nsocry.session.AuthenticationDecision;
 import com.nsocry.session.AuthenticationPort;
 import com.nsocry.session.SecureRandomSessionKeyProvider;
 import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Arrays;
+import javax.sql.DataSource;
 
 /** Điểm ghép và vòng đời tối thiểu để chạy TCP server NSOCry từ cấu hình. */
 public final class NsocryServerApplication implements Closeable {
@@ -50,15 +57,29 @@ public final class NsocryServerApplication implements Closeable {
 
     /**
      * Chạy server từ file cấu hình được chỉ định ở argument đầu tiên hoặc config/nsocry.properties.
-     * Xác thực mặc định từ chối mọi login cho đến khi module tài khoản được triển khai.
+     * Ghép MariaDB account repository và authentication service trước khi mở TCP listener.
      */
     public static void main(String[] args) throws Exception {
         Path path = args.length == 0 ? Path.of("config", "nsocry.properties") : Path.of(args[0]);
         ServerConfiguration configuration = new ServerConfigurationLoader().load(path);
-        AuthenticationPort rejectUntilDatabaseExists = (login, client) -> AuthenticationDecision.REJECTED;
+        DatabaseConfiguration database = new DatabaseConfigurationLoader().load(path, System.getenv());
+        DataSource dataSource = MariaDbDataSourceFactory.create(database);
+        Pbkdf2PasswordHasher passwords = new Pbkdf2PasswordHasher();
+        char[] dummyPassword = "nsocry-missing-account".toCharArray();
+        String missingAccountHash;
+        try {
+            missingAccountHash = passwords.hash(dummyPassword);
+        } finally {
+            Arrays.fill(dummyPassword, '\0');
+        }
+        AuthenticationPort authentication = new AuthenticationService(
+                new JdbcAccountRepository(dataSource),
+                passwords,
+                java.time.Clock.systemUTC(),
+                missingAccountHash);
         SanitizedNetworkEventSink events = new SanitizedNetworkEventSink(System.err::println);
         NsocryServerApplication application = new NsocryServerApplication(
-                configuration, rejectUntilDatabaseExists, events);
+                configuration, authentication, events);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> closeQuietly(application), "nsocry-shutdown"));
         application.start();
         System.out.println("NSOCry server started on " + application.server().localAddress());
