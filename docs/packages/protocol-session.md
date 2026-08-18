@@ -46,6 +46,8 @@ A rejected login returns from `LOGIN_PENDING` to `CLIENT_INFO_RECEIVED`, allowin
 - `HandshakePayloadDecoder`: client-accurate CLIENT_INFO and LOGIN decoding.
 - `LoginRequest`: redacts password and client token from `toString()`.
 - `AuthenticationPort`: boundary for the future account/authentication module.
+- `SessionKeyProvider`: boundary for per-session key creation.
+- `SecureRandomSessionKeyProvider`: production-safe random key source; key length is explicitly bounded.
 - `HandshakeProcessor`: orders CLIENT_INFO and LOGIN without database coupling.
 
 ### TCP lifecycle
@@ -53,6 +55,7 @@ A rejected login returns from `LOGIN_PENDING` to `CLIENT_INFO_RECEIVED`, allowin
 - `TcpServerConfig`: bind address, backlog, maximum concurrent sessions, read timeout and shutdown timeout.
 - `TcpServer`: loopback/real bind, named accept/session threads, zero-capacity handoff, overload rejection and graceful close.
 - `SessionConnectionHandler`: application boundary for each accepted socket.
+- `LegacyHandshakeConnectionHandler`: composes socket streams, transport, processor, key provider and authentication port for one bootstrap attempt.
 - `NetworkEventSink`: explicit sanitized failure/rejection reporting; network exceptions are not silently swallowed.
 
 ## Security properties at this checkpoint
@@ -77,16 +80,15 @@ The test suite currently covers:
 7. exact CLIENT_INFO byte/int order;
 8. LOGIN reserved fields and secret redaction;
 9. trigger → CLIENT_INFO → accepted LOGIN processor flow;
-10. loopback TCP accept and graceful shutdown.
+10. loopback TCP accept and graceful shutdown;
+11. full loopback trigger → key → CLIENT_INFO → LOGIN with fake authentication.
 
-Expected total after the next pull: 15 tests.
+Expected total after this checkpoint: 16 tests. The original 15-test checkpoint is VERIFIED on Windows; the new loopback test awaits Windows Maven verification.
 
 ## Not implemented yet
 
 - application bootstrap/main entry point;
-- wiring accepted sockets into `LegacySessionTransport`/`HandshakeProcessor`;
 - production observability implementation for `NetworkEventSink`;
-- secure key generation policy;
 - login attempt rate limiting;
 - account database adapter and password hashing;
 - version/update response;
@@ -95,4 +97,4 @@ Expected total after the next pull: 15 tests.
 
 ## Next exact action
 
-Wire each accepted socket into `LegacySessionTransport` and `HandshakeProcessor` using a secure key-provider port and fake authentication adapter. Add an integration test for trigger → CLIENT_INFO → LOGIN over loopback TCP. Do not connect the database yet.
+Run the new 16-test suite on Windows. If VERIFIED, add a composition/bootstrap entry point with sanitized network event reporting and configuration loading. Do not connect the database yet.
