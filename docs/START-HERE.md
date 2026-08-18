@@ -29,7 +29,8 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Client V7 chưa bị chỉnh/repack vì không phát hiện tracking hoặc defect đủ bằng chứng.
 - TCP/session/handshake loopback đã VERIFIED 16/16.
 - Toàn bộ package/type/method hiện tại đã được bổ sung Javadoc tiếng Việt; tài liệu tra cứu source đã có.
-- Bước kỹ thuật tiếp theo: bootstrap cấu hình và NetworkEventSink đã làm sạch.
+- Bootstrap, configuration và NetworkEventSink đã được triển khai; đang chờ xác minh bộ 23 test.
+- Bước kỹ thuật tiếp theo sau khi VERIFIED: thiết kế schema nsocry tối thiểu cho account/authentication.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
 
