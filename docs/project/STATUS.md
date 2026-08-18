@@ -675,3 +675,16 @@ Xác minh 135/135 rồi chạy preflight read-only trên database NSOCry. Chỉ 
 ## Next exact action hiện tại
 
 Xác minh 140/140 rồi package và xin xác nhận cuối trước khi chạy `item-seed-import`. Không tự chạy command ghi dữ liệu.
+
+## Checkpoint ITEM database payload verification
+
+- Người dùng xác nhận 140/140 test thành công và cấp xác nhận import rõ ràng.
+- ITEM seed local import: SUCCESS, 161 option + 1213 item.
+- Post-check ID/count/upgradable khớp report candidate.
+- Runtime snapshot chưa publish.
+- Thêm command load lại database và so payload SHA-256 với archive.
+- Năm test mới đang PENDING; suite mục tiêu 145.
+
+## Next exact action hiện tại
+
+Xác minh 145/145 rồi chạy `item-seed-db-verify` trên Windows. Không nối runtime trước khi database payload khớp SHA-256 candidate.
