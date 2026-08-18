@@ -557,3 +557,16 @@ Xác minh 92/92 rồi thiết kế validator và kế hoạch import seed ITEM c
 ## Next exact action hiện tại
 
 Xác minh 96/96 rồi tạo generator seed ITEM có output xác định và manifest đi kèm. Chưa import MariaDB cho đến khi artifact seed được người dùng phê duyệt.
+
+## Checkpoint ITEM seed artifact generator
+
+- Người dùng xác nhận 96/96 test thành công; ITEM seed validator: VERIFIED.
+- Generator tạo payload `.bin` theo codec thật và manifest văn bản xác định.
+- Không ghép tên/mô tả thành SQL; Unicode chỉ nằm trong payload codec.
+- Artifact tự kiểm định và trả defensive copy.
+- Database vẫn chưa thay đổi; V002 chưa chạy.
+- Bốn test mới đang PENDING; suite mục tiêu 100.
+
+## Next exact action hiện tại
+
+Xác minh 100/100 rồi tạo parser manifest và JDBC importer dùng transaction/prepared statement. Chưa thực thi importer trên database thật.
