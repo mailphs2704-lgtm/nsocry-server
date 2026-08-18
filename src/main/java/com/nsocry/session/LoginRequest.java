@@ -2,7 +2,7 @@ package com.nsocry.session;
 
 import java.util.Objects;
 
-/** Decoded login data whose string representation always redacts password and client token. */
+/** Dữ liệu đăng nhập đã giải mã; biểu diễn chuỗi luôn che mật khẩu và client token. */
 public final class LoginRequest {
     private final String username;
     private final String password;
