@@ -123,3 +123,19 @@ V002, kiểm tra data type, unsigned và NOT NULL; cột thiếu, thừa, trùng
 
 Preflight không chạy migration và không tự gọi importer. Khi V002 chưa chạy, kết quả
 hợp lệ là report liệt kê các cột thiếu; đây không phải lý do để tự động sửa schema.
+
+## Checkpoint V002 cục bộ
+
+- Backup trước migration: 2960 byte.
+- Backup SHA-256: `021575bfed0d4a34e751c68df1b489e4d8aefeef0e51c4a4a7b7fa00716c1348`.
+- Preflight trước V002: NOT_READY với đủ 12 cột thiếu.
+- V002 chạy thành công trên database NSOCry cục bộ.
+- Preflight sau V002: READY, `databaseChanged=false` riêng cho lần kiểm tra.
+- Chưa import seed tại checkpoint này.
+
+## Interactive import guard
+
+Command `item-seed-import <archive-path>` đọc và kiểm định archive trước, yêu cầu schema
+READY rồi bắt người vận hành nhập lại toàn bộ SHA-256. Chỉ sau khi checksum khớp mới gọi
+transactional importer. Command không chạy migration và sau import vẫn in
+`runtimeSnapshotPublished=false`.
