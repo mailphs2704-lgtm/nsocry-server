@@ -293,3 +293,43 @@ The first NSOCry source checkpoint is now VERIFIED both in Work static/manual ch
 ### Next exact action
 
 Proceed with TCP session skeleton and explicit handshake state machine.
+
+
+## 2026-08-18 — Autonomous protocol/session/TCP continuation
+
+### Authorization boundary
+
+Người dùng yêu cầu tiếp tục các công việc có thể làm độc lập trong lúc vắng mặt. Không có quyết định gameplay/database nào được tự đặt; không chạy NSOKISS và không sửa JAR V7.
+
+### Implemented
+
+- Explicit atomic `HandshakeStateMachine` với terminal/idempotent close.
+- `ProtocolLimits`, bounded `LegacyFrameReader` và synchronized `LegacyFrameWriter`.
+- `LegacySessionTransport`: validate trigger rỗng -27, gửi key, bật cipher hai chiều độc lập và deterministic close.
+- CLIENT_INFO decoder theo đúng byte order client V7.
+- LOGIN decoder và `LoginRequest.toString()` redaction cho password/token.
+- `AuthenticationPort`/decision/event và `HandshakeProcessor`, chưa phụ thuộc database.
+- Bounded `TcpServer`: backlog, max sessions, zero-capacity handoff, read timeout, TCP no-delay/keepalive, named threads và graceful shutdown.
+- `NetworkEventSink` để không nuốt lỗi mạng.
+- Package documentation: `docs/packages/protocol-session.md`.
+
+### Verification in Work environment
+
+- 23 main class files compile bằng `--release 17`.
+- Legacy-name scan trên source/pom: no matches.
+- Manual session transport verification: PASSED.
+- Manual CLIENT_INFO/LOGIN decode and secret-redaction verification: PASSED.
+- Manual TCP loopback accept/shutdown verification: PASSED.
+- Automated suite mở rộng từ 3 lên dự kiến 15 tests; cần user pull và chạy Maven để xác nhận chính thức.
+
+### Commits
+
+- State machine: `05b61e0771a2b8099d8bfedf3e78f3ec6711a317`.
+- Bounded session transport: `be0ec617b6570bdc019e96905dc4efbe0f7837d7`.
+- Safe payload decoding: `079243eac955ec795f4e9f1237484d4e6e6748a2`.
+- Handshake orchestration: `776409d71c146c3a0b2d50a45a864b41331e7813`.
+- TCP acceptor: `8a46b5841378c567c77362451c6e198910f2dc77`.
+
+### Next exact action
+
+Wire accepted socket to transport/processor with a secure key-provider port and loopback handshake integration test. Fake authentication only; no database/gameplay.
