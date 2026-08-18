@@ -53,13 +53,20 @@ public final class ItemAssetSeedArchiveService {
     /** Đọc, kiểm định archive và trả metadata; không mở JDBC connection. */
     public ItemAssetValidationResult dryRun(Path archive)
             throws IOException, ItemAssetSeedValidationException {
+        return readValidated(archive).validation();
+    }
+
+    /** Đọc archive đã kiểm định để command import nhận payload/manifest bất biến. */
+    public ValidatedItemAssetSeedArchive readValidated(Path archive)
+            throws IOException, ItemAssetSeedValidationException {
         Objects.requireNonNull(archive, "archive");
         Map<String, byte[]> entries = readEntries(archive);
         byte[] payload = requireEntry(entries, PAYLOAD_ENTRY);
         String manifestText = new String(requireEntry(entries, MANIFEST_ENTRY), StandardCharsets.UTF_8);
         ItemAssetSeedManifest manifest = ItemAssetSeedManifestParser.parse(manifestText);
         ItemAssetBundle bundle = ItemAssetCodec.decode(payload);
-        return ItemAssetSeedValidator.validate(bundle, manifest);
+        ItemAssetValidationResult validation = ItemAssetSeedValidator.validate(bundle, manifest);
+        return new ValidatedItemAssetSeedArchive(payload, manifestText, validation);
     }
 
     /** Ghi một zip entry với timestamp cố định để output không phụ thuộc đồng hồ máy. */
