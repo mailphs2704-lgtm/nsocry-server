@@ -580,6 +580,7 @@ Xác minh 100/100 rồi tạo parser manifest và JDBC importer dùng transactio
 - Importer không tự chạy V002, tăng version hoặc publish runtime snapshot.
 - Database thật vẫn chưa thay đổi.
 - Năm test mới đang PENDING; suite mục tiêu 105.
+- Lần chạy đầu: 104 pass, 1 failure do test so sánh sai wrapper `Integer`/`Short` cho `part_id=-1`; assertion đã sửa, production importer không đổi.
 
 ## Next exact action hiện tại
 
