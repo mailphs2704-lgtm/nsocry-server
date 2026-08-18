@@ -33,7 +33,8 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Schema account V001 và authentication service không phụ thuộc JDBC đã được viết.
 - Authentication và JdbcAccountRepository đã VERIFIED 32/32.
 - MariaDB composition đã VERIFIED 36/36.
-- Công cụ tạo administrator đầu tiên đã được viết; đang chờ xác minh 40 test.
+- Công cụ tạo administrator đầu tiên đã VERIFIED 40/40.
+- Executable uber-JAR và launcher server/create-admin/help đã được thêm; đang chờ mvn package và 44 test.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
 
