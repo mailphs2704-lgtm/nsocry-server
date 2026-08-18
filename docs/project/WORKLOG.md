@@ -922,3 +922,23 @@ Xác minh 85 test rồi tạo source ports/builder orchestration, không nối t
 ### Next exact action
 
 Xác minh 89 test rồi thiết kế JDBC adapter theo schema NSOCry, bắt đầu từ ITEM; không truy vấn database reference và không nối JDBC vào session.
+
+## 2026-08-18 — Xác minh 89 test và JDBC ITEM source
+
+### VERIFIED
+
+- Người dùng chạy 89 test: 0 failure, 0 error, 0 skipped.
+- Năm source port và build orchestration đều được kiểm chứng.
+
+### Đã triển khai tiếp
+
+- Migration V002 tạo hai read-model table ITEM mới, không chứa inventory gameplay.
+- `JdbcItemAssetSource` đọc option/template bằng transaction read-only repeatable-read.
+- Adapter bắt buộc ID liên tục từ 0 vì client dùng vị trí danh sách làm ID.
+- Mọi trường số được kiểm tra trước khi thu hẹp sang byte/short.
+- Lỗi JDBC hoặc dữ liệu lệch contract được bọc thành source error, làm snapshot cũ được giữ lại.
+- Ba unit test bằng JDBC proxy; không mở database thật. Suite mục tiêu 92.
+
+### Next exact action
+
+Xác minh 92 test, sau đó tạo validator/import plan cho seed ITEM; chưa chạy V002 hoặc nhập dữ liệu khi chưa có checkpoint backup và count/checksum.
