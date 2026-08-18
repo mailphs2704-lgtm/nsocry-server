@@ -1139,6 +1139,27 @@ Xác minh 135 test rồi package và chạy preflight trên database NSOCry hi�
 
 Xác minh 140 test rồi package; chỉ sau đó mới xin xác nhận cuối và chạy interactive import candidate đã VERIFIED_CROSS_PLATFORM.
 
+## 2026-08-18 — Xác minh 140 test và import ITEM local
+
+### VERIFIED
+
+- Người dùng chạy 140 test: 0 failure, 0 error, 0 skipped.
+- Người dùng xác nhận rõ `ĐỒNG Ý IMPORT ITEM` sau backup/schema/count preflight.
+- Interactive import thành công: 161 option, 1213 item, đúng candidate SHA-256.
+- SQL post-check: option ID 0–160, item ID 0–1212, 431 upgradable.
+- Runtime snapshot chưa publish.
+
+### Đã triển khai tiếp
+
+- Command `item-seed-db-verify` load lại JDBC source và dựng payload end-to-end.
+- Schema phải READY và payload phải khớp manifest candidate.
+- Command chỉ đọc database, không publish runtime.
+- Bốn verification test và một launcher parser test; suite mục tiêu 145.
+
+### Next exact action
+
+Xác minh 145 test rồi package và chạy database payload verify trên Windows. Chỉ sau checksum match mới nối ITEM source vào snapshot bootstrap.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
