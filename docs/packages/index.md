@@ -10,8 +10,8 @@
 
 | Module | Trách nhiệm | Dependency chính | Trạng thái |
 |---|---|---|---|
-| bootstrap | Startup, shutdown và lifecycle | Các contract ứng dụng | next |
-| configuration | Đọc và kiểm tra config | Không phụ thuộc gameplay | next |
+| com.nsocry.bootstrap | Startup, shutdown và composition root | configuration/network/session | active |
+| com.nsocry.configuration | Đọc và kiểm tra config | network config | active |
 | persistence | DB, transaction và repository | MariaDB driver | proposed |
 | com.nsocry.protocol.compat | Key, frame và stream compatibility | Java I/O | active |
 | com.nsocry.session | Handshake state, payload decode và auth port | protocol.compat | active |
@@ -22,10 +22,11 @@
 | world | Map, zone, mob và NPC | game-data/player | pending |
 | scheduler | Periodic jobs | application contracts | pending |
 | administration | Maintenance/admin use cases | application | pending |
-| observability | Log, metrics và trace | cross-cutting | next |
+| com.nsocry.observability | Sự kiện runtime đã làm sạch | network event port | active |
 
 ## Tài liệu đang hoạt động
 
 - [Protocol và session](protocol-session.md)
 - [Tra cứu source protocol, session và network](../code-reference/protocol-session-network.md)
 - [Chuẩn documentation](../development/documentation-standard.md)
+- [Bootstrap, configuration và observability](bootstrap-configuration-observability.md)
