@@ -202,3 +202,25 @@ Người dùng xác nhận NSOKISS hiện đang chạy tốt. Từ checkpoint n�
 ### Next exact action
 
 Tạo protocol fixture deterministic đầu tiên cho trigger, key, rolling XOR, CLIENT_INFO, LOGIN, CLIENT_OK, SELECT_PLAYER và full-size `-32`; sau đó mới chốt skeleton server NSOCry.
+
+
+## 2026-08-18 — Protocol fixture v1
+
+### Đã làm
+
+- Tạo `docs/protocol/fixtures/handshake-login-v1.json`.
+- Dùng key tổng hợp `CryTestKey`, tài khoản/mật khẩu giả và tên nhân vật `CryNinja`.
+- Ghi cả plain frame và encrypted frame cho CLIENT_INFO, LOGIN, CLIENT_OK và SELECT_PLAYER.
+- Ghi trigger/key response và vector server→client full-size `-32` với payload 32 KiB.
+- Đọc lại artifact từ GitHub và parse JSON thành công.
+
+### Kết quả VERIFIED
+
+- Cursor client→server sau bốn frame lần lượt: 6, 2, 6, 0.
+- Full-size encrypted frame dài 32.773 byte.
+- SHA-256 full-size vector: `40e7b93f17d5318417174f2f5ce321e1b2078cd7e2420f24e91073a772fe278c`.
+- Commit fixture: `a350776316aa5086cfa3d7b087b116a9f33e3a55`.
+
+### Next exact action
+
+Chốt Java/build/module skeleton và tạo codec tests đọc fixture này. Chưa kết nối database hoặc gameplay.
