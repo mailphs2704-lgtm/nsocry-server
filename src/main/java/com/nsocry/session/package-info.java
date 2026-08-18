@@ -1,7 +1,7 @@
 /**
- * Defines connection bootstrap state, client handshake decoding and ports used
- * to obtain session keys and authenticate accounts.
+ * Định nghĩa trạng thái khởi tạo kết nối, giải mã handshake của client và các
+ * cổng giao tiếp dùng để cấp khóa phiên, xác thực tài khoản.
  *
- * <p>The package coordinates protocol behavior without depending on persistence.</p>
+ * <p>Package điều phối protocol nhưng không phụ thuộc vào tầng lưu trữ.</p>
  */
 package com.nsocry.session;
