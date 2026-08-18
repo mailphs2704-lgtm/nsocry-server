@@ -12,7 +12,7 @@ import java.util.Objects;
 /** Mã hóa và parse kiểm chứng payload ITEM theo byte layout của client V7. */
 public final class ItemAssetCodec {
     private static final int MAX_OPTIONS = 255;
-    private static final int MAX_ITEMS = 65_535;
+    private static final int MAX_ITEMS = 32_767;
 
     private ItemAssetCodec() {
     }
@@ -56,7 +56,10 @@ public final class ItemAssetCodec {
             for (int index = 0; index < optionCount; index++) {
                 options.add(new ItemOptionAsset(input.readUTF(), input.readByte()));
             }
-            int itemCount = input.readUnsignedShort();
+            int itemCount = input.readShort();
+            if (itemCount < 0) {
+                throw new IOException("item count is negative");
+            }
             List<ItemTemplateAsset> items = new ArrayList<>(itemCount);
             for (int index = 0; index < itemCount; index++) {
                 items.add(new ItemTemplateAsset(
