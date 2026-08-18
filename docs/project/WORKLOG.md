@@ -573,3 +573,25 @@ Pull và chạy mvn test; sau 36/36 mới tạo công cụ bootstrap account và
 ### Next exact action
 
 Viết account bootstrap command an toàn và unit test repository insert trước khi yêu cầu chạy migration/database thật.
+
+
+## 2026-08-18 — Công cụ tạo administrator đầu tiên
+
+### Đã triển khai
+
+- Domain role và provisioning port tách khỏi JDBC.
+- FirstAdministratorService kiểm tra one-time guard, username, password và tạo hash.
+- JdbcAccountProvisioningRepository đếm/insert bằng prepared statement và lấy generated key.
+- Command tương tác không nhận password qua args, yêu cầu nhập hai lần và xóa password trong mọi nhánh.
+- Javadoc và tài liệu vận hành tiếng Việt.
+- Bốn test service; mục tiêu suite 40.
+
+### Kiểm chứng
+
+- MariaDB composition trước đó VERIFIED 36/36.
+- Provisioning source mới PENDING.
+- Chưa chạy migration hoặc kết nối database thật.
+
+### Next exact action
+
+Pull và chạy mvn test; sau 40/40 mới đóng gói lệnh vận hành và hướng dẫn tạo database nsocry cục bộ.
