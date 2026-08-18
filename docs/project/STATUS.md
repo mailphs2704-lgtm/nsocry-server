@@ -41,7 +41,7 @@
 
 ## Đang thực hiện
 
-Protocol bootstrap đã có source và tests. Bước kế tiếp là TCP session skeleton + explicit handshake state machine. PR #1 vẫn là Draft và chưa merge.
+Protocol bootstrap đã có codec, payload decoder, state machine, bounded session transport và TCP acceptor. Bước kế tiếp là wiring end-to-end loopback. PR #1 vẫn là Draft và chưa merge.
 
 ## Chưa thực hiện
 
@@ -65,7 +65,8 @@ Protocol bootstrap đã có source và tests. Bước kế tiếp là TCP sessio
 - [ ] Thiết kế schema `nsocry`, migration và seed.
 - [ ] Thiết kế logging/config/error handling.
 - [x] Tạo build skeleton, key/cipher/frame codec và fixture-based protocol tests.
-- [ ] Viết TCP session skeleton và explicit handshake state machine.
+- [x] Viết explicit handshake state machine, bounded stream transport và TCP acceptor lifecycle.
+- [ ] Wire TCP socket vào handshake processor và loopback integration test.
 - [ ] Kết nối client thật.
 
 ## Naming policy đang hiệu lực
@@ -146,6 +147,19 @@ Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người d
 - User-machine verification: Java 19.0.2 compiling with release 17; Maven test BUILD SUCCESS.
 - Maven/JUnit suite đã chạy trên máy Windows người dùng: 3 tests, 0 failures, 0 errors, 0 skipped, BUILD SUCCESS.
 
+## Session/TCP checkpoint
+
+- Explicit phases: CONNECTED → KEY_SENT → CLIENT_INFO_RECEIVED → LOGIN_PENDING → AUTHENTICATED → CLOSED.
+- Login rejection quay lại CLIENT_INFO_RECEIVED để có thể retry.
+- Bounded streaming reader/writer; client→server full-size bị từ chối.
+- CLIENT_INFO decoder dùng đúng byte+int order của V7.
+- LOGIN object redacts password/client token khỏi `toString()`.
+- Authentication là port, chưa nối database.
+- TCP acceptor có max sessions, zero-capacity handoff, read timeout, named threads và graceful shutdown.
+- Network failure/rejection được đưa qua event sink, không bị nuốt im lặng.
+- Work compile: 23 main class files; manual session/payload/TCP loopback checks PASSED.
+- Test source dự kiến sau pull: 15 tests; cần người dùng chạy lại `mvn test`.
+
 ## Next exact action
 
-Tạo TCP session skeleton với explicit states: CONNECTED → KEY_SENT → CLIENT_INFO → LOGIN → AUTHENTICATED. Dùng codec hiện tại, giới hạn frame, deterministic close/error và không log credential. Chưa kết nối database/gameplay.
+Wire accepted socket → `LegacySessionTransport` → `HandshakeProcessor`, thêm secure key-provider port và integration test trigger → CLIENT_INFO → LOGIN trên loopback. Dùng fake authentication; chưa kết nối database/gameplay.
