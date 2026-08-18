@@ -24,7 +24,8 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Bản đồ runtime đầu tiên đã được viết tại [architecture/nsokiss-runtime.md](architecture/nsokiss-runtime.md).
 - Draft PR đang dùng cho bộ tài liệu nền tảng: PR #1.
 - Chưa bắt đầu viết server NSOCry.
-- Bước kỹ thuật tiếp theo: lập inventory command từ `CMD.java`, đối chiếu `Controller.java`, sau đó mô tả handshake và login.
+- Command inventory, handshake/login server-side và đối chiếu tĩnh client JAR đã hoàn thành.
+- Bước kỹ thuật tiếp theo: tạo protocol fixture deterministic đầu tiên; sau đó chốt skeleton server NSOCry.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
 
@@ -37,6 +38,7 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 5. Không viết module mới trước khi protocol/dependency cần thiết đã được hiểu.
 6. Mỗi thay đổi code phải cập nhật documentation và worklog.
 7. Không tự quyết gameplay hoặc business rule chưa được người dùng mô tả.
+8. Không build/run/test NSOKISS; người dùng đã xác nhận reference hiện chạy tốt. Chỉ phân tích tĩnh khi cần bằng chứng protocol.
 
 ## Lệnh bàn giao cho AI
 
