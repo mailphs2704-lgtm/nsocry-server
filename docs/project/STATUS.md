@@ -164,6 +164,21 @@ Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người d
 
 Wire accepted socket → `LegacySessionTransport` → `HandshakeProcessor`, thêm secure key-provider port và integration test trigger → CLIENT_INFO → LOGIN trên loopback. Dùng fake authentication; chưa kết nối database/gameplay.
 
+## Checkpoint codec nhân vật sau đăng nhập
+
+- Đã phân tích tĩnh trình tự `UPDATE_VERSION → CLIENT_OK → danh sách nhân vật` từ reference; không chạy NSOKISS.
+- Đã xác minh envelope `NOT_MAP (-28)` cùng bố cục byte cho danh sách, chọn và tạo nhân vật.
+- Đã thêm mô hình `CharacterSummary`, `CreateCharacterRequest` và codec chuyên trách trong namespace `com.nsocry.character`.
+- Decoder từ chối envelope sai, command sai và byte dư; codec chưa được nối vào runtime.
+- Blob `UPDATE_VERSION` vẫn UNKNOWN và là điều kiện cần trước khi client thật đi đến màn hình nhân vật.
+- Quy tắc tối đa nhân vật và quy tắc tên chưa được chốt vì reference không nhất quán và NSOCry chưa có đặc tả nghiệp vụ.
+- Bộ 6 test mới đang PENDING xác minh trên máy người dùng; mốc gần nhất vẫn là 44/44 VERIFIED.
+- Tài liệu: `docs/protocol/post-login-character-v1.md`.
+
+## Next exact action hiện tại
+
+Xác minh suite mục tiêu 50/50, sau đó phân tích tĩnh client V7 để chốt cách đọc blob `UPDATE_VERSION`; chưa tích hợp danh sách nhân vật vào session khi bước này còn UNKNOWN.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
