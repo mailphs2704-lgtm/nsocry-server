@@ -9,6 +9,7 @@ public record ItemAssetSeedManifest(
         byte version,
         int optionCount,
         int itemCount,
+        int payloadLength,
         String payloadSha256) {
 
     /** Kiểm tra count và chuẩn hóa SHA-256 về chữ thường. */
@@ -18,6 +19,9 @@ public record ItemAssetSeedManifest(
         }
         if (itemCount < 0 || itemCount > 32_767) {
             throw new IllegalArgumentException("itemCount ngoài giới hạn wire");
+        }
+        if (payloadLength < 0) {
+            throw new IllegalArgumentException("payloadLength không được âm");
         }
         Objects.requireNonNull(payloadSha256, "payloadSha256");
         payloadSha256 = payloadSha256.toLowerCase(Locale.ROOT);
