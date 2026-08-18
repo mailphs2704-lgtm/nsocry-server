@@ -1251,6 +1251,26 @@ Xác minh 160 test rồi xây full SKILL converter/read-model candidate và fixt
 
 Xác minh 165 test rồi thêm command đóng gói convert/dry-run SKILL và kiểm tra checksum chéo Windows.
 
+## 2026-08-18 — Xác minh 165 và khóa checkpoint bàn giao
+
+### VERIFIED
+
+- Người dùng chạy 165 test: 0 failure, 0 error, 0 skipped.
+- Full SKILL converter, structural validation và codec round-trip: VERIFIED.
+
+### Trạng thái an toàn
+
+- Không chạy V003.
+- Không import SKILL.
+- Không thay đổi database hoặc runtime snapshot.
+- Candidate v26 vẫn là 42402 byte, SHA-256 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+
+### Next exact action
+
+Tạo command `skill-seed-convert` và `skill-seed-dry-run` theo mẫu pipeline ITEM,
+thêm năm test để suite mục tiêu 170. Chỉ sau khi người dùng xác nhận 170/170 mới
+chạy hai command trên Windows; chưa được chạy V003 hoặc import dữ liệu.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
