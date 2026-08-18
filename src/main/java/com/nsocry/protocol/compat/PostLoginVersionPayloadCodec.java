@@ -54,4 +54,14 @@ public final class PostLoginVersionPayloadCodec {
             Arrays.fill(payload, (byte) 0);
         }
     }
+
+    /** Tạo response cho một bộ dữ liệu; payload đã gồm byte phiên bản ở đầu. */
+    public static ProtocolFrame encodeDataResponse(ClientDataSet dataSet, byte[] dataPayload) {
+        Objects.requireNonNull(dataSet, "dataSet");
+        Objects.requireNonNull(dataPayload, "dataPayload");
+        byte[] payload = new byte[dataPayload.length + 1];
+        payload[0] = dataSet.requestCommand();
+        System.arraycopy(dataPayload, 0, payload, 1, dataPayload.length);
+        return new ProtocolFrame(NOT_MAP_ENVELOPE, payload);
+    }
 }
