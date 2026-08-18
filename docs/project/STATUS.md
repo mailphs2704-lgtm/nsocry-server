@@ -241,3 +241,18 @@ Thiết kế migration đầu tiên cho database nsocry và contract authenticat
 ## Next exact action hiện tại
 
 Tạo PasswordHashingPort, AccountRepository port và AuthenticationService bằng fake repository; chọn password hashing theo ADR trước khi viết JDBC adapter.
+
+
+## Checkpoint authentication domain/service
+
+- Đã thêm AccountCredential, AccountStatus và AccountRepository port.
+- Đã thêm PasswordHashingPort và Pbkdf2PasswordHasher thuần Java 17.
+- Đã thêm AuthenticationService triển khai AuthenticationPort.
+- Password tạm được xóa trong finally; username thiếu dùng dummy-hash verification; client chỉ nhận quyết định REJECTED chung.
+- ADR-0007 chốt PBKDF2-HMAC-SHA256, mặc định 600.000 vòng, salt 16 byte và hash 256 bit.
+- Đã thêm 6 test; tổng mục tiêu 29.
+- Trạng thái: PENDING vì Java source mới đã được thêm.
+
+## Next exact action hiện tại
+
+Người dùng pull và chạy mvn test. Nếu 29/29 thành công, ghi VERIFIED rồi triển khai JdbcAccountRepository cùng cấu hình kết nối database nsocry; không dùng database reference.
