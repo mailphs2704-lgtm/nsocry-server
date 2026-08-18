@@ -1040,6 +1040,26 @@ Xác minh 110 test rồi thiết kế bộ chuyển đổi dữ liệu ITEM tham
 
 Xác minh 115 test rồi tạo parser nguồn xác định cho hai bảng ITEM trong dump được cung cấp và sinh conversion report thực tế; chưa ghi database.
 
+## 2026-08-18 — Xác minh 115 test và parse ITEM dump thực tế
+
+### VERIFIED
+
+- Người dùng chạy 115 test: 0 failure, 0 error, 0 skipped.
+- ITEM reference converter và difference report: VERIFIED.
+
+### Đã triển khai/chạy offline
+
+- Parser giới hạn đúng hai INSERT `item_option`/`item`, hỗ trợ quote, backslash và Unicode.
+- Năm parser test mới; suite mục tiêu 120.
+- Main source compile thành công Java 17.
+- Chạy read-only trên dump được cung cấp: 161 option, 1213 item, 431 upgradable, 79 fashion difference.
+- Candidate payload: 66811 byte; SHA-256 `abb320fb8a940fc28c49c6d0c5b84e09e83d28248130884881845b9dd5bea6f8`.
+- Không kết nối MariaDB, không chạy V002 và không ghi seed.
+
+### Next exact action
+
+Xác minh 120 test rồi thêm launcher command chuyển dump thành candidate archive và kiểm tra checksum tái lập trên Windows.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
