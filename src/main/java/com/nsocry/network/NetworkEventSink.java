@@ -3,7 +3,7 @@ package com.nsocry.network;
 import java.io.IOException;
 import java.net.SocketAddress;
 
-/** Receives sanitized listener and session lifecycle failures without coupling networking to a logger. */
+/** Nhận sự kiện lỗi đã được làm sạch từ listener và phiên mà không ràng buộc tầng mạng với công cụ log. */
 public interface NetworkEventSink {
     void sessionFailed(SocketAddress remoteAddress, Exception failure);
 
