@@ -1,6 +1,6 @@
 package com.nsocry.session;
 
-/** Ordered lifecycle phases for the connection and login bootstrap. */
+/** Các giai đoạn theo thứ tự của vòng đời kết nối và khởi tạo đăng nhập. */
 public enum SessionPhase {
     CONNECTED,
     KEY_SENT,
