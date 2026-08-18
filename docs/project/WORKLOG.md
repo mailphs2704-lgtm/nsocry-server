@@ -415,3 +415,27 @@ Pull the branch and run `mvn test`. After 16/16 pass, record the result and cont
 ### Next exact action
 
 Triển khai application bootstrap tối thiểu với cấu hình TCP được kiểm tra, SecureRandomSessionKeyProvider và NetworkEventSink làm sạch; chưa kết nối database/gameplay.
+
+
+## 2026-08-18 — Bootstrap, cấu hình và observability
+
+### Đã triển khai
+
+- Thêm ServerConfiguration với namespace property nsocry, mặc định rõ ràng và giới hạn số.
+- Thêm ServerConfigurationLoader đọc file an toàn hoặc dùng mặc định khi file chưa tồn tại.
+- Thêm SanitizedNetworkEventSink chỉ xuất mã sự kiện, địa chỉ và loại exception; không xuất exception message/stack trace/payload/credential.
+- Thêm NsocryServerApplication làm composition root, shutdown hook và main class.
+- Authentication mặc định trả REJECTED; chưa kết nối database/gameplay.
+- Thêm file config/nsocry.properties.example.
+- Cấu hình maven-jar-plugin với main class NSOCry.
+- Thêm 7 test cho configuration, log sanitization và application lifecycle.
+
+### Kiểm chứng
+
+- Bộ 16 test trước vẫn VERIFIED.
+- Source và pom.xml đã thay đổi nên checkpoint mới là PENDING.
+- Mục tiêu Maven sau pull: 23 test, 0 failure, 0 error.
+
+### Next exact action
+
+Người dùng chạy mvn test. Sau khi 23/23 VERIFIED, bắt đầu schema nsocry tối thiểu và authentication adapter.
