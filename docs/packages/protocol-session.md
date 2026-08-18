@@ -10,6 +10,7 @@ This package checkpoint implements only the verified connection/bootstrap behavi
 |---|---|
 | `com.nsocry.protocol.compat` | Exact legacy-client wire compatibility: key delta, rolling XOR, frame encode/decode, bounded stream I/O |
 | `com.nsocry.session` | Explicit handshake phases, payload decoding, authentication port and deterministic transport close |
+| `com.nsocry.network` | Bounded TCP acceptor, socket options, named session ownership and event port |
 
 The compatibility package must not contain gameplay or persistence logic. New internal services must not depend on obfuscated/reference class names.
 
@@ -47,6 +48,13 @@ A rejected login returns from `LOGIN_PENDING` to `CLIENT_INFO_RECEIVED`, allowin
 - `AuthenticationPort`: boundary for the future account/authentication module.
 - `HandshakeProcessor`: orders CLIENT_INFO and LOGIN without database coupling.
 
+### TCP lifecycle
+
+- `TcpServerConfig`: bind address, backlog, maximum concurrent sessions, read timeout and shutdown timeout.
+- `TcpServer`: loopback/real bind, named accept/session threads, zero-capacity handoff, overload rejection and graceful close.
+- `SessionConnectionHandler`: application boundary for each accepted socket.
+- `NetworkEventSink`: explicit sanitized failure/rejection reporting; network exceptions are not silently swallowed.
+
 ## Security properties at this checkpoint
 
 - Frame sizes are bounded before streaming payload allocation.
@@ -68,14 +76,16 @@ The test suite currently covers:
 6. trigger → key → encrypted client frame;
 7. exact CLIENT_INFO byte/int order;
 8. LOGIN reserved fields and secret redaction;
-9. trigger → CLIENT_INFO → accepted LOGIN processor flow.
+9. trigger → CLIENT_INFO → accepted LOGIN processor flow;
+10. loopback TCP accept and graceful shutdown.
 
-Expected total after the next pull: 14 tests.
+Expected total after the next pull: 15 tests.
 
 ## Not implemented yet
 
-- production `ServerSocket` accept loop;
-- session/thread ownership and backpressure policy;
+- application bootstrap/main entry point;
+- wiring accepted sockets into `LegacySessionTransport`/`HandshakeProcessor`;
+- production observability implementation for `NetworkEventSink`;
 - secure key generation policy;
 - login attempt rate limiting;
 - account database adapter and password hashing;
@@ -85,4 +95,4 @@ Expected total after the next pull: 14 tests.
 
 ## Next exact action
 
-Add a minimal TCP acceptor around `LegacySessionTransport` with bounded active sessions, read timeout, named thread ownership and graceful shutdown. Use a fake authentication adapter in tests; do not connect the database yet.
+Wire each accepted socket into `LegacySessionTransport` and `HandshakeProcessor` using a secure key-provider port and fake authentication adapter. Add an integration test for trigger → CLIENT_INFO → LOGIN over loopback TCP. Do not connect the database yet.
