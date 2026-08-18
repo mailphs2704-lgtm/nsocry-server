@@ -661,3 +661,17 @@ Xác minh 130/130 rồi thêm command schema preflight chỉ đọc. Sau đó m�
 ## Next exact action hiện tại
 
 Xác minh 135/135 rồi chạy preflight read-only trên database NSOCry. Chỉ sau report mới lập lệnh backup và xin xác nhận riêng cho V002.
+
+## Checkpoint interactive ITEM seed import guard
+
+- Người dùng xác nhận 135/135 test thành công.
+- Backup 2960 byte và SHA-256 đã ghi nhận trước migration.
+- V002 local: VERIFIED bằng schema preflight READY.
+- Command import yêu cầu validated archive + schema READY + full SHA-256 confirmation.
+- Importer không publish runtime snapshot.
+- Năm test mới đang PENDING; suite mục tiêu 140.
+- Seed thật vẫn chưa import.
+
+## Next exact action hiện tại
+
+Xác minh 140/140 rồi package và xin xác nhận cuối trước khi chạy `item-seed-import`. Không tự chạy command ghi dữ liệu.
