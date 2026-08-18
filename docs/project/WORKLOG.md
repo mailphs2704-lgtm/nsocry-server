@@ -536,3 +536,25 @@ Viết JdbcAccountRepository dựa trên DataSource, prepared statement và lỗ
 ### Next exact action
 
 Pull và chạy mvn test; sau 32/32 mới ghép MariaDB DataSource/configuration vào bootstrap.
+
+
+## 2026-08-18 — Ghép MariaDB vào bootstrap
+
+### Đã triển khai
+
+- MariaDB Connector/J 3.5.10.
+- DatabaseConfiguration/Loader với environment override và password redaction.
+- MariaDbDataSourceFactory dùng driver chính thức.
+- Composition root tạo repository, password hasher và AuthenticationService trước khi start TCP.
+- File properties mẫu chỉ nêu tên NSOCRY_DB_PASSWORD, không chứa secret.
+- Bốn test cấu hình mới; mục tiêu suite 36.
+
+### Kiểm chứng
+
+- JdbcAccountRepository trước đó VERIFIED 32/32.
+- Source/pom mới PENDING cho đến khi người dùng chạy Maven.
+- Unit test không mở kết nối database thật.
+
+### Next exact action
+
+Pull và chạy mvn test; sau 36/36 mới tạo công cụ bootstrap account và kiểm tra migration nsocry cục bộ.
