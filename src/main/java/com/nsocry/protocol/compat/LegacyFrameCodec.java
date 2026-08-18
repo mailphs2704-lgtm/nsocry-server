@@ -11,6 +11,7 @@ public final class LegacyFrameCodec {
     private LegacyFrameCodec() {
     }
 
+    /** Tạo frame ngắn, tùy chọn áp dụng cipher và từ chối payload vượt giới hạn unsigned-short. */
     public static byte[] encodeShortFrame(byte command, byte[] payload, RollingXorCipher cipher) {
         if (payload.length > 0xFFFF) {
             throw new IllegalArgumentException("short frame payload exceeds 65535 bytes");
@@ -21,6 +22,7 @@ public final class LegacyFrameCodec {
         return cipher == null ? frame : cipher.transform(frame);
     }
 
+    /** Tạo frame kích thước đầy đủ dùng command đặc biệt và trường độ dài int. */
     public static byte[] encodeFullSizeFrame(byte[] payload, RollingXorCipher cipher) {
         ByteBuffer buffer = ByteBuffer.allocate(5 + payload.length).order(ByteOrder.BIG_ENDIAN);
         buffer.put(FULL_SIZE_COMMAND).putInt(payload.length).put(payload);
@@ -28,6 +30,7 @@ public final class LegacyFrameCodec {
         return cipher == null ? frame : cipher.transform(frame);
     }
 
+    /** Giải mã một frame hoàn chỉnh trong bộ nhớ và kiểm tra độ dài payload khớp header. */
     public static ProtocolFrame decodeFrame(byte[] wire, RollingXorCipher cipher) {
         if (wire == null || wire.length < 3) {
             throw new IllegalArgumentException("frame is too short");
