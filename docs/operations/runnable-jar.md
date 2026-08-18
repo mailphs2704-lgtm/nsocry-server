@@ -23,6 +23,7 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar ... item-seed-convert &lt;dump-path&gt; | Chuyển hai bảng ITEM trong dump thành candidate archive cạnh file nguồn |
 | java -jar ... item-schema-preflight [config-path] | Chỉ đọc information_schema và báo V002 READY/NOT_READY |
 | java -jar ... item-seed-import &lt;archive-path&gt; | Import tương tác sau validation, schema READY và xác nhận đủ SHA-256 |
+| java -jar ... item-seed-db-verify &lt;archive-path&gt; | Load lại DB, dựng ITEM payload và so checksum candidate |
 
 Không có argument sẽ in help. Command lạ hoặc quá nhiều argument bị từ chối.
 
@@ -96,3 +97,7 @@ khi transaction ghi bắt đầu.
 
 Không chạy command này trước khi suite mục tiêu của checkpoint được VERIFIED và backup
 đã có size/checksum. Import thành công chưa tự publish runtime snapshot.
+
+Sau import, `item-seed-db-verify` dùng cùng archive làm nguồn sự thật để xác minh dữ
+liệu database có tái tạo đúng payload. Kết quả thành công vẫn in
+`databaseChanged=false` và `runtimeSnapshotPublished=false`.
