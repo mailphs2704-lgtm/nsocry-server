@@ -4,6 +4,7 @@ import com.nsocry.protocol.compat.ProtocolFrame;
 import java.io.IOException;
 import java.util.Objects;
 
+/** Orchestrates handshake messages according to session state without database coupling. */
 public final class HandshakeProcessor {
     private final LegacySessionTransport transport;
     private ClientInfo clientInfo;
