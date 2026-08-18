@@ -4,110 +4,58 @@
 
 Tài liệu phải cho phép người dùng và AI mới hiểu hệ thống mà không đọc lại toàn bộ lịch sử chat hoặc reverse-engineer lại phần đã hoàn thành.
 
-## 2. Chuẩn tên và namespace
+## 2. Ngôn ngữ và độ phủ bắt buộc
 
-- Tên sản phẩm trong văn bản: `NSOCry`.
-- Dạng chữ thường cho namespace/artifact/database: `nsocry`.
-- Dạng ngắn: `Cry`/`cry` khi tên đầy đủ không phù hợp.
-- Package root dự kiến của implementation: `com.nsocry`.
-- Cấm `nsoz` và `nsotien` trong source/config/schema/artifact mới.
-- Không giữ tên class/method cũ nếu trách nhiệm đã được tách hoặc đổi.
+- Javadoc, ghi chú trong source, tài liệu kỹ thuật, STATUS và WORKLOG phải viết bằng tiếng Việt.
+- Giữ nguyên tên package, class, method, command, protocol và thuật ngữ kỹ thuật cần thiết để tra cứu chính xác.
+- Mỗi package phải có package-info.java mô tả trách nhiệm và phần bị cấm.
+- Mỗi class, interface, record và enum phải có Javadoc mô tả vai trò.
+- Mỗi constructor, method công khai và helper nội bộ có logic phải có Javadoc mô tả mục đích, trạng thái hoặc lỗi quan trọng.
+- Mỗi thay đổi logic phải cập nhật Javadoc và tài liệu tra cứu trong cùng checkpoint.
+
+## 3. Chuẩn tên và namespace
+
+- Tên sản phẩm: NSOCry; namespace/artifact/database: nsocry; dạng ngắn: Cry/cry.
+- Package root: com.nsocry.
+- Cấm nsoz và nsotien trong source/config/schema/artifact mới.
 - Tên reference phải kèm ngữ cảnh NSOKISS/reference.
-- Review phải thực hiện legacy-name scan ngoài `source-reference/`.
+- Review phải quét legacy-name ngoài source-reference.
 
-## 3. Tài liệu cho package/module
+## 4. Tài liệu package/module
 
-Mỗi module cần:
+Mỗi module phải ghi: mục đích, phạm vi, phần không thuộc trách nhiệm, API, dependency, state/lifecycle, concurrency, database, protocol, lỗi, bảo mật, test và ADR liên quan.
 
-- Mục đích.
-- Phạm vi chịu trách nhiệm.
-- Điều không thuộc trách nhiệm.
-- Public API.
-- Dependency vào/ra.
-- State và lifecycle.
-- Threading/concurrency.
-- Database tables.
-- Protocol commands.
-- Error handling.
-- Security considerations.
-- Test/verification.
-- Các ADR liên quan.
+## 5. Tài liệu class và method
 
-## 4. Tài liệu cho class
+Mỗi class phải có đường dẫn, nhiệm vụ, lý do tồn tại, dependency, state sở hữu, API, lifecycle và rủi ro khi sửa.
 
-Mỗi class quan trọng cần:
-
-- Đường dẫn source và package.
-- Nhiệm vụ duy nhất/chính.
-- Lý do tồn tại.
-- Constructor/dependencies.
-- State sở hữu.
-- Method quan trọng.
-- Class gọi nó và class nó gọi.
-- Điều kiện lifecycle.
-- Rủi ro khi sửa.
-
-## 5. Tài liệu cho method/flow
-
-Với method có logic nghiệp vụ hoặc protocol:
+Mỗi method có logic phải ghi:
 
 | Trường | Nội dung |
 |---|---|
-| Location | file, class, method; dòng chỉ dùng như gợi ý vì có thể dịch chuyển |
-| Purpose | nhiệm vụ |
-| Preconditions | điều kiện trước |
-| Input | kiểu, đơn vị, encoding, nullable/range |
-| Output | return/message/state mutation |
-| Side effects | DB, socket, cache, global state |
-| Flow | các bước theo thứ tự |
-| Errors | lỗi và cách xử lý |
-| Dependencies | class/table/command liên quan |
-| Reasoning | vì sao thiết kế như vậy |
-| Verification | test/log/fixture |
-| Status | VERIFIED/PROPOSED/UNKNOWN |
+| Location | File, class và method; số dòng chỉ là gợi ý |
+| Purpose | Nhiệm vụ |
+| Preconditions | Điều kiện trước |
+| Input | Kiểu, encoding, nullable và phạm vi |
+| Output | Giá trị trả về, message hoặc state mutation |
+| Side effects | DB, socket, cache hoặc global state |
+| Flow | Các bước theo thứ tự |
+| Errors | Lỗi và cách xử lý |
+| Dependencies | Class, table hoặc command liên quan |
+| Reasoning | Lý do thiết kế |
+| Verification | Test, log hoặc fixture |
+| Status | VERIFIED, PROPOSED hoặc UNKNOWN |
 
-Không dựa duy nhất vào số dòng; luôn có symbol/method để tìm lại.
+## 6. Protocol và database
 
-## 6. Tài liệu protocol
+Mỗi command phải có giá trị, hướng truyền, phase hợp lệ, payload byte-level, handler, phản hồi, thay đổi state, lỗi, evidence, fixture và trạng thái xác minh.
 
-Mỗi command cần:
+Mỗi bảng phải có ownership, khóa, ý nghĩa cột, đơn vị/encoding/default/nullability, method đọc/ghi, transaction, migration/seed, dữ liệu nhạy cảm và khác biệt với schema reference.
 
-- Tên symbolic và giá trị.
-- Hướng truyền.
-- Giai đoạn session hợp lệ.
-- Payload byte-level theo thứ tự.
-- Điều kiện/variant theo client version.
-- Handler nhận.
-- Service phản hồi.
-- State thay đổi.
-- Lỗi/response.
-- Source evidence.
-- Fixture hoặc cách tái hiện.
-- Trạng thái xác minh.
+## 7. STATUS, WORKLOG và ADR
 
-## 7. Tài liệu database
-
-Mỗi bảng cần:
-
-- Mục đích.
-- Ownership module.
-- Primary key/unique/foreign key.
-- Ý nghĩa từng cột.
-- Đơn vị/encoding/default/nullability.
-- Method đọc/ghi.
-- Transaction boundary.
-- Migration/seed.
-- Dữ liệu nhạy cảm.
-- Chênh lệch với schema NSOKISS.
-
-## 8. STATUS và WORKLOG
-
-- STATUS là snapshot mới nhất, có thể sửa.
-- WORKLOG là lịch sử append-only.
-- Mỗi task hoàn thành phải cập nhật cả hai.
-- STATUS chỉ có đúng một “Next exact action” ưu tiên cao nhất.
-- Mục DONE phải có bằng chứng kiểm chứng.
-
-## 9. ADR
-
-Tạo ADR khi quyết định ảnh hưởng nhiều module, khó đảo ngược hoặc AI sau dễ tự thay đổi. ADR gồm Context, Decision, Consequences, Alternatives và Status.
+- STATUS là snapshot mới nhất; WORKLOG là lịch sử append-only.
+- Mỗi task hoàn thành cập nhật cả hai.
+- STATUS chỉ có đúng một Next exact action ưu tiên cao nhất.
+- DONE phải có bằng chứng; không suy đoán VERIFIED.
+- Tạo ADR cho quyết định ảnh hưởng nhiều module, khó đảo ngược hoặc AI sau dễ tự thay đổi.
