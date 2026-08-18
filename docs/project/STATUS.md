@@ -585,3 +585,16 @@ Xác minh 100/100 rồi tạo parser manifest và JDBC importer dùng transactio
 ## Next exact action hiện tại
 
 Xác minh 105/105 rồi tạo command xuất artifact và báo cáo dry-run import. Chỉ hướng dẫn chạy V002/import sau khi có backup và artifact seed thật được phê duyệt.
+
+## Checkpoint ITEM seed archive/dry-run
+
+- Người dùng xác nhận 105/105 test thành công; parser/importer: VERIFIED.
+- Archive export dùng file tạm + atomic move và không ghi đè artifact cũ.
+- Dry-run chỉ chấp nhận `item.bin`/`item.manifest`, có hard size limit và checksum validation.
+- Launcher có command `item-seed-dry-run <archive-path>`; không mở database.
+- V002/import thật vẫn chưa chạy.
+- Năm test mới đang PENDING; suite mục tiêu 110.
+
+## Next exact action hiện tại
+
+Xác minh 110/110 rồi xây bộ chuyển đổi dữ liệu ITEM tham chiếu sang read model NSOCry kèm báo cáo count/range/difference. Không import tự động.
