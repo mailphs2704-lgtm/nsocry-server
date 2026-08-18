@@ -23,9 +23,11 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - ZIP NSOKISS khoảng 269 MB đã được loại khỏi Git.
 - Bản đồ runtime đầu tiên đã được viết tại [architecture/nsokiss-runtime.md](architecture/nsokiss-runtime.md).
 - Draft PR đang dùng cho bộ tài liệu nền tảng: PR #1.
-- Chưa bắt đầu viết server NSOCry.
-- Command inventory, handshake/login server-side và đối chiếu tĩnh client JAR đã hoàn thành.
-- Bước kỹ thuật tiếp theo: tạo protocol fixture deterministic đầu tiên; sau đó chốt skeleton server NSOCry.
+- Source NSOCry đã bắt đầu với Java 17/Maven và package root `com.nsocry`.
+- Command inventory, handshake/login, client static analysis và fixture v1 đã hoàn thành.
+- Codec key/rolling-XOR/frame compatibility cùng fixture-based tests đã có.
+- Client V7 chưa bị chỉnh/repack vì không phát hiện tracking hoặc defect đủ bằng chứng.
+- Bước kỹ thuật tiếp theo: TCP session skeleton và explicit handshake state machine.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
 
@@ -39,6 +41,7 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 6. Mỗi thay đổi code phải cập nhật documentation và worklog.
 7. Không tự quyết gameplay hoặc business rule chưa được người dùng mô tả.
 8. Không build/run/test NSOKISS; người dùng đã xác nhận reference hiện chạy tốt. Chỉ phân tích tĩnh khi cần bằng chứng protocol.
+9. Không sửa/repack client JAR chỉ dựa trên nghi ngờ; phải có evidence, checksum và compatibility plan.
 
 ## Lệnh bàn giao cho AI
 
