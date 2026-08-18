@@ -280,6 +280,17 @@ Chốt appearance payload (head/body/leg/mount) và dựng codec container; sau 
 
 Pull và chạy `mvn test` khi trở lại máy. Cần xác minh mục tiêu 81/81 trước khi viết database-backed asset builders và nối vào runtime.
 
+## Xác minh 81 test và snapshot assembler
+
+- Người dùng xác nhận Maven suite 81/81 thành công; toàn bộ codec asset nền tảng VERIFIED.
+- Đã thêm assembler mã hóa đủ năm sản phẩm trước khi tạo snapshot.
+- Đã thêm atomic provider để publish nguyên snapshot, không lộ trạng thái cập nhật dở.
+- Thêm 4 test; suite mục tiêu tiếp theo 85, PENDING Maven verification.
+
+## Next exact action hiện tại
+
+Xác minh 85/85, sau đó thiết kế source ports cho từng read model và builder orchestration; chưa dùng trực tiếp database reference.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
