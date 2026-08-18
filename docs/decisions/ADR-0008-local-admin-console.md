@@ -1,53 +1,44 @@
-# ADR-0008: Console quản trị cục bộ qua run.bat
+# ADR-0008: Quản trị cục bộ phát triển song hành
 
 ## Trạng thái
 
-ACCEPTED về kiến trúc; các command gameplay sẽ được triển khai khi module tương ứng tồn tại.
+ACCEPTED — đã sửa theo quyết định của người dùng: không xây Admin Console thành một phase độc lập.
 
 ## Bối cảnh
 
-NSOCry chưa có website quản trị. Người vận hành cần một giao diện Windows dễ dùng để khởi động server và thực hiện nghiệp vụ quản trị như mở sự kiện, cấp vật phẩm, gửi thông báo, quản lý giftcode và tài khoản.
-
-Nếu đặt logic trực tiếp trong batch file hoặc cho console chạy SQL tùy ý, hệ thống sẽ khó kiểm thử, không có phân quyền/audit và dễ làm hỏng dữ liệu.
+NSOCry chưa có website quản trị và về sau cần run.bat/lệnh bài Admin. Tuy nhiên làm toàn bộ console trước gameplay sẽ trì hoãn luồng game chính, trong khi command vật phẩm, sự kiện hoặc giftcode chưa thể đúng nếu service nền chưa tồn tại.
 
 ## Quyết định
 
-- Tạo run.bat ở repository root làm launcher Windows mỏng.
-- Giao diện lệnh bài Admin được viết trong Java, không viết business logic trong batch.
-- Chế độ admin khởi động server và console trong cùng JVM để command có thể tác động runtime an toàn.
-- Mọi thao tác đi qua AdminCommand và application service; cấm SQL tùy ý.
-- Yêu cầu đăng nhập account role ADMINISTRATOR trước khi mở menu.
-- Thao tác thay đổi dữ liệu phải xác nhận; thao tác nguy hiểm yêu cầu nhập lại mật khẩu hoặc mã xác nhận.
-- Mọi hành động ghi audit: admin id, command, target, timestamp, result; không ghi password/token.
-- Command phải kiểm tra input, quyền, trạng thái server và hỗ trợ idempotency khi phù hợp.
-- run.bat không chứa database password; secret lấy từ environment/config cục bộ đã bị Git ignore.
+- Ưu tiên tuyệt đối luồng server/game chính.
+- Không triển khai một giai đoạn Admin Console riêng ở thời điểm hiện tại.
+- Mỗi khi một module nghiệp vụ hoàn thành, bổ sung command quản trị liên quan ngay sau service đó nếu thực sự cần vận hành.
+- Command quản trị chỉ gọi application/domain service đã tồn tại; không viết logic song song và không thao tác SQL/JSON trực tiếp.
+- run.bat cuối cùng là launcher mỏng; business logic vẫn ở Java.
+- Khi có nền console, bắt buộc ADMINISTRATOR, permission, confirmation và audit.
+- Các yêu cầu mở sự kiện, cấp vật phẩm, thông báo và giftcode được giữ trong backlog, chỉ kích hoạt theo tiến độ module tương ứng.
 
-## Cấu trúc dự kiến
+## Thứ tự áp dụng
 
-run.bat
-→ NsocryLauncher admin
-→ LocalAdminConsole
-→ AdminCommandRegistry
-→ application services
-→ domain/repository/runtime ports
-
-## Nhóm command
-
-1. Hệ thống: start, stop an toàn, trạng thái, bảo trì, reload dữ liệu cho phép.
-2. Tài khoản: kích hoạt, khóa/mở khóa, đổi role, reset password có kiểm soát.
-3. Người chơi: tra cứu, cấp vật phẩm, điều chỉnh có giới hạn.
-4. Runtime: gửi thông báo, kick session, xem số người online.
-5. Sự kiện: mở/đóng/lập lịch sự kiện khi event module tồn tại.
-6. Giftcode: tạo, giới hạn lượt dùng/thời gian, vô hiệu hóa, thống kê.
-7. Audit: xem lịch sử thao tác quản trị.
+| Module chính hoàn thành | Phần quản trị được bổ sung |
+|---|---|
+| Account/authentication | activate, lock, role, reset password |
+| Session/runtime | status, online count, kick, announcement |
+| Inventory/item | cấp vật phẩm qua InventoryService |
+| Event | mở/đóng/lập lịch qua EventService |
+| Giftcode | tạo, vô hiệu hóa, giới hạn và thống kê |
+| Server lifecycle | maintenance và stop an toàn |
 
 ## Hệ quả
 
-- Có thể vận hành trước khi website tồn tại.
-- Logic quản trị tái sử dụng được khi xây website/API sau này.
-- Cần thêm schema audit và permission.
-- Command gameplay chỉ xuất hiện khi service tương ứng đã được triển khai; không tạo command giả thao tác trực tiếp lên JSON/database.
+- Gameplay không bị chậm bởi UI quản trị chưa cần thiết.
+- Command admin luôn dùng đúng service đã kiểm thử.
+- Website/API sau này có thể tái sử dụng cùng service.
+- run.bat và console hoàn chỉnh được ghép dần thay vì làm giả trước chức năng game.
 
-## Giả định cần xác nhận
+## Ràng buộc vẫn giữ nguyên
 
-Cụm từ mở sk được hiểu là mở sự kiện.
+- Không hard-code master password hoặc database secret.
+- Không cho chạy SQL tùy ý.
+- Không log password/token.
+- Thao tác nguy hiểm phải xác nhận và audit.
