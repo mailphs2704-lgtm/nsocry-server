@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Bounded TCP acceptor that owns listener, session executor and deterministic shutdown lifecycle. */
+/** TCP acceptor có giới hạn, sở hữu listener, bộ thực thi phiên và vòng đời dừng an toàn. */
 public final class TcpServer implements Closeable {
     private final TcpServerConfig config;
     private final SessionConnectionHandler handler;
