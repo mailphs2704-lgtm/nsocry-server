@@ -9,6 +9,7 @@ import com.nsocry.session.SessionKeyProvider;
 import java.net.Socket;
 import java.util.Objects;
 
+/** Coordinates one accepted socket through key exchange, client metadata decoding and login authentication. */
 public final class LegacyHandshakeConnectionHandler implements SessionConnectionHandler {
     private final ProtocolLimits limits;
     private final SessionKeyProvider keys;
