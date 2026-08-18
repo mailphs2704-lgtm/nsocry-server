@@ -12,7 +12,7 @@
 |---|---|---|---|
 | com.nsocry.bootstrap | Startup, shutdown và composition root | configuration/network/session | active |
 | com.nsocry.configuration | Đọc và kiểm tra config | network config | active |
-| persistence | DB, transaction và repository | MariaDB driver | proposed |
+| com.nsocry.persistence | JDBC adapter và lỗi persistence | DataSource/java.sql | active |
 | com.nsocry.protocol.compat | Key, frame và stream compatibility | Java I/O | active |
 | com.nsocry.session | Handshake state, payload decode và auth port | protocol.compat | active |
 | com.nsocry.network | Socket accept, giới hạn và session ownership | protocol/session | active |
