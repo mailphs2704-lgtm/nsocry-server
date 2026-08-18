@@ -224,3 +224,46 @@ Tạo protocol fixture deterministic đầu tiên cho trigger, key, rolling XOR,
 ### Next exact action
 
 Chốt Java/build/module skeleton và tạo codec tests đọc fixture này. Chưa kết nối database hoặc gameplay.
+
+
+## 2026-08-18 — V7 safety audit và NSOCry protocol bootstrap
+
+### Client audit
+
+- Chỉ phân tích bytecode/resources; không chạy client hoặc NSOKISS.
+- Không tìm thấy analytics/telemetry, tracker HTTP ẩn, IMEI/IMSI, danh bạ hoặc location collection.
+- Xác định module SMS là flow thanh toán do server message kích hoạt; chưa có bằng chứng tracking.
+- Xác định `platformRequest` và RMS tồn tại nhưng chưa có evidence exfiltration.
+- Không chỉnh/repack JAR vì chưa có defect cụ thể và việc sửa cipher một phía sẽ phá protocol.
+- Ghi audit tại `docs/security/client-v7-static-audit.md`.
+- SHA-256 JAR gốc: `affd33efffe2962c90c7e1da696d273ef9ac07ce27b81623afe8f364d2f32dd1`.
+
+### Source NSOCry đầu tiên
+
+- Chốt Java 17 + Maven + JUnit 6 trong ADR-0006.
+- Tạo package `com.nsocry.protocol.compat`.
+- Viết `RollingXorCipher`, `LegacyKeyCodec`, `LegacyFrameCodec` và `ProtocolFrame`.
+- Viết `ProtocolFixtureTest` đọc trực tiếp fixture JSON đã lưu.
+- Không dùng legacy product/vendor identifiers trong source mới.
+
+### Verification
+
+- Main source compile thành công bằng OpenJDK 17.0.19 với `--release 17`.
+- Manual key-frame vector PASSED.
+- Full-size 32 KiB encrypt/decode và SHA-256 vector PASSED.
+- Legacy-name scan trên source/pom không có match.
+- Maven/JUnit chưa chạy tại Work environment vì không có Maven CLI; cần chạy `mvn test` sau khi pull.
+
+### Git
+
+- Branch: `agent/document-nsokiss-runtime`
+- Protocol bootstrap commit: `c2751c538df00f9828a79a66bc0d33232b87196f`
+- Draft PR: #1
+
+### Pull readiness
+
+Checkpoint này có thể pull về máy để cài Maven/JDK và chạy test. Không cần merge PR để kiểm tra nhánh.
+
+### Next exact action
+
+Viết TCP session skeleton và explicit handshake state machine; chưa nối database/gameplay.
