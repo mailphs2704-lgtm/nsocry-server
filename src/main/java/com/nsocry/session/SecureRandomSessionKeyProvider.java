@@ -3,6 +3,7 @@ package com.nsocry.session;
 import java.security.SecureRandom;
 import java.util.Objects;
 
+/** Creates a fresh cryptographically random compatibility key for each session. */
 public final class SecureRandomSessionKeyProvider implements SessionKeyProvider {
     private static final int MAX_KEY_LENGTH = 255;
 
