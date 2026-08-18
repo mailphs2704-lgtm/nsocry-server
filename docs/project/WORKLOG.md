@@ -1118,6 +1118,27 @@ Xác minh 130 test rồi thêm launcher preflight command dùng config database 
 
 Xác minh 135 test rồi package và chạy preflight trên database NSOCry hiện tại. Kỳ vọng NOT_READY vì V002 chưa chạy; không tự động migration.
 
+## 2026-08-18 — Xác minh 135 test, backup và V002 READY
+
+### VERIFIED
+
+- Người dùng chạy 135 test: 0 failure, 0 error, 0 skipped.
+- Backup trước V002: 2960 byte; SHA-256 `021575bfed0d4a34e751c68df1b489e4d8aefeef0e51c4a4a7b7fa00716c1348`.
+- Preflight trước migration báo đúng 12 cột thiếu và không đổi database.
+- V002 đã chạy; preflight sau migration: READY.
+
+### Đã triển khai tiếp
+
+- Archive service trả validated content bằng defensive copy.
+- Interactive import command yêu cầu archive valid, schema READY và nhập đủ SHA-256.
+- Sai/hủy xác nhận dừng trước transaction import.
+- Import thành công không tự publish runtime snapshot.
+- Năm test mới; suite mục tiêu 140.
+
+### Next exact action
+
+Xác minh 140 test rồi package; chỉ sau đó mới xin xác nhận cuối và chạy interactive import candidate đã VERIFIED_CROSS_PLATFORM.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
