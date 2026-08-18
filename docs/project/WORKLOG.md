@@ -784,3 +784,23 @@ Kiểm kê nguồn tạo data/map/skill/item/appearance và viết tài liệu b
 ### Next exact action
 
 Triển khai ITEM asset codec đối xứng trước, sau đó mới đến SKILL, MAP, DATA và appearance.
+
+## 2026-08-18 — ITEM asset codec
+
+### Đã triển khai
+
+- Read model riêng cho item option và item template phía client.
+- ITEM encoder đúng thứ tự version/options/items.
+- Validator parser đối xứng, từ chối byte dư.
+- Giới hạn count đúng kiểu unsigned byte/unsigned short.
+- Năm test mới; suite tích lũy mục tiêu 65.
+
+### Trạng thái
+
+- Code và tài liệu: IMPLEMENTED.
+- Maven verification: PENDING đến khi người dùng trở lại máy.
+- Không thay đổi runtime/session/database.
+
+### Next exact action
+
+Đối chiếu SKILL parser client với reference encoder, ghi layout rồi mới triển khai SKILL codec.
