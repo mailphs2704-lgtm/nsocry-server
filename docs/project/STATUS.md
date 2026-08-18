@@ -570,3 +570,17 @@ Xác minh 96/96 rồi tạo generator seed ITEM có output xác định và mani
 ## Next exact action hiện tại
 
 Xác minh 100/100 rồi tạo parser manifest và JDBC importer dùng transaction/prepared statement. Chưa thực thi importer trên database thật.
+
+## Checkpoint JDBC ITEM seed importer
+
+- Người dùng xác nhận 100/100 test thành công; seed artifact generator: VERIFIED.
+- Parser manifest yêu cầu format canonical và khóa thêm payload length.
+- Importer validation xong trước khi mở connection.
+- Ghi seed bằng transaction SERIALIZABLE, prepared batch và rollback toàn bộ khi lỗi.
+- Importer không tự chạy V002, tăng version hoặc publish runtime snapshot.
+- Database thật vẫn chưa thay đổi.
+- Năm test mới đang PENDING; suite mục tiêu 105.
+
+## Next exact action hiện tại
+
+Xác minh 105/105 rồi tạo command xuất artifact và báo cáo dry-run import. Chỉ hướng dẫn chạy V002/import sau khi có backup và artifact seed thật được phê duyệt.
