@@ -62,6 +62,14 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesInteractiveItemSeedImport() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"item-seed-import", "seed/item.zip"});
+        assertEquals(NsocryLauncher.LaunchCommand.ITEM_SEED_IMPORT, request.command());
+        assertEquals(Path.of("seed/item.zip"), request.configurationPath());
+    }
+
+    @Test
     void rejectsUnknownOrExcessArguments() {
         assertThrows(IllegalArgumentException.class,
                 () -> NsocryLauncher.parse(new String[] {"unknown"}));
