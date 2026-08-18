@@ -688,3 +688,16 @@ Xác minh 140/140 rồi package và xin xác nhận cuối trước khi chạy `
 ## Next exact action hiện tại
 
 Xác minh 145/145 rồi chạy `item-seed-db-verify` trên Windows. Không nối runtime trước khi database payload khớp SHA-256 candidate.
+
+## Checkpoint SKILL asset foundation
+
+- Người dùng xác nhận 145/145 test thành công.
+- ITEM database payload khớp candidate; ITEM pipeline: VERIFIED_END_TO_END.
+- Snapshot publish đủ năm nguồn vẫn được giữ làm gate; không dùng source giả.
+- V003 draft chuẩn hóa option/class/template/level/level-option.
+- SKILL structural validator có năm test mới; suite mục tiêu 150.
+- V003 chưa chạy, database SKILL chưa tồn tại.
+
+## Next exact action hiện tại
+
+Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
