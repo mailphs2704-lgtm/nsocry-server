@@ -268,6 +268,18 @@ Phân rã DATA payload thành năm block length-prefixed và các bảng progres
 
 Chốt appearance payload (head/body/leg/mount) và dựng codec container; sau đó mới thiết kế builder lấy read model từ database/reference assets.
 
+## Checkpoint appearance asset codec
+
+- Đã đối chiếu parser appearance trong client với version blob reference.
+- Đã thêm read model head/body layer, leg và mount sáu frame group.
+- Codec kiểm tra ba variant count, descriptor shape và signed-byte limits.
+- Thêm 4 test; suite tích lũy mục tiêu 81.
+- Toàn bộ main source assets + protocol compatibility tiếp tục compile thành công bằng javac 17.
+
+## Điểm cần người dùng thao tác tiếp theo
+
+Pull và chạy `mvn test` khi trở lại máy. Cần xác minh mục tiêu 81/81 trước khi viết database-backed asset builders và nối vào runtime.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
