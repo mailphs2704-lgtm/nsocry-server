@@ -376,3 +376,21 @@ Do not rerun this exact 15-test checkpoint unless protocol/session/network sourc
 ### Next exact action
 
 Pull the branch and run `mvn test`. After 16/16 pass, record the result and continue to application composition/configuration and a sanitized `NetworkEventSink` implementation.
+
+
+## 2026-08-18 — Xác minh 16 test và chuẩn hóa ngôn ngữ tài liệu
+
+### VERIFIED
+
+- Người dùng xác nhận bộ Maven mới đã chạy đủ 16 test.
+- Checkpoint loopback handshake được chuyển từ PENDING sang VERIFIED.
+- Không cần chạy lại checkpoint này nếu source hoặc cấu hình build không thay đổi.
+
+### Quy tắc tài liệu mới
+
+- Toàn bộ Javadoc, ghi chú code, tài liệu kỹ thuật, STATUS và WORKLOG dùng tiếng Việt.
+- Tên package, class, method, command và protocol giữ nguyên để tra cứu chính xác.
+- Đã thêm package-info cho network, session và protocol.compat.
+- Đã thêm mô tả trách nhiệm trực tiếp vào toàn bộ 25 type hiện tại.
+- Đã tạo docs/code-reference/protocol-session-network.md, ánh xạ class/method, hợp đồng, trạng thái, lỗi và test bảo vệ.
+- Tiếp tục bổ sung Javadoc chi tiết cho từng method; không thay đổi logic đã VERIFIED.
