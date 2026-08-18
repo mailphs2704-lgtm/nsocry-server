@@ -1,5 +1,6 @@
 package com.nsocry.session;
 
+/** Decoded client capabilities and compatibility metadata sent before login. */
 public record ClientInfo(
         byte clientType,
         byte zoomLevel,
