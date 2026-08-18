@@ -177,3 +177,13 @@ Wire accepted socket → `LegacySessionTransport` → `HandshakeProcessor`, thê
 ## Next exact action
 
 Run `mvn test` once after pulling. If all 16 tests pass, mark this checkpoint VERIFIED and proceed to application composition/configuration plus sanitized network event reporting.
+
+
+## Chuẩn tài liệu và xác minh 16 test
+
+- Người dùng đã xác nhận bộ test mới chạy đủ 16 test.
+- Trạng thái checkpoint TCP handshake loopback: VERIFIED, 16/16.
+- Mọi Javadoc, ghi chú code, tài liệu kỹ thuật, STATUS và WORKLOG mới phải viết bằng tiếng Việt.
+- Chỉ giữ nguyên tiếng Anh đối với định danh code, tên protocol/command và thuật ngữ không nên dịch.
+- Đã bổ sung package-info cho ba package, Javadoc trách nhiệm cho toàn bộ 25 type và tài liệu tra cứu đến cấp method.
+- Việc chuẩn hóa Javadoc chi tiết cho từng method được xem là công việc tài liệu bắt buộc, không phải tính năng tùy chọn.
