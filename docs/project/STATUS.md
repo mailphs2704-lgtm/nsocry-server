@@ -610,3 +610,17 @@ Xác minh 110/110 rồi xây bộ chuyển đổi dữ liệu ITEM tham chiếu 
 ## Next exact action hiện tại
 
 Xác minh 115/115 rồi tạo parser xác định cho dữ liệu hai bảng ITEM trong dump được cung cấp, sinh bundle/artifact/report thực tế nhưng chưa import MariaDB.
+
+## Checkpoint parse ITEM dump thực tế
+
+- Người dùng xác nhận 115/115 test thành công; reference converter: VERIFIED.
+- Parser chỉ đọc hai INSERT ITEM và xử lý escaping/Unicode bằng state machine giới hạn.
+- Offline candidate: 161 option, 1213 item, payload 66811 byte.
+- Candidate SHA-256: `abb320fb8a940fc28c49c6d0c5b84e09e83d28248130884881845b9dd5bea6f8`.
+- Có 79 fashion value được đánh dấu chưa chuyển; chưa coi appearance/gameplay data hoàn tất.
+- Năm test mới đang PENDING; suite mục tiêu 120.
+- Database thật vẫn chưa thay đổi.
+
+## Next exact action hiện tại
+
+Xác minh 120/120 rồi thêm command chuyển dump thành candidate archive và đối chiếu checksum tái lập trên Windows. Chưa import database.
