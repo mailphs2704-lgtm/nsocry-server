@@ -1079,6 +1079,26 @@ Xác minh 120 test rồi thêm launcher command chuyển dump thành candidate a
 
 Xác minh 125 test rồi chạy convert + dry-run trên Windows để chứng minh checksum candidate tái lập; chưa chạy V002/import.
 
+## 2026-08-18 — Candidate cross-platform và V002 schema preflight
+
+### VERIFIED
+
+- Người dùng chạy 125 test: 0 failure, 0 error, 0 skipped.
+- Windows convert + dry-run khớp Work: 161/1213, 66811 byte và cùng SHA-256.
+- Candidate ITEM: VERIFIED_CROSS_PLATFORM.
+
+### Đã triển khai tiếp
+
+- Model/report cho metadata column và V002 schema readiness.
+- Contract yêu cầu đúng 12 cột, data type, unsigned và NOT NULL.
+- JDBC inspector chỉ đọc information_schema và đặt connection read-only.
+- Năm test mới; suite mục tiêu 130.
+- Chưa chạy V002, backup hoặc importer.
+
+### Next exact action
+
+Xác minh 130 test rồi thêm launcher preflight command dùng config database hiện có; command chỉ đọc schema và không chạy migration.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
