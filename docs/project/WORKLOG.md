@@ -478,3 +478,25 @@ Không chạy lại checkpoint 23 test nếu source hoặc pom.xml chưa thay đ
 ### Next exact action
 
 Tạo các port và authentication service bằng fake repository, sau khi chốt password hashing trong ADR.
+
+
+## 2026-08-18 — Authentication domain và password hashing
+
+### Đã triển khai
+
+- AccountCredential/AccountStatus và AccountRepository port không phụ thuộc JDBC.
+- PasswordHashingPort và PBKDF2-HMAC-SHA256 implementation thuần Java 17.
+- Hash tự mô tả version/work factor/salt/output; mặc định 600.000 vòng, salt riêng 16 byte.
+- Constant-time compare bằng MessageDigest.isEqual và giới hạn password/hash parameters chống dữ liệu hỏng gây DoS.
+- AuthenticationService dùng dummy hash cho username thiếu, xóa char[] password trong finally và trả REJECTED đồng nhất.
+- Thêm ADR-0007 và tài liệu package tiếng Việt.
+- Thêm 6 unit test; mục tiêu toàn suite là 29.
+
+### Kiểm chứng
+
+- Checkpoint 23 test trước vẫn VERIFIED.
+- Authentication source mới là PENDING cho đến khi người dùng chạy Maven.
+
+### Next exact action
+
+Pull và chạy mvn test; sau 29/29 mới triển khai JdbcAccountRepository cho database nsocry.
