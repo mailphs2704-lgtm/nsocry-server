@@ -16,6 +16,7 @@ public final class NsocryLauncher {
         switch (request.command()) {
             case SERVER -> NsocryServerApplication.main(forwarded);
             case CREATE_ADMIN -> FirstAdministratorCommand.main(forwarded);
+            case ITEM_SEED_DRY_RUN -> ItemAssetSeedDryRunCommand.main(forwarded);
             case HELP -> printUsage();
         }
     }
@@ -31,6 +32,7 @@ public final class NsocryLauncher {
         LaunchCommand command = switch (args[0]) {
             case "server" -> LaunchCommand.SERVER;
             case "create-admin" -> LaunchCommand.CREATE_ADMIN;
+            case "item-seed-dry-run" -> LaunchCommand.ITEM_SEED_DRY_RUN;
             case "help", "--help", "-h" -> LaunchCommand.HELP;
             default -> throw new IllegalArgumentException("unknown NSOCry command: " + args[0]);
         };
@@ -45,6 +47,7 @@ public final class NsocryLauncher {
         System.out.println("NSOCry commands:");
         System.out.println("  java -jar nsocry-server.jar server [config-path]");
         System.out.println("  java -jar nsocry-server.jar create-admin [config-path]");
+        System.out.println("  java -jar nsocry-server.jar item-seed-dry-run <archive-path>");
         System.out.println("  java -jar nsocry-server.jar help");
     }
 
@@ -52,6 +55,7 @@ public final class NsocryLauncher {
     enum LaunchCommand {
         SERVER,
         CREATE_ADMIN,
+        ITEM_SEED_DRY_RUN,
         HELP
     }
 
