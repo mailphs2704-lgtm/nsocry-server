@@ -61,3 +61,10 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Ghi commit/branch/PR và kết quả kiểm chứng.
 - Ghi rõ điểm dừng nếu đang dở.
 - Ghi đúng một “Next exact action” có thể thực hiện ngay.
+
+
+## Yêu cầu mới đã chấp nhận
+
+- Xây lệnh bài Admin cục bộ qua run.bat trước khi có website.
+- run.bat chỉ là launcher; console Java quản lý phân quyền, command, xác nhận và audit.
+- Đọc ADR-0008 và docs/administration/console-roadmap.md trước khi làm administration.
