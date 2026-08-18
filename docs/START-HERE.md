@@ -30,7 +30,8 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - TCP/session/handshake loopback đã VERIFIED 16/16.
 - Toàn bộ package/type/method hiện tại đã được bổ sung Javadoc tiếng Việt; tài liệu tra cứu source đã có.
 - Bootstrap, configuration và NetworkEventSink đã được triển khai; đang chờ xác minh bộ 23 test.
-- Bước kỹ thuật tiếp theo sau khi VERIFIED: thiết kế schema nsocry tối thiểu cho account/authentication.
+- Schema account V001 và authentication service không phụ thuộc JDBC đã được viết.
+- Bước kỹ thuật tiếp theo: xác minh 29 test, sau đó viết JdbcAccountRepository.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
 
