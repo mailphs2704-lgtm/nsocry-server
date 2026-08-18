@@ -282,3 +282,18 @@ Triển khai JdbcAccountRepository bằng DataSource/prepared statement và unit
 ## Next exact action hiện tại
 
 Người dùng pull và chạy mvn test. Nếu 32/32 thành công, ghi VERIFIED rồi bổ sung MariaDB driver, DataSource configuration và composition; database credential chỉ lấy từ môi trường/config không commit.
+
+
+## Checkpoint MariaDB composition
+
+- Đã thêm MariaDB Connector/J 3.5.10 chính thức.
+- DatabaseConfiguration ưu tiên NSOCRY_DB_URL/USER/PASSWORD và che password trong toString.
+- MariaDbDataSourceFactory tạo DataSource nhưng không mở connection sớm.
+- Main đã ghép JdbcAccountRepository, Pbkdf2PasswordHasher và AuthenticationService thật trước khi mở listener.
+- File config mẫu không chứa database password.
+- Thêm 4 test cấu hình; tổng mục tiêu 36.
+- Trạng thái: PENDING vì Java source và pom.xml đã thay đổi.
+
+## Next exact action hiện tại
+
+Người dùng pull và chạy mvn test. Nếu 36/36 thành công, ghi VERIFIED rồi thêm công cụ tạo account đầu tiên và kiểm tra migration trên database nsocry cục bộ, không đụng database reference.
