@@ -558,3 +558,18 @@ Pull và chạy mvn test; sau 32/32 mới ghép MariaDB DataSource/configuration
 ### Next exact action
 
 Pull và chạy mvn test; sau 36/36 mới tạo công cụ bootstrap account và kiểm tra migration nsocry cục bộ.
+
+
+## 2026-08-18 — Windows xác minh MariaDB composition
+
+### VERIFIED
+
+- Tests run: 36.
+- Failures: 0.
+- Errors: 0.
+- Skipped: 0.
+- Connector/J dependency, database configuration và bootstrap authentication đều compile/test thành công.
+
+### Next exact action
+
+Viết account bootstrap command an toàn và unit test repository insert trước khi yêu cầu chạy migration/database thật.
