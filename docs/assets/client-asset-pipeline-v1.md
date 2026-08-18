@@ -65,3 +65,15 @@ flowchart TD
 ## Bước tiếp theo
 
 Chốt byte layout chi tiết của ITEM trước vì đây là payload nhỏ và độc lập nhất. Viết model read-only, encoder và parser test đối xứng; sau đó làm SKILL, MAP, DATA và appearance theo thứ tự độ phức tạp tăng dần.
+
+## ITEM byte layout đã chốt
+
+| Thứ tự | Kiểu | Nội dung |
+|---:|---|---|
+| 1 | `byte` | item version |
+| 2 | `unsigned byte` | số item option template |
+| 3 | lặp option | `UTF name`, `byte type` |
+| 4 | `unsigned short` | số item template |
+| 5 | lặp item | `byte type`, `byte gender`, `UTF name`, `UTF description`, `byte level`, `short icon`, `short part`, `boolean upgradable` |
+
+`ItemAssetBundle` là read model riêng cho client. Nó không phải entity vật phẩm gameplay và không chứa giá, số lượng sở hữu, chỉ số ngẫu nhiên hoặc trạng thái người chơi.
