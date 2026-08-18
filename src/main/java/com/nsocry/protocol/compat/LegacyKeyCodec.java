@@ -7,6 +7,7 @@ public final class LegacyKeyCodec {
     private LegacyKeyCodec() {
     }
 
+    /** Mã hóa khóa phiên thành payload sai phân mà client V7 có thể khôi phục. */
     public static byte[] encodePayload(byte[] key) {
         requireValidKey(key);
         byte[] payload = new byte[key.length + 1];
@@ -18,6 +19,7 @@ public final class LegacyKeyCodec {
         return payload;
     }
 
+    /** Khôi phục khóa phiên từ payload sai phân và xác minh độ dài khai báo. */
     public static byte[] decodePayload(byte[] payload) {
         if (payload == null || payload.length < 2) {
             throw new IllegalArgumentException("key payload is too short");
@@ -33,6 +35,7 @@ public final class LegacyKeyCodec {
         return key;
     }
 
+    /** Bảo đảm khóa tồn tại và nằm trong phạm vi biểu diễn một byte độ dài. */
     private static void requireValidKey(byte[] key) {
         if (key == null || key.length == 0 || key.length > 255) {
             throw new IllegalArgumentException("key length must be between 1 and 255 bytes");
