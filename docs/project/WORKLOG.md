@@ -962,3 +962,22 @@ Xác minh 92 test, sau đó tạo validator/import plan cho seed ITEM; chưa ch�
 ### Next exact action
 
 Xác minh 96 test rồi tạo công cụ sinh seed ITEM có đầu ra xác định từ dữ liệu tĩnh được phê duyệt; chưa thực hiện import vào MariaDB.
+
+## 2026-08-18 — Xác minh 96 test và generator ITEM seed artifact
+
+### VERIFIED
+
+- Người dùng chạy 96 test: 0 failure, 0 error, 0 skipped.
+- ITEM seed manifest, codec round-trip và checksum validator: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Generator tạo payload nhị phân trực tiếp từ ITEM codec, không sinh SQL động.
+- Manifest key=value có format version, count, length và SHA-256; newline cố định LF.
+- Artifact sao chép phòng vệ payload và tự validation trước khi được trả về.
+- Importer tương lai sẽ decode artifact và dùng prepared statement.
+- Bốn test mới; suite mục tiêu 100.
+
+### Next exact action
+
+Xác minh 100 test rồi thiết kế parser manifest và JDBC seed importer transactional; vẫn chưa chạy V002 hoặc import dữ liệu thật.
