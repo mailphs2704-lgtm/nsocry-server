@@ -1230,6 +1230,27 @@ Xác minh 155 test rồi tạo converter SKILL và báo cáo chính xác bốn r
 
 Xác minh 160 test rồi xây full SKILL converter/read-model candidate và fixture wire tương thích.
 
+## 2026-08-18 — Xác minh 160 test và full SKILL converter candidate
+
+### VERIFIED
+
+- Người dùng chạy 160 test: 0 failure, 0 error, 0 skipped.
+- Raw-byte difference report: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Dựng toàn bộ class/template/level/option tree từ row chuẩn hóa trong dump.
+- Cột cache `skillTemplates` không được dùng làm nguồn authoritative.
+- Raw-byte 128–255 giữ nguyên bit pattern khi đi qua Java signed byte và codec.
+- Candidate dump thật: 42402 byte; SHA-256 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Structural validation và encode/decode round-trip thành công.
+- Năm test mới đang PENDING; suite mục tiêu 165.
+- V003/database/runtime snapshot không thay đổi.
+
+### Next exact action
+
+Xác minh 165 test rồi thêm command đóng gói convert/dry-run SKILL và kiểm tra checksum chéo Windows.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
