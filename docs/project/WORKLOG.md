@@ -649,3 +649,5 @@ Chạy mvn package và java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help. C
 ### Next exact action
 
 Chuẩn bị database nsocry cục bộ và administrator đầu tiên bằng migration/tool mới; không chạy hoặc sửa database reference.
+
+- Bổ sung .gitignore cho config/nsocry.properties trước khi hướng dẫn nhập database secret; không thay đổi source/build.
