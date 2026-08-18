@@ -698,6 +698,19 @@ Xác minh 145/145 rồi chạy `item-seed-db-verify` trên Windows. Không nối
 - SKILL structural validator có năm test mới; suite mục tiêu 150.
 - V003 chưa chạy, database SKILL chưa tồn tại.
 
+## Checkpoint full SKILL converter candidate
+
+- Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.
+- Converter dựng read model đầy đủ từ bốn bảng dump và không tin cột cache JSON trùng lặp.
+- Offline candidate v26: 42402 byte; SHA-256 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Structural validation và codec round-trip đều thành công trên dump thật.
+- Năm test mới đang PENDING; suite mục tiêu 165.
+- V003 chưa chạy, chưa tạo archive và chưa import SKILL.
+
+## Next exact action hiện tại
+
+Xác minh 165/165 rồi đóng gói command convert/dry-run SKILL để đối chiếu checksum trên Windows.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
