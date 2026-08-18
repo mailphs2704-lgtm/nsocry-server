@@ -179,6 +179,19 @@ Wire accepted socket → `LegacySessionTransport` → `HandshakeProcessor`, thê
 
 Xác minh suite mục tiêu 50/50, sau đó phân tích tĩnh client V7 để chốt cách đọc blob `UPDATE_VERSION`; chưa tích hợp danh sách nhân vật vào session khi bước này còn UNKNOWN.
 
+## Xác minh codec nhân vật và thương lượng phiên bản
+
+- Người dùng xác nhận suite 50/50: codec danh sách/chọn/tạo nhân vật VERIFIED.
+- Bytecode client V7 xác nhận `UPDATE_VERSION` bắt đầu bằng bốn byte data/map/skill/item version.
+- Client yêu cầu bộ dữ liệu lệch bằng các command rỗng `-122/-121/-120/-119`.
+- Client chỉ gửi `CLIENT_OK` khi cả bốn version đã khớp.
+- Đã thêm manifest, enum data set và codec version negotiation; thêm 5 test, suite mục tiêu 55.
+- Dữ liệu ngoại hình và bốn asset payload chưa được dựng; runtime integration vẫn chủ động hoãn.
+
+## Next exact action hiện tại
+
+Xác minh suite 55/55, sau đó lập inventory chính xác nguồn tạo bốn asset payload và dữ liệu ngoại hình; không copy business model hoặc package legacy.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
