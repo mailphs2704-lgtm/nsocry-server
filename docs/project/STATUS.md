@@ -192,6 +192,17 @@ Xác minh suite mục tiêu 50/50, sau đó phân tích tĩnh client V7 để ch
 
 Xác minh suite 55/55, sau đó lập inventory chính xác nguồn tạo bốn asset payload và dữ liệu ngoại hình; không copy business model hoặc package legacy.
 
+## Xác minh thương lượng phiên bản client
+
+- Người dùng đã chạy Maven và xác nhận 55/55 test thành công.
+- `ClientVersionManifest`, `ClientDataSet` và `PostLoginVersionPayloadCodec`: VERIFIED.
+- Không cần chạy lại 55 test nếu source hoặc cấu hình build chưa thay đổi.
+- Phiên làm việc tạm dừng để người dùng khởi động lại máy; không có công việc dở dang trong workspace người dùng.
+
+## Next exact action sau khi tiếp tục
+
+Lập inventory nguồn tạo payload data/map/skill/item và appearance từ reference/tài sản được cung cấp; thiết kế asset pipeline NSOCry trước khi nối `UPDATE_VERSION` vào session runtime.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
