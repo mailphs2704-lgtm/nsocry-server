@@ -12,6 +12,7 @@ public record TcpServerConfig(
         int readTimeoutMillis,
         Duration shutdownTimeout) {
 
+    /** Kiểm tra toàn bộ giới hạn và timeout ngay khi tạo cấu hình. */
     public TcpServerConfig {
         Objects.requireNonNull(bindAddress, "bindAddress");
         Objects.requireNonNull(shutdownTimeout, "shutdownTimeout");
