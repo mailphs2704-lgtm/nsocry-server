@@ -336,3 +336,17 @@ Người dùng pull và chạy mvn test. Nếu 40/40 thành công, ghi VERIFIED 
 ## Next exact action hiện tại
 
 Tạo JAR chạy độc lập chứa dependency, entry command an toàn cho server/create-admin và tài liệu vận hành Windows; sau đó mới yêu cầu người dùng tạo database nsocry cục bộ.
+
+
+## Checkpoint executable JAR/launcher
+
+- Đã thêm NsocryLauncher với command server, create-admin và help.
+- Không argument mặc định về help, không tự mở server.
+- Đã thêm Maven Shade Plugin 3.6.2 và manifest main class mới.
+- Uber-JAR chứa MariaDB driver nhưng không chứa database/account credential.
+- Đã thêm 4 parser test; tổng mục tiêu 44.
+- Trạng thái: PENDING vì Java source và pom.xml đã thay đổi.
+
+## Next exact action hiện tại
+
+Người dùng pull, chạy mvn package và chạy java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help. Nếu 44/44 và help thành công, ghi VERIFIED rồi hướng dẫn tạo database nsocry/migration cục bộ.
