@@ -1,7 +1,7 @@
 package com.nsocry.session;
 
 @FunctionalInterface
-/** Supplies a new per-session key without coupling the handshake to a generation policy. */
+/** Cấp khóa mới cho từng phiên mà không ràng buộc handshake với chính sách sinh khóa. */
 public interface SessionKeyProvider {
     byte[] createKey();
 }
