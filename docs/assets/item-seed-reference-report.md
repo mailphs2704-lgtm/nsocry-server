@@ -41,5 +41,11 @@ encode bằng ITEM codec, parse round-trip và tính checksum.
 read model ITEM và phải được đối chiếu ở checkpoint appearance/gameplay trước khi coi
 dữ liệu liên quan đã migrate đầy đủ.
 
-Đây là candidate identity để kiểm chứng lặp lại, chưa phải phê duyệt chạy V002 hoặc
-import database. Parser mới vẫn cần đạt suite mục tiêu 120 trên máy người dùng.
+## Xác minh Windows
+
+Candidate đã được tạo lại bằng executable JAR trên Windows và dry-run thành công với
+đúng 161 option, 1213 item, 66811 byte và SHA-256 nêu trên. Trạng thái artifact:
+`VERIFIED_CROSS_PLATFORM`.
+
+Đây vẫn chưa phải phê duyệt chạy V002 hoặc import database. Schema preflight và backup
+phải hoàn tất trước mọi thao tác ghi.
