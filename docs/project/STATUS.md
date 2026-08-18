@@ -201,3 +201,17 @@ Run `mvn test` once after pulling. If all 16 tests pass, mark this checkpoint VE
 ## Next exact action hiện tại
 
 Thiết kế và triển khai application bootstrap tối thiểu: nạp cấu hình TCP đã kiểm tra, tạo SecureRandomSessionKeyProvider và NetworkEventSink làm sạch dữ liệu; chưa nối database hoặc gameplay.
+
+
+## Checkpoint bootstrap/configuration/observability
+
+- Đã thêm composition root NsocryServerApplication và main class trong JAR manifest.
+- Đã thêm ServerConfiguration/Loader, file properties mẫu và validation theo từng property.
+- Đã thêm SanitizedNetworkEventSink không ghi exception message, stack trace, password, token hoặc payload.
+- Xác thực runtime hiện cố ý REJECTED cho đến khi module account/database tồn tại.
+- Đã thêm 7 test; tổng dự kiến 23.
+- Trạng thái kiểm chứng: PENDING vì source và pom.xml đã thay đổi.
+
+## Next exact action hiện tại
+
+Người dùng pull và chạy mvn test. Nếu 23/23 thành công, ghi VERIFIED rồi thiết kế schema nsocry tối thiểu cho account/authentication; chưa làm gameplay trước khi đăng nhập ổn định.
