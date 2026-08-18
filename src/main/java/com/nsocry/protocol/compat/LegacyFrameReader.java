@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
+/** Reads one bounded frame from a stream while preserving the inbound cipher cursor. */
 public final class LegacyFrameReader {
     private final DataInputStream input;
     private final ProtocolLimits limits;
