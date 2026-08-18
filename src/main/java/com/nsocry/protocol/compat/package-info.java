@@ -1,7 +1,7 @@
 /**
- * Isolates the wire-format compatibility required by the legacy V7 client:
- * framing, bounded stream I/O, key encoding and rolling XOR state.
+ * Cô lập phần tương thích định dạng dữ liệu bắt buộc cho client V7: đóng khung,
+ * đọc/ghi có giới hạn, mã hóa khóa và trạng thái rolling XOR.
  *
- * <p>The cipher is compatibility-only and must not be treated as security.</p>
+ * <p>Rolling XOR chỉ phục vụ tương thích, không được xem là lớp bảo mật.</p>
  */
 package com.nsocry.protocol.compat;
