@@ -215,3 +215,15 @@ Thiết kế và triển khai application bootstrap tối thiểu: nạp cấu h
 ## Next exact action hiện tại
 
 Người dùng pull và chạy mvn test. Nếu 23/23 thành công, ghi VERIFIED rồi thiết kế schema nsocry tối thiểu cho account/authentication; chưa làm gameplay trước khi đăng nhập ổn định.
+
+
+## Xác minh checkpoint bootstrap
+
+- Người dùng đã chạy Maven sau khi pull source và pom.xml mới.
+- Kết quả: 23 test, 0 failure, 0 error, 0 skipped.
+- Bootstrap/configuration/observability: VERIFIED.
+- Không chạy lại 23 test nếu source hoặc cấu hình build chưa thay đổi.
+
+## Next exact action hiện tại
+
+Thiết kế migration đầu tiên cho database nsocry và contract authentication an toàn dựa trên hành vi cần thiết; không sao chép bảng users reference với các cột hỗn hợp hoặc mật khẩu yếu.
