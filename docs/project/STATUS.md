@@ -143,7 +143,8 @@ Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người d
 - Key delta codec, rolling XOR cursor, short/full-size frame codec và immutable frame value.
 - Main source compile VERIFIED bằng JDK 17.
 - Manual key/full-size vector verification PASSED.
-- Maven/JUnit suite chưa chạy tại Work environment vì không có Maven CLI; test source đã được tạo để chạy sau khi pull.
+- User-machine verification: Java 19.0.2 compiling with release 17; Maven test BUILD SUCCESS.
+- Maven/JUnit suite đã chạy trên máy Windows người dùng: 3 tests, 0 failures, 0 errors, 0 skipped, BUILD SUCCESS.
 
 ## Next exact action
 
