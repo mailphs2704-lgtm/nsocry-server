@@ -804,3 +804,27 @@ Triển khai ITEM asset codec đối xứng trước, sau đó mới đến SKIL
 ### Next exact action
 
 Đối chiếu SKILL parser client với reference encoder, ghi layout rồi mới triển khai SKILL codec.
+
+## 2026-08-18 — SKILL asset codec
+
+### Đã xác minh tĩnh
+
+- Layout class → template → level → option khớp giữa encoder và client parser.
+- Option/template/level/level-option count là signed byte.
+- Class count là unsigned byte.
+- ITEM template count thực tế được client đọc signed short; giới hạn codec đã sửa về 32767.
+
+### Đã triển khai
+
+- Sáu read model SKILL bất biến.
+- Encoder/parser validator đối xứng.
+- Bốn test mới; suite tích lũy mục tiêu 69.
+
+### Trạng thái
+
+- Source: IMPLEMENTED.
+- Maven verification: PENDING khi người dùng trở lại máy.
+
+### Next exact action
+
+Đối chiếu MAP parser V7 và triển khai MAP asset codec sau khi chốt mọi count.
