@@ -68,3 +68,5 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Xây lệnh bài Admin cục bộ qua run.bat trước khi có website.
 - run.bat chỉ là launcher; console Java quản lý phân quyền, command, xác nhận và audit.
 - Đọc ADR-0008 và docs/administration/console-roadmap.md trước khi làm administration.
+
+- Quyết định mới nhất: Admin phát triển song hành theo module, không phải Next exact action độc lập; ưu tiên login/character/map.
