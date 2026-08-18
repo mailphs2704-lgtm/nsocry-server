@@ -227,3 +227,17 @@ Người dùng pull và chạy mvn test. Nếu 23/23 thành công, ghi VERIFIED 
 ## Next exact action hiện tại
 
 Thiết kế migration đầu tiên cho database nsocry và contract authentication an toàn dựa trên hành vi cần thiết; không sao chép bảng users reference với các cột hỗn hợp hoặc mật khẩu yếu.
+
+
+## Thiết kế database nsocry V001
+
+- Phân tích tĩnh bảng account/player reference, không chạy NSOKISS và không đọc database đang hoạt động.
+- Đã tạo script database nsocry và migration accounts tối thiểu.
+- Không sao chép credential, token, điện thoại, email, IP hoặc dữ liệu thanh toán reference.
+- accounts chỉ sở hữu dữ liệu xác thực, trạng thái, role, lockout và timestamp.
+- Username có unique constraint; password chỉ lưu chuỗi hash có version.
+- Trạng thái migration: PROPOSED, chưa chạy trên MariaDB.
+
+## Next exact action hiện tại
+
+Tạo PasswordHashingPort, AccountRepository port và AuthenticationService bằng fake repository; chọn password hashing theo ADR trước khi viết JDBC adapter.
