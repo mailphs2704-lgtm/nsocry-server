@@ -52,6 +52,15 @@ class PostLoginVersionPayloadCodecTest {
                 () -> PostLoginVersionPayloadCodec.decodeDataRequest(frame));
     }
 
+    @Test
+    void encodesRequestedDataSetWithNestedCommand() {
+        ProtocolFrame frame = PostLoginVersionPayloadCodec.encodeDataResponse(
+                ClientDataSet.MAP, new byte[] {7, 8});
+
+        assertEquals(-28, frame.command());
+        assertArrayEquals(new byte[] {(byte) -121, 7, 8}, frame.payload());
+    }
+
     private static void assertRequest(byte command, ClientDataSet expected) throws Exception {
         ProtocolFrame frame = new ProtocolFrame((byte) -28, new byte[] {command});
         assertEquals(expected, PostLoginVersionPayloadCodec.decodeDataRequest(frame));
