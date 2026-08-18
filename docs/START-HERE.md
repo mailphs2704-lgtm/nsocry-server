@@ -32,7 +32,8 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Bootstrap, configuration và NetworkEventSink đã được triển khai; đang chờ xác minh bộ 23 test.
 - Schema account V001 và authentication service không phụ thuộc JDBC đã được viết.
 - Authentication và JdbcAccountRepository đã VERIFIED 32/32.
-- MariaDB Connector/J, DatabaseConfiguration và authentication composition đã được thêm; đang chờ xác minh 36 test.
+- MariaDB composition đã VERIFIED 36/36.
+- Công cụ tạo administrator đầu tiên đã được viết; đang chờ xác minh 40 test.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
 
