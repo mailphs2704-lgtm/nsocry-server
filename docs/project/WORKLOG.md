@@ -1060,6 +1060,25 @@ Xác minh 115 test rồi tạo parser nguồn xác định cho hai bảng ITEM t
 
 Xác minh 120 test rồi thêm launcher command chuyển dump thành candidate archive và kiểm tra checksum tái lập trên Windows.
 
+## 2026-08-18 — Xác minh 120 test và command tạo ITEM candidate
+
+### VERIFIED
+
+- Người dùng chạy 120 test: 0 failure, 0 error, 0 skipped.
+- Parser dump và candidate report thực tế: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Launcher command `item-seed-convert <dump-path>` chạy toàn bộ pipeline offline.
+- Dump phải là regular UTF-8 file tối đa 64 MiB.
+- Output cạnh source, tên xác định và không ghi đè file đã có.
+- Báo cáo chỉ in count/difference/length/checksum và `databaseChanged=false`.
+- Bốn command test và một launcher parser test; suite mục tiêu 125.
+
+### Next exact action
+
+Xác minh 125 test rồi chạy convert + dry-run trên Windows để chứng minh checksum candidate tái lập; chưa chạy V002/import.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
