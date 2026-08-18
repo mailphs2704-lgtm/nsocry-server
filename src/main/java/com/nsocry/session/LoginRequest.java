@@ -2,6 +2,7 @@ package com.nsocry.session;
 
 import java.util.Objects;
 
+/** Decoded login data whose string representation always redacts password and client token. */
 public final class LoginRequest {
     private final String username;
     private final String password;
