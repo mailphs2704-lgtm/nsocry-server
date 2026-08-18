@@ -118,3 +118,10 @@ Một module chỉ được DONE khi:
 - Bắt buộc xác thực role ADMINISTRATOR, xác nhận thao tác nguy hiểm và audit mọi thay đổi.
 - Cấm hard-code master password, commit secret hoặc cung cấp SQL console tùy ý.
 - Thiết kế command/service phải tái sử dụng được cho website/API quản trị trong tương lai.
+
+
+### Điều chỉnh tiến độ Admin
+
+- Không xây Admin Console như một phase riêng trước gameplay.
+- Core module luôn được ưu tiên; command quản trị chỉ bổ sung khi service tương ứng đã hoàn thành.
+- Backlog Admin vẫn giữ đầy đủ nhưng không được trở thành blocker của login, character, map hoặc gameplay.
