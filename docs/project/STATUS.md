@@ -380,3 +380,15 @@ Tạo database nsocry cục bộ, chạy V001 migration, tạo database user ri�
 ## Next exact action hiện tại
 
 Tạo database user nsocry riêng và administrator đầu tiên bằng công cụ VERIFIED; sau đó triển khai nền Admin Console gồm login, help, status, audit và exit.
+
+
+## Điều chỉnh kế hoạch Admin
+
+- Theo yêu cầu người dùng, bỏ phase xây Admin Console độc lập.
+- Admin command phát triển song hành: core service xong đến đâu, command liên quan hoàn thiện đến đó.
+- Backlog mở sự kiện, cấp vật phẩm, thông báo, giftcode vẫn được giữ nhưng không chặn gameplay.
+- ADR-0008 và administration roadmap đã được thiết kế lại.
+
+## Next exact action hiện tại
+
+Phân tích tĩnh protocol sau đăng nhập của reference: danh sách nhân vật và chọn nhân vật; ghi fixture/evidence trước khi thiết kế character domain/schema mới.
