@@ -10,10 +10,12 @@ public final class SecureRandomSessionKeyProvider implements SessionKeyProvider 
     private final SecureRandom random;
     private final int keyLength;
 
+    /** Tạo provider dùng SecureRandom mặc định với độ dài khóa đã kiểm tra. */
     public SecureRandomSessionKeyProvider(int keyLength) {
         this(new SecureRandom(), keyLength);
     }
 
+    /** Constructor nội bộ cho phép truyền nguồn ngẫu nhiên khi kiểm thử. */
     SecureRandomSessionKeyProvider(SecureRandom random, int keyLength) {
         if (keyLength < 1 || keyLength > MAX_KEY_LENGTH) {
             throw new IllegalArgumentException("keyLength must be between 1 and 255");
@@ -23,6 +25,7 @@ public final class SecureRandomSessionKeyProvider implements SessionKeyProvider 
     }
 
     @Override
+    /** Sinh một mảng khóa mới cho phiên hiện tại. */
     public byte[] createKey() {
         byte[] key = new byte[keyLength];
         random.nextBytes(key);
