@@ -2,6 +2,7 @@ package com.nsocry.protocol.compat;
 
 import java.util.Arrays;
 
+/** Stateful legacy rolling-XOR transform with an independent cursor for one direction. */
 public final class RollingXorCipher {
     private final byte[] key;
     private int cursor;
