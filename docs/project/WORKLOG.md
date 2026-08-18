@@ -454,3 +454,27 @@ Người dùng chạy mvn test. Sau khi 23/23 VERIFIED, bắt đầu schema nsoc
 ### Quy tắc liên tục
 
 Không chạy lại checkpoint 23 test nếu source hoặc pom.xml chưa thay đổi. Bước tiếp theo là migration database nsocry và contract authentication mới, không nhập dữ liệu tài khoản nhạy cảm từ reference.
+
+
+## 2026-08-18 — Thiết kế migration account đầu tiên
+
+### Phân tích
+
+- Chỉ đọc tĩnh database.sql reference.
+- Bảng tài khoản reference trộn xác thực, thanh toán, web, event và quyền; không phù hợp để sao chép.
+- Không sử dụng hoặc ghi lại dữ liệu mẫu nhạy cảm.
+
+### Đã tạo
+
+- database/00-create-database.sql tạo database chuẩn nsocry.
+- database/migrations/V001__account_authentication.sql tạo bảng accounts tối thiểu.
+- docs/database/account-authentication.md mô tả cột, ownership, bảo mật và khác biệt với reference.
+
+### Kiểm chứng
+
+- SQL chưa chạy; trạng thái PROPOSED.
+- Không thay đổi Java/pom sau checkpoint VERIFIED 23/23, vì vậy không yêu cầu chạy lại Maven.
+
+### Next exact action
+
+Tạo các port và authentication service bằng fake repository, sau khi chốt password hashing trong ADR.
