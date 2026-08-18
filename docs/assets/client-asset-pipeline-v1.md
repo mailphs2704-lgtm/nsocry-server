@@ -112,3 +112,14 @@ Payload MAP chỉ chứa template tĩnh. Zone, tọa độ người chơi, mob i
 6. Effect-template data nằm cuối payload và có schema nội bộ riêng.
 
 Mười bảng giữ thứ tự cố định: bốn requirement, bốn coin cost, gold cost và max-percent. `DataAssetCodec` chịu trách nhiệm container; parser chi tiết năm graphics block và effect-template sẽ được tách riêng để không tạo một class khổng lồ.
+
+## Appearance layout đã chốt
+
+- `unsigned byte headCount`, sau đó ba group cùng count: jumping, normal, covered.
+- Mỗi head/body part: descriptor `layerCount * 3 + 2`, `short id`, `short smallImage`, rồi mỗi layer gồm `short imageId`, `short dx`, `short dy`.
+- `unsigned byte legCount`, mỗi leg gồm `short id`, `short smallImage`.
+- `unsigned byte bodyCount`, sau đó ba group cùng count: jumping, normal, covered.
+- `signed byte mountCount`; mỗi mount gồm `short itemId` và đúng sáu frame group.
+- Mỗi frame group: `signed byte frameCount`, lặp `short frameId`.
+
+Descriptor part là signed byte nên tối đa 41 layer. Ba biến thể head và ba biến thể body bắt buộc có count giống nhau vì wire chỉ gửi count một lần cho mỗi loại.
