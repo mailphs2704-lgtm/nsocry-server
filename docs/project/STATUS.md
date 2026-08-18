@@ -364,3 +364,5 @@ Người dùng pull, chạy mvn package và chạy java -jar target/nsocry-serve
 ## Next exact action hiện tại
 
 Tạo database nsocry cục bộ, chạy V001 migration, tạo database user riêng và chạy create-admin; không đụng database reference.
+
+- Security guard: config/nsocry.properties đã được thêm vào .gitignore; chỉ file example được commit.
