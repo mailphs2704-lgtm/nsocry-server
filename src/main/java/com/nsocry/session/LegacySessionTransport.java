@@ -15,7 +15,7 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-/** Owns framed stream I/O, directional cipher state and transport close semantics for one client. */
+/** Sở hữu I/O frame, trạng thái mã hóa hai chiều và thao tác đóng của một client. */
 public final class LegacySessionTransport implements Closeable {
     private final LegacyFrameReader reader;
     private final LegacyFrameWriter writer;
