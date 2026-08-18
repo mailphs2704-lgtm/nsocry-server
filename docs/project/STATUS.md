@@ -324,3 +324,15 @@ Tạo công cụ khởi tạo account đầu tiên: nhập password ẩn qua Con
 ## Next exact action hiện tại
 
 Người dùng pull và chạy mvn test. Nếu 40/40 thành công, ghi VERIFIED rồi chuẩn bị fat JAR/lệnh vận hành và hướng dẫn tạo database nsocry cục bộ từng bước.
+
+
+## Xác minh checkpoint first administrator
+
+- Người dùng đã chạy Maven sau khi pull provisioning source.
+- Kết quả: 40 test, 0 failure, 0 error, 0 skipped.
+- FirstAdministratorService và provisioning flow: VERIFIED.
+- Không chạy lại checkpoint 40 test nếu source hoặc pom.xml chưa thay đổi.
+
+## Next exact action hiện tại
+
+Tạo JAR chạy độc lập chứa dependency, entry command an toàn cho server/create-admin và tài liệu vận hành Windows; sau đó mới yêu cầu người dùng tạo database nsocry cục bộ.
