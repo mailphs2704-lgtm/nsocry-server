@@ -309,3 +309,18 @@ Người dùng pull và chạy mvn test. Nếu 36/36 thành công, ghi VERIFIED 
 ## Next exact action hiện tại
 
 Tạo công cụ khởi tạo account đầu tiên: nhập password ẩn qua Console, hash bằng PasswordHashingPort và insert bằng prepared statement; không nhận password từ argument hoặc log.
+
+
+## Checkpoint first administrator provisioning
+
+- Đã thêm AccountRole, AccountProvisioningRepository và FirstAdministratorService.
+- Đã thêm JdbcAccountProvisioningRepository với COUNT/INSERT prepared statement.
+- FirstAdministratorCommand chỉ nhận password ẩn từ System.console, yêu cầu xác nhận và xóa các mảng password.
+- Chỉ cho phép bootstrap khi bảng accounts chưa có dữ liệu.
+- Đã thêm 4 test service; tổng mục tiêu 40.
+- Chưa chạy migration/database thật và chưa yêu cầu người dùng nhập credential.
+- Trạng thái: PENDING vì Java source mới đã được thêm.
+
+## Next exact action hiện tại
+
+Người dùng pull và chạy mvn test. Nếu 40/40 thành công, ghi VERIFIED rồi chuẩn bị fat JAR/lệnh vận hành và hướng dẫn tạo database nsocry cục bộ từng bước.
