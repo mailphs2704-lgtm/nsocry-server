@@ -1,0 +1,8 @@
+
+
+## Thiết kế mới đang hoạt động
+
+- [Tài khoản và xác thực NSOCry](account-authentication.md)
+- Script tạo database: database/00-create-database.sql.
+- Migration đầu tiên: database/migrations/V001__account_authentication.sql.
+- Chưa chạy migration; trạng thái hiện tại là PROPOSED.
