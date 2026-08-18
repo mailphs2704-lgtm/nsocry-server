@@ -624,3 +624,15 @@ Xác minh 115/115 rồi tạo parser xác định cho dữ liệu hai bảng ITE
 ## Next exact action hiện tại
 
 Xác minh 120/120 rồi thêm command chuyển dump thành candidate archive và đối chiếu checksum tái lập trên Windows. Chưa import database.
+
+## Checkpoint ITEM seed convert command
+
+- Người dùng xác nhận 120/120 test thành công; dump parser: VERIFIED.
+- Launcher có `item-seed-convert <dump-path>` với hard limit 64 MiB.
+- Command xuất archive candidate bằng pipeline parser → converter → validator → atomic archive.
+- Output không ghi đè và báo rõ database không thay đổi.
+- Năm test mới đang PENDING; suite mục tiêu 125.
+
+## Next exact action hiện tại
+
+Xác minh 125/125 rồi chạy convert và dry-run candidate trên Windows. Chỉ khi checksum khớp báo cáo mới xem xét backup + V002; vẫn chưa import tự động.
