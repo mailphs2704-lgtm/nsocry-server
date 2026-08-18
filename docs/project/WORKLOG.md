@@ -670,3 +670,18 @@ Chuẩn bị database nsocry cục bộ và administrator đầu tiên bằng mi
 ### Next exact action
 
 Tạo database user/application administrator đầu tiên, rồi code Admin Console foundation; gameplay command chờ service nền.
+
+
+## 2026-08-18 — Điều chỉnh Admin thành lộ trình song hành
+
+### Quyết định của người dùng
+
+- Dự án chính làm đến đâu thì chức năng Admin liên quan hoàn thiện đến đó.
+- Bỏ qua việc xây toàn bộ Admin Console ở thời điểm hiện tại.
+- Tiếp tục luồng chính đang làm.
+
+### Đã cập nhật
+
+- ADR-0008 và console roadmap không còn coi Admin là phase độc lập.
+- Core service là nguồn sự thật; command admin chỉ là adapter theo sau.
+- Next exact action quay lại protocol character sau login.
