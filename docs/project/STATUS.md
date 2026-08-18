@@ -203,6 +203,21 @@ Xác minh suite 55/55, sau đó lập inventory chính xác nguồn tạo bốn 
 
 Lập inventory nguồn tạo payload data/map/skill/item và appearance từ reference/tài sản được cung cấp; thiết kế asset pipeline NSOCry trước khi nối `UPDATE_VERSION` vào session runtime.
 
+## Checkpoint asset snapshot foundation
+
+- Đã kiểm kê nguồn tạo appearance, DATA, MAP, SKILL và ITEM bằng phân tích tĩnh.
+- Đã xác nhận client V7 build 217 đọc mob count của MAP bằng `short`.
+- Đã thiết kế pipeline build → validate/checksum → snapshot → protocol adapter.
+- Đã thêm `ClientAssetSnapshot` bất biến và `ClientAssetSnapshotProvider`.
+- Snapshot yêu cầu đủ bốn payload và byte version đầu phải khớp manifest.
+- Đã bổ sung encoder response cho DATA/MAP/SKILL/ITEM.
+- Thêm 5 test; suite mục tiêu kế tiếp là 60, chưa yêu cầu người dùng chạy khi đang dùng điện thoại.
+- Tài liệu: `docs/assets/client-asset-pipeline-v1.md`.
+
+## Next exact action hiện tại
+
+Chốt ITEM byte layout và triển khai item asset read model + encoder/parser test đối xứng; tiếp tục làm việc trên GitHub, chưa cần người dùng pull.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
