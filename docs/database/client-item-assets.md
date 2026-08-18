@@ -109,3 +109,7 @@ sau xử lý có chủ đích, không được âm thầm coi là dữ liệu đ
 Dump tham chiếu được cung cấp mô tả khoảng 161 option và 1213 item. Đây mới là số liệu
 inventory tĩnh; count/checksum chính thức chỉ được chốt sau khi parser nguồn tạo bundle
 và artifact validator chạy thành công.
+
+Lần chạy offline hiện tại đã tạo candidate 161 option, 1213 item, payload 66811 byte,
+SHA-256 `abb320fb8a940fc28c49c6d0c5b84e09e83d28248130884881845b9dd5bea6f8`.
+Chi tiết và trạng thái phê duyệt nằm tại `docs/assets/item-seed-reference-report.md`.
