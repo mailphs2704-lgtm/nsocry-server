@@ -2,6 +2,7 @@ package com.nsocry.protocol.compat;
 
 import java.util.Arrays;
 
+/** Converts session keys to and from the delta payload expected by the V7 client. */
 public final class LegacyKeyCodec {
     private LegacyKeyCodec() {
     }
