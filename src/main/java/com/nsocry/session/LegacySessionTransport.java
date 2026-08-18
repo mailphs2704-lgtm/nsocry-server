@@ -25,6 +25,7 @@ public final class LegacySessionTransport implements Closeable {
     private RollingXorCipher inboundCipher;
     private RollingXorCipher outboundCipher;
 
+    /** Tạo transport từ hai stream, giới hạn protocol và tài nguyên cần đóng cuối phiên. */
     public LegacySessionTransport(
             InputStream input,
             OutputStream output,
@@ -35,6 +36,7 @@ public final class LegacySessionTransport implements Closeable {
         this.closeTarget = Objects.requireNonNull(closeTarget, "closeTarget");
     }
 
+    /** Xác minh trigger -27 rỗng, gửi khóa và kích hoạt cipher độc lập hai chiều. */
     public void beginHandshake(byte[] key) throws IOException {
         requireOpen();
         ProtocolFrame trigger = reader.readUnencryptedShortFrame();
@@ -53,6 +55,7 @@ public final class LegacySessionTransport implements Closeable {
         state.keySent();
     }
 
+    /** Đọc frame mã hóa tiếp theo từ client sau khi trao đổi khóa hoàn tất. */
     public ProtocolFrame readClientFrame() throws IOException {
         requireOpen();
         if (inboundCipher == null) {
@@ -61,6 +64,7 @@ public final class LegacySessionTransport implements Closeable {
         return reader.readEncryptedFrame(inboundCipher, false);
     }
 
+    /** Gửi frame ngắn mã hóa cho client bằng con trỏ chiều ra. */
     public void sendShortFrame(ProtocolFrame frame) throws IOException {
         requireOpen();
         if (outboundCipher == null) {
@@ -69,6 +73,7 @@ public final class LegacySessionTransport implements Closeable {
         writer.writeEncryptedShortFrame(frame, outboundCipher);
     }
 
+    /** Gửi payload full-size mã hóa cho client bằng con trỏ chiều ra. */
     public void sendFullSizePayload(byte[] payload) throws IOException {
         requireOpen();
         if (outboundCipher == null) {
@@ -77,11 +82,13 @@ public final class LegacySessionTransport implements Closeable {
         writer.writeEncryptedFullSizeFrame(payload, outboundCipher);
     }
 
+    /** Trả state machine thuộc transport để processor điều phối phase. */
     public HandshakeStateMachine state() {
         return state;
     }
 
     @Override
+    /** Đóng phase và tài nguyên nền đúng một lần. */
     public void close() throws IOException {
         if (closed.compareAndSet(false, true)) {
             state.close();
@@ -89,6 +96,7 @@ public final class LegacySessionTransport implements Closeable {
         }
     }
 
+    /** Từ chối thao tác I/O sau khi transport đã đóng. */
     private void requireOpen() throws IOException {
         if (closed.get()) {
             throw new IOException("session transport is closed");
