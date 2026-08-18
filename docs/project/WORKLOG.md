@@ -866,3 +866,23 @@ Phân tích DATA payload theo từng block và xác định phần nào là clie
 ### Next exact action
 
 Đối chiếu appearance parser với version blob và triển khai container head/body/leg/mount.
+
+## 2026-08-18 — Appearance asset codec và điểm dừng kiểm chứng
+
+### Đã triển khai
+
+- Read model part layer, head/body, leg và mount.
+- Appearance encoder/parser đối xứng.
+- Validation count ba biến thể, descriptor và đúng sáu mount frame group.
+- Bốn test mới; suite tích lũy mục tiêu 81.
+
+### Kiểm chứng Work
+
+- Main source assets + protocol compatibility compile thành công với javac 17.
+- Không có legacy namespace trong source/test mới.
+
+### Điểm dừng
+
+- Checkpoint VERIFIED gần nhất: 55/55.
+- Các checkpoint asset mới có 26 test đang PENDING Maven/JUnit.
+- Cần người dùng pull và chạy `mvn test`; chỉ sau 81/81 mới triển khai database-backed builders/runtime wiring.
