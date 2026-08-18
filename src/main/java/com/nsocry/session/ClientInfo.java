@@ -1,6 +1,6 @@
 package com.nsocry.session;
 
-/** Decoded client capabilities and compatibility metadata sent before login. */
+/** Thông tin khả năng và tương thích của client đã được giải mã trước khi đăng nhập. */
 public record ClientInfo(
         byte clientType,
         byte zoomLevel,
