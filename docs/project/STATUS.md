@@ -701,3 +701,16 @@ Xác minh 145/145 rồi chạy `item-seed-db-verify` trên Windows. Không nối
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
+
+## Checkpoint SKILL dump inventory
+
+- Người dùng xác nhận 150/150 test thành công.
+- Offline inventory: 7 class, 72 option, 91 template, 967 level, 3883 level option.
+- Tất cả ID/reference liên tục và hợp lệ; tối đa 6 option/level.
+- Có 4 raw-byte value >127; đã đánh dấu difference và bảo toàn miền 0–255 trong V003 draft.
+- Năm test mới đang PENDING; suite mục tiêu 155.
+- V003 chưa chạy.
+
+## Next exact action hiện tại
+
+Xác minh 155/155 rồi tạo full SKILL converter/read model candidate và liệt kê chính xác bốn byte-value khác biệt. Không migration/import.
