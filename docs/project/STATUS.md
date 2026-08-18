@@ -636,3 +636,16 @@ Xác minh 120/120 rồi thêm command chuyển dump thành candidate archive và
 ## Next exact action hiện tại
 
 Xác minh 125/125 rồi chạy convert và dry-run candidate trên Windows. Chỉ khi checksum khớp báo cáo mới xem xét backup + V002; vẫn chưa import tự động.
+
+## Checkpoint V002 schema preflight foundation
+
+- Người dùng xác nhận 125/125 test thành công.
+- Windows candidate/dry-run khớp SHA-256 Work; artifact: VERIFIED_CROSS_PLATFORM.
+- Schema contract kiểm tra đúng 12 cột V002 cùng type/unsigned/nullability.
+- JDBC inspector chỉ đọc information_schema; không DDL/DML.
+- Năm test mới đang PENDING; suite mục tiêu 130.
+- V002 và importer vẫn chưa chạy.
+
+## Next exact action hiện tại
+
+Xác minh 130/130 rồi thêm command schema preflight chỉ đọc. Sau đó mới lập checkpoint backup và xin xác nhận trước khi chạy V002.
