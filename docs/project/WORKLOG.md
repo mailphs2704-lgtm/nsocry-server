@@ -353,3 +353,26 @@ Wire accepted socket to transport/processor with a secure key-provider port and 
 ### Continuity rule
 
 Do not rerun this exact 15-test checkpoint unless protocol/session/network source or build configuration changes. The next verification target is the full loopback handshake integration.
+
+
+## 2026-08-18 — Full loopback handshake wiring
+
+### Implemented
+
+- Introduced a `SessionKeyProvider` port so networking does not own key-generation policy.
+- Added `SecureRandomSessionKeyProvider` with an explicit 1–255-byte key length boundary.
+- Added `LegacyHandshakeConnectionHandler`, connecting each accepted socket to `LegacySessionTransport` and `HandshakeProcessor`.
+- The handler requires CLIENT_INFO before LOGIN and accepts only AUTHENTICATED or LOGIN_REJECTED as terminal bootstrap results.
+- Added `LegacyHandshakeLoopbackTest` using a real loopback socket, transmitted key reconstruction, a continuous client outbound cipher cursor, CLIENT_INFO, LOGIN and fake authentication.
+- Authentication assertions use non-production fixture values; credentials/tokens are not logged.
+- Database and gameplay remain outside this checkpoint.
+
+### Verification
+
+- Static/source review completed.
+- Work environment cannot execute Maven or Java compilation because it contains a JRE only (`java` present; `mvn` and `javac` absent).
+- Windows verification target is exactly 16 tests. Do not claim VERIFIED until `mvn test` succeeds on the user machine.
+
+### Next exact action
+
+Pull the branch and run `mvn test`. After 16/16 pass, record the result and continue to application composition/configuration and a sanitized `NetworkEventSink` implementation.
