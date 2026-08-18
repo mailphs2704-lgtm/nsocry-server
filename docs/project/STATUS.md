@@ -350,3 +350,17 @@ Tạo JAR chạy độc lập chứa dependency, entry command an toàn cho serv
 ## Next exact action hiện tại
 
 Người dùng pull, chạy mvn package và chạy java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help. Nếu 44/44 và help thành công, ghi VERIFIED rồi hướng dẫn tạo database nsocry/migration cục bộ.
+
+
+## Xác minh executable JAR
+
+- Windows Maven chạy 44 test: 0 failure, 0 error, 0 skipped.
+- mvn package: BUILD SUCCESS.
+- Shade tạo target/nsocry-server-0.1.0-SNAPSHOT.jar.
+- java -jar ... help in đúng server/create-admin/help.
+- Cảnh báo overlapping META-INF/MANIFEST.MF là cảnh báo gộp resource; ManifestResourceTransformer đã tạo main manifest đúng.
+- Executable JAR/launcher: VERIFIED.
+
+## Next exact action hiện tại
+
+Tạo database nsocry cục bộ, chạy V001 migration, tạo database user riêng và chạy create-admin; không đụng database reference.
