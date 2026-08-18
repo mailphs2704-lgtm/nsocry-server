@@ -1,6 +1,6 @@
 package com.nsocry.session;
 
-/** Observable result of one successfully processed handshake step. */
+/** Kết quả quan sát được sau một bước handshake được xử lý thành công. */
 public enum HandshakeEvent {
     KEY_ESTABLISHED,
     CLIENT_INFO_ACCEPTED,
