@@ -89,3 +89,15 @@ Chốt byte layout chi tiết của ITEM trước vì đây là payload nhỏ v�
 7. Mỗi option: `short parameter`, `byte optionTemplateId`.
 
 Các count mà client đọc bằng `readByte()` bị giới hạn 0–127. Class count được đọc bằng `readUnsignedByte()` nên giới hạn 0–255. Codec từ chối count vượt giới hạn trước khi ghi để tránh client cấp phát mảng với kích thước âm.
+
+## MAP byte layout đã chốt cho client 217
+
+1. `byte mapVersion`.
+2. `unsigned byte mapCount`, lặp `UTF mapName`.
+3. `signed byte npcCount`.
+4. Mỗi NPC: `UTF name`, `short head`, `short body`, `short leg`, `signed byte menuRowCount`.
+5. Mỗi menu row: `signed byte choiceCount`, lặp `UTF text`.
+6. `signed short mobCount`.
+7. Mỗi mob: `byte type`, `UTF name`, `int health`, `byte moveRange`, `byte speed`.
+
+Payload MAP chỉ chứa template tĩnh. Zone, tọa độ người chơi, mob instance và trạng thái chiến đấu thuộc runtime gameplay, không được đưa vào `MapAssetBundle`.
