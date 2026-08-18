@@ -70,6 +70,14 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesItemDatabaseVerification() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"item-seed-db-verify", "seed/item.zip"});
+        assertEquals(NsocryLauncher.LaunchCommand.ITEM_SEED_DB_VERIFY, request.command());
+        assertEquals(Path.of("seed/item.zip"), request.configurationPath());
+    }
+
+    @Test
     void rejectsUnknownOrExcessArguments() {
         assertThrows(IllegalArgumentException.class,
                 () -> NsocryLauncher.parse(new String[] {"unknown"}));
