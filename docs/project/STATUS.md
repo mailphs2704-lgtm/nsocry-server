@@ -649,3 +649,15 @@ Xác minh 125/125 rồi chạy convert và dry-run candidate trên Windows. Ch�
 ## Next exact action hiện tại
 
 Xác minh 130/130 rồi thêm command schema preflight chỉ đọc. Sau đó mới lập checkpoint backup và xin xác nhận trước khi chạy V002.
+
+## Checkpoint launcher ITEM schema preflight
+
+- Người dùng xác nhận 130/130 test thành công; schema preflight foundation: VERIFIED.
+- Launcher có `item-schema-preflight [config-path]`.
+- Command chỉ in READY/NOT_READY/differences, không DDL/DML và không log database secret.
+- NOT_READY trả lỗi thay vì tiếp tục sang migration/import.
+- Năm test mới đang PENDING; suite mục tiêu 135.
+
+## Next exact action hiện tại
+
+Xác minh 135/135 rồi chạy preflight read-only trên database NSOCry. Chỉ sau report mới lập lệnh backup và xin xác nhận riêng cho V002.
