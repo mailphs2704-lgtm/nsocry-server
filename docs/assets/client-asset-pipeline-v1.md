@@ -73,7 +73,19 @@ Chốt byte layout chi tiết của ITEM trước vì đây là payload nhỏ v�
 | 1 | `byte` | item version |
 | 2 | `unsigned byte` | số item option template |
 | 3 | lặp option | `UTF name`, `byte type` |
-| 4 | `unsigned short` | số item template |
+| 4 | `signed short` | số item template, giới hạn 0–32767 |
 | 5 | lặp item | `byte type`, `byte gender`, `UTF name`, `UTF description`, `byte level`, `short icon`, `short part`, `boolean upgradable` |
 
 `ItemAssetBundle` là read model riêng cho client. Nó không phải entity vật phẩm gameplay và không chứa giá, số lượng sở hữu, chỉ số ngẫu nhiên hoặc trạng thái người chơi.
+
+## SKILL byte layout đã chốt
+
+1. `byte version`.
+2. `signed byte option-template count`, lặp `UTF option name`.
+3. `unsigned byte class count`.
+4. Mỗi class: `UTF name`, `signed byte template count`.
+5. Mỗi template: `byte id`, `UTF name`, `byte maxPoint`, `byte type`, `short icon`, `UTF description`, `signed byte level count`.
+6. Mỗi level: `short id`, `byte point`, `byte requiredLevel`, `short manaUse`, `int coolDown`, `short dx`, `short dy`, `byte maxFight`, `signed byte option count`.
+7. Mỗi option: `short parameter`, `byte optionTemplateId`.
+
+Các count mà client đọc bằng `readByte()` bị giới hạn 0–127. Class count được đọc bằng `readUnsignedByte()` nên giới hạn 0–255. Codec từ chối count vượt giới hạn trước khi ghi để tránh client cấp phát mảng với kích thước âm.
