@@ -35,7 +35,7 @@ CREATE TABLE client_skill_levels (
     id SMALLINT UNSIGNED NOT NULL,
     template_id TINYINT UNSIGNED NOT NULL,
     sort_order TINYINT UNSIGNED NOT NULL,
-    point TINYINT NOT NULL,
+    point SMALLINT UNSIGNED NOT NULL,
     required_level TINYINT NOT NULL,
     mana_use SMALLINT NOT NULL,
     cooldown INT NOT NULL,
@@ -45,6 +45,7 @@ CREATE TABLE client_skill_levels (
     PRIMARY KEY (id),
     CONSTRAINT chk_client_skill_levels_id CHECK (id <= 32767),
     CONSTRAINT chk_client_skill_levels_order CHECK (sort_order <= 126),
+    CONSTRAINT chk_client_skill_levels_point CHECK (point <= 255),
     CONSTRAINT uq_client_skill_level_order UNIQUE (template_id, sort_order),
     CONSTRAINT fk_client_skill_level_template FOREIGN KEY (template_id)
         REFERENCES client_skill_templates (id)
