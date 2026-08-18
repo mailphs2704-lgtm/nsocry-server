@@ -8,3 +8,5 @@
 - Chưa chạy migration; trạng thái hiện tại là PROPOSED.
 
 - [JdbcAccountRepository](jdbc-account-repository.md): adapter AccountRepository dùng DataSource/prepared statement; đang chờ xác minh 32 test.
+
+- [Ghép MariaDB vào bootstrap](mariadb-bootstrap.md): driver chính thức, cấu hình secret và composition root; đang chờ 36 test.
