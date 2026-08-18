@@ -19,6 +19,7 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help | In trợ giúp, không mở server/database |
 | java -jar ... server [config-path] | Nạp cấu hình, ghép database/auth và mở TCP listener |
 | java -jar ... create-admin [config-path] | Mở console tương tác tạo administrator đầu tiên |
+| java -jar ... item-seed-dry-run &lt;archive-path&gt; | Kiểm định ITEM seed archive, chỉ in metadata và không mở database |
 
 Không có argument sẽ in help. Command lạ hoặc quá nhiều argument bị từ chối.
 
@@ -47,3 +48,13 @@ Kết quả mong đợi:
 - Không yêu cầu database credential ở lệnh help.
 
 Chưa chạy server/create-admin cho đến khi database nsocry và migration được chuẩn bị.
+
+## ITEM seed dry-run
+
+Archive chứa đúng hai entry `item.bin` và `item.manifest`. Lệnh dry-run giới hạn payload
+16 MiB, manifest 4 KiB, từ chối entry lạ/trùng/directory rồi kiểm tra codec round-trip,
+count, length và SHA-256. Kết quả chỉ in version, count, length và checksum.
+
+`ItemAssetSeedArchiveService.export` ghi vào file tạm cùng thư mục rồi atomic move sang
+đích và không ghi đè file có sẵn. Đây mới là foundation để command export sau này nhận
+bundle từ nguồn được duyệt; chưa có command tự lấy dữ liệu reference hoặc database.
