@@ -886,3 +886,20 @@ Phân tích DATA payload theo từng block và xác định phần nào là clie
 - Checkpoint VERIFIED gần nhất: 55/55.
 - Các checkpoint asset mới có 26 test đang PENDING Maven/JUnit.
 - Cần người dùng pull và chạy `mvn test`; chỉ sau 81/81 mới triển khai database-backed builders/runtime wiring.
+
+## 2026-08-18 — Xác minh 81 test và snapshot assembly
+
+### VERIFIED
+
+- Người dùng chạy 81 test: 0 failure, 0 error, 0 skipped.
+- Asset snapshot, ITEM, SKILL, MAP, DATA container và appearance codec đều VERIFIED.
+
+### Đã triển khai tiếp
+
+- `ClientAssetSnapshotAssembler` tạo manifest và đủ năm payload theo kiểu all-or-nothing.
+- `AtomicClientAssetSnapshotProvider` thay snapshot nguyên tử.
+- Bốn test mới; suite mục tiêu 85.
+
+### Next exact action
+
+Xác minh 85 test rồi tạo source ports/builder orchestration, không nối thẳng session với JDBC.
