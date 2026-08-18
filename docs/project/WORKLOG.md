@@ -163,3 +163,42 @@ Client-side trigger/key behavior, unnamed payload fields, Server.version bytes, 
 ### Next exact action
 
 Decompile/inspect `V7_217_X1.jar`, đối chiếu handshake/login và tạo protocol fixture.
+
+
+## 2026-08-18 — Đối chiếu tĩnh client V7_217_X1
+
+### Quyết định phạm vi
+
+Người dùng xác nhận NSOKISS hiện đang chạy tốt. Từ checkpoint này, không build/run/test runtime NSOKISS; trạng thái đó là baseline do người dùng xác nhận. Reference chỉ được đọc tĩnh để hiểu hành vi và giao thức.
+
+### Kết quả VERIFIED
+
+- JAR có 180 class Java ME bị obfuscate; phân tích bằng bytecode, không chạy client.
+- Client mở socket/streams rồi gửi ngay `GET_SESSION_ID (-27)` với payload rỗng.
+- Client tái tạo key từ byte đầu và XOR delta; sau đó bật rolling XOR.
+- Cursor mã hóa chiều gửi và giải mã chiều nhận độc lập, tiếp tục qua nhiều frame.
+- Client outbound dùng length 2 byte; client inbound dùng length 4 byte khi command giải mã là `-32`.
+- CLIENT_INFO được gửi trước LOGIN.
+- Phát hiện client ghi field 9–10 của CLIENT_INFO theo thứ tự byte + int, còn server đọc int + byte. Tổng độ rộng vẫn 5 byte; client build này gửi cả hai bằng 0.
+- LOGIN gửi username, password, version, hai UTF rỗng, một UTF do helper sinh và một server byte.
+- CLIENT_OK là NOT_MAP/-101 không payload.
+- SELECT_PLAYER là NOT_MAP/-126 + một UTF tên nhân vật.
+- Ghi `docs/protocol/client-jar-analysis.md` và cập nhật `handshake-login.md`.
+
+### Không thực hiện
+
+- Không chạy/test NSOKISS.
+- Không sửa reference.
+- Không viết hoặc sao chép class legacy vào NSOCry.
+- Không đưa tên legacy thành package/class/method mới.
+
+### Git
+
+- Branch: `agent/document-nsokiss-runtime`
+- Draft PR: #1
+- Checkpoint bắt đầu: `f13b3d91205a900df85dd1a15fd160b2b0e1e381`
+- Commit tài liệu client đầu tiên: `b5719ab8c419211a858723caffe0ce8328c3abcf`
+
+### Next exact action
+
+Tạo protocol fixture deterministic đầu tiên cho trigger, key, rolling XOR, CLIENT_INFO, LOGIN, CLIENT_OK, SELECT_PLAYER và full-size `-32`; sau đó mới chốt skeleton server NSOCry.
