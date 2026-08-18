@@ -32,4 +32,16 @@ Inventory offline thực tế xác nhận 7 class, 72 option, 91 template, 967 l
 level option; tối đa 6 option/level. Có 4 giá trị nằm trong 128–255 ở field dùng một
 byte. Chúng được giữ và đánh dấu, không cắt hoặc từ chối âm thầm.
 
+| Entity | ID | Field | Giá trị raw | Signed byte tương thích |
+|---|---:|---|---:|---:|
+| level | 957 | point | 150 | -106 |
+| level | 958 | point | 150 | -106 |
+| level | 962 | point | 140 | -116 |
+| level | 966 | point | 140 | -116 |
+
+Không có difference ở `maxPoint`, `type`, `maxFight` hoặc `requiredLevel`.
+Read model giữ miền nghiệp vụ 0–255; việc chuyển sang signed byte chỉ diễn ra tại
+wire boundary sau khi fixture client xác nhận cách tương thích.
+
 Các số trên chưa phải manifest chính thức. V003 chưa chạy và chưa có seed/import SKILL.
+Mốc kiểm thử gần nhất do người dùng xác nhận là 155/155.
