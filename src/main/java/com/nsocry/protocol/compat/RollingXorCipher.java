@@ -2,7 +2,7 @@ package com.nsocry.protocol.compat;
 
 import java.util.Arrays;
 
-/** Stateful legacy rolling-XOR transform with an independent cursor for one direction. */
+/** Phép biến đổi rolling XOR có trạng thái và con trỏ độc lập cho một chiều truyền. */
 public final class RollingXorCipher {
     private final byte[] key;
     private int cursor;
