@@ -3,6 +3,7 @@ package com.nsocry.protocol.compat;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
+/** Encodes and decodes complete legacy-client wire frames for fixtures and compatibility tests. */
 public final class LegacyFrameCodec {
     public static final byte KEY_EXCHANGE_COMMAND = -27;
     public static final byte FULL_SIZE_COMMAND = -32;
