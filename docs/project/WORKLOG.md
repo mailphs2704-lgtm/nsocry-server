@@ -847,3 +847,22 @@ Triển khai ITEM asset codec đối xứng trước, sau đó mới đến SKIL
 ### Next exact action
 
 Phân tích DATA payload theo từng block và xác định phần nào là client graphics, progression hay effect metadata.
+
+## 2026-08-18 — DATA container codec
+
+### Đã triển khai
+
+- Enum năm graphics block và mười progression table.
+- Task route read model.
+- Data asset bundle sao chép sâu.
+- Container encoder/parser cho length-prefix, task route, EXP, progression và effect tail.
+- Bốn test mới; suite tích lũy mục tiêu 77.
+
+### Kiểm chứng trong Work
+
+- Main source assets + protocol compatibility compile thành công bằng javac 17.
+- Maven/JUnit vẫn PENDING do không có Maven/JUnit runtime trong Work.
+
+### Next exact action
+
+Đối chiếu appearance parser với version blob và triển khai container head/body/leg/mount.
