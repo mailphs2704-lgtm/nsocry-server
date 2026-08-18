@@ -12,31 +12,35 @@
 - Main checkpoint đã xác nhận: `98723d12`
 - Nhánh tài liệu đang làm: `agent/document-nsokiss-runtime`
 - Commit kiến trúc runtime: `a2e6d629`
+- Commit continuity/roadmap: `59b7365a`
 - Draft PR: [#1](https://github.com/mailphs2704-lgtm/nsocry-server/pull/1)
-- Trạng thái merge: chưa merge, không được coi tài liệu đã có trên main cho đến khi PR được hợp nhất.
+- Trạng thái merge: chưa merge; không coi tài liệu đã có trên main trước khi PR được hợp nhất.
 
 ## Đã hoàn thành (VERIFIED)
 
 - [x] Cài và kiểm tra Git trên máy người dùng.
 - [x] Cài GitHub CLI và đăng nhập tài khoản `mailphs2704-lgtm`.
 - [x] Tạo/thiết lập repository `nsocry-server`.
-- [x] Tạo cấu trúc thư mục documentation/reference ban đầu.
-- [x] Kiểm kê source NSOKISS: 250 file Java.
-- [x] Kiểm kê package cấp cao và package con.
-- [x] Lưu source inspection và các file reference lên GitHub.
-- [x] Loại `NSOKISS.zip` khoảng 269 MB khỏi Git/lịch sử push cần thiết.
-- [x] Push checkpoint reference thành công lên `main` tại `98723d12`.
-- [x] Xác định entry point: `NinjaSchool.main()`.
-- [x] Xác định chuỗi khởi động cấu hình → DB → init → start.
+- [x] Tạo cấu trúc documentation/reference.
+- [x] Kiểm kê source NSOKISS: 250 file Java và các package.
+- [x] Lưu source inspection/reference lên GitHub.
+- [x] Loại `NSOKISS.zip` khoảng 269 MB khỏi Git để push thành công.
+- [x] Push checkpoint reference lên `main` tại `98723d12`.
+- [x] Xác định `NinjaSchool.main()` là entry point.
+- [x] Xác định chuỗi cấu hình → DB → init → start.
 - [x] Xác định luồng `ServerSocket.accept() -> Session -> Controller/Service`.
-- [x] Xác định frame message mức cao: command + length + payload, có key transform.
+- [x] Xác định frame mức cao: command + length + payload, có key transform.
 - [x] Xác định SQL reference có 44 bảng.
-- [x] Tạo tài liệu `docs/architecture/nsokiss-runtime.md`.
-- [x] Mở Draft PR #1 cho tài liệu kiến trúc.
+- [x] Tạo tài liệu runtime NSOKISS.
+- [x] Tạo START-HERE, REQUIREMENTS, STATUS, ROADMAP và WORKLOG.
+- [x] Tạo workflow, documentation standard và AI handoff.
+- [x] Tạo architecture overview và package index.
+- [x] Ghi bốn ADR nền tảng.
+- [x] Mở/cập nhật Draft PR #1.
 
 ## Đang thực hiện
 
-- [ ] Hoàn thiện bộ hồ sơ bàn giao và định hướng dự án trong Draft PR #1.
+Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Discovery kế tiếp có thể thực hiện trên nhánh mới sau khi checkpoint tài liệu được chấp nhận.
 
 ## Chưa thực hiện
 
@@ -44,39 +48,35 @@
 
 - [ ] Inventory toàn bộ constant command trong `CMD.java`.
 - [ ] Ghép từng command với nhánh xử lý trong `Controller.java`.
-- [ ] Phân tích `MessageCollector`, sender queue, close/error behavior.
-- [ ] Phân tích handshake và trao đổi key hai chiều.
+- [ ] Phân tích `MessageCollector`, sender queue và close/error behavior.
+- [ ] Phân tích handshake/key transform hai chiều.
 - [ ] Phân tích client metadata/client type.
-- [ ] Phân tích luồng login đầy đủ.
-- [ ] Truy dependency login đến `User`, `Char`, DAO và SQL.
+- [ ] Phân tích login và dependency đến `User`, `Char`, DAO, SQL.
 - [ ] Phân tích client JAR để xác nhận protocol.
 - [ ] Ghép 44 bảng với class/method đọc ghi.
-- [ ] Lập bản đồ tải game data, map, mob, NPC, item, skill, task.
+- [ ] Lập bản đồ game data/map/mob/NPC/item/skill/task.
 
-### Thiết kế NSOCry
+### Thiết kế và xây dựng NSOCry
 
 - [ ] Chốt Java/build tool.
 - [ ] Chốt package/module architecture.
 - [ ] Chốt concurrency và session lifecycle.
-- [ ] Thiết kế schema database `nsocry`.
-- [ ] Thiết kế migration và seed data.
-- [ ] Thiết kế logging, config và error handling.
-- [ ] Viết skeleton server.
-- [ ] Viết test protocol.
+- [ ] Thiết kế schema `nsocry`, migration và seed.
+- [ ] Thiết kế logging/config/error handling.
+- [ ] Viết skeleton server và protocol tests.
 - [ ] Kết nối client thật.
 
-## Không được làm lại nếu không có lý do
+## Không được làm lại nếu không có bằng chứng trạng thái đổi
 
 - Kiểm tra NSOKISS có chạy được không.
 - Liệt kê lại toàn bộ file/package.
-- Cài lại Git/GitHub CLI.
-- Tạo lại repository.
+- Cài lại Git/GitHub CLI hoặc tạo lại repository.
 - Push lại ZIP lớn.
-- Yêu cầu người dùng dán toàn bộ `Server.java` hoặc source đã có trong reference.
+- Yêu cầu người dùng dán toàn bộ source đã có trong reference.
 
 ## Blocker hiện tại
 
-Không có blocker kỹ thuật cho bước discovery kế tiếp. Việc merge Draft PR #1 cần người dùng duyệt khi nội dung hoàn chỉnh.
+Không có blocker kỹ thuật. Quyết định merge Draft PR #1 thuộc người dùng.
 
 ## Next exact action
 
@@ -85,4 +85,4 @@ Không có blocker kỹ thuật cho bước discovery kế tiếp. Việc merge 
 - `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/constants/CMD.java`
 - `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/network/Controller.java`
 
-Sau đó tạo `docs/protocol/command-inventory.md` với mỗi command gồm: tên, giá trị byte/int, hướng client/server, handler, service gọi ra, trạng thái xác minh và ghi chú payload. Chưa viết network code NSOCry trước khi inventory và handshake tối thiểu hoàn thành.
+Tạo `docs/protocol/command-inventory.md`. Mỗi command phải có tên, giá trị, hướng truyền, session phase, handler, service/use case gọi ra, payload đã biết, evidence và trạng thái VERIFIED/UNKNOWN. Chưa viết network/gameplay code NSOCry trước khi inventory và handshake tối thiểu hoàn thành.
