@@ -13,7 +13,7 @@ class ItemAssetSeedValidatorTest {
     @Test
     void acceptsExactManifestAndReturnsOperationalMetadata() throws Exception {
         ItemAssetValidationResult result = ItemAssetSeedValidator.validate(
-                fixture(), new ItemAssetSeedManifest((byte) 26, 1, 1, FIXTURE_SHA256));
+                fixture(), new ItemAssetSeedManifest((byte) 26, 1, 1, 35, FIXTURE_SHA256));
 
         assertEquals(26, result.version());
         assertEquals(1, result.optionCount());
@@ -24,7 +24,7 @@ class ItemAssetSeedValidatorTest {
 
     @Test
     void rejectsUnexpectedCountBeforeApproval() {
-        ItemAssetSeedManifest manifest = new ItemAssetSeedManifest((byte) 26, 2, 1, FIXTURE_SHA256);
+        ItemAssetSeedManifest manifest = new ItemAssetSeedManifest((byte) 26, 2, 1, 35, FIXTURE_SHA256);
 
         assertThrows(ItemAssetSeedValidationException.class,
                 () -> ItemAssetSeedValidator.validate(fixture(), manifest));
@@ -36,7 +36,7 @@ class ItemAssetSeedValidatorTest {
                 (byte) 26,
                 List.of(new ItemOptionAsset("Tên đã đổi", (byte) 2)),
                 fixture().items());
-        ItemAssetSeedManifest manifest = new ItemAssetSeedManifest((byte) 26, 1, 1, FIXTURE_SHA256);
+        ItemAssetSeedManifest manifest = new ItemAssetSeedManifest((byte) 26, 1, 1, 35, FIXTURE_SHA256);
 
         assertThrows(ItemAssetSeedValidationException.class,
                 () -> ItemAssetSeedValidator.validate(changed, manifest));
@@ -45,7 +45,7 @@ class ItemAssetSeedValidatorTest {
     @Test
     void rejectsMalformedChecksumManifest() {
         assertThrows(IllegalArgumentException.class,
-                () -> new ItemAssetSeedManifest((byte) 26, 1, 1, "not-a-sha256"));
+                () -> new ItemAssetSeedManifest((byte) 26, 1, 1, 35, "not-a-sha256"));
     }
 
     private static ItemAssetBundle fixture() {
