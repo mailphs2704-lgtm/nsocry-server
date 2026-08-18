@@ -4,6 +4,7 @@ import java.net.InetSocketAddress;
 import java.time.Duration;
 import java.util.Objects;
 
+/** Immutable validated TCP listener limits and timeout configuration. */
 public record TcpServerConfig(
         InetSocketAddress bindAddress,
         int backlog,
