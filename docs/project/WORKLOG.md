@@ -333,3 +333,23 @@ Người dùng yêu cầu tiếp tục các công việc có thể làm độc l
 ### Next exact action
 
 Wire accepted socket to transport/processor with a secure key-provider port and loopback handshake integration test. Fake authentication only; no database/gameplay.
+
+
+## 2026-08-18 — Windows verification of session/TCP checkpoint
+
+### VERIFIED result
+
+- Pulled branch successfully.
+- Maven compiled 22 main source files with release 17.
+- Maven compiled 7 test source files.
+- Test classes: TCP server, frame stream, protocol fixture, handshake payload, handshake processor, handshake state machine and session transport.
+- Tests run: 15.
+- Failures: 0.
+- Errors: 0.
+- Skipped: 0.
+- Final result: `BUILD SUCCESS`.
+- Total time shown: 1.826 seconds.
+
+### Continuity rule
+
+Do not rerun this exact 15-test checkpoint unless protocol/session/network source or build configuration changes. The next verification target is the full loopback handshake integration.
