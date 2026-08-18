@@ -515,3 +515,24 @@ Pull và chạy mvn test; sau 29/29 mới triển khai JdbcAccountRepository cho
 ### Next exact action
 
 Viết JdbcAccountRepository dựa trên DataSource, prepared statement và lỗi persistence đã làm sạch; chưa ghép credential database vào source.
+
+
+## 2026-08-18 — JdbcAccountRepository
+
+### Đã triển khai
+
+- Adapter AccountRepository dựa trên javax.sql.DataSource.
+- Prepared statement cho username và mọi update.
+- Mapping status 0/1/2 sang ACTIVE/LOCKED/BANNED; dữ liệu ngoài contract bị từ chối.
+- try-with-resources cho Connection, PreparedStatement và ResultSet.
+- AccountPersistenceException với message đã làm sạch.
+- Ba test dùng JDBC proxy, không kết nối database reference hoặc MariaDB thật.
+
+### Kiểm chứng
+
+- Checkpoint authentication trước đó VERIFIED 29/29.
+- Persistence source mới PENDING; mục tiêu 32 test.
+
+### Next exact action
+
+Pull và chạy mvn test; sau 32/32 mới ghép MariaDB DataSource/configuration vào bootstrap.
