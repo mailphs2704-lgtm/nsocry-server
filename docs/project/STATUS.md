@@ -366,3 +366,17 @@ Người dùng pull, chạy mvn package và chạy java -jar target/nsocry-serve
 Tạo database nsocry cục bộ, chạy V001 migration, tạo database user riêng và chạy create-admin; không đụng database reference.
 
 - Security guard: config/nsocry.properties đã được thêm vào .gitignore; chỉ file example được commit.
+
+
+## Database cục bộ và yêu cầu Admin Console
+
+- Người dùng đã tạo database nsocry và chạy V001 thành công; SHOW TABLES/DESCRIBE accounts đúng schema.
+- Migration V001 trên MariaDB cục bộ: VERIFIED.
+- Ý tưởng lệnh bài Admin qua run.bat đã được ACCEPTED.
+- ADR-0008 quy định batch chỉ là launcher, business logic ở Java, bắt buộc role/confirmation/audit.
+- Giả định mở sk nghĩa là mở sự kiện.
+- Command vật phẩm/sự kiện/giftcode sẽ dùng service thật khi module đó tồn tại, không thao tác SQL/JSON trực tiếp.
+
+## Next exact action hiện tại
+
+Tạo database user nsocry riêng và administrator đầu tiên bằng công cụ VERIFIED; sau đó triển khai nền Admin Console gồm login, help, status, audit và exit.
