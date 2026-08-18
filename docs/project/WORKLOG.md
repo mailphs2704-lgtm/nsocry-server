@@ -903,3 +903,22 @@ Phân tích DATA payload theo từng block và xác định phần nào là clie
 ### Next exact action
 
 Xác minh 85 test rồi tạo source ports/builder orchestration, không nối thẳng session với JDBC.
+
+## 2026-08-18 — Xác minh 85 test và asset source orchestration
+
+### VERIFIED
+
+- Người dùng chạy 85 test: 0 failure, 0 error, 0 skipped.
+- Snapshot assembler và atomic provider đã được kiểm chứng trên máy Windows.
+
+### Đã triển khai tiếp
+
+- Năm source port độc lập cho DATA/MAP/SKILL/ITEM/appearance.
+- Publisher port tách thao tác publish khỏi nguồn lưu trữ.
+- Build service đọc đủ năm nguồn, assemble rồi mới publish.
+- Lỗi nguồn hoặc kết quả null giữ nguyên snapshot hiện hành.
+- Bốn test mới; suite mục tiêu 89.
+
+### Next exact action
+
+Xác minh 89 test rồi thiết kế JDBC adapter theo schema NSOCry, bắt đầu từ ITEM; không truy vấn database reference và không nối JDBC vào session.
