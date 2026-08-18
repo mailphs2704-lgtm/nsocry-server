@@ -1,8 +1,8 @@
 # Trạng thái hiện tại của NSOCry
 
 **Cập nhật:** 2026-08-18 UTC  
-**Trạng thái dự án:** Discovery / reverse engineering  
-**Source NSOCry:** chưa bắt đầu  
+**Trạng thái dự án:** Protocol bootstrap  
+**Source NSOCry:** đã bắt đầu — codec compatibility tối thiểu  
 **Nguồn sự thật:** repository và thư mục `docs/`
 
 ## Snapshot Git
@@ -41,7 +41,7 @@
 
 ## Đang thực hiện
 
-Protocol fixture đầu tiên đã hoàn thành và được đọc/parse lại từ GitHub. PR #1 vẫn là Draft và chưa merge.
+Protocol bootstrap đã có source và tests. Bước kế tiếp là TCP session skeleton + explicit handshake state machine. PR #1 vẫn là Draft và chưa merge.
 
 ## Chưa thực hiện
 
@@ -59,12 +59,13 @@ Protocol fixture đầu tiên đã hoàn thành và được đọc/parse lại 
 
 ### Thiết kế và xây dựng NSOCry
 
-- [ ] Chốt Java/build tool (next).
-- [ ] Chốt package/module architecture.
+- [x] Chốt Java 17 + Maven; JUnit 6 cho automated tests.
+- [x] Chốt single-module bootstrap và package root `com.nsocry`; compatibility boundary `com.nsocry.protocol.compat`.
 - [ ] Chốt concurrency và session lifecycle.
 - [ ] Thiết kế schema `nsocry`, migration và seed.
 - [ ] Thiết kế logging/config/error handling.
-- [ ] Viết skeleton server và protocol tests.
+- [x] Tạo build skeleton, key/cipher/frame codec và fixture-based protocol tests.
+- [ ] Viết TCP session skeleton và explicit handshake state machine.
 - [ ] Kết nối client thật.
 
 ## Naming policy đang hiệu lực
@@ -127,6 +128,23 @@ Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người d
 - Có trigger/key frame và vector full-size `-32` 32 KiB kèm SHA-256.
 - JSON đã được đọc và parse lại thành công từ GitHub.
 
+## Client V7 safety checkpoint
+
+- Không phát hiện analytics/telemetry, hidden HTTP tracker, IMEI/IMSI, danh bạ hoặc location collection trong static scan.
+- Có SMS payment helper do server message kích hoạt; chưa có bằng chứng đây là tracking.
+- Không repack JAR vì chưa có defect đủ bằng chứng và sửa cipher một phía sẽ phá tương thích.
+- Audit: `docs/security/client-v7-static-audit.md`.
+- Original SHA-256: `affd33efffe2962c90c7e1da696d273ef9ac07ce27b81623afe8f364d2f32dd1`.
+
+## Protocol bootstrap checkpoint
+
+- Java 17, Maven, JUnit 6; ADR-0006.
+- Source: `com.nsocry.protocol.compat`.
+- Key delta codec, rolling XOR cursor, short/full-size frame codec và immutable frame value.
+- Main source compile VERIFIED bằng JDK 17.
+- Manual key/full-size vector verification PASSED.
+- Maven/JUnit suite chưa chạy tại Work environment vì không có Maven CLI; test source đã được tạo để chạy sau khi pull.
+
 ## Next exact action
 
-Chốt Java/build/module skeleton cho NSOCry, sau đó tạo codec tối thiểu và automated tests đọc trực tiếp fixture `handshake-login-v1.json`. Không kết nối database/gameplay ở bước này.
+Tạo TCP session skeleton với explicit states: CONNECTED → KEY_SENT → CLIENT_INFO → LOGIN → AUTHENTICATED. Dùng codec hiện tại, giới hạn frame, deterministic close/error và không log credential. Chưa kết nối database/gameplay.
