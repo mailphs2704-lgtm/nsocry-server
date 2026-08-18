@@ -595,3 +595,18 @@ Viết account bootstrap command an toàn và unit test repository insert trư�
 ### Next exact action
 
 Pull và chạy mvn test; sau 40/40 mới đóng gói lệnh vận hành và hướng dẫn tạo database nsocry cục bộ.
+
+
+## 2026-08-18 — Windows xác minh first administrator
+
+### VERIFIED
+
+- Tests run: 40.
+- Failures: 0.
+- Errors: 0.
+- Skipped: 0.
+- Provisioning validation, one-time guard và password clearing đều đạt.
+
+### Next exact action
+
+Đóng gói runnable JAR đầy đủ dependency và chuẩn hóa lệnh server/create-admin trước khi thao tác MariaDB thật.
