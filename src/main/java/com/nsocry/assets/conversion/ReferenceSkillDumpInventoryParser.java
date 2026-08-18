@@ -1,5 +1,6 @@
 package com.nsocry.assets.conversion;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -36,29 +37,31 @@ public final class ReferenceSkillDumpInventoryParser {
 
         Set<Integer> classIds = ids(classes);
         Set<Integer> templateIds = ids(templates);
-        int signedByteOverflowCount = 0;
+        List<SkillRawByteDifference> byteDifferences = new ArrayList<>();
         for (List<String> template : templates) {
+            int templateId = integer(template.get(0), "template id");
             int classId = integer(template.get(1), "template class");
             if (!classIds.contains(classId)) {
                 throw new IllegalArgumentException("skill template tham chiếu class không tồn tại");
             }
-            signedByteOverflowCount += checkedWireByte(integer(template.get(3), "max point"), "max point");
-            signedByteOverflowCount += checkedWireByte(integer(template.get(4), "template type"), "template type");
+            checkWireByte(integer(template.get(3), "max point"), "template", templateId, "maxPoint", byteDifferences);
+            checkWireByte(integer(template.get(4), "template type"), "template", templateId, "type", byteDifferences);
             checkedShort(integer(template.get(5), "template icon"), "template icon");
         }
 
         int levelOptionCount = 0;
         int maximumOptions = 0;
         for (List<String> level : levels) {
+            int levelId = integer(level.get(0), "level id");
             int templateId = integer(level.get(1), "level template");
             if (!templateIds.contains(templateId)) {
                 throw new IllegalArgumentException("skill level tham chiếu template không tồn tại");
             }
-            signedByteOverflowCount += checkedWireByte(integer(level.get(2), "max fight"), "max fight");
-            signedByteOverflowCount += checkedWireByte(integer(level.get(3), "required level"), "required level");
+            checkWireByte(integer(level.get(2), "max fight"), "level", levelId, "maxFight", byteDifferences);
+            checkWireByte(integer(level.get(3), "required level"), "level", levelId, "requiredLevel", byteDifferences);
             checkedShort(integer(level.get(4), "mana use"), "mana use");
             integer(level.get(5), "cooldown");
-            signedByteOverflowCount += checkedWireByte(integer(level.get(6), "point"), "point");
+            checkWireByte(integer(level.get(6), "point"), "level", levelId, "point", byteDifferences);
             checkedShort(integer(level.get(7), "dx"), "dx");
             checkedShort(integer(level.get(8), "dy"), "dy");
             int count = validateOptions(level.get(9), options.size());
@@ -70,7 +73,7 @@ public final class ReferenceSkillDumpInventoryParser {
                 classes.size(), options.size(), templates.size(), levels.size(), levelOptionCount,
                 templates.isEmpty() ? 0 : 0, templates.isEmpty() ? 0 : templates.size() - 1,
                 levels.isEmpty() ? 0 : 0, levels.isEmpty() ? 0 : levels.size() - 1,
-                maximumOptions, signedByteOverflowCount);
+                maximumOptions, byteDifferences.size(), byteDifferences);
     }
 
     /** Parse chính xác array option JSON có schema param/id và kiểm tra reference. */
@@ -129,11 +132,18 @@ public final class ReferenceSkillDumpInventoryParser {
         if (count > maximum) throw new IllegalArgumentException(name + " vượt giới hạn " + maximum);
     }
 
-    private static int checkedWireByte(int value, String name) {
+    private static void checkWireByte(
+            int value,
+            String entityType,
+            int entityId,
+            String field,
+            List<SkillRawByteDifference> differences) {
         if (value < Byte.MIN_VALUE || value > 255) {
-            throw new IllegalArgumentException(name + " vượt raw byte");
+            throw new IllegalArgumentException(field + " vượt raw byte");
         }
-        return value > Byte.MAX_VALUE ? 1 : 0;
+        if (value > Byte.MAX_VALUE) {
+            differences.add(new SkillRawByteDifference(entityType, entityId, field, value));
+        }
     }
 
     private static short checkedShort(int value, String name) {
