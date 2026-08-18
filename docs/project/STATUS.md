@@ -255,6 +255,19 @@ Chốt MAP payload client 217 gồm map, NPC/menu và mob template; thiết kế
 
 Phân rã DATA payload thành năm block length-prefixed và các bảng progression/effect; chốt schema từng block trước khi code.
 
+## Checkpoint DATA container codec
+
+- Đã chốt container DATA: 5 graphics block, task routes, EXP, 10 progression table và effect-template tail.
+- Đã thêm `DataAssetBundle` sao chép sâu, bắt buộc đủ mọi block/bảng.
+- Codec kiểm tra length-prefix không vượt payload còn lại và signed-byte counts không âm.
+- Parser chi tiết graphics/effect được giữ thành bước riêng để tránh class khổng lồ.
+- Thêm 4 test; suite tích lũy mục tiêu 77, PENDING Maven verification.
+- Toàn bộ main source trong `assets` + `protocol.compat` compile thành công bằng javac 17 nội bộ.
+
+## Next exact action hiện tại
+
+Chốt appearance payload (head/body/leg/mount) và dựng codec container; sau đó mới thiết kế builder lấy read model từ database/reference assets.
+
 
 ## Checkpoint: TCP handshake integration implemented
 
