@@ -1021,6 +1021,25 @@ Xác minh 105 test rồi tạo command xuất artifact ra file an toàn và dry-
 
 Xác minh 110 test rồi thiết kế bộ chuyển đổi dữ liệu ITEM tham chiếu thành read model NSOCry có báo cáo khác biệt; chưa import database.
 
+## 2026-08-18 — Xác minh 110 test và ITEM reference converter
+
+### VERIFIED
+
+- Người dùng chạy 110 test: 0 failure, 0 error, 0 skipped.
+- ITEM seed archive export/dry-run và launcher command: VERIFIED.
+
+### Đã triển khai tiếp
+
+- Row model tách biệt cho option/template tham chiếu, không mang tên database cũ.
+- Converter offline sắp theo ID và từ chối gap, duplicate, overflow, boolean ngoài 0/1.
+- Report chứa count/range cùng số fashion value không nằm trên ITEM wire.
+- Fashion được đánh dấu để xử lý ở appearance/gameplay checkpoint, không âm thầm mất.
+- Năm test mới; suite mục tiêu 115.
+
+### Next exact action
+
+Xác minh 115 test rồi tạo parser nguồn xác định cho hai bảng ITEM trong dump được cung cấp và sinh conversion report thực tế; chưa ghi database.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
