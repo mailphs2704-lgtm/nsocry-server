@@ -6,39 +6,30 @@ Nhật ký append-only. Không sửa lịch sử để làm đẹp tiến độ;
 
 ### Đã làm
 
-- Thiết lập Git và GitHub CLI trên máy người dùng.
-- Xác nhận tài khoản GitHub `mailphs2704-lgtm`.
-- Tạo repository `nsocry-server`.
-- Tạo cấu trúc `docs/` và `source-reference/`.
-- Kiểm kê source NSOKISS.
-- Tạo các file reference về tree, package, source và network core.
-- Stage/commit bộ reference.
-- Xử lý lỗi GitHub từ chối file `NSOKISS.zip` khoảng 269 MB.
+- Thiết lập Git và GitHub CLI; xác nhận tài khoản `mailphs2704-lgtm`.
+- Tạo repository, cấu trúc `docs/` và `source-reference/`.
+- Kiểm kê source NSOKISS và tạo các file reference.
+- Xử lý GitHub từ chối `NSOKISS.zip` khoảng 269 MB.
 - Giữ ZIP trên máy nhưng loại khỏi Git.
 - Push reference thành công lên main.
 
-### Kết quả đã kiểm chứng
+### Kết quả VERIFIED
 
 - NSOKISS reference có 250 file Java.
-- Repository main cập nhật đến `98723d12`.
-- NSOKISS ZIP không còn chặn push.
-- Reference và inspection cần thiết đã ở GitHub.
+- Main cập nhật đến `98723d12`.
+- ZIP lớn không còn chặn push.
+- Reference/inspection cần thiết đã ở GitHub.
 
 ### Không cần làm lại
 
-- Cài Git/GitHub CLI.
-- Kiểm kê package/source.
-- Push ZIP.
-- Xác minh NSOKISS đang hoạt động.
+Cài Git/GitHub CLI, kiểm kê package/source, push ZIP và xác minh NSOKISS đang hoạt động.
 
 ## 2026-08-18 — Bản đồ runtime NSOKISS đầu tiên
 
 ### Đã làm
 
 - Đọc `NinjaSchool.java`, `Server.java`, `Session.java` và network core.
-- Xác định entry point và chuỗi startup.
-- Xác định vòng accept socket và tạo session.
-- Xác định vai trò mức cao của Controller/Service.
+- Xác định entry point, startup, vòng accept socket, tạo session và vai trò Controller/Service.
 - Xác định framing mức cao của message.
 - Nhóm 44 bảng SQL reference.
 - Viết `docs/architecture/nsokiss-runtime.md`.
@@ -52,30 +43,40 @@ Nhật ký append-only. Không sửa lịch sử để làm đẹp tiến độ;
 
 ### Kiểm chứng
 
-Đối chiếu trực tiếp source reference và database SQL. Chưa kiểm chứng byte-level protocol bằng client JAR.
+Đối chiếu trực tiếp source reference và SQL. Chưa kiểm chứng byte-level protocol bằng client JAR.
 
 ## 2026-08-18 — Chuẩn hóa continuity và định hướng tổng thể
 
 ### Mục tiêu
 
-Đảm bảo ChatGPT Work, Chat thường hoặc một phiên AI mới có thể tiếp tục đúng hướng mà không phụ thuộc trí nhớ hội thoại.
+Đảm bảo ChatGPT Work, Chat thường hoặc AI mới tiếp tục đúng hướng mà không phụ thuộc trí nhớ hội thoại.
 
-### Nội dung bổ sung
+### Đã làm
 
-- Điểm vào START-HERE.
-- Requirements và ràng buộc.
-- Status với next exact action.
-- Roadmap theo stage gate.
-- Quy trình Git/documentation.
-- Architecture overview.
-- ADR cho các quyết định nền tảng.
-- Hướng dẫn AI handoff.
-- Package documentation index.
+- Tạo `START-HERE.md`.
+- Ghi yêu cầu/ràng buộc vào `REQUIREMENTS.md`.
+- Tạo snapshot `STATUS.md` với đúng một next action.
+- Xây dựng roadmap theo stage gate.
+- Chuẩn hóa workflow và documentation.
+- Viết architecture overview và package index.
+- Tạo bốn ADR nền tảng.
+- Tạo hướng dẫn AI handoff.
+- Cập nhật README tài liệu.
 
-### Trạng thái
+### Git
 
-Đang được thêm vào Draft PR #1. Sau khi commit hoàn tất, entry này phải được cập nhật trong STATUS nếu SHA/PR thay đổi.
+- Branch: `agent/document-nsokiss-runtime`
+- Commit nội dung chính: `59b7365abaceec83267573c353e5212f420fd0e1`
+- Commit hoàn tất STATUS: `4f3e2a9f6f9caebf8c5f52faf477d40295d208de`
+- Draft PR: #1
 
-### Điểm tiếp tục
+### Kết quả VERIFIED
 
-Command inventory từ `CMD.java` và `Controller.java`.
+- Các file đã được ghi trên nhánh GitHub và đọc lại được qua GitHub.
+- Không có code NSOCry nào được viết trong task này.
+- NSOKISS reference không bị sửa.
+- Next exact action là command inventory từ `CMD.java` và `Controller.java`.
+
+### Trạng thái bàn giao
+
+Checkpoint continuity hoàn tất. Phiên sau phải bắt đầu ở `docs/START-HERE.md` và không lặp các mục VERIFIED trong STATUS.
