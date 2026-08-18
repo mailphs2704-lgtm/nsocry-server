@@ -1160,6 +1160,30 @@ Xác minh 140 test rồi package; chỉ sau đó mới xin xác nhận cuối v�
 
 Xác minh 145 test rồi package và chạy database payload verify trên Windows. Chỉ sau checksum match mới nối ITEM source vào snapshot bootstrap.
 
+## 2026-08-18 — ITEM end-to-end VERIFIED và SKILL foundation
+
+### VERIFIED
+
+- Người dùng chạy 145 test: 0 failure, 0 error, 0 skipped.
+- Database ITEM load → encode → validate khớp candidate 66811 byte/SHA-256.
+- ITEM pipeline: VERIFIED_END_TO_END.
+
+### Quyết định
+
+- Không publish snapshot bán phần khi DATA/MAP/SKILL/appearance chưa có source hoàn chỉnh.
+- Giữ JdbcItemAssetSource sẵn sàng và tiếp tục SKILL theo cùng pipeline an toàn.
+
+### Đã triển khai tiếp
+
+- Migration V003 draft với năm bảng SKILL chuẩn hóa, không JSON runtime.
+- Structural validator kiểm tra nested count, duplicate ID và option reference.
+- Năm test mới; suite mục tiêu 150.
+- V003 chưa chạy và chưa import SKILL.
+
+### Next exact action
+
+Xác minh 150 test rồi xây parser/converter SKILL từ dump và tạo report thực tế; chưa chạy V003.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
