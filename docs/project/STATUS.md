@@ -41,7 +41,7 @@
 
 ## Đang thực hiện
 
-Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Discovery kế tiếp có thể thực hiện trên nhánh mới sau khi checkpoint tài liệu được chấp nhận.
+Thiết kế protocol fixture đầu tiên cho NSOCry từ evidence server + client đã khóa. PR #1 vẫn là Draft và chưa merge.
 
 ## Chưa thực hiện
 
@@ -53,7 +53,7 @@ Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Dis
 - [x] Phân tích handshake/key transform phía server; phía client còn cần JAR/fixture.
 - [x] Lập layout 13 field CLIENT_INFO; 2 field vẫn UNKNOWN semantics.
 - [x] Lập layout LOGIN và luồng đến `User.login`; mapping SQL đầy đủ còn pending.
-- [ ] Phân tích client JAR để xác nhận protocol.
+- [x] Phân tích tĩnh client JAR để xác nhận protocol; không chạy/test NSOKISS.
 - [ ] Ghép 44 bảng với class/method đọc ghi.
 - [ ] Lập bản đồ game data/map/mob/NPC/item/skill/task.
 
@@ -86,7 +86,7 @@ Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Dis
 
 ## Blocker hiện tại
 
-Không có blocker kỹ thuật. Quyết định merge Draft PR #1 thuộc người dùng.
+Không có blocker kỹ thuật. Không cần chạy/test NSOKISS vì người dùng đã xác nhận hệ thống reference đang hoạt động tốt.
 
 ## Kết quả command inventory
 
@@ -108,14 +108,26 @@ Không có blocker kỹ thuật. Quyết định merge Draft PR #1 thuộc ngư�
 - Ghi 8 legacy defects không được copy, gồm plaintext credential logging/password comparison.
 - Tài liệu: `docs/protocol/handshake-login.md`.
 
+## Kết quả đối chiếu client JAR
+
+- Client gửi frame đầu `GET_SESSION_ID (-27)`, payload rỗng.
+- Xác nhận key reconstruction bằng XOR delta và cursor đọc/ghi độc lập.
+- Xác nhận CLIENT_INFO, LOGIN, CLIENT_OK và SELECT_PLAYER.
+- Hai UTF chưa đặt tên của LOGIN là chuỗi rỗng trong client build này.
+- Phát hiện lệch kiểu field CLIENT_INFO: client ghi byte + int, server đọc int + byte; tổng 5 byte nên vẫn căn hàng khi cả hai bằng 0.
+- Client đọc length 4 byte cho command `-32`.
+- Tài liệu: `docs/protocol/client-jar-analysis.md`.
+- Không chạy client/server NSOKISS.
+
 ## Next exact action
 
-Đối chiếu client `V7_217_X1.jar` để xác minh:
+Viết protocol fixture deterministic đầu tiên cho NSOCry:
 
-1. first trigger frame;
-2. key reconstruction/cursor;
-3. ý nghĩa hai UTF chưa đặt tên, random và server byte;
-4. cấu trúc `Server.version`;
-5. SELECT_PLAYER request và enter-map sequence.
+1. trigger `E5 00 00`;
+2. key response dùng test key cố định;
+3. reconstruction và rolling XOR với cursor độc lập;
+4. CLIENT_INFO đúng byte order thực tế của client;
+5. LOGIN, CLIENT_OK và SELECT_PLAYER;
+6. case full-size server→client command `-32`.
 
-Cập nhật `docs/protocol/handshake-login.md` bằng evidence client-side hoặc ghi rõ phần không thể decompile. Sau đó mới thiết kế protocol fixture đầu tiên.
+Sau fixture, chốt Java/build/module skeleton dựa trên protocol đã kiểm chứng.
