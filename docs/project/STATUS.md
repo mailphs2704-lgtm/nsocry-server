@@ -256,3 +256,15 @@ Tạo PasswordHashingPort, AccountRepository port và AuthenticationService bằ
 ## Next exact action hiện tại
 
 Người dùng pull và chạy mvn test. Nếu 29/29 thành công, ghi VERIFIED rồi triển khai JdbcAccountRepository cùng cấu hình kết nối database nsocry; không dùng database reference.
+
+
+## Xác minh checkpoint authentication
+
+- Người dùng đã chạy bộ Maven sau khi pull authentication source.
+- Kết quả: 29 test, 0 failure, 0 error, 0 skipped.
+- Authentication domain/service và PBKDF2 password hashing: VERIFIED.
+- Không chạy lại checkpoint 29 test nếu Java source hoặc pom.xml chưa thay đổi.
+
+## Next exact action hiện tại
+
+Triển khai JdbcAccountRepository bằng DataSource/prepared statement và unit test adapter; sau đó mới ghép MariaDB driver/pool vào bootstrap.
