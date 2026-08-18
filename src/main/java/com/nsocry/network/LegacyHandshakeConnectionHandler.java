@@ -15,6 +15,7 @@ public final class LegacyHandshakeConnectionHandler implements SessionConnection
     private final SessionKeyProvider keys;
     private final AuthenticationPort authentication;
 
+    /** Tạo handler bằng giới hạn protocol, nguồn khóa phiên và port xác thực bắt buộc. */
     public LegacyHandshakeConnectionHandler(
             ProtocolLimits limits,
             SessionKeyProvider keys,
@@ -25,6 +26,7 @@ public final class LegacyHandshakeConnectionHandler implements SessionConnection
     }
 
     @Override
+    /** Chạy trọn handshake cho một socket đến kết quả xác thực hoặc từ chối. */
     public void handle(Socket socket) throws Exception {
         Objects.requireNonNull(socket, "socket");
         LegacySessionTransport transport = new LegacySessionTransport(
@@ -39,6 +41,7 @@ public final class LegacyHandshakeConnectionHandler implements SessionConnection
         }
     }
 
+    /** Xác minh sự kiện thực tế đúng với bước handshake bắt buộc. */
     private static void require(HandshakeEvent expected, HandshakeEvent actual) {
         if (actual != expected) {
             throw new IllegalStateException(
