@@ -187,3 +187,17 @@ Run `mvn test` once after pulling. If all 16 tests pass, mark this checkpoint VE
 - Chỉ giữ nguyên tiếng Anh đối với định danh code, tên protocol/command và thuật ngữ không nên dịch.
 - Đã bổ sung package-info cho ba package, Javadoc trách nhiệm cho toàn bộ 25 type và tài liệu tra cứu đến cấp method.
 - Việc chuẩn hóa Javadoc chi tiết cho từng method được xem là công việc tài liệu bắt buộc, không phải tính năng tùy chọn.
+
+
+## Hoàn tất chuẩn hóa Javadoc tiếng Việt
+
+- Toàn bộ 3 package hiện tại có package-info.java tiếng Việt.
+- Toàn bộ 25 type hiện tại có mô tả trách nhiệm tiếng Việt.
+- Constructor, public method và helper private có logic trong protocol.compat, session và network đã có Javadoc tiếng Việt.
+- Tài liệu tra cứu class/method đã được liên kết từ chỉ mục package và START-HERE.
+- documentation-standard.md đã khóa ngôn ngữ và độ phủ bắt buộc.
+- Đây là thay đổi chỉ có comment/tài liệu; kết quả logic 16/16 vẫn là checkpoint VERIFIED gần nhất.
+
+## Next exact action hiện tại
+
+Thiết kế và triển khai application bootstrap tối thiểu: nạp cấu hình TCP đã kiểm tra, tạo SecureRandomSessionKeyProvider và NetworkEventSink làm sạch dữ liệu; chưa nối database hoặc gameplay.
