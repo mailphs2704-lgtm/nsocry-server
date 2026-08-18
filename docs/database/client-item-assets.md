@@ -113,3 +113,13 @@ và artifact validator chạy thành công.
 Lần chạy offline hiện tại đã tạo candidate 161 option, 1213 item, payload 66811 byte,
 SHA-256 `abb320fb8a940fc28c49c6d0c5b84e09e83d28248130884881845b9dd5bea6f8`.
 Chi tiết và trạng thái phê duyệt nằm tại `docs/assets/item-seed-reference-report.md`.
+
+## Schema preflight
+
+`JdbcItemAssetSchemaInspector` chỉ đọc `information_schema.columns` của database đang
+chọn và bật read-only cho connection. `ItemAssetSchemaContract` yêu cầu đúng 12 cột
+V002, kiểm tra data type, unsigned và NOT NULL; cột thiếu, thừa, trùng hoặc sai contract
+đều làm `ready=false`.
+
+Preflight không chạy migration và không tự gọi importer. Khi V002 chưa chạy, kết quả
+hợp lệ là report liệt kê các cột thiếu; đây không phải lý do để tự động sửa schema.
