@@ -99,3 +99,35 @@ Checkpoint continuity hoàn tất. Phiên sau phải bắt đầu ở `docs/STAR
 ### Lưu ý
 
 Tên legacy vẫn được phép trong `source-reference/` và tài liệu trích dẫn reference; không được dùng làm namespace hoặc định danh implementation NSOCry.
+
+## 2026-08-18 — Inventory command và Controller routing
+
+### Phạm vi
+
+- `CMD.java` (311 constant).
+- `Controller.java` (outer dispatch và ba nested envelope).
+
+### Kết quả VERIFIED
+
+- 126 constant có route client→server trong Controller.
+- DIRECT: 71.
+- NOT_LOGIN: 2.
+- NOT_MAP: 31.
+- SUB_COMMAND: 22.
+- 185 declaration không có route trong Controller; hướng truyền vẫn UNKNOWN.
+- 69 giá trị byte được nhiều symbol dùng lại.
+- Numeric byte không đủ để định danh command; phải kèm envelope/scope và session phase.
+- `NEW_MESSAGE` có raw nested subcommand 0 không có tên trong CMD.
+
+### Artifact
+
+- `docs/protocol/command-inventory.md`
+- Bao gồm toàn bộ 311 declarations, 126 routed cases, handler evidence, collision table và analysis gaps.
+
+### Quy tắc an toàn áp dụng
+
+Không gán server→client cho constant không có Controller case. Không đặt payload field dựa trên tên symbol. Legacy symbol chỉ là mapping reference; tên NSOCry sẽ theo ADR-0005.
+
+### Next exact action
+
+Phân tích `MessageCollector`, key transform, `setClientType` và `login`; viết `docs/protocol/handshake-login.md`.

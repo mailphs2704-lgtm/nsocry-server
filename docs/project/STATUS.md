@@ -47,8 +47,8 @@ Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Dis
 
 ### Discovery
 
-- [ ] Inventory toàn bộ constant command trong `CMD.java`.
-- [ ] Ghép từng command với nhánh xử lý trong `Controller.java`.
+- [x] Inventory toàn bộ 311 constant command trong `CMD.java`.
+- [x] Ghép 126 command với nhánh xử lý trong `Controller.java`; 185 declaration còn cần truy usage.
 - [ ] Phân tích `MessageCollector`, sender queue và close/error behavior.
 - [ ] Phân tích handshake/key transform hai chiều.
 - [ ] Phân tích client metadata/client type.
@@ -88,11 +88,22 @@ Không có task code đang dở. PR #1 đang chờ người dùng xem/merge. Dis
 
 Không có blocker kỹ thuật. Quyết định merge Draft PR #1 thuộc người dùng.
 
+## Kết quả command inventory
+
+- 311 constant được khai báo.
+- 126 constant được route trong Controller: DIRECT 71, NOT_LOGIN 2, NOT_MAP 31, SUB_COMMAND 22.
+- 185 constant chưa được Controller route; chưa được phép kết luận là server→client.
+- 69 giá trị byte có collision giữa nhiều symbol; scope/envelope là một phần của identity.
+- Tài liệu: `docs/protocol/command-inventory.md`.
+
 ## Next exact action
 
-Đọc:
+Phân tích byte-level handshake/login theo thứ tự:
 
-- `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/constants/CMD.java`
-- `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/network/Controller.java`
+1. `Session.MessageCollector` và hàm đọc message/key.
+2. `Session.setClientType(Message)`.
+3. `Session.login(Message)`.
+4. Các response tương ứng trong `Service`.
+5. Đối chiếu client JAR nếu source server không đủ.
 
-Tạo `docs/protocol/command-inventory.md`. Mỗi command phải có tên, giá trị, hướng truyền, session phase, handler, service/use case gọi ra, payload đã biết, evidence và trạng thái VERIFIED/UNKNOWN. Chưa viết network/gameplay code NSOCry trước khi inventory và handshake tối thiểu hoàn thành.
+Tạo `docs/protocol/handshake-login.md` với frame, thứ tự field, kiểu dữ liệu, session state transition, lỗi và evidence. Không suy đoán field chưa đọc được.
