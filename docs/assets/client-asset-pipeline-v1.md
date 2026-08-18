@@ -123,3 +123,9 @@ Mười bảng giữ thứ tự cố định: bốn requirement, bốn coin cost
 - Mỗi frame group: `signed byte frameCount`, lặp `short frameId`.
 
 Descriptor part là signed byte nên tối đa 41 layer. Ba biến thể head và ba biến thể body bắt buộc có count giống nhau vì wire chỉ gửi count một lần cho mỗi loại.
+
+## Snapshot assembly và publish
+
+`ClientAssetSnapshotAssembler` mã hóa đủ DATA/MAP/SKILL/ITEM/appearance trong biến cục bộ rồi mới tạo snapshot. Lỗi ở bất kỳ codec nào làm toàn bộ thao tác thất bại, không thể sinh snapshot bán phần.
+
+`AtomicClientAssetSnapshotProvider` publish một snapshot hoàn chỉnh bằng `AtomicReference`. Session đang chạy luôn nhìn thấy snapshot cũ hoặc snapshot mới, không thấy trạng thái đang thay dở.
