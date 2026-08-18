@@ -21,7 +21,7 @@ public final class ItemAssetSeedArtifactGenerator {
             byte[] payload = ItemAssetCodec.encode(bundle);
             String sha256 = sha256(payload);
             ItemAssetSeedManifest manifest = new ItemAssetSeedManifest(
-                    bundle.version(), bundle.options().size(), bundle.items().size(), sha256);
+                    bundle.version(), bundle.options().size(), bundle.items().size(), payload.length, sha256);
             ItemAssetValidationResult validation = ItemAssetSeedValidator.validate(bundle, manifest);
             return new ItemAssetSeedArtifact(payload, manifest, validation, manifestText(validation));
         } catch (IOException | IllegalArgumentException exception) {
