@@ -267,3 +267,29 @@ Checkpoint này có thể pull về máy để cài Maven/JDK và chạy test. K
 ### Next exact action
 
 Viết TCP session skeleton và explicit handshake state machine; chưa nối database/gameplay.
+
+
+## 2026-08-18 — Windows pull/build verification
+
+### User-machine result
+
+- Branch `agent/document-nsokiss-runtime` fetched and switched successfully.
+- Working tree clean and synchronized with origin.
+- Java runtime/compiler: 19.0.2; Maven compiled with `release 17`.
+- Maven resolved project dependencies successfully.
+- Main compile: 4 source files.
+- Test compile: 1 test source file.
+- Test class: `com.nsocry.protocol.compat.ProtocolFixtureTest`.
+- Tests run: 3.
+- Failures: 0.
+- Errors: 0.
+- Skipped: 0.
+- Final result: `BUILD SUCCESS`.
+
+### Meaning
+
+The first NSOCry source checkpoint is now VERIFIED both in Work static/manual checks and by the real Windows checkout. The protocol fixture, build configuration and automated tests are pull-safe.
+
+### Next exact action
+
+Proceed with TCP session skeleton and explicit handshake state machine.
