@@ -714,3 +714,29 @@ Tạo database user/application administrator đầu tiên, rồi code Admin Con
 ### Next exact action
 
 Pull và chạy `mvn test`. Nếu 50/50 thành công, đánh dấu codec VERIFIED rồi phân tích client V7 để giải mã chính xác blob `UPDATE_VERSION` trước khi nối runtime.
+
+## 2026-08-18 — Xác minh 50 test và giải mã UPDATE_VERSION
+
+### VERIFIED
+
+- Người dùng đã chạy suite: 50 test, không failure/error/skip.
+- Codec danh sách, chọn và tạo nhân vật được nâng từ PENDING thành VERIFIED.
+
+### Phân tích tĩnh client V7
+
+- Dùng bytecode JAR, không chạy client hoặc NSOKISS.
+- Xác minh payload `UPDATE_VERSION` mở đầu bằng data/map/skill/item version.
+- Xác minh bốn request cập nhật rỗng: DATA `-122`, MAP `-121`, SKILL `-120`, ITEM `-119`.
+- Xác minh client chỉ gửi `CLIENT_OK` sau khi bốn version khớp.
+- Dữ liệu ngoại hình nằm nối tiếp bốn byte version và được đọc khi data version đã khớp.
+
+### Đã triển khai
+
+- Thêm `ClientVersionManifest`, `ClientDataSet` và `PostLoginVersionPayloadCodec`.
+- Codec không tự tạo asset giả; chỉ mã hóa contract đã có bằng chứng.
+- Thêm 5 unit test; suite mục tiêu 55.
+- Cập nhật tài liệu protocol bằng tiếng Việt.
+
+### Next exact action
+
+Pull và chạy `mvn test`. Nếu 55/55 thành công, inventory nguồn tạo payload data/map/skill/item và appearance để thiết kế asset pipeline NSOCry.
