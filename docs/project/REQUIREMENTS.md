@@ -122,6 +122,9 @@ Một module chỉ được DONE khi:
 - **CONFIRMED:** mọi AI phải tuân thủ giao thức giao tiếp, thực hiện và trả kết quả tại
   `docs/handoff/OWNER-COLLABORATION.md`; ưu tiên ngắn gọn, không lặp phần VERIFIED và luôn
   báo tiến độ tổng thể cùng bước tiếp theo chính xác.
+- **CONFIRMED:** mọi AI tiếp tục lưu công việc vào `agent/document-nsokiss-runtime`; cấm
+  push/merge `main`. Sau mỗi 5–10 commit phải được Codex rà soát; chỉ merge khi review đạt,
+  các gate VERIFIED và chủ dự án xác nhận rõ `ĐỒNG Ý MERGE VÀO MAIN`.
 - Không làm hỏng module đã hoàn thành.
 
 

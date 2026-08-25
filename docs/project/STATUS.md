@@ -770,6 +770,23 @@ checksum/version/count gate và không tự động publish khi startup chưa đ
 Tiếp tục xây runtime snapshot SKILL có kiểm soát theo Architecture Lock; mọi phiên AI phải
 trả kết quả theo giao thức cộng tác mới.
 
+## Checkpoint khóa quy trình merge `main`
+
+- **CONFIRMED:** nhánh phát triển duy nhất hiện tại là
+  `agent/document-nsokiss-runtime`.
+- AI tiếp quản chỉ commit/push vào nhánh này; không tự tạo luồng khác và không ghi `main`.
+- Sau mỗi 5–10 commit, Codex rà soát toàn bộ khoảng diff cùng architecture/test/docs và tác
+  động database/runtime.
+- Chỉ merge vào `main` khi review đạt, gate liên quan VERIFIED và chủ dự án xác nhận rõ
+  `ĐỒNG Ý MERGE VÀO MAIN`.
+- Mốc review gốc hiện tại: `747958b754f0b3c265dc35b6734d71a9f8522a54`.
+- Không thay đổi production/database/runtime; tiến độ giữ nguyên **17%**.
+
+## Next exact action hiện tại
+
+AI tiếp quản tiếp tục runtime snapshot SKILL trên `agent/document-nsokiss-runtime`. Sau
+5–10 commit mới yêu cầu Codex rà soát; chưa merge `main`.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.

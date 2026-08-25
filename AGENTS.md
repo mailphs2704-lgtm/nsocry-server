@@ -27,10 +27,21 @@ Mọi AI hoặc lập trình viên phải đọc theo thứ tự: `docs/project/
 - Database migration/import cần backup, preflight, checksum, test và xác nhận riêng.
 - Runtime snapshot chỉ publish khi đủ nguồn và validation; cấm dữ liệu giả vượt gate.
 
+## Quản trị nhánh Git
+
+- Nhánh phát triển chung hiện tại là `agent/document-nsokiss-runtime`; mọi AI tiếp quản phải
+  pull và push checkpoint vào đúng nhánh này nếu chủ dự án chưa chỉ định nhánh khác.
+- Cấm push trực tiếp hoặc tự ý merge vào `main`.
+- Sau mỗi khoảng 5–10 commit, checkpoint phải được phiên Codex rà soát diff, Architecture
+  Lock, test, tài liệu, database/runtime impact và rủi ro hồi quy.
+- Chỉ được merge vào `main` khi review đạt, toàn bộ gate liên quan VERIFIED và chủ dự án
+  xác nhận rõ nguyên văn hoặc tương đương: `ĐỒNG Ý MERGE VÀO MAIN`.
+
 ## Hoàn tất một checkpoint
 
 1. Cập nhật tài liệu chức năng liên quan bằng tiếng Việt.
 2. Cập nhật `STATUS.md` và `WORKLOG.md`: VERIFIED/PENDING, test, count/checksum,
    tác động database/runtime, tiến độ tổng thể và `Next exact action`.
 3. Chạy test, `git diff --check` và architecture lock test.
-4. Stage đúng file thuộc nhiệm vụ, commit và push đúng nhánh.
+4. Stage đúng file thuộc nhiệm vụ, commit và push vào `agent/document-nsokiss-runtime`;
+   không merge `main` nếu chưa đủ review và xác nhận bắt buộc.

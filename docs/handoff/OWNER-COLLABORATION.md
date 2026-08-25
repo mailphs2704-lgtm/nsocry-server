@@ -59,6 +59,10 @@ Bạn cần chạy: <chỉ ghi khi thật sự cần>.
   không đọc lại vô điều kiện toàn bộ 250 class reference.
 - Khi nhiều AI cùng làm, mỗi AI dùng nhánh/commit có ranh giới nhỏ; không để thay đổi chưa ghi
   nhật ký kéo dài qua nhiều module.
+- Nhánh làm việc chung hiện tại là `agent/document-nsokiss-runtime`; AI khác không tự tạo
+  luồng riêng hoặc ghi vào `main` nếu chưa có chỉ định mới.
+- Sau mỗi 5–10 commit, chủ dự án sẽ yêu cầu Codex rà soát. `main` chỉ nhận checkpoint sau
+  review đạt và xác nhận rõ của chủ dự án.
 
 ## 5. Điều kiện dừng
 

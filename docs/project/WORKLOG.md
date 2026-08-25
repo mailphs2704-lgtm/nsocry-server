@@ -1566,3 +1566,13 @@ tiếp tục runtime snapshot SKILL theo contract đã khóa.
   review theo commit/PR và architecture gate.
 - Liên kết quy tắc vào AGENTS, README, REQUIREMENTS và AI-HANDOFF.
 - Không thay đổi production/database/runtime; tiến độ gameplay cơ bản giữ nguyên 17%.
+
+## 2026-08-25 — Khóa quy tắc nhánh và quyền merge `main`
+
+- Chủ dự án chốt mọi AI tiếp tục trên `agent/document-nsokiss-runtime`.
+- Cấm push trực tiếp hoặc tự ý merge vào `main`.
+- Chu kỳ review được chốt khoảng 5–10 commit/lần, lấy mốc hiện tại từ commit `747958b`.
+- Merge chỉ hợp lệ sau review Codex đạt, gate VERIFIED và xác nhận rõ của chủ dự án:
+  `ĐỒNG Ý MERGE VÀO MAIN`.
+- Đã đưa quy tắc vào AGENTS, workflow, requirements, giao thức cộng tác và STATUS.
+- Không thay đổi production/database/runtime; tiến độ gameplay cơ bản giữ nguyên 17%.

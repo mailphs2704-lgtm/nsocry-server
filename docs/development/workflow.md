@@ -3,9 +3,15 @@
 ## 1. Nguyên tắc nhánh
 
 - `main`: checkpoint ổn định, không thử nghiệm trực tiếp.
-- Mỗi khối công việc dùng nhánh `agent/<mô-tả-ngắn>` hoặc nhánh feature tương đương.
+- **CONFIRMED:** nhánh phát triển chung hiện tại là `agent/document-nsokiss-runtime`.
+- Mọi AI tiếp quản phải tiếp tục/push vào nhánh trên; không tự tạo nhánh khác nếu chủ dự án
+  chưa yêu cầu, tránh phân tán checkpoint.
 - Mở Draft PR sớm để giữ checkpoint và cho phép kiểm tra.
-- Chỉ merge khi tiêu chí hoàn thành và documentation đã đủ.
+- Cấm push trực tiếp hoặc tự merge vào `main`.
+- Sau mỗi khoảng 5–10 commit phải có một lượt rà soát diff, Architecture Lock, test, tài
+  liệu và tác động database/runtime bởi phiên Codex được chủ dự án giao review.
+- Chỉ merge vào `main` khi review đạt, tiêu chí hoàn thành/documentation đủ và chủ dự án
+  xác nhận rõ `ĐỒNG Ý MERGE VÀO MAIN` hoặc câu có ý nghĩa tương đương.
 
 ## 2. Chu trình một task
 
