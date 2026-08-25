@@ -765,6 +765,21 @@ phải khớp 42402 byte và SHA-256 đã khóa; chưa migration/import.
 Người dùng pull và xác minh 175/175. Sau đó mới thêm launcher command
 `skill-schema-preflight`; chưa chạy migration.
 
+## Checkpoint 175 VERIFIED và SKILL schema command
+
+- Người dùng xác nhận 175/175; schema foundation: VERIFIED.
+- Đã nối `skill-schema-preflight [config-path]` vào executable launcher.
+- Command chỉ đọc, in READY/NOT_READY/differences và `databaseChanged=false`.
+- NOT_READY kết thúc lỗi để automation không hiểu nhầm schema đã sẵn sàng.
+- Năm test mới đang PENDING; suite mục tiêu 180.
+- V003 chưa chạy; SKILL chưa import; database/runtime snapshot không thay đổi.
+- Tiến độ ước tính đến gameplay cơ bản: 15%.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 180/180, sau đó package và chạy preflight read-only trên
+database NSOCry. Kỳ vọng NOT_READY vì V003 chưa chạy; chưa migration.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
