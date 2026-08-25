@@ -1351,6 +1351,13 @@ Người dùng xác minh 175 test rồi thêm `skill-schema-preflight` command c
 Người dùng xác minh 180 test rồi chạy preflight chỉ đọc trên database hiện tại;
 chưa chạy V003 hoặc import.
 
+## 2026-08-25 — Xác minh 180 và chuyển sang database preflight
+
+- Người dùng xác nhận 180 test sạch.
+- SKILL schema command: VERIFIED.
+- Next: package và chạy read-only preflight trên database hiện tại.
+- Không chạy V003/import; tiến độ gameplay cơ bản: 15%.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
