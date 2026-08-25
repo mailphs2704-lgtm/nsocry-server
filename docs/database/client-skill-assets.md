@@ -106,3 +106,11 @@ vẫn là version 26, 42402 byte, SHA-256
 Mỗi checkpoint SKILL phải ghi bằng tiếng Việt: test đã xác nhận, count/checksum, thay đổi
 source/schema/database, trạng thái runtime snapshot, rủi ro còn lại, tiến độ tổng thể và
 `Next exact action`. Không được đánh dấu VERIFIED khi người dùng chưa gửi kết quả Windows.
+
+## Import local đã hoàn tất
+
+Người dùng xác nhận import bằng full SHA-256. Transaction đã commit 72 option, 7 class,
+91 template, 967 level và 3883 level-option; checksum artifact vẫn là
+`4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+Runtime snapshot chưa publish. Trạng thái tiếp theo là post-check database và tái dựng
+payload từ JDBC để so end-to-end, không coi count đơn thuần là đủ.
