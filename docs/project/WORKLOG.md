@@ -1358,6 +1358,14 @@ chưa chạy V003 hoặc import.
 - Next: package và chạy read-only preflight trên database hiện tại.
 - Không chạy V003/import; tiến độ gameplay cơ bản: 15%.
 
+## 2026-08-25 — Database SKILL preflight NOT_READY đúng kỳ vọng
+
+- Lần đầu không kết nối vì MariaDB chưa chạy; không phải lỗi source.
+- Sau khi bật MariaDB, inspector báo đủ 26 cột V003 còn thiếu.
+- `databaseChanged=false`; NOT_READY exception đúng contract automation.
+- Chưa chạy migration/import.
+- Next: backup database và ghi checksum trước khi xin xác nhận V003.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
