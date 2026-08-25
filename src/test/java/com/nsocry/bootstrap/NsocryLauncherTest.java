@@ -78,6 +78,22 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesSkillSchemaPreflightWithDefaultConfig() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"skill-schema-preflight"});
+        assertEquals(NsocryLauncher.LaunchCommand.SKILL_SCHEMA_PREFLIGHT, request.command());
+        assertNull(request.configurationPath());
+    }
+
+    @Test
+    void parsesSkillSchemaPreflightWithExplicitConfig() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"skill-schema-preflight", "config/local.properties"});
+        assertEquals(NsocryLauncher.LaunchCommand.SKILL_SCHEMA_PREFLIGHT, request.command());
+        assertEquals(Path.of("config/local.properties"), request.configurationPath());
+    }
+
+    @Test
     void rejectsUnknownOrExcessArguments() {
         assertThrows(IllegalArgumentException.class,
                 () -> NsocryLauncher.parse(new String[] {"unknown"}));
