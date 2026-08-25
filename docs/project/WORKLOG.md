@@ -1296,6 +1296,21 @@ chạy hai command trên Windows; chưa được chạy V003 hoặc import dữ 
 
 Người dùng pull, chạy 170 test rồi package và đối chiếu hai command trên Windows.
 
+## 2026-08-25 — Windows xác minh 170/170
+
+### VERIFIED
+
+- HEAD local/remote: `ba503279`.
+- Working tree clean sau pull.
+- Maven compile 143 source file và 44 test source file thành công.
+- 170 test: 0 failure, 0 error, 0 skipped; BUILD SUCCESS.
+- Lỗi unlink Git pack cũ không ảnh hưởng source hoặc lịch sử nhánh.
+
+### Next exact action
+
+Package JAR và chạy SKILL convert/dry-run chéo Windows; so count, raw-byte difference,
+payload length và SHA-256. Không chạy V003 hoặc import.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
