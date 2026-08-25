@@ -1598,3 +1598,29 @@ tiếp tục runtime snapshot SKILL theo contract đã khóa.
 
 Người dùng xác minh 205/205, sau đó xây command publish thử read-only từ JDBC với report
 version/count/checksum; chưa tự động publish khi startup.
+
+## 2026-08-25 — 205 VERIFIED và command publish thử SKILL
+
+### VERIFIED
+
+- Người dùng xác nhận 205/205 test sạch.
+- Snapshot/runtime publish service của checkpoint trước chuyển sang VERIFIED Windows.
+
+### Đã triển khai
+
+- Launcher route mới `skill-runtime-publish <archive-path>`.
+- Command kiểm tra archive và V003 trước khi đọc JDBC source.
+- Atomic publish chỉ xảy ra sau version/count/raw difference/length/SHA-256 gate.
+- Report ghi rõ database không đổi, snapshot đã publish cục bộ và startup chưa nối.
+- Thêm bốn command test và một launcher parser test; suite mục tiêu 210 PENDING Windows.
+
+### Tác động
+
+- Database không thay đổi.
+- Server startup chưa publish runtime snapshot.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+
+### Next exact action
+
+Người dùng xác minh 210/210 rồi chạy command trên Windows với archive candidate đã khóa;
+đối chiếu version 26, count, payload 42402 byte và SHA-256.

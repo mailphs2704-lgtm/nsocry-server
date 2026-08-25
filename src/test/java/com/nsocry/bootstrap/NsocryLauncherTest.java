@@ -110,6 +110,14 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesSkillRuntimePublish() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"skill-runtime-publish", "seed/skill.zip"});
+        assertEquals(NsocryLauncher.LaunchCommand.SKILL_RUNTIME_PUBLISH, request.command());
+        assertEquals(Path.of("seed/skill.zip"), request.configurationPath());
+    }
+
+    @Test
     void rejectsUnknownOrExcessArguments() {
         assertThrows(IllegalArgumentException.class,
                 () -> NsocryLauncher.parse(new String[] {"unknown"}));

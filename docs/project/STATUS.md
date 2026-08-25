@@ -803,6 +803,24 @@ AI tiếp quản tiếp tục runtime snapshot SKILL trên `agent/document-nsoki
 Người dùng pull và xác minh 205/205 trên Windows. Sau đó mới thêm command read-only để
 publish thử SKILL từ JDBC candidate, in version/count/checksum và không tự chạy khi startup.
 
+## Checkpoint 205 VERIFIED và command publish thử SKILL
+
+- Người dùng xác nhận **205/205** test thành công.
+- Runtime snapshot SKILL bất biến, defensive copy, atomic swap và failure rollback: VERIFIED.
+- Đã thêm `skill-runtime-publish <archive-path>`: archive validation → V003 preflight → JDBC
+  source → manifest gates → atomic publish → report.
+- Command không ghi database và không được gọi trong server startup.
+- Report phân biệt rõ snapshot đã publish trong tiến trình command với startup chưa nối.
+- Năm test mới đang PENDING Windows; suite mục tiêu **210**.
+- Database không đổi; server runtime snapshot chưa publish.
+- Tiến độ đến gameplay cơ bản giữ nguyên **17%**.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 210/210. Sau đó package JAR và chạy command với SKILL archive
+đã khóa; chỉ khi report khớp version 26, count, 42402 byte và SHA-256 candidate mới đánh dấu
+publish thử VERIFIED_CROSS_PLATFORM.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.

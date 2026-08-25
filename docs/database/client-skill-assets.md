@@ -134,3 +134,9 @@ startup chưa publish và giữ nguyên snapshot cũ nếu JDBC, encode hoặc m
 Luồng này chưa được tự nối vào startup. Quyết định cũ vẫn giữ nguyên: không tạo
 `ClientAssetSnapshot` bán phần cho session trước khi DATA, MAP, ITEM và appearance cùng có
 nguồn runtime đầy đủ. Database không bị ghi trong quá trình rebuild/publish SKILL.
+
+Command `skill-runtime-publish <archive-path>` là phép thử vận hành có kiểm soát. Command
+đọc archive candidate, preflight V003, dựng lại bundle qua JDBC rồi publish vào atomic store
+cục bộ chỉ khi toàn bộ gate khớp. Report bắt buộc in version/count/length/SHA-256,
+`databaseChanged=false`, `runtimeSnapshotPublished=true` và `serverStartupWired=false`.
+Snapshot thử kết thúc cùng tiến trình command; startup server vẫn chưa tự publish.

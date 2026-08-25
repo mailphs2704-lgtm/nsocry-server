@@ -98,6 +98,17 @@ khi transaction ghi bắt đầu.
 Không chạy command này trước khi suite mục tiêu của checkpoint được VERIFIED và backup
 đã có size/checksum. Import thành công chưa tự publish runtime snapshot.
 
+### Publish thử SKILL runtime snapshot
+
+```text
+java -jar target/nsocry-server.jar skill-runtime-publish <skill-archive-path>
+```
+
+Command chỉ đọc database, yêu cầu archive hợp lệ và schema V003 READY, sau đó atomic publish
+snapshot trong tiến trình command. Output phải có `databaseChanged=false`,
+`runtimeSnapshotPublished=true` và `serverStartupWired=false`. Đây chưa phải wiring startup
+hoặc publish `ClientAssetSnapshot` đầy đủ cho session.
+
 Sau import, `item-seed-db-verify` dùng cùng archive làm nguồn sự thật để xác minh dữ
 liệu database có tái tạo đúng payload. Kết quả thành công vẫn in
 `databaseChanged=false` và `runtimeSnapshotPublished=false`.
