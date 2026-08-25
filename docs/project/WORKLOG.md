@@ -1767,3 +1767,29 @@ Push checkpoint và chạy full Maven suite 235/235. Sau VERIFIED mới tiếp t
   tra cứu bắt buộc cho chủ server/AI tiếp quản.
 - Database/runtime không đổi; tiến độ gameplay cơ bản giữ nguyên 17%.
 - Next: MAP schema contract, migration draft và read-only preflight; chưa chạy migration.
+
+## 2026-08-25 — MAP schema V004 draft và read-only preflight
+
+### Đang xây dựng
+
+- Chốt bốn bảng catalog MAP với 18 cột: tên map, NPC template, NPC menu entry, mob template.
+- Menu NPC lưu chuẩn hóa theo NPC/row/choice order để bảo toàn `List<List<String>>` trên wire
+  nhưng không khóa database vào JSON.
+- `menu_row_count` bảo toàn được hàng menu rỗng, không phụ thuộc việc có choice entry.
+- Thêm migration `V004__client_map_assets.sql` ở trạng thái DRAFT; file chưa được chạy.
+- Thêm schema column/report/contract và JDBC inspector chỉ đọc `information_schema`.
+- Thêm launcher command `map-schema-preflight [config-path]`; output không lộ credential và
+  luôn khai báo `databaseChanged=false`.
+- Thêm bảy test cho exact contract, sai khác metadata, JDBC read-only, report và launcher.
+- Developer Manual/catalog, database manual, runnable JAR và TR-003 đã cập nhật tiếng Việt.
+
+### Trạng thái
+
+- Full suite Windows mục tiêu **242** đang PENDING.
+- `databaseChanged=false`; `runtimeSnapshotPublished=false`; server startup không đổi.
+- Tiến độ đến gameplay cơ bản giữ nguyên 17% vì chưa có database/runtime MAP hoạt động.
+
+### Next exact action
+
+Push checkpoint và chạy full Maven suite 242/242. Sau VERIFIED mới chạy preflight read-only;
+không chạy V004/import nếu chưa backup và chưa có xác nhận riêng của chủ dự án.

@@ -77,6 +77,15 @@ Nếu output đã tồn tại, command dừng thay vì ghi đè. Báo cáo luôn
 Sau khi convert, chạy dry-run trên đúng archive vừa tạo và đối chiếu SHA-256 với báo
 cáo candidate trước khi cân nhắc migration/import.
 
+### Kiểm tra schema MAP V004
+
+```powershell
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-schema-preflight
+```
+
+Command chỉ đọc `information_schema`, luôn báo `databaseChanged=false`. Trước khi V004 được
+chạy, kết quả đúng là `MAP schema preflight NOT_READY`; không tự chạy migration draft.
+
 ## ITEM schema preflight
 
 ```powershell

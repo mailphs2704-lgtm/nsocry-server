@@ -29,6 +29,7 @@ public final class NsocryLauncher {
             case SKILL_RUNTIME_PUBLISH -> SkillAssetRuntimePublishCommand.main(forwarded);
             case MAP_SEED_CONVERT -> MapAssetSeedConvertCommand.main(forwarded);
             case MAP_SEED_DRY_RUN -> MapAssetSeedDryRunCommand.main(forwarded);
+            case MAP_SCHEMA_PREFLIGHT -> MapAssetSchemaPreflightCommand.main(forwarded);
             case HELP -> printUsage();
         }
     }
@@ -57,6 +58,7 @@ public final class NsocryLauncher {
             case "skill-runtime-publish" -> LaunchCommand.SKILL_RUNTIME_PUBLISH;
             case "map-seed-convert" -> LaunchCommand.MAP_SEED_CONVERT;
             case "map-seed-dry-run" -> LaunchCommand.MAP_SEED_DRY_RUN;
+            case "map-schema-preflight" -> LaunchCommand.MAP_SCHEMA_PREFLIGHT;
             case "help", "--help", "-h" -> LaunchCommand.HELP;
             default -> throw new IllegalArgumentException("unknown NSOCry command: " + args[0]);
         };
@@ -84,6 +86,7 @@ public final class NsocryLauncher {
         System.out.println("  java -jar nsocry-server.jar skill-runtime-publish <archive-path>");
         System.out.println("  java -jar nsocry-server.jar map-seed-convert <dump-path>");
         System.out.println("  java -jar nsocry-server.jar map-seed-dry-run <archive-path>");
+        System.out.println("  java -jar nsocry-server.jar map-schema-preflight [config-path]");
         System.out.println("  java -jar nsocry-server.jar help");
     }
 
@@ -104,6 +107,7 @@ public final class NsocryLauncher {
         SKILL_RUNTIME_PUBLISH,
         MAP_SEED_CONVERT,
         MAP_SEED_DRY_RUN,
+        MAP_SCHEMA_PREFLIGHT,
         HELP
     }
 

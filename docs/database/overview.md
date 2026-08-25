@@ -3,6 +3,8 @@
 ## Thiết kế mới đang hoạt động
 
 - [Tài khoản và xác thực NSOCry](account-authentication.md)
+- [Read model MAP V004](client-map-assets.md) — bốn bảng catalog, migration draft và
+  preflight chỉ đọc; chưa chạy migration/import.
 - Script tạo database: database/00-create-database.sql.
 - Migration đầu tiên: database/migrations/V001__account_authentication.sql.
 - Chưa chạy migration; trạng thái hiện tại là PROPOSED.

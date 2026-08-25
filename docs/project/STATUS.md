@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** DEVELOPER_MANUAL_VERIFIED
+**Trạng thái:** MAP_SCHEMA_PREFLIGHT_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -69,7 +69,9 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 ## PENDING
 
-- MAP chưa có schema/migration/importer và chưa publish runtime.
+- MAP V004 contract/migration draft/read-only preflight đã có; bảy test mới đang PENDING
+  Windows, full suite mục tiêu **242**.
+- MAP chưa chạy migration, chưa có importer/JDBC source và chưa publish runtime.
 - Server startup chưa nối runtime snapshot client đầy đủ DATA/MAP/SKILL/ITEM/appearance.
 - Client thật chưa vào gameplay.
 
@@ -119,7 +121,17 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Hai documentation gate bảo vệ source coverage và các trường quản trị bắt buộc.
 - Hai documentation gate và toàn bộ Developer Manual đã vượt full suite Windows **235/235**.
 
+## MAP schema V004 đang xây
+
+- Migration draft gồm bốn bảng/18 cột: map name, NPC template, NPC menu entry và mob template.
+- NPC menu chuẩn hóa bằng `(npc_id,row_order,choice_order)`, không khóa persistence vào JSON.
+- `menu_row_count` bảo toàn cả hàng menu rỗng khi dựng lại cấu trúc wire hai chiều.
+- `MapAssetSchemaContract` từ chối cột thiếu/thừa/trùng/sai type/unsigned/nullability.
+- `JdbcMapAssetSchemaInspector` chỉ đọc `information_schema` trên connection read-only.
+- Launcher có command `map-schema-preflight [config-path]`, luôn báo `databaseChanged=false`.
+- Chưa chạy V004, chưa import seed, chưa tạo JDBC asset source và chưa publish runtime.
+
 ## Next exact action
 
-Tiếp tục MAP schema contract, migration draft và read-only schema preflight trên
-`agent/document-nsokiss-runtime`. Chưa chạy migration/import và chưa merge `main`.
+Push checkpoint MAP V004 draft; người dùng pull và chạy full `mvn test`, kỳ vọng **242/242**.
+Sau VERIFIED mới chạy read-only preflight; chưa chạy migration/import và chưa merge `main`.
