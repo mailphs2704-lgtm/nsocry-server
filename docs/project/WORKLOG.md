@@ -1311,6 +1311,26 @@ Người dùng pull, chạy 170 test rồi package và đối chiếu hai comman
 Package JAR và chạy SKILL convert/dry-run chéo Windows; so count, raw-byte difference,
 payload length và SHA-256. Không chạy V003 hoặc import.
 
+## 2026-08-25 — SKILL VERIFIED_CROSS_PLATFORM và schema foundation
+
+### VERIFIED_CROSS_PLATFORM
+
+- Windows convert/dry-run khớp Work về toàn bộ count và bốn raw-byte difference.
+- Payload 42402 byte; SHA-256 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Cả hai phía báo `databaseChanged=false`.
+
+### Đã triển khai tiếp
+
+- Contract metadata cho đúng 26 cột V003.
+- Read-only JDBC inspector cho năm bảng SKILL.
+- Difference report bao phủ cột thiếu/thừa/trùng/type/unsigned/nullability.
+- Năm test mới; suite mục tiêu 175.
+- Chưa thêm command launcher, chưa chạy V003 và chưa import.
+
+### Next exact action
+
+Người dùng xác minh 175 test rồi thêm `skill-schema-preflight` command chỉ đọc.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
