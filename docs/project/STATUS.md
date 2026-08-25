@@ -884,6 +884,26 @@ interactive command; importer vẫn yêu cầu nhập đúng full SHA-256 tại 
 Chạy SQL post-check chỉ đọc cho count/ID/raw point. Sau khi khớp mới xây database payload
 verification; không publish runtime snapshot.
 
+## Checkpoint SKILL post-check và database payload verifier
+
+- SQL hậu import khớp tuyệt đối:
+  - option 72, ID 0–71;
+  - class 7, ID 0–6;
+  - template 91, ID 0–90;
+  - level 967, ID 0–966;
+  - level-option 3883;
+  - point level 957/958/962/966 = 150/150/140/140.
+- JDBC source đọc năm bảng trong một repeatable-read snapshot và kiểm tra ID/sort/reference/range.
+- Launcher có `skill-seed-db-verify <archive-path>` để encode lại DB và so manifest/SHA-256.
+- Năm test mới đang PENDING; suite mục tiêu 195.
+- Database không đổi sau post-check; runtime snapshot chưa publish.
+- Tiến độ gameplay cơ bản: 17%.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 195/195. Sau đó package và chạy database payload verifier
+trên Windows; chỉ khi checksum khớp mới đánh dấu SKILL VERIFIED_END_TO_END.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
