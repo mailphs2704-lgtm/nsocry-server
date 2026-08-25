@@ -2,7 +2,18 @@
 
 Mọi AI hoặc lập trình viên phải đọc theo thứ tự: `docs/project/STATUS.md`,
 `docs/project/WORKLOG.md`, `docs/architecture/architecture-lock.md` và
-`docs/architecture/planned-contracts.tsv` trước khi sửa source.
+`docs/architecture/planned-contracts.tsv`, sau đó
+`docs/handoff/OWNER-COLLABORATION.md` trước khi sửa source.
+
+## Giao tiếp với chủ dự án
+
+- Tuân thủ toàn bộ `docs/handoff/OWNER-COLLABORATION.md`.
+- Trả lời bằng tiếng Việt, ngắn gọn, chỉ tập trung phần mới; không kể lại phần VERIFIED.
+- Mỗi bước phải nói đang xây gì, kiểm chứng, tác động database/runtime, commit, tiến độ phần
+  trăm đến gameplay cơ bản và một bước tiếp theo chính xác.
+- Không tăng tiến độ cho stub/tài liệu/code chưa chạy và không gọi PENDING là VERIFIED.
+- Chỉ đưa lệnh Windows khi người dùng thật sự phải thao tác; lệnh phải copy được và có output
+  kỳ vọng rõ ràng.
 
 ## Bất biến
 

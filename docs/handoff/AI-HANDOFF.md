@@ -15,9 +15,10 @@ Theo thứ tự:
 5. `docs/architecture/architecture-lock.md`
 6. `docs/architecture/planned-contracts.tsv`
 7. `docs/architecture/reference-coverage.md`
-8. ADR đang hiệu lực
-9. Tài liệu architecture/module liên quan
-10. Diff/PR hiện tại
+8. `docs/handoff/OWNER-COLLABORATION.md`
+9. ADR đang hiệu lực
+10. Tài liệu architecture/module liên quan
+11. Diff/PR hiện tại
 
 ## 3. Quy tắc cho AI tiếp quản
 
@@ -31,6 +32,8 @@ Theo thứ tự:
 - Không tạo package ngoài danh mục khóa và không đổi contract `LOCKED` nếu chưa có ADR,
   cập nhật manifest/test và xác nhận của chủ dự án.
 - Contract `RESERVED` là ranh giới đã dành trước, không phải bằng chứng chức năng đã hoàn thành.
+- Phản hồi và cách làm việc phải tuân thủ `OWNER-COLLABORATION.md`; không bắt người dùng
+  kể lại tiến độ đã có trên GitHub.
 
 ## 4. Prompt tiếp tục dành cho Chat thường
 

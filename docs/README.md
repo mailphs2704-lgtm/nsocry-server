@@ -19,6 +19,8 @@ Thư mục `docs/` là nguồn sự thật chính thức về yêu cầu, quyế
 13. [development/workflow.md](development/workflow.md) — quy trình làm việc và Git.
 14. [development/documentation-standard.md](development/documentation-standard.md) — chuẩn tài liệu bắt buộc.
 15. [handoff/AI-HANDOFF.md](handoff/AI-HANDOFF.md) — cách tiếp tục khi đổi Chat/Work/AI.
+16. [handoff/OWNER-COLLABORATION.md](handoff/OWNER-COLLABORATION.md) — cách giao tiếp,
+    thực hiện và trả kết quả bắt buộc khi làm việc với chủ dự án.
 
 ## Phân loại độ tin cậy
 

@@ -756,6 +756,20 @@ theo lộ trình; không tự thay đổi manifest hoặc tạo package ngoài k
 Tiếp tục xây luồng publish runtime snapshot SKILL bất biến từ database đã VERIFIED, có
 checksum/version/count gate và không tự động publish khi startup chưa được kiểm chứng.
 
+## Checkpoint giao thức cộng tác với chủ dự án
+
+- Đã hệ thống hóa cách giao tiếp, thực hiện, trả result, hướng dẫn PowerShell, báo tiến độ,
+  phân loại bằng chứng và xử lý khi thất bại thành quy tắc CONFIRMED bắt buộc.
+- AI tiếp quản phải đọc `OWNER-COLLABORATION.md` trước khi sửa source.
+- Quy tắc tiết kiệm token: không lặp VERIFIED, GitHub là bộ nhớ chính, review theo khoảng
+  commit/PR và rủi ro thay vì đọc lại toàn dự án vô điều kiện.
+- Không thay đổi production, database hoặc runtime snapshot; tiến độ giữ nguyên **17%**.
+
+## Next exact action hiện tại
+
+Tiếp tục xây runtime snapshot SKILL có kiểm soát theo Architecture Lock; mọi phiên AI phải
+trả kết quả theo giao thức cộng tác mới.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.

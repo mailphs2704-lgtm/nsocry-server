@@ -1555,3 +1555,14 @@ tiếp tục runtime snapshot SKILL theo contract đã khóa.
 - Database và runtime snapshot không thay đổi.
 - Tiến độ gameplay cơ bản giữ nguyên 17%.
 - Bước kế tiếp: hiện thực publish runtime snapshot SKILL có kiểm soát theo khung đã khóa.
+
+## 2026-08-25 — Khóa giao thức cộng tác giữa AI và chủ dự án
+
+- Thêm tài liệu bắt buộc mô tả chi tiết cách giao tiếp, chu trình làm việc và mẫu trả result.
+- Ghi rõ nguyên tắc tiếng Việt, ngắn gọn, không lặp VERIFIED, báo chức năng đang xây và
+  phần trăm tổng thể ở mỗi checkpoint.
+- Chuẩn hóa cách đưa lệnh Windows, bằng chứng test, tác động database/runtime và lỗi/blocker.
+- Thêm chiến lược tiết kiệm token khi nhiều AI làm nối tiếp: commit nhỏ, nhật ký liên tục,
+  review theo commit/PR và architecture gate.
+- Liên kết quy tắc vào AGENTS, README, REQUIREMENTS và AI-HANDOFF.
+- Không thay đổi production/database/runtime; tiến độ gameplay cơ bản giữ nguyên 17%.

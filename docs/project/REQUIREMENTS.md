@@ -119,6 +119,9 @@ Một module chỉ được DONE khi:
 - NSOKISS là nguồn tham khảo hành vi tĩnh; không chạy, không sửa và không sao chép cơ học
   các god class/singleton vào NSOCry.
 - Mỗi bước hoàn thành phải cập nhật tài liệu chi tiết bằng tiếng Việt, STATUS và WORKLOG.
+- **CONFIRMED:** mọi AI phải tuân thủ giao thức giao tiếp, thực hiện và trả kết quả tại
+  `docs/handoff/OWNER-COLLABORATION.md`; ưu tiên ngắn gọn, không lặp phần VERIFIED và luôn
+  báo tiến độ tổng thể cùng bước tiếp theo chính xác.
 - Không làm hỏng module đã hoàn thành.
 
 
