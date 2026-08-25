@@ -1366,6 +1366,14 @@ chưa chạy V003 hoặc import.
 - Chưa chạy migration/import.
 - Next: backup database và ghi checksum trước khi xin xác nhận V003.
 
+## 2026-08-25 — Backup trước V003
+
+- File: `backup/nsocry-before-v003-20260825-114548.sql`.
+- Kích thước: 95731 byte.
+- SHA-256: `a20218e737aeeb5814dd727637e186deed145ca901cf7572a475b0ec079e720d`.
+- Backup hoàn tất trước migration; V003 chưa chạy.
+- Next: chỉ chạy V003 sau xác nhận rõ ràng của người dùng.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
