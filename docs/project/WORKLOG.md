@@ -1271,6 +1271,31 @@ Tạo command `skill-seed-convert` và `skill-seed-dry-run` theo mẫu pipeline 
 thêm năm test để suite mục tiêu 170. Chỉ sau khi người dùng xác nhận 170/170 mới
 chạy hai command trên Windows; chưa được chạy V003 hoặc import dữ liệu.
 
+## 2026-08-25 — Tiếp tục từ 165 và dựng SKILL seed commands
+
+### Đã đối chiếu
+
+- Nhánh `agent/document-nsokiss-runtime` vẫn ở checkpoint 165, không có code AI lạ phía sau.
+- Full SKILL candidate đầu vào giữ nguyên count/payload/checksum đã VERIFIED.
+
+### Đã triển khai
+
+- Artifact và manifest SKILL xác định, payload được defensive copy.
+- Validator kiểm tra structure/count/version/payload length/SHA-256/raw-byte differences.
+- Archive atomic, không overwrite, đúng hai entry và có hard limit giải nén.
+- Command `skill-seed-convert` và `skill-seed-dry-run` đã nối launcher.
+- Offline dump thật convert/dry-run cùng trả 42402 byte và SHA-256
+  `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Năm test mới; suite mục tiêu 170.
+
+### Trạng thái an toàn
+
+- Không chạy V003, không JDBC, không import và không publish runtime snapshot.
+
+### Next exact action
+
+Người dùng pull, chạy 170 test rồi package và đối chiếu hai command trên Windows.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
