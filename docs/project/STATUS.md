@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_SCHEMA_NOT_READY_BACKUP_REQUIRED
+**Trạng thái:** MAP_V004_AWAITING_CONFIRMATION
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -130,9 +130,11 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Bảy test MAP schema/command và catalog đầy đủ đã vượt full suite Windows **242/242**.
 - Preflight database thật trả `NOT_READY`: thiếu đúng 18/18 cột V004; không ghi nhận cột
   thừa/sai contract và `databaseChanged=false`.
+- Backup trước V004 đã tạo: `backup/nsocry-before-v004-20260825-223913.sql`, 207887 byte,
+  SHA-256 `0F6DA143638EA358837A478C18B8094C06E027ED4EB413FAA901B4808E666541`.
 - Chưa chạy V004, chưa import seed, chưa tạo JDBC asset source và chưa publish runtime.
 
 ## Next exact action
 
-Tạo backup database trước V004, ghi nhận FullName/Length/SHA-256. Chưa chạy migration/import
-và chưa merge `main`.
+Chờ chủ dự án xác nhận rõ `ĐỒNG Ý CHẠY V004`; sau đó mới cung cấp lệnh migration và chạy lại
+preflight. Chưa import MAP và chưa merge `main`.

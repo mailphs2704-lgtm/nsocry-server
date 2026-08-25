@@ -1834,3 +1834,16 @@ cột thiếu trước V004. Không chạy migration/import nếu chưa backup v
 
 Tạo backup `nsocry-before-v004-<timestamp>.sql`, kiểm tra file size và SHA-256. Chỉ sau khi
 backup hợp lệ và chủ dự án xác nhận riêng mới được chạy migration V004.
+
+## 2026-08-25 — Backup trước MAP V004 hợp lệ
+
+- File: `backup/nsocry-before-v004-20260825-223913.sql`.
+- Kích thước: 207887 byte.
+- SHA-256: `0F6DA143638EA358837A478C18B8094C06E027ED4EB413FAA901B4808E666541`.
+- Công cụ: Laragon MariaDB 10.11.10 `mysqldump.exe`; exit code 0.
+- Database chưa thay đổi; migration V004 chưa chạy; runtime snapshot chưa publish.
+
+### Next exact action
+
+Chờ xác nhận riêng `ĐỒNG Ý CHẠY V004`. Sau xác nhận mới chạy đúng migration draft đã review,
+rồi chạy lại `map-schema-preflight`; chưa import MAP seed.
