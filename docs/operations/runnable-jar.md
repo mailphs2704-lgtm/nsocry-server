@@ -109,6 +109,16 @@ snapshot trong tiến trình command. Output phải có `databaseChanged=false`,
 `runtimeSnapshotPublished=true` và `serverStartupWired=false`. Đây chưa phải wiring startup
 hoặc publish `ClientAssetSnapshot` đầy đủ cho session.
 
+## MAP seed convert và dry-run
+
+```powershell
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-seed-convert "source-reference\database.sql"
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-seed-dry-run "source-reference\database-map-seed-v7-candidate.zip"
+```
+
+Hai command chỉ đọc file offline. Convert tạo archive cạnh dump; dry-run decode và đối chiếu
+manifest/count/length/SHA-256. Cả hai đều không mở database và không publish runtime.
+
 Sau import, `item-seed-db-verify` dùng cùng archive làm nguồn sự thật để xác minh dữ
 liệu database có tái tạo đúng payload. Kết quả thành công vẫn in
 `databaseChanged=false` và `runtimeSnapshotPublished=false`.

@@ -45,7 +45,7 @@ Không có dữ liệu spawn/zone được đưa vào `MapAssetBundle`.
 
 Ngày 2026-08-25, người dùng chạy nhóm kiểm chứng MAP trước và xác nhận **13 tests PASS**. Vì vậy inventory/parser/converter/codec checkpoint này được coi là VERIFIED.
 
-## MAP seed artifact checkpoint — PENDING 5 tests
+## MAP seed artifact checkpoint — VERIFIED 5 tests
 
 Bước kế tiếp bổ sung candidate artifact xác định, vẫn hoàn toàn offline:
 
@@ -72,4 +72,13 @@ Chạy riêng nhóm này:
 mvn "-Dtest=MapAssetSeedArtifactGeneratorTest" test
 ```
 
-Trạng thái: **PENDING Windows Maven verification — tối đa 5 test cho lượt này**.
+Trạng thái: **VERIFIED trong full suite Windows 227/227**.
+
+## MAP archive/command checkpoint — PENDING 6 tests
+
+- Archive xác định chỉ chứa `map.bin` và `map.manifest`.
+- Export atomic, không ghi đè; read giới hạn kích thước và fail closed với entry lạ/trùng.
+- Dry-run decode payload rồi đối chiếu lại version/count/length/SHA-256.
+- Launcher nhận `map-seed-convert` và `map-seed-dry-run`.
+- Chưa migration/import/database/runtime publish.
+- Full suite mục tiêu: 233 test.

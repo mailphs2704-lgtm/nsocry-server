@@ -1,6 +1,7 @@
 # Chỉ mục package/module NSOCry
 
-> Source NSOCry đã bắt đầu. Protocol, session và network hiện ACTIVE; các module nghiệp vụ còn lại vẫn PROPOSED.
+> Source NSOCry đang phát triển theo Architecture Lock v1. Protocol/session/network và
+> client asset pipeline ITEM/SKILL/MAP hiện ACTIVE; gameplay runtime còn PENDING.
 
 ## Chuẩn namespace
 
@@ -17,6 +18,9 @@
 | com.nsocry.session | Handshake state, payload decode và auth port | protocol.compat | active |
 | com.nsocry.network | Socket accept, giới hạn và session ownership | protocol/session | active |
 | com.nsocry.authentication | Password hash và quyết định đăng nhập | account repository port | active |
+| com.nsocry.assets | Read model, codec, manifest và validation client asset | Java I/O/crypto | active |
+| com.nsocry.assets.conversion | Converter dump reference offline | assets/parser | active |
+| com.nsocry.operations | Archive, migration/import orchestration có gate | assets/persistence port | active |
 | player | Account và character lifecycle | persistence/domain | pending |
 | game-data | Static data loading | persistence/resources | pending |
 | world | Map, zone, mob và NPC | game-data/player | pending |
@@ -32,3 +36,5 @@
 - [Bootstrap, configuration và observability](bootstrap-configuration-observability.md)
 - [Thiết kế tài khoản và xác thực](../database/account-authentication.md)
 - [Package authentication](authentication.md)
+- [MAP asset conversion](../code-reference/map-asset-conversion.md)
+- [MAP seed archive và command](../code-reference/map-seed-archive.md)

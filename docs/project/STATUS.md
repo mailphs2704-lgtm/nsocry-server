@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** REVIEW_FIX_VERIFIED
+**Trạng thái:** MAP_ARCHIVE_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -69,7 +69,9 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 ## PENDING
 
-- MAP candidate chưa có archive service/command, chưa import database và chưa publish runtime.
+- MAP archive service, manifest parser, convert/dry-run command và sáu test mới đang PENDING
+  Windows; full suite mục tiêu **233**.
+- MAP chưa có schema/migration/importer và chưa publish runtime.
 - Server startup chưa nối runtime snapshot client đầy đủ DATA/MAP/SKILL/ITEM/appearance.
 - Client thật chưa vào gameplay.
 
@@ -100,7 +102,16 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Không publish runtime snapshot server trong checkpoint sửa review.
 - Tiến độ giữ nguyên 17% vì đây là sửa integrity/documentation, chưa thêm gameplay.
 
+## MAP archive/command đang xây
+
+- `map-seed-convert <dump-path>` tạo candidate v7 cạnh dump, không JDBC.
+- `map-seed-dry-run <archive-path>` decode và xác minh lại manifest/checksum.
+- ZIP schema đóng: `map.bin` + `map.manifest`; cấm entry lạ/trùng/thiếu và ghi đè.
+- Payload/manifest có hard size limit; export qua temporary file + atomic move.
+- Validated archive trả defensive payload copy cho importer tương lai.
+- Sáu regression test đã viết nhưng chưa được gọi VERIFIED trước output Windows.
+
 ## Next exact action
 
-Tiếp tục MAP seed archive/command trên `agent/document-nsokiss-runtime`: đóng gói candidate,
-thêm dry-run validation và launcher routing trước mọi migration/import. Chưa merge `main`.
+Commit/push checkpoint MAP archive/command vào `agent/document-nsokiss-runtime`. Người dùng
+pull và chạy full `mvn test`, kỳ vọng 233/233. Chưa migration/import và chưa merge `main`.

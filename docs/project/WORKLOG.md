@@ -1694,3 +1694,27 @@ sạch mới được đánh dấu VERIFIED; chưa merge `main`.
 - Database không đổi; server startup chưa nối runtime snapshot.
 - Tiến độ gameplay cơ bản giữ nguyên 17%.
 - Next: xây MAP seed archive/command + dry-run validation offline; chưa migration/import.
+
+## 2026-08-25 — MAP seed archive và command offline
+
+### Đã triển khai
+
+- Manifest parser MAP schema đóng, từ chối field thiếu/thừa/trùng và version sai miền.
+- Archive service ghi `map.bin` + `map.manifest` xác định qua temporary file/atomic move.
+- Cấm ghi đè; giới hạn payload 16 MiB, manifest 8 KiB; từ chối entry lạ/trùng/directory.
+- ReadValidated decode bundle rồi so version/count/length/SHA-256 trước khi trả defensive copy.
+- Command `map-seed-convert` đọc dump tối đa 64 MiB, tạo candidate v7 cạnh nguồn và report
+  rõ database/runtime không đổi.
+- Command `map-seed-dry-run` xác minh archive offline; launcher route/help đã cập nhật.
+- Thêm sáu test; full suite mục tiêu 233 đang PENDING Windows.
+
+### Tác động
+
+- Không tạo schema/migration/importer; database không đổi.
+- Không publish MAP/runtime snapshot và không nối server startup.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+
+### Next exact action
+
+Push checkpoint; người dùng chạy full Maven suite kỳ vọng 233/233. Sau VERIFIED mới bắt đầu
+MAP schema preflight/migration draft; chưa chạy migration/import.
