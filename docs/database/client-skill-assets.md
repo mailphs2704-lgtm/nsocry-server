@@ -91,3 +91,7 @@ V003 đã được người dùng xác nhận rõ ràng sau backup và chạy th
 migration báo READY. Năm bảng hiện còn rỗng. Importer foundation validate artifact trước
 khi mở connection, xóa/ghi đúng thứ tự foreign key trong một transaction SERIALIZABLE,
 giữ `point` 140/150 dưới dạng unsigned và rollback toàn bộ nếu một batch lỗi.
+
+Interactive command `skill-seed-import <archive-path>` có ba gate: archive full-valid,
+schema V003 READY và người vận hành nhập đúng toàn bộ SHA-256. Sai/hủy confirmation
+dừng trước importer. Import thành công vẫn không publish runtime snapshot.
