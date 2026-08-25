@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** REVIEW_FIX_PENDING_WINDOWS
+**Trạng thái:** REVIEW_FIX_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -59,7 +59,7 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Raw point được bảo toàn: level 957=150, 958=150, 962=140, 966=140.
 - Schema V003 READY; database đã import và JDBC payload verification khớp.
 - Runtime publish thử đã được tách khỏi startup; database không bị ghi.
-- Windows full suite gần nhất do người dùng xác nhận: **210/210**.
+- Windows full suite gần nhất do người dùng xác nhận: **227/227**, không failure/error/skipped.
 
 ### MAP đã xác nhận theo nhóm
 
@@ -69,12 +69,6 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 ## PENDING
 
-- Các thay đổi sửa review hiện tại chưa được chạy Maven trên Windows.
-- Năm test `MapAssetSeedArtifactGeneratorTest` chưa có xác nhận Windows.
-- Ba regression test mới bảo vệ checksum snapshot, strict JSON và cấu trúc STATUS chưa có
-  xác nhận Windows.
-- Tổng số method gắn `@Test` trong source hiện tại sau sửa là **227**; đây chỉ là inventory,
-  không phải kết quả VERIFIED. Full suite phải được chạy thật.
 - MAP candidate chưa có archive service/command, chưa import database và chưa publish runtime.
 - Server startup chưa nối runtime snapshot client đầy đủ DATA/MAP/SKILL/ITEM/appearance.
 - Client thật chưa vào gameplay.
@@ -96,6 +90,8 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Loại bỏ hơn 1.000 dòng STATUS trùng/lệch thời gian; lịch sử vẫn nằm trong WORKLOG.
 - Architecture gate buộc STATUS có đúng một next action và cấm AI tự công bố review.
 - Quy tắc bắt buộc đã chuẩn hóa trong AGENTS, workflow, requirements và handoff.
+- Toàn bộ năm MAP artifact test và ba regression test sửa review đã vượt full suite Windows
+  **227/227**.
 
 ## Tác động hiện tại
 
@@ -106,6 +102,5 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 ## Next exact action
 
-Commit/push checkpoint sửa review vào `agent/document-nsokiss-runtime`. Người dùng pull và
-chạy full `mvn test`; chỉ khi output chạy thật sạch mới chuyển toàn bộ test mới sang VERIFIED,
-cập nhật PR #1 và tiếp tục MAP seed archive/command. Chưa merge `main`.
+Tiếp tục MAP seed archive/command trên `agent/document-nsokiss-runtime`: đóng gói candidate,
+thêm dry-run validation và launcher routing trước mọi migration/import. Chưa merge `main`.

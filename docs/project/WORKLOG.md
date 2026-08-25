@@ -1683,3 +1683,14 @@ Người dùng xác minh 210/210 rồi chạy command trên Windows với archiv
 
 Push checkpoint, cập nhật Draft PR #1 rồi người dùng chạy full `mvn test`. Chỉ output thật
 sạch mới được đánh dấu VERIFIED; chưa merge `main`.
+
+## 2026-08-25 — Review fix và MAP artifact đạt 227/227
+
+- Người dùng xác nhận full Maven suite **227/227**, không failure/error/skipped.
+- Checksum snapshot regression, strict JSON regression và STATUS/review architecture gate:
+  VERIFIED Windows.
+- Năm test MAP seed artifact chuyển từ PENDING sang VERIFIED.
+- Checkpoint review fix `6ba4308a` được chấp nhận về test; chưa phải xác nhận merge `main`.
+- Database không đổi; server startup chưa nối runtime snapshot.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+- Next: xây MAP seed archive/command + dry-run validation offline; chưa migration/import.
