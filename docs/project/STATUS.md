@@ -720,6 +720,22 @@ Xác minh 165/165 rồi đóng gói command convert/dry-run SKILL để đối c
 - Việc kế tiếp duy nhất: xây `skill-seed-convert` và `skill-seed-dry-run`, thêm đúng năm test để hướng tới 170.
 - Sau 170/170 mới chạy convert/dry-run trên Windows và so checksum; tuyệt đối chưa migration/import.
 
+## Checkpoint SKILL seed commands
+
+- Mốc đầu vào 165/165 đã được đối chiếu lại với GitHub trước khi tiếp tục.
+- Đã thêm artifact/manifest/validator/archive cho SKILL và hai command
+  `skill-seed-convert`, `skill-seed-dry-run`.
+- Offline full-dump convert + dry-run khớp candidate: 42402 byte, SHA-256
+  `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Bốn difference level.point 150/150/140/140 được tái dựng đúng sau decode archive.
+- Năm test mới đang PENDING; suite mục tiêu 170.
+- V003 chưa chạy; SKILL chưa import; database/runtime snapshot không thay đổi.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 170/170 trên Windows. Sau đó package JAR, chạy convert và
+dry-run với `source-reference\\database.sql`; chỉ đối chiếu report/checksum, chưa migration/import.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
