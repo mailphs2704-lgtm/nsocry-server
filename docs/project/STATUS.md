@@ -787,6 +787,22 @@ trả kết quả theo giao thức cộng tác mới.
 AI tiếp quản tiếp tục runtime snapshot SKILL trên `agent/document-nsokiss-runtime`. Sau
 5–10 commit mới yêu cầu Codex rà soát; chưa merge `main`.
 
+## Checkpoint runtime snapshot SKILL
+
+- Đã thêm snapshot payload SKILL bất biến và atomic store không có trạng thái bán phần.
+- Publish chỉ xảy ra sau khi source khớp version, count, raw-byte difference, payload length
+  và SHA-256 của manifest đã khóa.
+- Lỗi source/validation giữ nguyên snapshot trước đó; payload trả ra bằng defensive copy.
+- Chưa tự nối publish vào startup và chưa tạo `ClientAssetSnapshot` bán phần.
+- Năm test mới đã viết; suite mục tiêu **205**, đang PENDING Windows verification.
+- Database không đổi; runtime snapshot thực tế chưa publish trong server.
+- Tiến độ đến gameplay cơ bản giữ nguyên **17%** vì chưa nối runtime/session.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 205/205 trên Windows. Sau đó mới thêm command read-only để
+publish thử SKILL từ JDBC candidate, in version/count/checksum và không tự chạy khi startup.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.

@@ -1576,3 +1576,25 @@ tiếp tục runtime snapshot SKILL theo contract đã khóa.
   `ĐỒNG Ý MERGE VÀO MAIN`.
 - Đã đưa quy tắc vào AGENTS, workflow, requirements, giao thức cộng tác và STATUS.
 - Không thay đổi production/database/runtime; tiến độ gameplay cơ bản giữ nguyên 17%.
+
+## 2026-08-25 — Runtime snapshot SKILL có kiểm soát
+
+### Đã triển khai
+
+- Snapshot runtime chỉ chứa payload SKILL cùng version/count/length/SHA-256 đã xác minh.
+- Payload được sao chép phòng vệ khi tạo và khi đọc.
+- Atomic store khởi tạo rỗng; chỉ swap toàn bộ snapshot sau khi mọi gate thành công.
+- Service đọc `SkillAssetSource`, đối chiếu manifest candidate và giữ snapshot cũ khi lỗi.
+- Không nối tự động vào startup; không phá quy tắc cấm `ClientAssetSnapshot` bán phần.
+- Thêm năm test; suite mục tiêu 205 đang PENDING Windows.
+
+### Tác động
+
+- Database không thay đổi.
+- Runtime server chưa publish snapshot vì composition/startup chưa được nối.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+
+### Next exact action
+
+Người dùng xác minh 205/205, sau đó xây command publish thử read-only từ JDBC với report
+version/count/checksum; chưa tự động publish khi startup.

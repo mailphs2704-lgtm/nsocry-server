@@ -120,3 +120,17 @@ SQL post-check đã khớp count, ID 0-based liên tục và bốn point 150/150
 sort-order/reference/range rồi dựng lại cây wire. Command `skill-seed-db-verify` encode
 bundle JDBC và so trực tiếp với manifest candidate; chỉ khi SHA-256 khớp mới nâng pipeline
 lên VERIFIED_END_TO_END. Command không ghi database và không publish runtime snapshot.
+
+## Runtime snapshot SKILL có kiểm soát
+
+`SkillAssetRuntimePublishService` nhận `SkillAssetSource`, manifest candidate đã khóa và
+atomic store. Mỗi lần rebuild phải đọc lại toàn bộ bundle, encode rồi vượt đồng thời gate
+version, sáu count, raw-byte difference, payload length và SHA-256 trước khi atomic swap.
+
+`SkillAssetRuntimeSnapshot` chỉ giữ metadata đã xác minh cùng payload bất biến; mọi lần đọc
+payload đều trả defensive copy. `AtomicSkillAssetRuntimeSnapshotStore` ở trạng thái rỗng khi
+startup chưa publish và giữ nguyên snapshot cũ nếu JDBC, encode hoặc manifest gate thất bại.
+
+Luồng này chưa được tự nối vào startup. Quyết định cũ vẫn giữ nguyên: không tạo
+`ClientAssetSnapshot` bán phần cho session trước khi DATA, MAP, ITEM và appearance cùng có
+nguồn runtime đầy đủ. Database không bị ghi trong quá trình rebuild/publish SKILL.
