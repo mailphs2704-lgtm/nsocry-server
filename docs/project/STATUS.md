@@ -736,6 +736,20 @@ Xác minh 165/165 rồi đóng gói command convert/dry-run SKILL để đối c
 Người dùng pull và xác minh 170/170 trên Windows. Sau đó package JAR, chạy convert và
 dry-run với `source-reference\\database.sql`; chỉ đối chiếu report/checksum, chưa migration/import.
 
+## Checkpoint 170 VERIFIED
+
+- Windows pull kết thúc ở remote HEAD `ba503279`; working tree clean.
+- Người dùng chạy Maven: 170 test, 0 failure, 0 error, 0 skipped; BUILD SUCCESS.
+- SKILL seed convert/dry-run code checkpoint: VERIFIED.
+- Lỗi Windows không unlink được Git pack cũ chỉ xảy ra trong bước dọn object; không ảnh
+  hưởng fast-forward, source hoặc test.
+- V003 chưa chạy; SKILL chưa import; database/runtime snapshot không thay đổi.
+
+## Next exact action hiện tại
+
+Package JAR rồi chạy `skill-seed-convert` và `skill-seed-dry-run` trên Windows. Candidate
+phải khớp 42402 byte và SHA-256 đã khóa; chưa migration/import.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
