@@ -1331,6 +1331,26 @@ payload length và SHA-256. Không chạy V003 hoặc import.
 
 Người dùng xác minh 175 test rồi thêm `skill-schema-preflight` command chỉ đọc.
 
+## 2026-08-25 — Xác minh 175 và thêm SKILL schema command
+
+### VERIFIED
+
+- Người dùng xác nhận 175 test: 0 failure, 0 error, 0 skipped.
+- V003 schema contract và JDBC read-only inspector: VERIFIED.
+
+### Đã triển khai
+
+- Launcher nhận `skill-schema-preflight [config-path]`.
+- READY/NOT_READY report không lộ credential và luôn báo database không đổi.
+- NOT_READY trả lỗi rõ ràng.
+- Ba command test và hai launcher test; suite mục tiêu 180.
+- Tiến độ ước tính đến gameplay cơ bản: 15%.
+
+### Next exact action
+
+Người dùng xác minh 180 test rồi chạy preflight chỉ đọc trên database hiện tại;
+chưa chạy V003 hoặc import.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
