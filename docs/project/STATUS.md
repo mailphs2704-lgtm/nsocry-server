@@ -833,6 +833,22 @@ publish thử VERIFIED_CROSS_PLATFORM.
 
 Người dùng pull và chạy lại `mvn test`, kỳ vọng 210/210.
 
+## Checkpoint tạm dừng — 210 VERIFIED
+
+- Người dùng xác nhận **210/210** test thành công sau bản sửa exception contract.
+- Command `skill-runtime-publish`, launcher routing và failure-state report: VERIFIED Windows.
+- Database không thay đổi; runtime snapshot server chưa publish; startup chưa nối.
+- Nhánh tiếp tục: `agent/document-nsokiss-runtime`; Draft PR #1; chưa merge `main`.
+- Tiến độ đến gameplay cơ bản giữ nguyên **17%**.
+- Trạng thái phiên: tạm dừng theo yêu cầu chủ dự án; không có source dở dang.
+
+## Next exact action sau khi tiếp tục
+
+Package JAR rồi chạy `skill-runtime-publish` trên Windows với SKILL archive candidate đã
+khóa. Report phải khớp version 26, 72 option, 7 class, 91 template, 967 level,
+3883 level-option, payload 42402 byte và SHA-256
+`4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.

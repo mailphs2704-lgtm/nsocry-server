@@ -1633,3 +1633,14 @@ Người dùng xác minh 210/210 rồi chạy command trên Windows với archiv
 - Test hiện có giữ vai trò regression gate; không thêm test mới, mục tiêu vẫn 210.
 - Database/runtime snapshot không thay đổi; tiến độ giữ nguyên 17%.
 - Next exact action: pull checkpoint và chạy lại `mvn test` kỳ vọng 210/210.
+
+## 2026-08-25 — Checkpoint tạm dừng 210 VERIFIED
+
+- Người dùng xác nhận 210 test, 0 failure/error/skipped, BUILD SUCCESS.
+- Exception contract của report và toàn bộ command publish thử SKILL: VERIFIED Windows.
+- Database không thay đổi; server startup chưa publish snapshot.
+- Không có file/source dở dang tại điểm dừng.
+- Branch `agent/document-nsokiss-runtime`; PR #1 giữ Draft; không merge `main`.
+- Tiến độ gameplay cơ bản: 17%.
+- Next exact action khi tiếp tục: package JAR, chạy `skill-runtime-publish` với candidate đã
+  khóa và đối chiếu version/count/42402 byte/SHA-256; chưa nối startup.
