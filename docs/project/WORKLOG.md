@@ -1807,3 +1807,17 @@ không chạy V004/import nếu chưa backup và chưa có xác nhận riêng c�
 ### Next exact action
 
 Push catalog đầy đủ và chạy lại full Maven suite, kỳ vọng 242/242; chưa chạy migration V004.
+
+## 2026-08-25 — MAP V004 preflight đạt 242/242
+
+- Người dùng xác nhận full Maven suite **242/242**, không failure/error/skipped.
+- MAP schema contract, JDBC read-only inspector, launcher route/report và catalog coverage:
+  VERIFIED Windows.
+- Lỗi catalog mất đoạn đã đóng sau khi publish lại đủ 1.910 dòng.
+- `databaseChanged=false`; `runtimeSnapshotPublished=false`; migration V004 chưa chạy.
+- Tiến độ gameplay cơ bản giữ nguyên 17% vì schema database MAP chưa được áp dụng.
+
+### Next exact action
+
+Chạy `map-schema-preflight` read-only trên database hiện tại; kỳ vọng NOT_READY cùng danh sách
+cột thiếu trước V004. Không chạy migration/import nếu chưa backup và xác nhận riêng.

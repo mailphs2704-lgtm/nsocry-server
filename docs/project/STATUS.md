@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_SCHEMA_PREFLIGHT_PENDING_WINDOWS
+**Trạng thái:** MAP_SCHEMA_PREFLIGHT_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -59,7 +59,7 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Raw point được bảo toàn: level 957=150, 958=150, 962=140, 966=140.
 - Schema V003 READY; database đã import và JDBC payload verification khớp.
 - Runtime publish thử đã được tách khỏi startup; database không bị ghi.
-- Windows full suite gần nhất do người dùng xác nhận: **235/235**, không failure/error/skipped.
+- Windows full suite gần nhất do người dùng xác nhận: **242/242**, không failure/error/skipped.
 
 ### MAP đã xác nhận theo nhóm
 
@@ -69,10 +69,6 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 ## PENDING
 
-- MAP V004 contract/migration draft/read-only preflight đã có; bảy test mới đang PENDING
-  Windows, full suite mục tiêu **242**.
-- Lần chạy Windows đầu tiên: 242 test, một failure do blob catalog trên GitHub bị mất đoạn khi
-  publish; production/MAP test không thất bại. Bản vá catalog đầy đủ đang PENDING chạy lại.
 - MAP chưa chạy migration, chưa có importer/JDBC source và chưa publish runtime.
 - Server startup chưa nối runtime snapshot client đầy đủ DATA/MAP/SKILL/ITEM/appearance.
 - Client thật chưa vào gameplay.
@@ -131,9 +127,10 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - `MapAssetSchemaContract` từ chối cột thiếu/thừa/trùng/sai type/unsigned/nullability.
 - `JdbcMapAssetSchemaInspector` chỉ đọc `information_schema` trên connection read-only.
 - Launcher có command `map-schema-preflight [config-path]`, luôn báo `databaseChanged=false`.
+- Bảy test MAP schema/command và catalog đầy đủ đã vượt full suite Windows **242/242**.
 - Chưa chạy V004, chưa import seed, chưa tạo JDBC asset source và chưa publish runtime.
 
 ## Next exact action
 
-Push bản vá catalog đầy đủ; người dùng pull và chạy lại full `mvn test`, kỳ vọng **242/242**.
-Sau VERIFIED mới chạy read-only preflight; chưa chạy migration/import và chưa merge `main`.
+Chạy `map-schema-preflight` chỉ đọc trên database hiện tại và ghi nhận đầy đủ differences.
+Chưa chạy migration/import và chưa merge `main`.
