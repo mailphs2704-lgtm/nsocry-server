@@ -1545,3 +1545,13 @@ lặp lại phân tích NSOKISS, không tự đổi package/class/method và kh�
 
 Commit/push checkpoint; người dùng pull và chạy `mvn test` kỳ vọng 200/200. Khi VERIFIED,
 tiếp tục runtime snapshot SKILL theo contract đã khóa.
+
+## 2026-08-25 — Architecture Lock v1 VERIFIED trên Windows
+
+- Người dùng xác nhận **200/200 test** thành công, không failure/error/skipped.
+- Năm test kiến trúc chuyển từ PENDING sang VERIFIED.
+- Khung package/type/method, quy tắc namespace, chiều phụ thuộc và bàn giao AI chính thức
+  trở thành checkpoint bắt buộc cho mọi phiên phát triển tiếp theo.
+- Database và runtime snapshot không thay đổi.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+- Bước kế tiếp: hiện thực publish runtime snapshot SKILL có kiểm soát theo khung đã khóa.

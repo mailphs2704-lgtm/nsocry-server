@@ -742,6 +742,20 @@ Người dùng pull checkpoint kiến trúc và chạy `mvn test`, kỳ vọng 2
 đánh dấu Architecture Lock v1 VERIFIED rồi quay lại bước publish runtime snapshot SKILL
 theo lộ trình; không tự thay đổi manifest hoặc tạo package ngoài khung.
 
+## Checkpoint 200 VERIFIED — Architecture Lock v1
+
+- Người dùng xác nhận suite đạt **200/200**, không failure/error/skipped.
+- Năm architecture gate mới hoạt động đúng trên môi trường Windows.
+- Architecture Lock v1, manifest 99 contract/package rows, namespace gate, package coverage,
+  dependency gate và quy tắc bàn giao AI: **VERIFIED**.
+- Không thay đổi production runtime, database hoặc runtime snapshot.
+- Tiến độ đến gameplay cơ bản giữ nguyên **17%**.
+
+## Next exact action hiện tại
+
+Tiếp tục xây luồng publish runtime snapshot SKILL bất biến từ database đã VERIFIED, có
+checksum/version/count gate và không tự động publish khi startup chưa được kiểm chứng.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.
