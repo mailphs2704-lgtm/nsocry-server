@@ -49,12 +49,18 @@ public final class SkillAssetSeedArchiveService {
 
     /** Đọc đủ hai entry, decode và xác minh lại manifest/checksum/raw-byte. */
     public SkillAssetSeedValidationResult dryRun(Path archive) throws IOException {
+        return readValidated(archive).validation();
+    }
+
+    /** Trả payload/manifest bất biến sau full validation cho interactive importer. */
+    public ValidatedSkillAssetSeedArchive readValidated(Path archive) throws IOException {
         Map<String, byte[]> entries = readEntries(Objects.requireNonNull(archive, "archive"));
         byte[] payload = require(entries, PAYLOAD_ENTRY);
         String manifestText = new String(require(entries, MANIFEST_ENTRY), StandardCharsets.UTF_8);
         SkillAssetSeedManifest manifest = SkillAssetSeedManifestParser.parse(manifestText);
         SkillAssetBundle bundle = SkillAssetCodec.decode(payload);
-        return SkillAssetSeedValidator.validate(bundle, manifest);
+        SkillAssetSeedValidationResult validation = SkillAssetSeedValidator.validate(bundle, manifest);
+        return new ValidatedSkillAssetSeedArchive(payload, manifestText, validation);
     }
 
     private static void write(ZipOutputStream output, String name, byte[] content) throws IOException {
