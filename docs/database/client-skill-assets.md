@@ -95,3 +95,14 @@ giữ `point` 140/150 dưới dạng unsigned và rollback toàn bộ nếu mộ
 Interactive command `skill-seed-import <archive-path>` có ba gate: archive full-valid,
 schema V003 READY và người vận hành nhập đúng toàn bộ SHA-256. Sai/hủy confirmation
 dừng trước importer. Import thành công vẫn không publish runtime snapshot.
+
+Checkpoint Windows 190/190 đã xác minh toàn bộ interactive guard. Transaction chỉ bắt
+đầu sau khi archive, schema và checksum đều hợp lệ. Candidate được phép xem xét import
+vẫn là version 26, 42402 byte, SHA-256
+`4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+
+## Quy tắc cập nhật tài liệu
+
+Mỗi checkpoint SKILL phải ghi bằng tiếng Việt: test đã xác nhận, count/checksum, thay đổi
+source/schema/database, trạng thái runtime snapshot, rủi ro còn lại, tiến độ tổng thể và
+`Next exact action`. Không được đánh dấu VERIFIED khi người dùng chưa gửi kết quả Windows.
