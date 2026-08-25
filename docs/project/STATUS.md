@@ -806,6 +806,22 @@ database NSOCry. Kỳ vọng NOT_READY vì V003 chưa chạy; chưa migration.
 - V003 vẫn chưa chạy; đang chờ xác nhận migration rõ ràng của người dùng.
 - Tiến độ gameplay cơ bản: 15%.
 
+## Checkpoint V003 READY và SKILL importer foundation
+
+- Người dùng xác nhận `ĐỒNG Ý CHẠY V003`; migration đã chạy sau backup hợp lệ.
+- Post-migration preflight: READY; databaseChanged=false trong bước kiểm tra.
+- Năm bảng SKILL đã tồn tại nhưng chưa có row seed.
+- Transactional importer validate trước connection, ghi năm bảng theo FK order và rollback khi lỗi.
+- Raw point 140/150 được bind dưới dạng unsigned database value.
+- Năm test mới đang PENDING; suite mục tiêu 185.
+- SKILL chưa import; runtime snapshot chưa publish.
+- Tiến độ đến gameplay cơ bản: 16%.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 185/185. Sau đó thêm interactive import command với archive,
+schema READY và xác nhận đủ SHA-256; chưa import nếu thiếu xác nhận cuối.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
