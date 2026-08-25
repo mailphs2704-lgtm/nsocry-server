@@ -864,6 +864,26 @@ tự chạy command ghi database.
 Xin xác nhận rõ ràng `ĐỒNG Ý IMPORT SKILL`. Chỉ sau xác nhận mới package và chạy
 interactive command; importer vẫn yêu cầu nhập đúng full SHA-256 tại console.
 
+## Checkpoint SKILL local import SUCCESS
+
+- Người dùng xác nhận `ĐỒNG Ý IMPORT SKILL` và nhập đúng full SHA-256 tại console.
+- Transaction import đã commit:
+  - option=72;
+  - class=7;
+  - template=91;
+  - level=967;
+  - level-option=3883.
+- Payload length=42402; SHA-256 khớp candidate đã khóa.
+- Bốn raw-byte difference được report trước transaction.
+- `runtimeSnapshotPublished=false`.
+- Chưa có JDBC load → encode → checksum verification hậu import.
+- Tiến độ đến gameplay cơ bản: 17%.
+
+## Next exact action hiện tại
+
+Chạy SQL post-check chỉ đọc cho count/ID/raw point. Sau khi khớp mới xây database payload
+verification; không publish runtime snapshot.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
