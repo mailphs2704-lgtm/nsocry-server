@@ -797,6 +797,15 @@ database NSOCry. Kỳ vọng NOT_READY vì V003 chưa chạy; chưa migration.
 - Bước tiếp theo: tạo backup + SHA-256 trước V003 và chờ xác nhận migration riêng.
 - Tiến độ đến gameplay cơ bản: 15%.
 
+## Checkpoint backup trước V003
+
+- Backup: `backup/nsocry-before-v003-20260825-114548.sql`.
+- Kích thước: 95731 byte.
+- SHA-256: `a20218e737aeeb5814dd727637e186deed145ca901cf7572a475b0ec079e720d`.
+- Backup được tạo sau NOT_READY preflight và trước mọi thay đổi V003.
+- V003 vẫn chưa chạy; đang chờ xác nhận migration rõ ràng của người dùng.
+- Tiến độ gameplay cơ bản: 15%.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
