@@ -30,6 +30,9 @@
 
 ## Tài liệu đang hoạt động
 
+- [Developer Manual — điểm tra cứu source](../developer-manual/README.md)
+- [Code catalog toàn production](../developer-manual/code-catalog.md)
+- [Sổ truy vết phần chưa đủ dữ liệu](../developer-manual/trace-register.md)
 - [Protocol và session](protocol-session.md)
 - [Tra cứu source protocol, session và network](../code-reference/protocol-session-network.md)
 - [Chuẩn documentation](../development/documentation-standard.md)

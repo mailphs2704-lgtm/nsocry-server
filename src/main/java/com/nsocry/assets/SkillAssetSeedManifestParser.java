@@ -11,6 +11,7 @@ public final class SkillAssetSeedManifestParser {
     private SkillAssetSeedManifestParser() {
     }
 
+    /** Parse manifest schema đóng và từ chối field thiếu, lạ, trùng hoặc sai kiểu. */
     public static SkillAssetSeedManifest parse(String text) {
         Objects.requireNonNull(text, "text");
         Map<String, String> values = new HashMap<>();

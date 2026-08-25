@@ -38,6 +38,7 @@ public final class JdbcSkillAssetSource implements SkillAssetSource {
     private final DataSource dataSource;
     private final byte version;
 
+    /** Tạo source JDBC với version payload explicit; chưa đọc database ở constructor. */
     public JdbcSkillAssetSource(DataSource dataSource, byte version) {
         this.dataSource = Objects.requireNonNull(dataSource, "dataSource");
         this.version = version;

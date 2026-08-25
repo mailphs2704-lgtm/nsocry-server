@@ -1727,3 +1727,34 @@ MAP schema preflight/migration draft; chưa chạy migration/import.
 - Database không đổi; MAP runtime snapshot chưa publish; startup chưa nối.
 - Tiến độ gameplay cơ bản giữ nguyên 17%.
 - Next: xây MAP schema contract, migration draft và read-only preflight; chưa chạy migration.
+
+## 2026-08-25 — Xây Developer Manual quản trị toàn source
+
+### Mục tiêu
+
+Cho phép chủ server tìm được chức năng, vai trò, luồng, lỗi, cách mở rộng và test liên quan
+mà không phải đọc toàn bộ chat hoặc tự reverse-engineer lại source.
+
+### Đã triển khai
+
+- Manual index điều hướng theo nhu cầu quản trị.
+- Kiến trúc và luồng JAR/network/auth/client asset/database safety.
+- Playbook sửa field/payload/schema/command/checksum/parser/gameplay module.
+- Troubleshooting config, MariaDB, schema, checksum, archive, test, IntelliJ và restore.
+- Maintenance standard với hồ sơ class/method và nhãn evidence chuẩn.
+- Sổ 17 TRACE_REQUIRED, mỗi mục có dữ liệu còn thiếu và điều kiện đóng.
+- Catalog sinh cơ học bao phủ 173 file production trong 12 package, kèm Javadoc summary,
+  source path và API public/protected phát hiện được.
+- Generator catalog có thể chạy lại khi source đổi.
+- Hai test mới bắt buộc catalog chứa mọi Java production và manual chứa đủ trường quản trị.
+- START-HERE/README/AGENTS/REQUIREMENTS/package index đã liên kết manual bắt buộc.
+
+### Trạng thái
+
+- Không đổi production, database hoặc runtime.
+- Hai test mới PENDING Windows; full suite mục tiêu 235.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+
+### Next exact action
+
+Push checkpoint và chạy full Maven suite 235/235. Sau VERIFIED mới tiếp tục MAP schema draft.

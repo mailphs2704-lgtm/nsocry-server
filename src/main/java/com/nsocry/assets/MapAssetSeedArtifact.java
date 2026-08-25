@@ -24,10 +24,12 @@ public final class MapAssetSeedArtifact {
         return Arrays.copyOf(payload, payload.length);
     }
 
+    /** Trả manifest UTF-8 xác định dùng khi ghi archive. */
     public String manifestText() {
         return manifestText;
     }
 
+    /** Trả metadata đã xác minh của đúng payload candidate. */
     public MapAssetSeedValidationResult validation() {
         return validation;
     }

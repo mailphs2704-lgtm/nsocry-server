@@ -20,6 +20,7 @@ public final class SkillAssetSeedConvertCommand {
     private SkillAssetSeedConvertCommand() {
     }
 
+    /** Entry CLI yêu cầu đúng một dump path rồi tạo SKILL candidate offline. */
     public static void main(String[] args) throws Exception {
         if (args == null || args.length != 1) {
             throw new IllegalArgumentException("skill-seed-convert yêu cầu đúng một dump path");

@@ -46,6 +46,13 @@ Mỗi method có logic phải ghi:
 | Verification | Test, log hoặc fixture |
 | Status | VERIFIED, PROPOSED hoặc UNKNOWN |
 
+Developer Manual dùng bộ nhãn mở rộng tại `docs/developer-manual/maintenance-standard.md`.
+Phần chưa đủ evidence bắt buộc dùng `TRACE_REQUIRED` và có ID/điều kiện đóng trong
+`trace-register.md`; không được viết hành vi dự kiến như code đã hoạt động.
+
+`code-catalog.md` phải chứa mọi file production và được tái sinh sau khi thêm/xóa/đổi source.
+`DocumentationCoverageTest` là gate bắt buộc cùng Architecture Lock test.
+
 ## 6. Protocol và database
 
 Mỗi command phải có giá trị, hướng truyền, phase hợp lệ, payload byte-level, handler, phản hồi, thay đổi state, lỗi, evidence, fixture và trạng thái xác minh.

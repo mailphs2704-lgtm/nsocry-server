@@ -9,6 +9,7 @@ public final class MapAssetSeedDryRunCommand {
     private MapAssetSeedDryRunCommand() {
     }
 
+    /** Entry CLI yêu cầu đúng một archive path rồi xác minh không mutation. */
     public static void main(String[] args) throws Exception {
         if (args == null || args.length != 1) {
             throw new IllegalArgumentException("map-seed-dry-run yêu cầu đúng một archive path");

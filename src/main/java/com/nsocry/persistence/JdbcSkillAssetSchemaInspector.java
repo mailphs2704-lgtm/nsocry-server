@@ -23,6 +23,7 @@ public final class JdbcSkillAssetSchemaInspector {
 
     private final DataSource dataSource;
 
+    /** Tạo inspector read-only cho đúng DataSource NSOCry; từ chối null. */
     public JdbcSkillAssetSchemaInspector(DataSource dataSource) {
         this.dataSource = Objects.requireNonNull(dataSource, "dataSource");
     }

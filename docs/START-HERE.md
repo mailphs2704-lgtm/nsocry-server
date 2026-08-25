@@ -19,24 +19,17 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 
 ## Trạng thái hiện tại
 
-- Git/GitHub đã thiết lập và reference đã push thành công.
-- ZIP NSOKISS khoảng 269 MB đã được loại khỏi Git.
-- Bản đồ runtime đầu tiên đã được viết tại [architecture/nsokiss-runtime.md](architecture/nsokiss-runtime.md).
-- Draft PR đang dùng cho bộ tài liệu nền tảng: PR #1.
-- Source NSOCry đã bắt đầu với Java 17/Maven và package root `com.nsocry`.
-- Command inventory, handshake/login, client static analysis và fixture v1 đã hoàn thành.
-- Codec key/rolling-XOR/frame compatibility cùng fixture-based tests đã có.
-- Client V7 chưa bị chỉnh/repack vì không phát hiện tracking hoặc defect đủ bằng chứng.
-- TCP/session/handshake loopback đã VERIFIED 16/16.
-- Toàn bộ package/type/method hiện tại đã được bổ sung Javadoc tiếng Việt; tài liệu tra cứu source đã có.
-- Bootstrap, configuration và NetworkEventSink đã được triển khai; đang chờ xác minh bộ 23 test.
-- Schema account V001 và authentication service không phụ thuộc JDBC đã được viết.
-- Authentication và JdbcAccountRepository đã VERIFIED 32/32.
-- MariaDB composition đã VERIFIED 36/36.
-- Công cụ tạo administrator đầu tiên đã VERIFIED 40/40.
-- Executable uber-JAR và launcher server/create-admin/help đã được thêm; đang chờ mvn package và 44 test.
+- Nhánh phát triển: `agent/document-nsokiss-runtime`; Draft PR #1; chưa merge `main`.
+- Architecture Lock v1 đang hiệu lực; cấm tự đổi package/contract LOCKED.
+- Windows full suite gần nhất: 233/233 VERIFIED.
+- ITEM và SKILL seed/database pipeline: VERIFIED_END_TO_END.
+- MAP converter/artifact/archive/convert/dry-run: VERIFIED; schema/import/runtime chưa làm.
+- Database hiện không thay đổi bởi checkpoint MAP; startup chưa nối full client snapshot.
+- Tiến độ đến gameplay cơ bản: 17%.
+- Developer Manual và code catalog là điểm tra cứu source dành cho chủ server.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
+Khi cần hiểu hoặc sửa code, bắt đầu tại [developer-manual/README.md](developer-manual/README.md).
 
 ## Ràng buộc không được vi phạm
 
@@ -52,7 +45,9 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 
 ## Lệnh bàn giao cho AI
 
-> Đọc toàn bộ `docs/START-HERE.md`, `docs/project/REQUIREMENTS.md`, `docs/project/STATUS.md`, phần mới nhất của `docs/project/WORKLOG.md`, các ADR đang hiệu lực và tài liệu module liên quan. Tiếp tục từ “Next exact action”. Không làm lại mục VERIFIED; nếu nghi ngờ, nêu bằng chứng trạng thái đã thay đổi trước khi kiểm tra lại.
+> Đọc `docs/START-HERE.md`, REQUIREMENTS, STATUS, Developer Manual, Architecture Lock,
+> phần mới nhất WORKLOG, ADR và tài liệu module liên quan. Tiếp tục đúng “Next exact action”.
+> Không làm lại VERIFIED; phần thiếu evidence phải dùng TRACE_REQUIRED.
 
 ## Trước khi kết thúc mỗi phiên
 

@@ -24,10 +24,12 @@ public final class ValidatedSkillAssetSeedArchive {
         return Arrays.copyOf(payload, payload.length);
     }
 
+    /** Trả manifest SKILL đã được dùng để xác minh payload. */
     public String manifestText() {
         return manifestText;
     }
 
+    /** Trả cấu trúc/raw-byte/length/checksum đã xác minh. */
     public SkillAssetSeedValidationResult validation() {
         return validation;
     }

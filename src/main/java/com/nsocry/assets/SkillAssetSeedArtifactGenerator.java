@@ -10,6 +10,7 @@ public final class SkillAssetSeedArtifactGenerator {
     private SkillAssetSeedArtifactGenerator() {
     }
 
+    /** Encode bundle, sinh manifest deterministic và validate lại trước khi trả artifact. */
     public static SkillAssetSeedArtifact generate(SkillAssetBundle bundle) {
         Objects.requireNonNull(bundle, "bundle");
         try {

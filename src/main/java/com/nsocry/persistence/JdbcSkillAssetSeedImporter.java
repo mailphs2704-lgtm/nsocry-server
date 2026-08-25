@@ -43,6 +43,7 @@ public final class JdbcSkillAssetSeedImporter {
 
     private final DataSource dataSource;
 
+    /** Tạo importer transaction cho DataSource đích; chưa mở connection ở constructor. */
     public JdbcSkillAssetSeedImporter(DataSource dataSource) {
         this.dataSource = Objects.requireNonNull(dataSource, "dataSource");
     }

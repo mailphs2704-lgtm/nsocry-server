@@ -34,6 +34,7 @@ public final class DataAssetBundle {
         this.effectTemplates = Arrays.copyOf(effectTemplates, effectTemplates.length);
     }
 
+    /** Trả version raw byte của payload DATA. */
     public byte version() {
         return version;
     }
@@ -45,10 +46,12 @@ public final class DataAssetBundle {
         return Arrays.copyOf(data, data.length);
     }
 
+    /** Trả các tuyến nhiệm vụ bất biến theo từng nhóm client. */
     public List<List<TaskRouteAsset>> taskRoutes() {
         return taskRoutes;
     }
 
+    /** Trả bản sao bảng ngưỡng kinh nghiệm để caller không sửa bundle. */
     public long[] experienceThresholds() {
         return Arrays.copyOf(experienceThresholds, experienceThresholds.length);
     }
@@ -60,6 +63,7 @@ public final class DataAssetBundle {
         return Arrays.copyOf(data, data.length);
     }
 
+    /** Trả bản sao payload effect template thuộc DATA. */
     public byte[] effectTemplates() {
         return Arrays.copyOf(effectTemplates, effectTemplates.length);
     }

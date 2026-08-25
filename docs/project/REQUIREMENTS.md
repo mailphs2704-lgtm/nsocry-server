@@ -127,6 +127,9 @@ Một module chỉ được DONE khi:
   các gate VERIFIED và chủ dự án xác nhận rõ `ĐỒNG Ý MERGE VÀO MAIN`.
 - **CONFIRMED:** tác giả không tự review commit của mình; review phải độc lập và ghi base/head.
   STATUS chỉ giữ checkpoint hiện tại với đúng một next action; lịch sử nằm trong WORKLOG.
+- **CONFIRMED:** chủ server phải tra cứu được chức năng, vai trò, luồng, lỗi và cách sửa code
+  qua Developer Manual. Mọi source production phải có catalog; phần chưa đủ dữ liệu phải có
+  nhãn `TRACE_REQUIRED`, ID truy vết và điều kiện đóng, không được suy đoán thành tài liệu chuẩn.
 - Không làm hỏng module đã hoàn thành.
 
 

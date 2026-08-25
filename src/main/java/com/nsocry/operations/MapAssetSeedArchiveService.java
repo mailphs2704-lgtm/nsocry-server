@@ -48,6 +48,7 @@ public final class MapAssetSeedArchiveService {
         }
     }
 
+    /** Xác minh đầy đủ archive và chỉ trả metadata, không mở database/runtime. */
     public MapAssetSeedValidationResult dryRun(Path archive) throws IOException {
         return readValidated(archive).validation();
     }

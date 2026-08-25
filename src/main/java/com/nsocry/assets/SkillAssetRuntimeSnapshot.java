@@ -34,9 +34,13 @@ public final class SkillAssetRuntimeSnapshot {
         return new SkillAssetRuntimeSnapshot(validation, payload);
     }
 
+    /** Trả version raw byte đã vượt manifest gate. */
     public byte version() { return version; }
+    /** Trả báo cáo cấu trúc SKILL bất biến. */
     public SkillAssetValidationReport structure() { return structure; }
+    /** Trả độ dài payload đã khóa. */
     public int payloadLength() { return payloadLength; }
+    /** Trả SHA-256 chữ thường đã đối chiếu với chính payload. */
     public String payloadSha256() { return payloadSha256; }
 
     /** Trả bản sao để session không thể sửa payload đang được dùng chung. */

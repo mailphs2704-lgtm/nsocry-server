@@ -19,14 +19,17 @@ public final class ValidatedMapAssetSeedArchive {
         this.validation = Objects.requireNonNull(validation, "validation");
     }
 
+    /** Trả defensive copy cho importer tương lai. */
     public byte[] payload() {
         return Arrays.copyOf(payload, payload.length);
     }
 
+    /** Trả manifest đã được dùng để xác minh payload. */
     public String manifestText() {
         return manifestText;
     }
 
+    /** Trả count/length/checksum đã xác minh. */
     public MapAssetSeedValidationResult validation() {
         return validation;
     }

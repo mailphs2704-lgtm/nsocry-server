@@ -20,6 +20,7 @@ public final class MapAssetSeedConvertCommand {
     private MapAssetSeedConvertCommand() {
     }
 
+    /** Entry CLI yêu cầu đúng một dump path rồi tạo MAP candidate offline. */
     public static void main(String[] args) throws Exception {
         if (args == null || args.length != 1) {
             throw new IllegalArgumentException("map-seed-convert yêu cầu đúng một dump path");

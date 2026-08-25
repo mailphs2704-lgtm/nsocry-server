@@ -3,7 +3,7 @@
 Mọi AI hoặc lập trình viên phải đọc theo thứ tự: `docs/project/STATUS.md`,
 `docs/project/WORKLOG.md`, `docs/architecture/architecture-lock.md` và
 `docs/architecture/planned-contracts.tsv`, sau đó
-`docs/handoff/OWNER-COLLABORATION.md` trước khi sửa source.
+`docs/handoff/OWNER-COLLABORATION.md` và `docs/developer-manual/README.md` trước khi sửa source.
 
 ## Giao tiếp với chủ dự án
 
@@ -42,6 +42,10 @@ Mọi AI hoặc lập trình viên phải đọc theo thứ tự: `docs/project/
   append vào `WORKLOG.md`, không chèn checkpoint cũ trở lại STATUS.
 - Số test VERIFIED phải xuất phát từ output chạy thật. Cấm suy ra bằng cách đếm `@Test` hoặc
   dùng kết quả nhóm test thay cho full suite.
+- Mọi source production phải xuất hiện trong Developer Manual code catalog. Class/method mới
+  phải ghi chức năng, vai trò, luồng, lỗi, cách sửa và test; thiếu evidence dùng TRACE_REQUIRED.
+- Chạy lại `tools/generate-developer-catalog.sh` sau khi thêm/xóa/đổi source và vượt
+  `DocumentationCoverageTest` trước checkpoint.
 
 ## Hoàn tất một checkpoint
 

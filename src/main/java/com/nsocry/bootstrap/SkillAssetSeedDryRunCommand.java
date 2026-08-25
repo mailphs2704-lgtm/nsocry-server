@@ -9,6 +9,7 @@ public final class SkillAssetSeedDryRunCommand {
     private SkillAssetSeedDryRunCommand() {
     }
 
+    /** Entry CLI yêu cầu đúng một archive path rồi dry-run không mutation. */
     public static void main(String[] args) throws Exception {
         if (args == null || args.length != 1) {
             throw new IllegalArgumentException("skill-seed-dry-run yêu cầu đúng một archive path");

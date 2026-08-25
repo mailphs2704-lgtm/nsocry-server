@@ -15,14 +15,17 @@ public final class SkillAssetSeedArtifact {
         this.validation = Objects.requireNonNull(validation, "validation");
     }
 
+    /** Trả defensive copy của payload seed. */
     public byte[] payload() {
         return Arrays.copyOf(payload, payload.length);
     }
 
+    /** Trả manifest UTF-8 xác định đi kèm payload. */
     public String manifestText() {
         return manifestText;
     }
 
+    /** Trả metadata/checksum đã xác minh của candidate. */
     public SkillAssetSeedValidationResult validation() {
         return validation;
     }

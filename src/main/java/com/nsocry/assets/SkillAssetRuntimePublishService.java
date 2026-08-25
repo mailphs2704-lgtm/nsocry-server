@@ -9,6 +9,7 @@ public final class SkillAssetRuntimePublishService {
     private final SkillAssetSeedManifest manifest;
     private final AtomicSkillAssetRuntimeSnapshotStore store;
 
+    /** Tạo service từ source, manifest khóa và atomic store đích; từ chối dependency null. */
     public SkillAssetRuntimePublishService(
             SkillAssetSource source,
             SkillAssetSeedManifest manifest,

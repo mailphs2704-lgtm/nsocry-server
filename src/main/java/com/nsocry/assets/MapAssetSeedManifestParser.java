@@ -11,6 +11,7 @@ public final class MapAssetSeedManifestParser {
     private MapAssetSeedManifestParser() {
     }
 
+    /** Parse toàn bộ manifest và fail closed nếu schema/field/value không hợp lệ. */
     public static MapAssetSeedManifest parse(String text) {
         Objects.requireNonNull(text, "text");
         Map<String, String> values = new HashMap<>();
