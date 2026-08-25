@@ -1469,6 +1469,28 @@ Chờ người dùng xác nhận rõ `ĐỒNG Ý IMPORT SKILL`, sau đó mới c
 
 Post-check SQL count/ID/raw point, sau đó xây JDBC source và database payload verifier.
 
+## 2026-08-25 — SKILL post-check VERIFIED và JDBC payload verifier
+
+### Post-check VERIFIED
+
+- Count và miền ID của cả năm bảng khớp candidate.
+- Bốn raw point trong database giữ đúng 150, 150, 140, 140.
+
+### Đã triển khai
+
+- JDBC source dùng read-only repeatable-read transaction cho năm bảng.
+- Kiểm tra ID liên tục, sort order theo parent, foreign reference và numeric range.
+- Tái dựng đúng class → template → level → option tree.
+- Command `skill-seed-db-verify` so bundle database với candidate manifest end-to-end.
+- Report gồm count, raw-byte differences, payload length, SHA-256 và trạng thái không mutation.
+- Năm test mới; suite mục tiêu 195.
+- Tiến độ gameplay cơ bản: 17%.
+
+### Next exact action
+
+Người dùng xác minh 195 test rồi chạy DB payload verify trên Windows. Runtime snapshot
+vẫn chưa publish.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
