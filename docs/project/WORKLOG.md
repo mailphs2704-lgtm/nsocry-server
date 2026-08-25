@@ -1448,6 +1448,27 @@ thay đổi kỹ thuật, database/checksum/count, rủi ro, tiến độ và b�
 
 Chờ người dùng xác nhận rõ `ĐỒNG Ý IMPORT SKILL`, sau đó mới chạy command tương tác.
 
+## 2026-08-25 — Import SKILL local thành công
+
+### Xác nhận và kết quả
+
+- Người dùng cấp xác nhận rõ `ĐỒNG Ý IMPORT SKILL`.
+- Console xác minh đúng SHA-256 candidate trước transaction.
+- Importer commit 72 option, 7 class, 91 template, 967 level và 3883 level-option.
+- Payload 42402 byte; SHA-256
+  `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Bốn raw point 150/150/140/140 được giữ trong report.
+- Runtime snapshot chưa publish.
+
+### Trạng thái và tiến độ
+
+- SKILL local import: SUCCESS nhưng chưa VERIFIED_END_TO_END từ JDBC payload.
+- Tiến độ gameplay cơ bản: 17%.
+
+### Next exact action
+
+Post-check SQL count/ID/raw point, sau đó xây JDBC source và database payload verifier.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
