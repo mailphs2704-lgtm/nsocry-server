@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** DEVELOPER_MANUAL_PENDING_WINDOWS
+**Trạng thái:** DEVELOPER_MANUAL_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -59,7 +59,7 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Raw point được bảo toàn: level 957=150, 958=150, 962=140, 966=140.
 - Schema V003 READY; database đã import và JDBC payload verification khớp.
 - Runtime publish thử đã được tách khỏi startup; database không bị ghi.
-- Windows full suite gần nhất do người dùng xác nhận: **233/233**, không failure/error/skipped.
+- Windows full suite gần nhất do người dùng xác nhận: **235/235**, không failure/error/skipped.
 
 ### MAP đã xác nhận theo nhóm
 
@@ -69,8 +69,6 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 ## PENDING
 
-- Developer Manual và hai documentation coverage test mới đang PENDING Windows; full suite
-  mục tiêu **235**.
 - MAP chưa có schema/migration/importer và chưa publish runtime.
 - Server startup chưa nối runtime snapshot client đầy đủ DATA/MAP/SKILL/ITEM/appearance.
 - Client thật chưa vào gameplay.
@@ -119,9 +117,9 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
   TRACE_REQUIRED cho gameplay/runtime chưa đủ dữ liệu.
 - Generator catalog nằm tại `tools/generate-developer-catalog.sh`.
 - Hai documentation gate bảo vệ source coverage và các trường quản trị bắt buộc.
-- Chưa gọi checkpoint này VERIFIED trước output full suite Windows.
+- Hai documentation gate và toàn bộ Developer Manual đã vượt full suite Windows **235/235**.
 
 ## Next exact action
 
-Commit/push Developer Manual trên `agent/document-nsokiss-runtime`; người dùng pull và chạy
-full `mvn test`, kỳ vọng 235/235. Sau VERIFIED mới tiếp tục MAP schema/preflight draft.
+Tiếp tục MAP schema contract, migration draft và read-only schema preflight trên
+`agent/document-nsokiss-runtime`. Chưa chạy migration/import và chưa merge `main`.

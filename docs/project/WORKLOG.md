@@ -1758,3 +1758,12 @@ mà không phải đọc toàn bộ chat hoặc tự reverse-engineer lại sour
 ### Next exact action
 
 Push checkpoint và chạy full Maven suite 235/235. Sau VERIFIED mới tiếp tục MAP schema draft.
+
+## 2026-08-25 — Developer Manual đạt 235/235
+
+- Người dùng xác nhận full Maven suite **235/235**, không failure/error/skipped.
+- Catalog coverage 173/173 source và required management fields: VERIFIED Windows.
+- Developer Manual, 17 TRACE_REQUIRED entries và generator catalog được chấp nhận làm điểm
+  tra cứu bắt buộc cho chủ server/AI tiếp quản.
+- Database/runtime không đổi; tiến độ gameplay cơ bản giữ nguyên 17%.
+- Next: MAP schema contract, migration draft và read-only preflight; chưa chạy migration.

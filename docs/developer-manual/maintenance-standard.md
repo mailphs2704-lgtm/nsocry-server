@@ -49,3 +49,8 @@ path; line range chỉ là hỗ trợ tại checkpoint. Khi signature đổi ph�
 - Không ghi runtime/database đã đổi nếu chỉ chạy unit test.
 - Không tự đánh dấu review độc lập cho commit do cùng AI tạo.
 - Không xóa lịch sử WORKLOG để làm trạng thái trông sạch hơn.
+
+## Checkpoint xác minh
+
+Developer Manual, catalog coverage và required-field gate đã được người dùng xác nhận trong
+full suite Windows **235/235** ngày 2026-08-25.
