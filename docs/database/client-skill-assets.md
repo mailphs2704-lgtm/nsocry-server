@@ -114,3 +114,9 @@ Người dùng xác nhận import bằng full SHA-256. Transaction đã commit 7
 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
 Runtime snapshot chưa publish. Trạng thái tiếp theo là post-check database và tái dựng
 payload từ JDBC để so end-to-end, không coi count đơn thuần là đủ.
+
+SQL post-check đã khớp count, ID 0-based liên tục và bốn point 150/150/140/140.
+`JdbcSkillAssetSource` đọc năm bảng trong một repeatable-read transaction, kiểm tra ID,
+sort-order/reference/range rồi dựng lại cây wire. Command `skill-seed-db-verify` encode
+bundle JDBC và so trực tiếp với manifest candidate; chỉ khi SHA-256 khớp mới nâng pipeline
+lên VERIFIED_END_TO_END. Command không ghi database và không publish runtime snapshot.
