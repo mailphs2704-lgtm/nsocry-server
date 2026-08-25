@@ -83,3 +83,6 @@ Contract V003 khai báo đúng 26 cột thuộc năm bảng SKILL. Inspector ch�
 `information_schema.columns`, bật read-only connection và báo đầy đủ cột thiếu, thừa,
 trùng hoặc sai `data_type`/`unsigned`/nullability. Foundation này chưa có quyền chạy
 V003 và không thực hiện DDL/DML.
+
+Launcher command `skill-schema-preflight [config-path]` chỉ đọc contract trên database,
+in READY/NOT_READY cùng từng difference và luôn báo `databaseChanged=false`.
