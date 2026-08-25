@@ -1374,6 +1374,28 @@ chưa chạy V003 hoặc import.
 - Backup hoàn tất trước migration; V003 chưa chạy.
 - Next: chỉ chạy V003 sau xác nhận rõ ràng của người dùng.
 
+## 2026-08-25 — V003 READY và transactional SKILL importer
+
+### VERIFIED
+
+- Người dùng xác nhận chạy V003 sau backup 95731 byte và checksum đã khóa.
+- Post-migration `skill-schema-preflight`: READY.
+- Năm bảng SKILL mới còn rỗng; chưa import.
+
+### Đã triển khai tiếp
+
+- Importer validate payload/manifest trước khi mở JDBC connection.
+- SERIALIZABLE transaction, delete/insert theo đúng foreign-key order.
+- Prepared batches cho option/class/template/level/level-option.
+- Point raw-byte được mở rộng unsigned khi ghi SMALLINT UNSIGNED.
+- Failure hoặc batch count sai rollback toàn transaction.
+- Năm test mới; suite mục tiêu 185.
+- Tiến độ gameplay cơ bản: 16%.
+
+### Next exact action
+
+Người dùng xác minh 185 test rồi xây interactive import guard; chưa tự import SKILL.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
