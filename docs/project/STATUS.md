@@ -750,6 +750,21 @@ dry-run với `source-reference\\database.sql`; chỉ đối chiếu report/chec
 Package JAR rồi chạy `skill-seed-convert` và `skill-seed-dry-run` trên Windows. Candidate
 phải khớp 42402 byte và SHA-256 đã khóa; chưa migration/import.
 
+## Checkpoint SKILL cross-platform và schema preflight foundation
+
+- Windows convert/dry-run khớp Work tuyệt đối; artifact: VERIFIED_CROSS_PLATFORM.
+- Candidate: 72 option, 7 class, 91 template, 967 level, 3883 level-option.
+- Payload 42402 byte; SHA-256 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Contract V003 kiểm tra đúng 26 cột của năm bảng SKILL.
+- JDBC inspector chỉ đọc information_schema và đặt connection read-only.
+- Năm test mới đang PENDING; suite mục tiêu 175.
+- V003 chưa chạy; SKILL chưa import; database/runtime snapshot không thay đổi.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 175/175. Sau đó mới thêm launcher command
+`skill-schema-preflight`; chưa chạy migration.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
