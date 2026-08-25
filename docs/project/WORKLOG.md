@@ -1396,6 +1396,26 @@ chưa chạy V003 hoặc import.
 
 Người dùng xác minh 185 test rồi xây interactive import guard; chưa tự import SKILL.
 
+## 2026-08-25 — Xác minh 185 và interactive SKILL import guard
+
+### VERIFIED
+
+- Người dùng xác nhận 185 test sạch.
+- Transactional SKILL importer: VERIFIED.
+
+### Đã triển khai
+
+- Validated archive giữ payload bất biến bằng defensive copy.
+- Command `skill-seed-import` kiểm tra archive và V003 trước confirmation.
+- Full SHA-256 constant-time confirmation là gate cuối trước transaction.
+- Sai/hủy confirmation không import; import thành công không publish snapshot.
+- Năm test mới; suite mục tiêu 190.
+- Tiến độ gameplay cơ bản: 16%.
+
+### Next exact action
+
+Người dùng xác minh 190 test rồi mới xin xác nhận cuối để import SKILL candidate.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
