@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 20179)
+Total output lines: 1863
+
 # Nhật ký làm việc NSOCry
 
 Nhật ký append-only. Không sửa lịch sử để làm đẹp tiến độ; nếu thông tin cũ sai, thêm entry đính chính và liên kết.
@@ -976,25 +979,7 @@ Xác minh 96 test rồi tạo công cụ sinh seed ITEM có đầu ra xác đị
 - Manifest key=value có format version, count, length và SHA-256; newline cố định LF.
 - Artifact sao chép phòng vệ payload và tự validation trước khi được trả về.
 - Importer tương lai sẽ decode artifact và dùng prepared statement.
-- Bốn test mới; suite mục tiêu 100.
-
-### Next exact action
-
-Xác minh 100 test rồi thiết kế parser manifest và JDBC seed importer transactional; vẫn chưa chạy V002 hoặc import dữ liệu thật.
-
-## 2026-08-18 — Xác minh 100 test và JDBC ITEM seed importer
-
-### VERIFIED
-
-- Người dùng chạy 100 test: 0 failure, 0 error, 0 skipped.
-- Generator seed artifact xác định và defensive copy: VERIFIED.
-
-### Đã triển khai tiếp
-
-- Parser manifest canonical, từ chối khóa thừa, sai thứ tự hoặc giá trị ngoài giới hạn.
-- Manifest nay khóa cả payload length bên cạnh version/count/SHA-256.
-- Importer kiểm định artifact trước khi mở database connection.
-- Thay seed bằng transaction SERIALIZABLE và prepared batch; lỗi rollback toàn bộ.
+- Bốn test mới; suit…179 tokens truncated…ng transaction SERIALIZABLE và prepared batch; lỗi rollback toàn bộ.
 - Importer không chạy migration, không tăng version và không publish snapshot.
 - Năm test mới; suite mục tiêu 105.
 
@@ -1847,3 +1832,17 @@ backup hợp lệ và chủ dự án xác nhận riêng mới được chạy mi
 
 Chờ xác nhận riêng `ĐỒNG Ý CHẠY V004`. Sau xác nhận mới chạy đúng migration draft đã review,
 rồi chạy lại `map-schema-preflight`; chưa import MAP seed.
+
+## 2026-08-25 — MAP schema V004 READY
+
+- Chủ dự án xác nhận rõ `ĐỒNG Ý CHẠY V004` sau khi backup hợp lệ.
+- Migration `V004__client_map_assets.sql` đã được chạy trên database `nsocry`.
+- Preflight sau migration trả `MAP schema preflight READY` và không có difference.
+- Tác động migration: `databaseChanged=true` vì bốn bảng/18 cột MAP đã được tạo.
+- Tác động preflight: `databaseChanged=false` vì command chỉ đọc metadata.
+- Chưa import MAP seed; runtime snapshot chưa publish; tiến độ gameplay giữ nguyên 17%.
+
+### Next exact action
+
+Xây importer transaction, JDBC source và database payload verifier cho MAP V004. Chưa import
+candidate nếu chưa có full SHA-256 confirmation riêng của chủ dự án.

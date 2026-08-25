@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_V004_AWAITING_CONFIRMATION
+**Trạng thái:** MAP_V004_READY
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -128,13 +128,15 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - `JdbcMapAssetSchemaInspector` chỉ đọc `information_schema` trên connection read-only.
 - Launcher có command `map-schema-preflight [config-path]`, luôn báo `databaseChanged=false`.
 - Bảy test MAP schema/command và catalog đầy đủ đã vượt full suite Windows **242/242**.
-- Preflight database thật trả `NOT_READY`: thiếu đúng 18/18 cột V004; không ghi nhận cột
-  thừa/sai contract và `databaseChanged=false`.
+- Preflight trước migration trả `NOT_READY`, thiếu đúng 18/18 cột V004.
 - Backup trước V004 đã tạo: `backup/nsocry-before-v004-20260825-223913.sql`, 207887 byte,
   SHA-256 `0F6DA143638EA358837A478C18B8094C06E027ED4EB413FAA901B4808E666541`.
-- Chưa chạy V004, chưa import seed, chưa tạo JDBC asset source và chưa publish runtime.
+- Chủ dự án đã xác nhận và migration V004 đã chạy; preflight sau migration trả `READY`.
+- V004 đã làm `databaseChanged=true`; command preflight sau đó chỉ đọc và báo
+  `databaseChanged=false`.
+- Chưa import MAP seed, chưa tạo JDBC asset source và chưa publish runtime.
 
 ## Next exact action
 
-Chờ chủ dự án xác nhận rõ `ĐỒNG Ý CHẠY V004`; sau đó mới cung cấp lệnh migration và chạy lại
-preflight. Chưa import MAP và chưa merge `main`.
+Xây MAP seed importer transaction và JDBC source/verification trên schema V004 READY. Chưa
+import MAP nếu chưa có checksum confirmation riêng và chưa merge `main`.
