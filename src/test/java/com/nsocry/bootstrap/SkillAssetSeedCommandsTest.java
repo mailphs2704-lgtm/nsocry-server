@@ -79,6 +79,20 @@ class SkillAssetSeedCommandsTest {
                 NsocryLauncher.parse(new String[] {"skill-seed-dry-run", "skill.zip"}).command());
     }
 
+    @Test
+    void validatedArchiveReturnsDefensivePayloadCopy() throws Exception {
+        var artifact = SkillAssetSeedArtifactGenerator.generate(
+                ReferenceSkillAssetConverter.convert((byte) 26, validDump()).bundle());
+        Path archive = temporaryDirectory.resolve("validated-skill.zip");
+        var service = new SkillAssetSeedArchiveService();
+        service.export(artifact, archive);
+
+        var validated = service.readValidated(archive);
+        byte[] first = validated.payload();
+        first[0] ^= 1;
+        assertEquals(26, Byte.toUnsignedInt(validated.payload()[0]));
+    }
+
     private static String validDump() {
         return """
                 INSERT INTO `clazz` (`id`, `name`) VALUES
