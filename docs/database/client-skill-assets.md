@@ -73,3 +73,13 @@ archive/manifest và trước mọi migration/import.
 - Chạy offline trên dump thật giữ nguyên payload 42402 byte và SHA-256
   `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
 - Hai command đều báo `databaseChanged=false`; V003 và database chưa thay đổi.
+
+Windows convert/dry-run đã khớp hoàn toàn với Work: count, bốn difference, 42402 byte
+và SHA-256. Artifact được nâng trạng thái `VERIFIED_CROSS_PLATFORM`.
+
+## Schema preflight foundation
+
+Contract V003 khai báo đúng 26 cột thuộc năm bảng SKILL. Inspector chỉ đọc
+`information_schema.columns`, bật read-only connection và báo đầy đủ cột thiếu, thừa,
+trùng hoặc sai `data_type`/`unsigned`/nullability. Foundation này chưa có quyền chạy
+V003 và không thực hiện DDL/DML.
