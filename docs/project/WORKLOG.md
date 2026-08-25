@@ -1416,6 +1416,38 @@ Người dùng xác minh 185 test rồi xây interactive import guard; chưa t�
 
 Người dùng xác minh 190 test rồi mới xin xác nhận cuối để import SKILL candidate.
 
+## 2026-08-25 — Xác minh 190 và khóa candidate import SKILL
+
+### VERIFIED
+
+- Người dùng xác nhận 190 test sạch.
+- Interactive import guard, archive defensive copy và launcher routing: VERIFIED.
+- Schema V003 hiện READY; backup trước migration đã có kích thước/checksum đầy đủ.
+
+### Candidate đã khóa
+
+- Version 26.
+- 72 option, 7 class, 91 template, 967 level, 3883 level-option.
+- Bốn raw-byte point: 957=150, 958=150, 962=140, 966=140.
+- Payload 42402 byte.
+- SHA-256 `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+
+### Trạng thái an toàn
+
+- SKILL chưa import; năm bảng V003 đang rỗng.
+- Runtime snapshot chưa publish.
+- Sai/hủy checksum confirmation dừng trước transaction.
+- Tiến độ gameplay cơ bản: 16%.
+
+### Quy tắc tài liệu được tái xác nhận
+
+Sau mỗi bước phải cập nhật tài liệu chi tiết bằng tiếng Việt, gồm trạng thái kiểm thử,
+thay đổi kỹ thuật, database/checksum/count, rủi ro, tiến độ và bước tiếp theo.
+
+### Next exact action
+
+Chờ người dùng xác nhận rõ `ĐỒNG Ý IMPORT SKILL`, sau đó mới chạy command tương tác.
+
 ### Sửa lỗi kiểm thử Windows
 
 - Lần chạy đầu đạt 104/105; importer không lỗi runtime.
