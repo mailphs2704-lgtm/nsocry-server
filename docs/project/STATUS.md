@@ -837,6 +837,33 @@ schema READY và xác nhận đủ SHA-256; chưa import nếu thiếu xác nh�
 Người dùng pull và xác minh 190/190. Sau đó package và xin xác nhận import cuối; không
 tự chạy command ghi database.
 
+## Checkpoint 190 VERIFIED — sẵn sàng xin xác nhận import SKILL
+
+- Người dùng xác nhận 190/190: 0 failure, 0 error, 0 skipped.
+- Validated archive defensive copy, launcher routing và checksum confirmation: VERIFIED.
+- V003 schema: READY; backup trước V003 đã khóa bằng SHA-256.
+- Candidate duy nhất được xem xét import:
+  - version=26;
+  - option=72, class=7, template=91, level=967, level-option=3883;
+  - raw-byte differences: level 957=150, 958=150, 962=140, 966=140;
+  - payloadLength=42402;
+  - SHA-256=`4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Database mới chỉ có schema V003 rỗng; SKILL chưa import.
+- Runtime snapshot chưa publish.
+- Tiến độ đến gameplay cơ bản: 16%.
+
+## Quy tắc documentation bắt buộc
+
+- Mỗi bước hoàn thành phải cập nhật STATUS, WORKLOG và tài liệu package/chức năng liên quan.
+- Nội dung phải chi tiết, rõ ràng và viết bằng tiếng Việt.
+- Phải phân biệt VERIFIED/PENDING, ghi test/count/checksum, tác động database và bước kế tiếp.
+- Không được coi output Work là Windows VERIFIED nếu người dùng chưa xác nhận.
+
+## Next exact action hiện tại
+
+Xin xác nhận rõ ràng `ĐỒNG Ý IMPORT SKILL`. Chỉ sau xác nhận mới package và chạy
+interactive command; importer vẫn yêu cầu nhập đúng full SHA-256 tại console.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
