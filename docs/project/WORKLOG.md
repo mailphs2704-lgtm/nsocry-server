@@ -1821,3 +1821,16 @@ Push catalog đầy đủ và chạy lại full Maven suite, kỳ vọng 242/242
 
 Chạy `map-schema-preflight` read-only trên database hiện tại; kỳ vọng NOT_READY cùng danh sách
 cột thiếu trước V004. Không chạy migration/import nếu chưa backup và xác nhận riêng.
+
+## 2026-08-25 — MAP database preflight xác nhận NOT_READY
+
+- Người dùng chạy command trên database thật; preflight báo thiếu đúng toàn bộ 18 cột V004.
+- Không báo cột thừa hoặc sai contract, phù hợp trạng thái migration chưa chạy.
+- Command in `databaseChanged=false` rồi trả exit lỗi có chủ đích để chặn quy trình tiếp tục
+  khi schema chưa READY.
+- Database không đổi; runtime snapshot chưa publish; tiến độ gameplay giữ nguyên 17%.
+
+### Next exact action
+
+Tạo backup `nsocry-before-v004-<timestamp>.sql`, kiểm tra file size và SHA-256. Chỉ sau khi
+backup hợp lệ và chủ dự án xác nhận riêng mới được chạy migration V004.

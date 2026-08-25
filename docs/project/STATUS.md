@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_SCHEMA_PREFLIGHT_VERIFIED
+**Trạng thái:** MAP_SCHEMA_NOT_READY_BACKUP_REQUIRED
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -128,9 +128,11 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - `JdbcMapAssetSchemaInspector` chỉ đọc `information_schema` trên connection read-only.
 - Launcher có command `map-schema-preflight [config-path]`, luôn báo `databaseChanged=false`.
 - Bảy test MAP schema/command và catalog đầy đủ đã vượt full suite Windows **242/242**.
+- Preflight database thật trả `NOT_READY`: thiếu đúng 18/18 cột V004; không ghi nhận cột
+  thừa/sai contract và `databaseChanged=false`.
 - Chưa chạy V004, chưa import seed, chưa tạo JDBC asset source và chưa publish runtime.
 
 ## Next exact action
 
-Chạy `map-schema-preflight` chỉ đọc trên database hiện tại và ghi nhận đầy đủ differences.
-Chưa chạy migration/import và chưa merge `main`.
+Tạo backup database trước V004, ghi nhận FullName/Length/SHA-256. Chưa chạy migration/import
+và chưa merge `main`.
