@@ -2,7 +2,7 @@
 
 ## Mục tiêu
 
-Checkpoint này chỉ dựng **candidate MAP asset offline** từ `source-reference/database.sql`. Không thực thi SQL, không ghi database, không tạo zone/runtime và chưa thay seed production.
+Pipeline MAP chỉ dựng **candidate asset offline** từ `source-reference/database.sql`. Không thực thi SQL, không ghi database, không tạo zone/runtime và chưa thay seed production.
 
 ## Nguồn authoritative
 
@@ -18,7 +18,7 @@ Converter chỉ đọc đúng ba `INSERT`:
 
 ## Inventory và wire guard
 
-`ReferenceMapDumpInventoryParser` tính count trực tiếp từ tuple của dump và yêu cầu ID liên tục từ `0`. Không dùng comment `~N rows` của công cụ export làm nguồn sự thật. Dump hiện đã quan sát map ID tới ít nhất `158`, vì vậy comment cũ `~148 rows` rõ ràng không đủ tin cậy.
+`ReferenceMapDumpInventoryParser` tính count trực tiếp từ tuple của dump và yêu cầu ID liên tục từ `0`. Không dùng comment `~N rows` của công cụ export làm nguồn sự thật. Dump hiện đã quan sát map ID tới ít nhất `158`, vì vậy comment cũ `~148 rows` không đủ tin cậy.
 
 Giới hạn theo `MapAssetCodec`/client V7:
 
@@ -28,13 +28,13 @@ Giới hạn theo `MapAssetCodec`/client V7:
 - số dòng menu NPC: tối đa `127`;
 - số choice trong một dòng menu: tối đa `127`;
 - `head/body/leg`: phải nằm trong `short`;
-- `monster.type`, `range_move`, `speed`: raw byte. Giá trị `128..255` được giữ bit pattern khi cast sang Java `byte` và đồng thời ghi vào report để không bị hiểu nhầm thành số âm nghiệp vụ.
+- `monster.type`, `range_move`, `speed`: raw byte; bit pattern `128..255` được bảo toàn khi encode/decode.
 
 Menu NPC chỉ chấp nhận schema JSON `array<array<string>>`; object hoặc byte dư bị từ chối.
 
-## Candidate converter
+## Converter checkpoint — VERIFIED
 
-`ReferenceMapAssetConverter.convert(version, dump)` luôn chạy inventory validation trước, sau đó dựng:
+`ReferenceMapAssetConverter.convert(version, dump)` chạy inventory validation trước, sau đó dựng:
 
 1. `List<String> mapNames` từ `map.name`;
 2. `NpcTemplateAsset` từ `name/head/body/leg/menu`;
@@ -43,18 +43,33 @@ Menu NPC chỉ chấp nhận schema JSON `array<array<string>>`; object hoặc b
 
 Không có dữ liệu spawn/zone được đưa vào `MapAssetBundle`.
 
-## Test checkpoint
+Ngày 2026-08-25, người dùng chạy nhóm kiểm chứng MAP trước và xác nhận **13 tests PASS**. Vì vậy inventory/parser/converter/codec checkpoint này được coi là VERIFIED.
 
-Các test mới:
+## MAP seed artifact checkpoint — PENDING 5 tests
 
-- `ReferenceMapDumpInventoryParserTest`: schema, ID gap, menu JSON, raw-byte range và smoke test trực tiếp trên `source-reference/database.sql`;
-- `ReferenceMapAssetConverterTest`: chứng minh runtime columns bị bỏ qua, raw byte `200` được bảo toàn và bundle round-trip qua `MapAssetCodec`;
-- `MapAssetCodecTest`: codec wire đã tồn tại và được giữ nguyên.
+Bước kế tiếp bổ sung candidate artifact xác định, vẫn hoàn toàn offline:
 
-Lệnh kiểm chứng tập trung:
+- `MapAssetSeedManifest`: khóa `version`, `mapCount`, `npcCount`, `mobCount`, `payloadLength`, `sha256` và wire limits;
+- `MapAssetSeedValidator`: encode lại bundle rồi đối chiếu toàn bộ manifest;
+- `MapAssetSeedArtifact`: giữ payload bằng defensive copy;
+- `MapAssetSeedArtifactGenerator`: tạo payload + manifest text format `nsocry-map-seed-v1`, tính SHA-256 và validate lại trước khi trả candidate.
+
+Checkpoint này **chưa tạo ZIP**, chưa import database và chưa publish runtime. Archive/command chỉ được làm sau khi 5 test artifact pass.
+
+## Nhóm test hiện tại
+
+Chính xác 5 test trong `MapAssetSeedArtifactGeneratorTest`:
+
+1. artifact và manifest deterministic;
+2. checksum mismatch bị từ chối;
+3. count vượt wire limit bị từ chối;
+4. payload artifact là defensive copy;
+5. payload round-trip giữ raw byte `200`.
+
+Chạy riêng nhóm này:
 
 ```powershell
-mvn -Dtest=ReferenceMapDumpInventoryParserTest,ReferenceMapAssetConverterTest,MapAssetCodecTest test
+mvn "-Dtest=MapAssetSeedArtifactGeneratorTest" test
 ```
 
-Trạng thái tài liệu tại checkpoint này: **candidate implementation; cần Maven pass trước khi coi MAP inventory là verified**.
+Trạng thái: **PENDING Windows Maven verification — tối đa 5 test cho lượt này**.
