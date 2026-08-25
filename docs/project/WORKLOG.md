@@ -1793,3 +1793,17 @@ Push checkpoint và chạy full Maven suite 235/235. Sau VERIFIED mới tiếp t
 
 Push checkpoint và chạy full Maven suite 242/242. Sau VERIFIED mới chạy preflight read-only;
 không chạy V004/import nếu chưa backup và chưa có xác nhận riêng của chủ dự án.
+
+## 2026-08-25 — Sửa catalog GitHub bị mất đoạn
+
+- Full suite Windows chạy 242 test nhưng có một failure tại `DocumentationCoverageTest`:
+  catalog trên GitHub thiếu path `SkillDumpInventoryReport.java`.
+- Source và MAP schema test không báo failure; database/runtime không đổi.
+- Đối chiếu xác nhận generator/local catalog có đủ path, nhưng blob GitHub chỉ còn 1.497 dòng
+  do nội dung lớn bị cắt giữa khi publish qua connector.
+- Bản vá publish lại catalog theo nhiều chunk để giữ nguyên toàn bộ nội dung; không sửa source.
+- Trạng thái vẫn PENDING, không gọi 242/242 VERIFIED trước khi người dùng chạy lại full suite.
+
+### Next exact action
+
+Push catalog đầy đủ và chạy lại full Maven suite, kỳ vọng 242/242; chưa chạy migration V004.

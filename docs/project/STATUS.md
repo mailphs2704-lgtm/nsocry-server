@@ -71,6 +71,8 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 - MAP V004 contract/migration draft/read-only preflight đã có; bảy test mới đang PENDING
   Windows, full suite mục tiêu **242**.
+- Lần chạy Windows đầu tiên: 242 test, một failure do blob catalog trên GitHub bị mất đoạn khi
+  publish; production/MAP test không thất bại. Bản vá catalog đầy đủ đang PENDING chạy lại.
 - MAP chưa chạy migration, chưa có importer/JDBC source và chưa publish runtime.
 - Server startup chưa nối runtime snapshot client đầy đủ DATA/MAP/SKILL/ITEM/appearance.
 - Client thật chưa vào gameplay.
@@ -133,5 +135,5 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 
 ## Next exact action
 
-Push checkpoint MAP V004 draft; người dùng pull và chạy full `mvn test`, kỳ vọng **242/242**.
+Push bản vá catalog đầy đủ; người dùng pull và chạy lại full `mvn test`, kỳ vọng **242/242**.
 Sau VERIFIED mới chạy read-only preflight; chưa chạy migration/import và chưa merge `main`.

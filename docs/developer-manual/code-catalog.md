@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 38282)
-Total output lines: 1910
-
 # Danh mục code production NSOCry
 
 > File này được sinh cơ học từ `src/main/java` bởi `tools/generate-developer-catalog.sh`.
@@ -781,7 +778,424 @@ Total output lines: 1910
 - **Vai trò tóm tắt:** Kết quả chuyển đổi SKILL gồm read model wire-ready và inventory đối chiếu.
 - **Trạng thái:** `IMPLEMENTED`
 - **API public/protected phát hiện được:**
-  - **D…8282 tokens truncated…+ manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+  - **Dòng 7 — `public record SkillAssetConversionResult(`**: Kết quả chuyển đổi SKILL gồm read model wire-ready và inventory đối chiếu.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.assets.conversion.SkillDumpInventoryReport`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/SkillDumpInventoryReport.java`
+- **Vai trò tóm tắt:** Inventory đã kiểm tra của bốn nguồn SKILL trong dump tham chiếu.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public record SkillDumpInventoryReport(`**: Inventory đã kiểm tra của bốn nguồn SKILL trong dump tham chiếu.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.assets.conversion.SkillRawByteDifference`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/SkillRawByteDifference.java`
+- **Vai trò tóm tắt:** Một giá trị raw byte 128–255 cần quyết định compatibility trước khi cast sang byte Java.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 6 — `public record SkillRawByteDifference(String entityType, int entityId, String field, int value) {`**: Một giá trị raw byte 128–255 cần quyết định compatibility trước khi cast sang byte Java.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+## `com.nsocry.authentication`
+
+**Vai trò:** Credential policy và application authentication contract.
+
+**Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
+
+### `com.nsocry.authentication.AccountCredential`
+
+- **Source:** `src/main/java/com/nsocry/authentication/AccountCredential.java`
+- **Vai trò tóm tắt:** Dữ liệu xác thực tối thiểu được repository tải cho một tài khoản.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public record AccountCredential(`**: Dữ liệu xác thực tối thiểu được repository tải cho một tài khoản.
+  - **Dòng 26 — `public boolean isTemporarilyLockedAt(Instant instant) {`**: Cho biết tài khoản có bị khóa tạm tại thời điểm được cung cấp hay không.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.AccountProvisioningRepository`
+
+- **Source:** `src/main/java/com/nsocry/authentication/AccountProvisioningRepository.java`
+- **Vai trò tóm tắt:** Port tối thiểu dùng riêng cho quá trình tạo account ban đầu.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 4 — `public interface AccountProvisioningRepository {`**: Port tối thiểu dùng riêng cho quá trình tạo account ban đầu.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.AccountRepository`
+
+- **Source:** `src/main/java/com/nsocry/authentication/AccountRepository.java`
+- **Vai trò tóm tắt:** Port lưu trữ tối thiểu mà authentication service cần, chưa phụ thuộc JDBC.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public interface AccountRepository {`**: Port lưu trữ tối thiểu mà authentication service cần, chưa phụ thuộc JDBC.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.AccountRole`
+
+- **Source:** `src/main/java/com/nsocry/authentication/AccountRole.java`
+- **Vai trò tóm tắt:** Role tài khoản được lưu đúng theo constraint của schema accounts.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 4 — `public enum AccountRole {`**: Role tài khoản được lưu đúng theo constraint của schema accounts.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.AccountStatus`
+
+- **Source:** `src/main/java/com/nsocry/authentication/AccountStatus.java`
+- **Vai trò tóm tắt:** Trạng thái nghiệp vụ tối thiểu quyết định tài khoản có được đăng nhập hay không.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 4 — `public enum AccountStatus {`**: Trạng thái nghiệp vụ tối thiểu quyết định tài khoản có được đăng nhập hay không.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.AuthenticationService`
+
+- **Source:** `src/main/java/com/nsocry/authentication/AuthenticationService.java`
+- **Vai trò tóm tắt:** Xác thực account bằng repository và password hasher mà không phân biệt lỗi trả cho client.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class AuthenticationService implements AuthenticationPort {`**: Xác thực account bằng repository và password hasher mà không phân biệt lỗi trả cho client.
+  - **Dòng 21 — `public AuthenticationService(`**: Tạo service cùng dummy hash dùng để cân bằng đường xử lý username không tồn tại.
+  - **Dòng 34 — `public AuthenticationDecision authenticate(LoginRequest request, ClientInfo clientInfo) {`**: Xác minh password rồi kiểm tra activated, status và khóa tạm trước khi chấp nhận.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.FirstAdministratorService`
+
+- **Source:** `src/main/java/com/nsocry/authentication/FirstAdministratorService.java`
+- **Vai trò tóm tắt:** Tạo administrator đầu tiên theo quy tắc một lần và luôn xóa password đầu vào.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 8 — `public final class FirstAdministratorService {`**: Tạo administrator đầu tiên theo quy tắc một lần và luôn xóa password đầu vào.
+  - **Dòng 17 — `public FirstAdministratorService(`**: Tạo service từ provisioning repository và password hasher.
+  - **Dòng 28 — `public long provision(String username, char[] password) {`**: Tạo administrator đầu tiên và trả id mới.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.PasswordHashingPort`
+
+- **Source:** `src/main/java/com/nsocry/authentication/PasswordHashingPort.java`
+- **Vai trò tóm tắt:** Port tạo và xác minh password hash có version mà không làm lộ thuật toán cho service.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 4 — `public interface PasswordHashingPort {`**: Port tạo và xác minh password hash có version mà không làm lộ thuật toán cho service.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.Pbkdf2PasswordHasher`
+
+- **Source:** `src/main/java/com/nsocry/authentication/Pbkdf2PasswordHasher.java`
+- **Vai trò tóm tắt:** Password hasher thuần Java dùng PBKDF2-HMAC-SHA256, salt riêng và định dạng có version.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 12 — `public final class Pbkdf2PasswordHasher implements PasswordHashingPort {`**: Password hasher thuần Java dùng PBKDF2-HMAC-SHA256, salt riêng và định dạng có version.
+  - **Dòng 25 — `public Pbkdf2PasswordHasher() {`**: Tạo hasher với SecureRandom mặc định và work factor 600.000 vòng.
+  - **Dòng 40 — `public String hash(char[] password) {`**: Tạo salt mới, dẫn xuất hash và đóng gói version, work factor, salt cùng kết quả.
+  - **Dòng 52 — `public boolean verify(char[] password, String encodedHash) {`**: Phân tích chuỗi đã lưu và so sánh kết quả bằng MessageDigest.isEqual.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.authentication.package-info`
+
+- **Source:** `src/main/java/com/nsocry/authentication/package-info.java`
+- **Vai trò tóm tắt:** Chứa domain và application service cho xác thực tài khoản NSOCry.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - Không có API public/protected một dòng; xem source/package contract.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+## `com.nsocry.bootstrap`
+
+**Vai trò:** Composition root, launcher và command vận hành.
+
+**Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
+
+### `com.nsocry.bootstrap.FirstAdministratorCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/FirstAdministratorCommand.java`
+- **Vai trò tóm tắt:** Lệnh tương tác tạo administrator đầu tiên mà không nhận password qua argument.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 15 — `public final class FirstAdministratorCommand {`**: Lệnh tương tác tạo administrator đầu tiên mà không nhận password qua argument.
+  - **Dòng 20 — `public static void main(String[] args) throws Exception {`**: Đọc username/password từ Console, xác nhận password rồi tạo đúng một administrator.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.ItemAssetDatabaseVerifyCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/ItemAssetDatabaseVerifyCommand.java`
+- **Vai trò tóm tắt:** Xác minh dữ liệu ITEM trong database tái tạo đúng payload candidate mà không ghi dữ liệu.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 23 — `public final class ItemAssetDatabaseVerifyCommand {`**: Xác minh dữ liệu ITEM trong database tái tạo đúng payload candidate mà không ghi dữ liệu.
+  - **Dòng 28 — `public static void main(String[] args) throws Exception {`**: Đọc archive, schema và JDBC source rồi so count/length/SHA-256 end-to-end.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.ItemAssetSchemaPreflightCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/ItemAssetSchemaPreflightCommand.java`
+- **Vai trò tóm tắt:** Command chỉ đọc kiểm tra database hiện tại có khớp schema ITEM V002 hay không.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class ItemAssetSchemaPreflightCommand {`**: Command chỉ đọc kiểm tra database hiện tại có khớp schema ITEM V002 hay không.
+  - **Dòng 19 — `public static void main(String[] args) throws Exception {`**: Nạp config, mở DataSource chỉ đọc và dừng với lỗi nếu schema chưa sẵn sàng.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.ItemAssetSeedConvertCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/ItemAssetSeedConvertCommand.java`
+- **Vai trò tóm tắt:** Command chuyển ITEM trong dump tham chiếu thành candidate archive, không dùng JDBC.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 19 — `public final class ItemAssetSeedConvertCommand {`**: Command chuyển ITEM trong dump tham chiếu thành candidate archive, không dùng JDBC.
+  - **Dòng 27 — `public static void main(String[] args) throws Exception {`**: Chấp nhận đúng một dump path, xuất candidate cạnh file nguồn và in metadata.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.ItemAssetSeedDryRunCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/ItemAssetSeedDryRunCommand.java`
+- **Vai trò tóm tắt:** Command kiểm định archive ITEM seed và chỉ in metadata, không mở database.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 8 — `public final class ItemAssetSeedDryRunCommand {`**: Command kiểm định archive ITEM seed và chỉ in metadata, không mở database.
+  - **Dòng 13 — `public static void main(String[] args) throws Exception {`**: Chấp nhận đúng một đường dẫn archive và in báo cáo dry-run.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.ItemAssetSeedImportCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/ItemAssetSeedImportCommand.java`
+- **Vai trò tóm tắt:** Command tương tác import ITEM seed đã duyệt; không chạy migration hoặc publish runtime.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 21 — `public final class ItemAssetSeedImportCommand {`**: Command tương tác import ITEM seed đã duyệt; không chạy migration hoặc publish runtime.
+  - **Dòng 26 — `public static void main(String[] args) throws Exception {`**: Kiểm định archive/schema, yêu cầu nhập đúng SHA-256 rồi mới mở transaction import.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.MapAssetSchemaPreflightCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/MapAssetSchemaPreflightCommand.java`
+- **Vai trò tóm tắt:** Command chỉ đọc kiểm tra database hiện tại có khớp schema MAP V004 hay không.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class MapAssetSchemaPreflightCommand {`**: Command chỉ đọc kiểm tra database hiện tại có khớp schema MAP V004 hay không.
+  - **Dòng 19 — `public static void main(String[] args) throws Exception {`**: Nạp config, mở DataSource read-only và trả lỗi khi schema chưa sẵn sàng.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.MapAssetSeedConvertCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/MapAssetSeedConvertCommand.java`
+- **Vai trò tóm tắt:** Tạo MAP seed candidate offline từ dump; không mở database hoặc publish runtime.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 16 — `public final class MapAssetSeedConvertCommand {`**: Tạo MAP seed candidate offline từ dump; không mở database hoặc publish runtime.
+  - **Dòng 24 — `public static void main(String[] args) throws Exception {`**: Entry CLI yêu cầu đúng một dump path rồi tạo MAP candidate offline.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.MapAssetSeedDryRunCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/MapAssetSeedDryRunCommand.java`
+- **Vai trò tóm tắt:** Xác minh MAP archive offline; không mở database hoặc publish runtime.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 8 — `public final class MapAssetSeedDryRunCommand {`**: Xác minh MAP archive offline; không mở database hoặc publish runtime.
+  - **Dòng 13 — `public static void main(String[] args) throws Exception {`**: Entry CLI yêu cầu đúng một archive path rồi xác minh không mutation.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.NsocryLauncher`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/NsocryLauncher.java`
+- **Vai trò tóm tắt:** Entry point duy nhất của executable JAR, phân luồng lệnh vận hành rõ ràng.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 6 — `public final class NsocryLauncher {`**: Entry point duy nhất của executable JAR, phân luồng lệnh vận hành rõ ràng.
+  - **Dòng 11 — `public static void main(String[] args) throws Exception {`**: Phân tích argument rồi chạy server, tạo administrator hoặc in trợ giúp.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.NsocryServerApplication`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/NsocryServerApplication.java`
+- **Vai trò tóm tắt:** Điểm ghép và vòng đời tối thiểu để chạy TCP server NSOCry từ cấu hình.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 26 — `public final class NsocryServerApplication implements Closeable {`**: Điểm ghép và vòng đời tối thiểu để chạy TCP server NSOCry từ cấu hình.
+  - **Dòng 30 — `public NsocryServerApplication(`**: Ghép cấu hình, xác thực và event sink thành server nhưng chưa tự động start.
+  - **Dòng 43 — `public void start() throws IOException {`**: Khởi động TCP listener sau khi toàn bộ dependency đã được tạo thành công.
+  - **Dòng 48 — `public TcpServer server() {`**: Trả server đang được application sở hữu để kiểm tra trạng thái và địa chỉ bind.
+  - **Dòng 54 — `public void close() throws IOException {`**: Dừng toàn bộ tài nguyên runtime thuộc application.
+  - **Dòng 62 — `public static void main(String[] args) throws Exception {`**: Chạy server từ file cấu hình được chỉ định ở argument đầu tiên hoặc config/nsocry.properties.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.SkillAssetDatabaseVerifyCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/SkillAssetDatabaseVerifyCommand.java`
+- **Vai trò tóm tắt:** Xác minh dữ liệu SKILL trong database tái tạo đúng payload candidate.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 22 — `public final class SkillAssetDatabaseVerifyCommand {`**: Xác minh dữ liệu SKILL trong database tái tạo đúng payload candidate.
+  - **Dòng 27 — `public static void main(String[] args) throws Exception {`**: Đọc archive/schema/JDBC source và so payload end-to-end, không ghi database.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.SkillAssetRuntimePublishCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/SkillAssetRuntimePublishCommand.java`
+- **Vai trò tóm tắt:** Publish thử SKILL snapshot từ JDBC sau toàn bộ gate candidate; không ghi database.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 22 — `public final class SkillAssetRuntimePublishCommand {`**: Publish thử SKILL snapshot từ JDBC sau toàn bộ gate candidate; không ghi database.
+  - **Dòng 27 — `public static void main(String[] args) throws Exception {`**: Đọc archive, preflight schema và publish vào atomic store cục bộ của command.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.SkillAssetSchemaPreflightCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/SkillAssetSchemaPreflightCommand.java`
+- **Vai trò tóm tắt:** Command chỉ đọc kiểm tra database hiện tại có khớp schema SKILL V003 hay không.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class SkillAssetSchemaPreflightCommand {`**: Command chỉ đọc kiểm tra database hiện tại có khớp schema SKILL V003 hay không.
+  - **Dòng 19 — `public static void main(String[] args) throws Exception {`**: Nạp config, mở DataSource read-only và trả lỗi khi schema chưa sẵn sàng.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.SkillAssetSeedConvertCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/SkillAssetSeedConvertCommand.java`
+- **Vai trò tóm tắt:** Command tạo SKILL candidate offline từ dump, không dùng JDBC.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 16 — `public final class SkillAssetSeedConvertCommand {`**: Command tạo SKILL candidate offline từ dump, không dùng JDBC.
+  - **Dòng 24 — `public static void main(String[] args) throws Exception {`**: Entry CLI yêu cầu đúng một dump path rồi tạo SKILL candidate offline.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.SkillAssetSeedDryRunCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/SkillAssetSeedDryRunCommand.java`
+- **Vai trò tóm tắt:** Command xác minh SKILL archive mà không mở database hoặc publish snapshot.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 8 — `public final class SkillAssetSeedDryRunCommand {`**: Command xác minh SKILL archive mà không mở database hoặc publish snapshot.
+  - **Dòng 13 — `public static void main(String[] args) throws Exception {`**: Entry CLI yêu cầu đúng một archive path rồi dry-run không mutation.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.SkillAssetSeedImportCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/SkillAssetSeedImportCommand.java`
+- **Vai trò tóm tắt:** Command tương tác import SKILL đã duyệt; không migration hoặc publish runtime.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 21 — `public final class SkillAssetSeedImportCommand {`**: Command tương tác import SKILL đã duyệt; không migration hoặc publish runtime.
+  - **Dòng 26 — `public static void main(String[] args) throws Exception {`**: Archive + schema READY + full SHA-256 là ba gate bắt buộc trước transaction.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.package-info`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/package-info.java`
+- **Vai trò tóm tắt:** Ghép dependency và quản lý vòng đời tiến trình NSOCry.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - Không có API public/protected một dòng; xem source/package contract.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+## `com.nsocry.character`
+
+**Vai trò:** Read model/payload danh sách nhân vật sau đăng nhập.
+
+**Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
+
+### `com.nsocry.character.CharacterSelectionPayloadCodec`
+
+- **Source:** `src/main/java/com/nsocry/character/CharacterSelectionPayloadCodec.java`
+- **Vai trò tóm tắt:** Mã hóa và giải mã payload màn hình nhân vật tương thích luồng client V7 đã xác minh tĩnh.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 13 — `public final class CharacterSelectionPayloadCodec {`**: Mã hóa và giải mã payload màn hình nhân vật tương thích luồng client V7 đã xác minh tĩnh.
+  - **Dòng 22 — `public static ProtocolFrame encodeCharacterList(List<CharacterSummary> characters) throws IOException {`**: Tạo frame danh sách nhân vật theo đúng thứ tự trường mà client cũ đọc.
+  - **Dòng 48 — `public static String decodeSelectedCharacterName(ProtocolFrame frame) throws IOException {`**: Giải mã tên nhân vật client muốn chọn và từ chối envelope, command hoặc byte đuôi sai.
+  - **Dòng 56 — `public static CreateCharacterRequest decodeCreateCharacterRequest(ProtocolFrame frame) throws IOException {`**: Giải mã đúng ba trường wire của yêu cầu tạo nhân vật, chưa trộn quy tắc nghiệp vụ vào codec.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.character.CharacterSummary`
+
+- **Source:** `src/main/java/com/nsocry/character/CharacterSummary.java`
+- **Vai trò tóm tắt:** Dữ liệu hiển thị tối thiểu của một nhân vật trong màn hình chọn nhân vật.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 6 — `public record CharacterSummary(`**: Dữ liệu hiển thị tối thiểu của một nhân vật trong màn hình chọn nhân vật.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.character.CreateCharacterRequest`
+
+- **Source:** `src/main/java/com/nsocry/character/CreateCharacterRequest.java`
+- **Vai trò tóm tắt:** Yêu cầu tạo nhân vật đã giải mã từ client; quy tắc nghiệp vụ sẽ được kiểm tra ở tầng dịch vụ.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 6 — `public record CreateCharacterRequest(String name, byte gender, byte head) {`**: Yêu cầu tạo nhân vật đã giải mã từ client; quy tắc nghiệp vụ sẽ được kiểm tra ở tầng dịch vụ.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.character.package-info`
+
+- **Source:** `src/main/java/com/nsocry/character/package-info.java`
+- **Vai trò tóm tắt:** Mô hình và codec phục vụ luồng danh sách, chọn và tạo nhân vật của NSOCry.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - Không có API public/protected một dòng; xem source/package contract.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+## `com.nsocry.configuration`
+
+**Vai trò:** Load và validate cấu hình server/database.
+
+**Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
+
+### `com.nsocry.configuration.DatabaseConfiguration`
+
+- **Source:** `src/main/java/com/nsocry/configuration/DatabaseConfiguration.java`
+- **Vai trò tóm tắt:** Cấu hình kết nối database bất biến; biểu diễn chuỗi luôn che password.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 8 — `public final class DatabaseConfiguration {`**: Cấu hình kết nối database bất biến; biểu diễn chuỗi luôn che password.
+  - **Dòng 21 — `public DatabaseConfiguration(String url, String user, String password) {`**: Tạo cấu hình sau khi kiểm tra URL MariaDB, user và password bắt buộc.
+  - **Dòng 31 — `public static DatabaseConfiguration from(Properties properties, Map<String, String> environment) {`**: Đọc cấu hình, ưu tiên biến môi trường rồi mới đến file properties.
+  - **Dòng 41 — `public String url() {`**: Trả JDBC URL đã kiểm tra.
+  - **Dòng 46 — `public String user() {`**: Trả database user cho DataSource factory.
+  - **Dòng 51 — `public String password() {`**: Trả password cho DataSource factory; bên gọi không được log giá trị.
+  - **Dòng 57 — `public String toString() {`**: Mô tả cấu hình mà không bao giờ đưa password vào chuỗi.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.configuration.DatabaseConfigurationLoader`
+
+- **Source:** `src/main/java/com/nsocry/configuration/DatabaseConfigurationLoader.java`
+- **Vai trò tóm tắt:** Đọc cấu hình database từ file cục bộ và biến môi trường mà không ghi log nội dung.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 12 — `public final class DatabaseConfigurationLoader {`**: Đọc cấu hình database từ file cục bộ và biến môi trường mà không ghi log nội dung.
+  - **Dòng 14 — `public DatabaseConfiguration load(Path path, Map<String, String> environment) throws IOException {`**: Đọc file nếu tồn tại rồi áp dụng biến môi trường có độ ưu tiên cao hơn.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.configuration.ServerConfiguration`
+
+- **Source:** `src/main/java/com/nsocry/configuration/ServerConfiguration.java`
+- **Vai trò tóm tắt:** Cấu hình runtime bất biến dùng để tạo TCP server và nguồn khóa phiên.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 10 — `public record ServerConfiguration(TcpServerConfig tcp, int sessionKeyLength) {`**: Cấu hình runtime bất biến dùng để tạo TCP server và nguồn khóa phiên.
+  - **Dòng 28 — `public static ServerConfiguration from(Properties properties) {`**: Tạo cấu hình từ Properties, dùng mặc định an toàn cho các khóa bị thiếu.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.configuration.ServerConfigurationLoader`
+
+- **Source:** `src/main/java/com/nsocry/configuration/ServerConfigurationLoader.java`
+- **Vai trò tóm tắt:** Đọc cấu hình NSOCry từ file properties mà không lưu hoặc ghi log giá trị cấu hình.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 11 — `public final class ServerConfigurationLoader {`**: Đọc cấu hình NSOCry từ file properties mà không lưu hoặc ghi log giá trị cấu hình.
+  - **Dòng 13 — `public ServerConfiguration load(Path path) throws IOException {`**: Đọc file tồn tại; nếu đường dẫn không tồn tại thì dùng toàn bộ giá trị mặc định.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.configuration.package-info`
+
+- **Source:** `src/main/java/com/nsocry/configuration/package-info.java`
+- **Vai trò tóm tắt:** Đọc, kiểm tra và biểu diễn cấu hình runtime của NSOCry.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - Không có API public/protected một dòng; xem source/package contract.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
 ## `com.nsocry.network`
 
