@@ -788,6 +788,15 @@ database NSOCry. Kỳ vọng NOT_READY vì V003 chưa chạy; chưa migration.
 - Kỳ vọng NOT_READY và danh sách 26 cột thiếu vì V003 chưa chạy.
 - Không migration/import; tiến độ gameplay cơ bản giữ ở 15%.
 
+## Checkpoint SKILL schema NOT_READY verified
+
+- Sau khi MariaDB được bật, read-only preflight kết nối thành công.
+- Report xác nhận đúng 26/26 cột V003 còn thiếu trên năm bảng SKILL.
+- Command báo `databaseChanged=false` và kết thúc NOT_READY đúng thiết kế.
+- Database chưa thay đổi; V003 chưa chạy; SKILL chưa import.
+- Bước tiếp theo: tạo backup + SHA-256 trước V003 và chờ xác nhận migration riêng.
+- Tiến độ đến gameplay cơ bản: 15%.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
