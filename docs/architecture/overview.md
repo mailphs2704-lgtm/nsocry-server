@@ -1,6 +1,9 @@
 # Tổng quan kiến trúc định hướng NSOCry
 
-**Trạng thái:** PROPOSED — chỉ các nguyên tắc đã ghi CONFIRMED mới là bắt buộc.
+**Trạng thái:** SUPERSEDED một phần. Khung package, tầng phụ thuộc và quy trình thay đổi
+được thay bằng [architecture-lock.md](architecture-lock.md) cùng
+[planned-contracts.tsv](planned-contracts.tsv). Các mô tả nội bộ gameplay chưa được khóa
+trong hai tài liệu đó vẫn là PROPOSED.
 
 ## 1. Mục tiêu kiến trúc
 

@@ -9,11 +9,16 @@ Thư mục `docs/` là nguồn sự thật chính thức về yêu cầu, quyế
 3. [project/STATUS.md](project/STATUS.md) — trạng thái mới nhất và bước tiếp theo chính xác.
 4. [project/ROADMAP.md](project/ROADMAP.md) — lộ trình tổng thể và tiêu chí hoàn thành.
 5. [project/WORKLOG.md](project/WORKLOG.md) — nhật ký theo thời gian.
-6. [architecture/overview.md](architecture/overview.md) — định hướng kiến trúc NSOCry.
-7. [architecture/nsokiss-runtime.md](architecture/nsokiss-runtime.md) — hành vi runtime NSOKISS đã kiểm chứng.
-8. [development/workflow.md](development/workflow.md) — quy trình làm việc và Git.
-9. [development/documentation-standard.md](development/documentation-standard.md) — chuẩn tài liệu bắt buộc.
-10. [handoff/AI-HANDOFF.md](handoff/AI-HANDOFF.md) — cách tiếp tục khi đổi Chat/Work/AI.
+6. [architecture/architecture-lock.md](architecture/architecture-lock.md) — khung kiến trúc bắt buộc và quy trình thay đổi.
+7. [architecture/planned-contracts.tsv](architecture/planned-contracts.tsv) — danh mục package/type/method máy có thể kiểm tra.
+8. [architecture/reference-coverage.md](architecture/reference-coverage.md) — ánh xạ phạm vi NSOKISS sang NSOCry.
+9. [architecture/current-source-inventory.md](architecture/current-source-inventory.md) — ảnh chụp 154 kiểu Java hiện tại.
+10. [architecture/current-public-api.md](architecture/current-public-api.md) — ảnh chụp API công khai hiện tại.
+11. [architecture/overview.md](architecture/overview.md) — định hướng kiến trúc NSOCry.
+12. [architecture/nsokiss-runtime.md](architecture/nsokiss-runtime.md) — hành vi runtime NSOKISS đã kiểm chứng.
+13. [development/workflow.md](development/workflow.md) — quy trình làm việc và Git.
+14. [development/documentation-standard.md](development/documentation-standard.md) — chuẩn tài liệu bắt buộc.
+15. [handoff/AI-HANDOFF.md](handoff/AI-HANDOFF.md) — cách tiếp tục khi đổi Chat/Work/AI.
 
 ## Phân loại độ tin cậy
 

@@ -1497,3 +1497,51 @@ vẫn chưa publish.
 - Assertion của test mong `Integer(-1)` trong khi `PreparedStatement.setShort` bind đúng `Short(-1)`.
 - Đã sửa expected value sang `short`; không thay đổi production code hoặc contract database.
 - Suite mục tiêu vẫn là 105.
+
+## 2026-08-25 — Xây và khóa khung xương kiến trúc NSOCry v1
+
+### Mục tiêu
+
+Tạo một nguồn sự thật đủ chi tiết để các phiên AI tiếp theo tiếp tục cùng kiến trúc, không
+lặp lại phân tích NSOKISS, không tự đổi package/class/method và không tạo code khung rỗng.
+
+### Công việc đã thực hiện
+
+- Kiểm kê tĩnh 250 class thuộc 39 package NSOKISS và ánh xạ theo nhóm trách nhiệm; không
+  chạy runtime reference.
+- Kiểm kê 154 kiểu Java production thuộc 12 package NSOCry.
+- Sinh ảnh chụp 393 khai báo API public hiện hữu kèm source location.
+- Viết Architecture Lock v1 với bảy tầng và luật phụ thuộc một chiều.
+- Viết manifest 99 contract/package rows, mỗi type RESERVED có trách nhiệm và required
+  methods dự kiến để triển khai dần.
+- Bao phủ toàn bộ nhóm game chính: người chơi, chiến đấu, kỹ năng, vật phẩm, bản đồ, quái,
+  NPC, nhiệm vụ, tổ đội, gia tộc, giao dịch, cửa hàng, chat, giftcode, xếp hạng, sự kiện,
+  bot, quản trị và lịch chạy.
+- Ghi rõ các god class, event/zone/bot class explosion và singleton NSOKISS không được port
+  cơ học; thay bằng component, service, data và strategy có ranh giới.
+- Thêm `AGENTS.md` và cập nhật README, handoff, workflow, requirements, overview để luật
+  khóa được áp dụng cho cả người và AI.
+- Thêm năm test kiến trúc tự động.
+
+### Kiểm chứng và giới hạn
+
+- Manifest đúng sáu cột, không trùng identity: PASS.
+- Tất cả package production hiện tại có khai báo: PASS.
+- Không có package/import `com.nsoz` hoặc `com.nsotien`: PASS.
+- Domain game không import persistence/network/bootstrap/operations/JDBC: PASS.
+- `git diff --check`: PASS.
+- Chưa chạy Maven trong Work; năm test mới PENDING Windows, mục tiêu suite 200.
+- Không thay đổi production runtime, database hoặc runtime snapshot.
+
+### Quyết định
+
+- Khóa contract thay vì sinh hàng trăm stub là lựa chọn chính thức: vẫn giữ được hướng phát
+  triển nhưng compiler không bị ô nhiễm bởi API suy đoán và tiến độ không bị thổi phồng.
+- Thay đổi `LOCKED` hoặc thêm package mới cần ADR, cập nhật manifest/test/tài liệu và xác
+  nhận rõ của chủ dự án.
+- Tiến độ đến gameplay cơ bản giữ nguyên 17%.
+
+### Next exact action
+
+Commit/push checkpoint; người dùng pull và chạy `mvn test` kỳ vọng 200/200. Khi VERIFIED,
+tiếp tục runtime snapshot SKILL theo contract đã khóa.

@@ -9,7 +9,8 @@
 
 ## 2. Chu trình một task
 
-1. Đọc START-HERE, REQUIREMENTS, STATUS, WORKLOG mới nhất và ADR liên quan.
+1. Đọc START-HERE, REQUIREMENTS, STATUS, WORKLOG mới nhất, Architecture Lock,
+   contract manifest và ADR liên quan.
 2. Xác định task có nằm đúng “Next exact action” không.
 3. Đọc source/reference tối thiểu cần thiết.
 4. Ghi rõ facts VERIFIED, giả thuyết PROPOSED và UNKNOWN.
@@ -20,6 +21,16 @@
 9. Cập nhật STATUS và append WORKLOG.
 10. Commit/push và cập nhật PR.
 11. Ghi next exact action.
+
+## 2.1. Kiểm soát thay đổi kiến trúc
+
+- Package/type/method trong `planned-contracts.tsv` là đường biên phát triển chính thức.
+- `LOCKED` không được đổi/xóa/di chuyển nếu chưa có ADR, test kiến trúc, cập nhật toàn bộ
+  tài liệu liên quan và xác nhận rõ của chủ dự án.
+- `RESERVED` được phép hiện thực dần nhưng phải giữ đúng package, trách nhiệm và hướng phụ
+  thuộc; không được tạo class rỗng chỉ để đánh dấu hoàn thành.
+- Package mới hoặc phụ thuộc ngược tầng phải được đề xuất bằng ADR trước khi viết code.
+- Mỗi lần thay đổi manifest phải chạy `ArchitectureLockTest` và ghi lý do vào WORKLOG.
 
 ## 3. Quy tắc reverse engineering
 

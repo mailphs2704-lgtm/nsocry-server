@@ -12,9 +12,12 @@ Theo thứ tự:
 2. `docs/project/REQUIREMENTS.md`
 3. `docs/project/STATUS.md`
 4. Entry mới nhất trong `docs/project/WORKLOG.md`
-5. ADR đang hiệu lực
-6. Tài liệu architecture/module liên quan
-7. Diff/PR hiện tại
+5. `docs/architecture/architecture-lock.md`
+6. `docs/architecture/planned-contracts.tsv`
+7. `docs/architecture/reference-coverage.md`
+8. ADR đang hiệu lực
+9. Tài liệu architecture/module liên quan
+10. Diff/PR hiện tại
 
 ## 3. Quy tắc cho AI tiếp quản
 
@@ -25,16 +28,19 @@ Theo thứ tự:
 - Không lấy lời cũ trong chat ghi đè tài liệu mới hơn trên GitHub.
 - Nếu STATUS và code mâu thuẫn, báo mâu thuẫn và kiểm tra commit/diff; không âm thầm chọn một bên.
 - Không chuyển task nếu “Next exact action” chưa xong hoặc chưa ghi lý do thay đổi ưu tiên.
+- Không tạo package ngoài danh mục khóa và không đổi contract `LOCKED` nếu chưa có ADR,
+  cập nhật manifest/test và xác nhận của chủ dự án.
+- Contract `RESERVED` là ranh giới đã dành trước, không phải bằng chứng chức năng đã hoàn thành.
 
 ## 4. Prompt tiếp tục dành cho Chat thường
 
-> Hãy đọc repository public `mailphs2704-lgtm/nsocry-server`, bắt đầu từ `docs/START-HERE.md`, sau đó đọc REQUIREMENTS, STATUS, entry WORKLOG mới nhất và tài liệu liên quan. Tóm tắt đúng trạng thái, liệt kê phần VERIFIED không được làm lại, rồi tiếp tục “Next exact action”. Không tự sửa requirement PROPOSED/UNKNOWN.
+> Hãy đọc repository public `mailphs2704-lgtm/nsocry-server`, bắt đầu từ `docs/START-HERE.md`, sau đó đọc REQUIREMENTS, STATUS, entry WORKLOG mới nhất, `docs/architecture/architecture-lock.md`, `docs/architecture/planned-contracts.tsv` và tài liệu liên quan. Tóm tắt đúng trạng thái, liệt kê phần VERIFIED không được làm lại, rồi tiếp tục “Next exact action”. Không tự sửa requirement PROPOSED/UNKNOWN và không đổi khung kiến trúc nếu chưa qua ADR cùng xác nhận của chủ dự án.
 
 Nếu Chat thường không truy cập được GitHub, đính kèm bốn file trên. Không cần tải lại toàn bộ source chỉ để định hướng.
 
 ## 5. Prompt tiếp tục dành cho Work/Codex
 
-> Mở repo `mailphs2704-lgtm/nsocry-server`. Đọc bộ handoff bắt buộc và diff/PR hiện tại. Thực hiện “Next exact action” trên nhánh riêng. Kiểm chứng, cập nhật documentation, STATUS, WORKLOG, commit và mở/cập nhật Draft PR. Không sửa NSOKISS reference.
+> Mở repo `mailphs2704-lgtm/nsocry-server`. Đọc bộ handoff bắt buộc, Architecture Lock, contract manifest và diff/PR hiện tại. Thực hiện “Next exact action” trên nhánh riêng, chỉ xây trong package/contract đã khóa. Kiểm chứng, cập nhật documentation tiếng Việt, STATUS, WORKLOG, commit và mở/cập nhật Draft PR. Mọi thay đổi khung phải có ADR và xác nhận chủ dự án. Không sửa hoặc chạy NSOKISS reference.
 
 ## 6. Mẫu checkpoint khi dừng giữa task
 

@@ -698,6 +698,50 @@ Xác minh 145/145 rồi chạy `item-seed-db-verify` trên Windows. Không nối
 - SKILL structural validator có năm test mới; suite mục tiêu 150.
 - V003 chưa chạy, database SKILL chưa tồn tại.
 
+## Checkpoint 195 VERIFIED — khóa khung xương kiến trúc toàn dự án
+
+### Trạng thái đầu vào VERIFIED
+
+- Người dùng xác nhận suite hiện tại đạt **195/195**, không failure/error/skipped.
+- SKILL đã import và post-check đúng 72 option, 7 class, 91 template, 967 level,
+  3883 level-option; runtime snapshot vẫn chưa publish.
+
+### Khung kiến trúc đã xây
+
+- Đã kiểm kê tĩnh 250 class/39 package NSOKISS và 154 kiểu Java/12 package production
+  NSOCry; NSOKISS không được chạy hoặc sửa.
+- Đã khóa mô hình bảy tầng: foundation, protocol/transport, domain, application, assets,
+  adapters và composition.
+- Manifest máy đọc được có 99 dòng package/type contract, bao phủ player, combat,
+  ability, skill, item, fashion, effect, map/instance/ground-item, mob, NPC, task, party,
+  clan, trade, store/stall, chat, giftcode, ranking, event, bot, admin và scheduler.
+- Đã chụp 393 khai báo API public hiện tại để phát hiện thay đổi ngoài ý muốn.
+- `LOCKED` bảo vệ contract hiện hữu; `RESERVED` dành trước ranh giới để hiện thực dần,
+  tuyệt đối không được hiểu là chức năng đã hoàn thành.
+- `AGENTS.md`, handoff, workflow và REQUIREMENTS buộc AI sau đọc và tuân thủ khung;
+  mọi thay đổi phải có ADR, test/tài liệu cập nhật và xác nhận chủ dự án.
+- Không sinh hàng loạt class rỗng. Khung xương được biểu diễn bằng contract manifest có
+  trách nhiệm và required method rõ, tránh code giả, phụ thuộc sai và lãng phí token.
+
+### Kiểm chứng
+
+- Năm test kiến trúc mới kiểm tra manifest, package coverage, namespace, chiều phụ thuộc
+  domain và quy tắc tài liệu/ADR.
+- Kiểm tra tĩnh manifest, namespace, package coverage, dependency và `git diff --check`:
+  PASS trong Work.
+- Suite mục tiêu trên Windows: **200 test**; hiện PENDING xác nhận người dùng.
+
+### Tiến độ tổng thể
+
+- Tiến độ đến gameplay cơ bản vẫn **17%**: bước này giảm rủi ro phát triển và khóa hướng,
+  chưa bổ sung runtime gameplay nên không cộng phần trăm giả.
+
+## Next exact action hiện tại
+
+Người dùng pull checkpoint kiến trúc và chạy `mvn test`, kỳ vọng 200/200. Sau xác nhận,
+đánh dấu Architecture Lock v1 VERIFIED rồi quay lại bước publish runtime snapshot SKILL
+theo lộ trình; không tự thay đổi manifest hoặc tạo package ngoài khung.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.

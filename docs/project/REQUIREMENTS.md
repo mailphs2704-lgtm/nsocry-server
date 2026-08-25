@@ -107,6 +107,18 @@ Một module chỉ được DONE khi:
 - Có kiểm chứng (test, build, log, trace hoặc đối chiếu).
 - Có documentation.
 - STATUS và WORKLOG đã cập nhật.
+
+## Khóa khung phát triển toàn dự án
+
+- **CONFIRMED:** AI/nhà phát triển tiếp quản phải xây tiếp trong khung package, type và
+  method đã công bố tại `docs/architecture/planned-contracts.tsv`.
+- Contract `LOCKED` chỉ được thay đổi sau ADR, cập nhật test/tài liệu và xác nhận rõ của
+  chủ dự án; không được tự tiện đổi tên hoặc tổ chức lại theo sở thích phiên làm việc.
+- Contract `RESERVED` là thiết kế đích để hiện thực dần, không phải code đã hoàn thành và
+  không được tạo hàng loạt class rỗng để nâng tiến độ giả.
+- NSOKISS là nguồn tham khảo hành vi tĩnh; không chạy, không sửa và không sao chép cơ học
+  các god class/singleton vào NSOCry.
+- Mỗi bước hoàn thành phải cập nhật tài liệu chi tiết bằng tiếng Việt, STATUS và WORKLOG.
 - Không làm hỏng module đã hoàn thành.
 
 
