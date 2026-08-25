@@ -86,3 +86,8 @@ V003 và không thực hiện DDL/DML.
 
 Launcher command `skill-schema-preflight [config-path]` chỉ đọc contract trên database,
 in READY/NOT_READY cùng từng difference và luôn báo `databaseChanged=false`.
+
+V003 đã được người dùng xác nhận rõ ràng sau backup và chạy thành công; preflight sau
+migration báo READY. Năm bảng hiện còn rỗng. Importer foundation validate artifact trước
+khi mở connection, xóa/ghi đúng thứ tự foreign key trong một transaction SERIALIZABLE,
+giữ `point` 140/150 dưới dạng unsigned và rollback toàn bộ nếu một batch lỗi.
