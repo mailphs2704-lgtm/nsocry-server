@@ -23,6 +23,7 @@ public final class NsocryLauncher {
             case ITEM_SCHEMA_PREFLIGHT -> ItemAssetSchemaPreflightCommand.main(forwarded);
             case SKILL_SEED_CONVERT -> SkillAssetSeedConvertCommand.main(forwarded);
             case SKILL_SEED_DRY_RUN -> SkillAssetSeedDryRunCommand.main(forwarded);
+            case SKILL_SCHEMA_PREFLIGHT -> SkillAssetSchemaPreflightCommand.main(forwarded);
             case HELP -> printUsage();
         }
     }
@@ -45,6 +46,7 @@ public final class NsocryLauncher {
             case "item-schema-preflight" -> LaunchCommand.ITEM_SCHEMA_PREFLIGHT;
             case "skill-seed-convert" -> LaunchCommand.SKILL_SEED_CONVERT;
             case "skill-seed-dry-run" -> LaunchCommand.SKILL_SEED_DRY_RUN;
+            case "skill-schema-preflight" -> LaunchCommand.SKILL_SCHEMA_PREFLIGHT;
             case "help", "--help", "-h" -> LaunchCommand.HELP;
             default -> throw new IllegalArgumentException("unknown NSOCry command: " + args[0]);
         };
@@ -66,6 +68,7 @@ public final class NsocryLauncher {
         System.out.println("  java -jar nsocry-server.jar item-schema-preflight [config-path]");
         System.out.println("  java -jar nsocry-server.jar skill-seed-convert <dump-path>");
         System.out.println("  java -jar nsocry-server.jar skill-seed-dry-run <archive-path>");
+        System.out.println("  java -jar nsocry-server.jar skill-schema-preflight [config-path]");
         System.out.println("  java -jar nsocry-server.jar help");
     }
 
@@ -80,6 +83,7 @@ public final class NsocryLauncher {
         ITEM_SCHEMA_PREFLIGHT,
         SKILL_SEED_CONVERT,
         SKILL_SEED_DRY_RUN,
+        SKILL_SCHEMA_PREFLIGHT,
         HELP
     }
 
