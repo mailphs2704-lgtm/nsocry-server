@@ -822,6 +822,21 @@ database NSOCry. Kỳ vọng NOT_READY vì V003 chưa chạy; chưa migration.
 Người dùng pull và xác minh 185/185. Sau đó thêm interactive import command với archive,
 schema READY và xác nhận đủ SHA-256; chưa import nếu thiếu xác nhận cuối.
 
+## Checkpoint 185 VERIFIED và interactive SKILL import guard
+
+- Người dùng xác nhận 185/185; transactional importer: VERIFIED.
+- Archive service trả defensive payload copy sau full validation.
+- Launcher có `skill-seed-import <archive-path>`.
+- Command yêu cầu archive hợp lệ + V003 READY + full SHA-256 confirmation.
+- Sai/hủy checksum dừng trước importer; import không publish runtime snapshot.
+- Năm test mới đang PENDING; suite mục tiêu 190.
+- Seed thật chưa import; tiến độ gameplay cơ bản: 16%.
+
+## Next exact action hiện tại
+
+Người dùng pull và xác minh 190/190. Sau đó package và xin xác nhận import cuối; không
+tự chạy command ghi database.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
