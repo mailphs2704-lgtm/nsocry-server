@@ -821,6 +821,18 @@ Người dùng pull và xác minh 210/210. Sau đó package JAR và chạy comma
 đã khóa; chỉ khi report khớp version 26, count, 42402 byte và SHA-256 candidate mới đánh dấu
 publish thử VERIFIED_CROSS_PLATFORM.
 
+## Sửa lỗi kiểm thử command publish SKILL
+
+- Lần chạy Windows đầu đạt 209/210; production không ghi database hoặc publish startup.
+- `printReport` dùng `Optional.orElseThrow()` mặc định nên trả `NoSuchElementException` khi
+  store rỗng, không đúng contract lỗi trạng thái.
+- Đã đổi sang `IllegalStateException` với thông báo rõ snapshot chưa được publish.
+- Không đổi gate, payload, database hoặc runtime lifecycle; suite mục tiêu vẫn 210.
+
+## Next exact action hiện tại
+
+Người dùng pull và chạy lại `mvn test`, kỳ vọng 210/210.
+
 ## Checkpoint full SKILL converter candidate
 
 - Người dùng xác nhận 160/160 test thành công; raw-byte difference checkpoint: VERIFIED.

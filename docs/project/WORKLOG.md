@@ -1624,3 +1624,12 @@ version/count/checksum; chưa tự động publish khi startup.
 
 Người dùng xác minh 210/210 rồi chạy command trên Windows với archive candidate đã khóa;
 đối chiếu version 26, count, payload 42402 byte và SHA-256.
+
+## 2026-08-25 — Sửa exception contract của SKILL publish report
+
+- Windows chạy 210 test: 209 pass, một failure, không error/skipped.
+- Test chứng minh store rỗng phát `NoSuchElementException` thay vì `IllegalStateException`.
+- Production command đã đổi sang exception có chủ đích và thông báo rõ trạng thái chưa publish.
+- Test hiện có giữ vai trò regression gate; không thêm test mới, mục tiêu vẫn 210.
+- Database/runtime snapshot không thay đổi; tiến độ giữ nguyên 17%.
+- Next exact action: pull checkpoint và chạy lại `mvn test` kỳ vọng 210/210.

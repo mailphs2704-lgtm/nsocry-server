@@ -62,7 +62,9 @@ public final class SkillAssetRuntimePublishCommand {
         Objects.requireNonNull(snapshot, "snapshot");
         Objects.requireNonNull(store, "store");
         Objects.requireNonNull(output, "output");
-        if (store.currentSnapshot().orElseThrow() != snapshot) {
+        SkillAssetRuntimeSnapshot current = store.currentSnapshot()
+                .orElseThrow(() -> new IllegalStateException("SKILL runtime snapshot chưa được publish"));
+        if (current != snapshot) {
             throw new IllegalStateException("SKILL runtime snapshot không phải bản vừa publish");
         }
         var structure = snapshot.structure();
