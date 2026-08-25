@@ -1718,3 +1718,12 @@ sạch mới được đánh dấu VERIFIED; chưa merge `main`.
 
 Push checkpoint; người dùng chạy full Maven suite kỳ vọng 233/233. Sau VERIFIED mới bắt đầu
 MAP schema preflight/migration draft; chưa chạy migration/import.
+
+## 2026-08-25 — MAP archive/command đạt 233/233
+
+- Người dùng xác nhận full Maven suite **233/233**, không failure/error/skipped.
+- Manifest parser, archive limits/schema, tamper rejection, defensive copy và launcher route:
+  VERIFIED Windows.
+- Database không đổi; MAP runtime snapshot chưa publish; startup chưa nối.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+- Next: xây MAP schema contract, migration draft và read-only preflight; chưa chạy migration.

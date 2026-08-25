@@ -50,4 +50,4 @@ minh. Toàn bộ luồng chỉ đọc dump/file, không mở database và không
 `MapAssetSeedCommandsTest` có sáu test: round-trip command, payload tamper, entry lạ,
 defensive copy, manifest field lạ/trùng và launcher routing.
 
-Trạng thái: PENDING Windows full suite; mục tiêu 233 test.
+Trạng thái: VERIFIED trong full suite Windows 233/233.

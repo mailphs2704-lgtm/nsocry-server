@@ -74,11 +74,11 @@ mvn "-Dtest=MapAssetSeedArtifactGeneratorTest" test
 
 Trạng thái: **VERIFIED trong full suite Windows 227/227**.
 
-## MAP archive/command checkpoint — PENDING 6 tests
+## MAP archive/command checkpoint — VERIFIED 6 tests
 
 - Archive xác định chỉ chứa `map.bin` và `map.manifest`.
 - Export atomic, không ghi đè; read giới hạn kích thước và fail closed với entry lạ/trùng.
 - Dry-run decode payload rồi đối chiếu lại version/count/length/SHA-256.
 - Launcher nhận `map-seed-convert` và `map-seed-dry-run`.
 - Chưa migration/import/database/runtime publish.
-- Full suite mục tiêu: 233 test.
+- Người dùng xác nhận full suite Windows **233/233**, không failure/error/skipped.
