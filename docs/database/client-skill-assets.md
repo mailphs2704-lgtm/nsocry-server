@@ -62,3 +62,14 @@ Kết quả chạy offline trên dump thật với version candidate 26:
 
 Đây mới là candidate offline; cần Windows cross-platform verification trước khi tạo
 archive/manifest và trước mọi migration/import.
+
+## Checkpoint command convert/dry-run
+
+- `skill-seed-convert <dump-path>` tạo archive cạnh dump, không mở JDBC.
+- `skill-seed-dry-run <archive-path>` đọc lại payload/manifest và xác minh cấu trúc,
+  count, codec, SHA-256 cùng danh sách raw-byte difference.
+- Archive chỉ chấp nhận `skill.bin` và `skill.manifest`, có hard limit khi giải nén,
+  timestamp cố định và không ghi đè candidate đã tồn tại.
+- Chạy offline trên dump thật giữ nguyên payload 42402 byte và SHA-256
+  `4f13faa5d95653ff9d04945d0fe8a5146030526383944d22de1786c497155cf5`.
+- Hai command đều báo `databaseChanged=false`; V003 và database chưa thay đổi.
