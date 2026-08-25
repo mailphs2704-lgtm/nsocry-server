@@ -130,6 +130,8 @@ version, sáu count, raw-byte difference, payload length và SHA-256 trước kh
 `SkillAssetRuntimeSnapshot` chỉ giữ metadata đã xác minh cùng payload bất biến; mọi lần đọc
 payload đều trả defensive copy. `AtomicSkillAssetRuntimeSnapshotStore` ở trạng thái rỗng khi
 startup chưa publish và giữ nguyên snapshot cũ nếu JDBC, encode hoặc manifest gate thất bại.
+Factory snapshot tính lại SHA-256 từ chính payload và từ chối payload cùng độ dài nhưng sai
+nội dung trước khi atomic store có thể nhận snapshot.
 
 Luồng này chưa được tự nối vào startup. Quyết định cũ vẫn giữ nguyên: không tạo
 `ClientAssetSnapshot` bán phần cho session trước khi DATA, MAP, ITEM và appearance cùng có

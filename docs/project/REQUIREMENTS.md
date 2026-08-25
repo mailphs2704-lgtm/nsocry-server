@@ -125,6 +125,8 @@ Một module chỉ được DONE khi:
 - **CONFIRMED:** mọi AI tiếp tục lưu công việc vào `agent/document-nsokiss-runtime`; cấm
   push/merge `main`. Sau mỗi 5–10 commit phải được Codex rà soát; chỉ merge khi review đạt,
   các gate VERIFIED và chủ dự án xác nhận rõ `ĐỒNG Ý MERGE VÀO MAIN`.
+- **CONFIRMED:** tác giả không tự review commit của mình; review phải độc lập và ghi base/head.
+  STATUS chỉ giữ checkpoint hiện tại với đúng một next action; lịch sử nằm trong WORKLOG.
 - Không làm hỏng module đã hoàn thành.
 
 

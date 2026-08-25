@@ -11,17 +11,27 @@ public final class SkillAssetRuntimeSnapshot {
     private final String payloadSha256;
     private final byte[] payload;
 
-    /** Tạo snapshot từ kết quả validation và payload tương ứng. */
-    public SkillAssetRuntimeSnapshot(SkillAssetSeedValidationResult validation, byte[] payload) {
+    private SkillAssetRuntimeSnapshot(SkillAssetSeedValidationResult validation, byte[] payload) {
         Objects.requireNonNull(validation, "validation");
         this.payload = Arrays.copyOf(Objects.requireNonNull(payload, "payload"), payload.length);
         if (payload.length != validation.payloadLength()) {
             throw new IllegalArgumentException("SKILL payload length không khớp validation");
         }
+        String actualSha256 = SkillAssetSeedValidator.sha256(payload);
+        if (!actualSha256.equals(validation.payloadSha256())) {
+            throw new IllegalArgumentException("SKILL payload SHA-256 không khớp validation");
+        }
         version = validation.version();
         structure = validation.structure();
         payloadLength = validation.payloadLength();
         payloadSha256 = validation.payloadSha256();
+    }
+
+    /** Factory duy nhất: từ chối payload nếu length hoặc SHA-256 lệch validation. */
+    static SkillAssetRuntimeSnapshot verified(
+            SkillAssetSeedValidationResult validation,
+            byte[] payload) {
+        return new SkillAssetRuntimeSnapshot(validation, payload);
     }
 
     public byte version() { return version; }

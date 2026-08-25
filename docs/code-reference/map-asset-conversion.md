@@ -19,7 +19,7 @@ Line ranges dưới đây áp dụng cho source tại checkpoint MAP seed artifa
 - **Lines 17–61 — `parse(String)`**: parse `map/npc/monster`, kiểm tra arity + ID liên tục, wire count, NPC short/menu và raw-byte fields của monster; trả `MapDumpInventoryReport`.
 - **Lines 64–66 — `parseNpcMenu(String)`**: entry point package-private cho cùng parser menu được inventory và converter sử dụng.
 - **Lines 68–117 — scalar/inventory guards**: min/max ID, sequential ID, integer, maximum count, short và raw-byte range.
-- **Lines 120–226 — `NpcMenuParser`**: state machine JSON chuyên biệt cho `array<array<string>>`; xử lý escape, `\uXXXX`, whitespace và từ chối trailing data/schema khác.
+- **Lines 120–229 — `NpcMenuParser`**: state machine JSON chuyên biệt cho `array<array<string>>`; xử lý escape, `\uXXXX`, whitespace; từ chối control character chưa escape, trailing data và schema khác.
 
 ## `MapAssetConversionResult.java`
 

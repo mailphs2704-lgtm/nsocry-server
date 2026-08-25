@@ -1644,3 +1644,42 @@ Người dùng xác minh 210/210 rồi chạy command trên Windows với archiv
 - Tiến độ gameplay cơ bản: 17%.
 - Next exact action khi tiếp tục: package JAR, chạy `skill-runtime-publish` với candidate đã
   khóa và đối chiếu version/count/42402 byte/SHA-256; chưa nối startup.
+
+## 2026-08-25 — Khắc phục kết quả review và chuẩn hóa bộ quy tắc
+
+### Phạm vi review
+
+- Base: `747958b754f0b3c265dc35b6734d71a9f8522a54`.
+- Head đã rà soát: `399646a5a3310f77753f3032c5fcd5af112ef51a`.
+- Bảy commit, 31 file thay đổi; chưa merge `main`.
+
+### Vấn đề đã khắc phục
+
+- `SkillAssetRuntimeSnapshot` không còn constructor public nhận payload tùy ý.
+- Factory duy nhất tính lại SHA-256 từ payload; cùng length nhưng sai byte bị từ chối trước
+  atomic publish.
+- NPC menu JSON từ chối control character chưa escape theo chuẩn JSON.
+- STATUS cũ hơn 1.000 dòng, có nhiều next action mâu thuẫn, đã thay bằng snapshot hiện tại
+  ngắn gọn; lịch sử được giữ tại WORKLOG.
+- Architecture test mới buộc STATUS có đúng một next action và kiểm tra quy tắc review độc lập.
+- Cấm AI tự đánh dấu commit mình viết là REVIEWED; review phải có reviewer độc lập cùng
+  base/head/findings/test evidence.
+- Cấm suy số test VERIFIED bằng cách đếm annotation hoặc dùng group test thay full suite.
+
+### Test mới
+
+- Snapshot từ chối payload bị sửa nhưng giữ nguyên length.
+- Parser từ chối newline/control character chưa escape trong JSON string.
+- Architecture gate bảo vệ cấu trúc STATUS và review ownership.
+- Source hiện có inventory 227 method `@Test`; toàn bộ checkpoint mới vẫn PENDING Windows.
+
+### Tác động
+
+- Database không đổi; server startup chưa nối snapshot.
+- MAP artifact vẫn offline, chưa archive/import/runtime publish.
+- Tiến độ gameplay cơ bản giữ nguyên 17%.
+
+### Next exact action
+
+Push checkpoint, cập nhật Draft PR #1 rồi người dùng chạy full `mvn test`. Chỉ output thật
+sạch mới được đánh dấu VERIFIED; chưa merge `main`.

@@ -166,6 +166,9 @@ public final class ReferenceMapDumpInventoryParser {
                 char current = source.charAt(index++);
                 if (current == '"') return value.toString();
                 if (current != '\\') {
+                    if (current <= 0x1F) {
+                        throw error("JSON string chứa control character chưa escape");
+                    }
                     value.append(current);
                     continue;
                 }

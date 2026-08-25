@@ -12,6 +12,8 @@
   liệu và tác động database/runtime bởi phiên Codex được chủ dự án giao review.
 - Chỉ merge vào `main` khi review đạt, tiêu chí hoàn thành/documentation đủ và chủ dự án
   xác nhận rõ `ĐỒNG Ý MERGE VÀO MAIN` hoặc câu có ý nghĩa tương đương.
+- Tác giả/AI tạo commit không được tự đánh dấu commit của mình `REVIEWED`; reviewer độc lập
+  phải ghi base SHA, head SHA, findings, test evidence và kết luận rõ.
 
 ## 2. Chu trình một task
 
@@ -27,6 +29,9 @@
 9. Cập nhật STATUS và append WORKLOG.
 10. Commit/push và cập nhật PR.
 11. Ghi next exact action.
+
+`STATUS.md` là snapshot ngắn của hiện tại, chỉ có một `Next exact action`. Mọi lịch sử theo
+thời gian phải append vào `WORKLOG.md`; không dùng STATUS làm nhật ký cộng dồn.
 
 ## 2.1. Kiểm soát thay đổi kiến trúc
 

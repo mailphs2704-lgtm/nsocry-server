@@ -63,6 +63,10 @@ Bạn cần chạy: <chỉ ghi khi thật sự cần>.
   luồng riêng hoặc ghi vào `main` nếu chưa có chỉ định mới.
 - Sau mỗi 5–10 commit, chủ dự án sẽ yêu cầu Codex rà soát. `main` chỉ nhận checkpoint sau
   review đạt và xác nhận rõ của chủ dự án.
+- AI viết code không được tự nhận đã review chính commit của mình. Kết quả review chỉ hợp lệ
+  khi một reviewer độc lập được chủ dự án yêu cầu kiểm tra khoảng base/head cụ thể.
+- STATUS chỉ giữ trạng thái hiện tại; WORKLOG giữ lịch sử. Nếu STATUS có nhiều next action
+  mâu thuẫn, phải dừng và chuẩn hóa trước khi phát triển tiếp.
 
 ## 5. Điều kiện dừng
 

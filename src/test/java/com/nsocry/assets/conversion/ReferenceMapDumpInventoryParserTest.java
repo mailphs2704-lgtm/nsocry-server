@@ -42,6 +42,13 @@ class ReferenceMapDumpInventoryParserTest {
     }
 
     @Test
+    void rejectsUnescapedControlCharacterInNpcMenuJson() {
+        assertThrows(IllegalArgumentException.class,
+                () -> ReferenceMapDumpInventoryParser.parse(validDump().replace(
+                        "Nói chuyện", "Nói\nchuyện")));
+    }
+
+    @Test
     void capturesMonsterRangeOutsideSignedByteRange() {
         MapDumpInventoryReport report = ReferenceMapDumpInventoryParser.parse(
                 validDump().replace(", 500000, 33, 2,", ", 500000, 200, 2,"));

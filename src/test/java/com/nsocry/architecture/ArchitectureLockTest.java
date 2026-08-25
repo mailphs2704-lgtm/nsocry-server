@@ -83,6 +83,16 @@ class ArchitectureLockTest {
                 .contains("Quy trình thay đổi khung"));
     }
 
+    @Test
+    void statusContainsExactlyOneCurrentActionAndReviewCannotBeSelfDeclared() throws Exception {
+        String status = Files.readString(Path.of("docs", "project", "STATUS.md"));
+        assertTrue(status.split("## Next exact action", -1).length == 2,
+                "STATUS phải có đúng một Next exact action hiện tại");
+        String rules = Files.readString(Path.of("AGENTS.md"));
+        assertTrue(rules.contains("Cấm tự công bố kết quả rà soát"));
+        assertTrue(rules.contains("reviewer độc lập"));
+    }
+
     private static List<String[]> contracts() throws IOException {
         List<String[]> rows = new ArrayList<>();
         List<String> lines = Files.readAllLines(MANIFEST);

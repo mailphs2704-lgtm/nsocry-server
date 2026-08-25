@@ -36,6 +36,12 @@ Mọi AI hoặc lập trình viên phải đọc theo thứ tự: `docs/project/
   Lock, test, tài liệu, database/runtime impact và rủi ro hồi quy.
 - Chỉ được merge vào `main` khi review đạt, toàn bộ gate liên quan VERIFIED và chủ dự án
   xác nhận rõ nguyên văn hoặc tương đương: `ĐỒNG Ý MERGE VÀO MAIN`.
+- Cấm tự công bố kết quả rà soát cho commit do chính phiên AI đó tạo. Trạng thái `REVIEWED`
+  chỉ hợp lệ khi reviewer độc lập được chủ dự án yêu cầu, ghi rõ base/head và findings.
+- `STATUS.md` chỉ mô tả checkpoint hiện tại và có đúng một `Next exact action`; lịch sử chỉ
+  append vào `WORKLOG.md`, không chèn checkpoint cũ trở lại STATUS.
+- Số test VERIFIED phải xuất phát từ output chạy thật. Cấm suy ra bằng cách đếm `@Test` hoặc
+  dùng kết quả nhóm test thay cho full suite.
 
 ## Hoàn tất một checkpoint
 

@@ -78,6 +78,19 @@ class SkillAssetRuntimePublishServiceTest {
         assertThrows(NullPointerException.class, () -> new SkillAssetRuntimePublishService(() -> bundle, manifest, null));
     }
 
+    @Test
+    void snapshotFactoryRejectsSameLengthPayloadWithDifferentChecksum() throws Exception {
+        SkillAssetBundle bundle = bundle((byte) 26);
+        byte[] payload = SkillAssetCodec.encode(bundle);
+        SkillAssetSeedValidationResult validation = SkillAssetSeedValidator.validate(
+                bundle, manifest(payload));
+        byte[] tampered = payload.clone();
+        tampered[tampered.length - 1] ^= 1;
+
+        assertThrows(IllegalArgumentException.class,
+                () -> SkillAssetRuntimeSnapshot.verified(validation, tampered));
+    }
+
     private static SkillAssetBundle bundle(byte version) {
         SkillTemplateAsset template = new SkillTemplateAsset(
                 (byte) 0, "Cry Strike", (byte) 1, (byte) 0, (short) 7, "skill",

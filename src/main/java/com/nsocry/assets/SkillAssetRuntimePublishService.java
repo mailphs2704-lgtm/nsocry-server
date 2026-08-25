@@ -23,7 +23,7 @@ public final class SkillAssetRuntimePublishService {
         SkillAssetBundle bundle = Objects.requireNonNull(source.load(), "skill source result");
         SkillAssetSeedValidationResult validation = SkillAssetSeedValidator.validate(bundle, manifest);
         byte[] payload = SkillAssetCodec.encode(bundle);
-        SkillAssetRuntimeSnapshot snapshot = new SkillAssetRuntimeSnapshot(validation, payload);
+        SkillAssetRuntimeSnapshot snapshot = SkillAssetRuntimeSnapshot.verified(validation, payload);
         store.publish(snapshot);
         return snapshot;
     }
