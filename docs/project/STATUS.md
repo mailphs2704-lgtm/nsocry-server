@@ -780,6 +780,14 @@ Người dùng pull và xác minh 175/175. Sau đó mới thêm launcher command
 Người dùng pull và xác minh 180/180, sau đó package và chạy preflight read-only trên
 database NSOCry. Kỳ vọng NOT_READY vì V003 chưa chạy; chưa migration.
 
+## Checkpoint 180 VERIFIED
+
+- Người dùng xác nhận 180/180: 0 failure, 0 error, 0 skipped.
+- `skill-schema-preflight` code checkpoint: VERIFIED.
+- Bước đang thực hiện: chạy preflight read-only trên database NSOCry hiện tại.
+- Kỳ vọng NOT_READY và danh sách 26 cột thiếu vì V003 chưa chạy.
+- Không migration/import; tiến độ gameplay cơ bản giữ ở 15%.
+
 ## Next exact action hiện tại
 
 Xác minh 150/150 rồi parse/convert SKILL dump offline và sinh count/range/difference report. Không migration/import trước manifest và backup checkpoint.
