@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_CANDIDATE_VERIFIED
+**Trạng thái:** PAUSED_BY_OWNER
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -48,6 +48,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Xây DATA archive service và manifest parser/dry-run để lưu candidate deterministic, đọc lại và
-xác minh checksum trước mọi persistence. Chưa thiết kế/chạy migration hoặc import, chưa nối
-startup và chưa merge `main`.
+Dự án tạm dừng theo yêu cầu chủ dự án. Khi tiếp tục, bắt đầu từ DATA archive service và manifest
+parser/dry-run cho candidate đã khóa; không làm lại các checkpoint VERIFIED, chưa ghi DATA vào
+database, chưa nối startup và chưa merge `main`.
