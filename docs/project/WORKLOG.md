@@ -1865,3 +1865,16 @@ candidate nếu chưa có full SHA-256 confirmation riêng của chủ dự án.
 
 Push checkpoint và chạy full Maven suite 252/252. Chỉ sau VERIFIED mới chuẩn bị xác nhận
 import MAP candidate; chưa publish runtime snapshot.
+
+## 2026-08-26 — MAP database pipeline đạt 252/252
+
+- Người dùng xác nhận full Maven suite **252/252**, không failure/error/skipped.
+- Transaction importer, rollback gate, checksum confirmation, JDBC repeatable-read source,
+  database payload verifier và launcher route: VERIFIED Windows.
+- Database không đổi bởi test; MAP seed chưa import; runtime snapshot chưa publish.
+- Tiến độ gameplay giữ nguyên 17% vì database MAP chưa chứa candidate.
+
+### Next exact action
+
+Chạy dry-run đúng MAP candidate để khóa version/count/payloadLength/SHA-256. Sau đó mới xin
+xác nhận import riêng; không publish runtime.

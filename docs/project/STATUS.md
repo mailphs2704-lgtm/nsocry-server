@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_DATABASE_PIPELINE_PENDING_WINDOWS
+**Trạng thái:** MAP_DATABASE_PIPELINE_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -59,7 +59,7 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Raw point được bảo toàn: level 957=150, 958=150, 962=140, 966=140.
 - Schema V003 READY; database đã import và JDBC payload verification khớp.
 - Runtime publish thử đã được tách khỏi startup; database không bị ghi.
-- Windows full suite gần nhất do người dùng xác nhận: **242/242**, không failure/error/skipped.
+- Windows full suite gần nhất do người dùng xác nhận: **252/252**, không failure/error/skipped.
 
 ### MAP đã xác nhận theo nhóm
 
@@ -144,9 +144,9 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - JDBC source đọc repeatable-read snapshot, buộc ID/order liên tục và kiểm tra reference/range.
 - Database verifier dựng lại payload và so count/length/SHA-256 với manifest candidate.
 - Hai launcher command mới: `map-seed-import` và `map-seed-db-verify`.
-- Mười test mới đang PENDING Windows; full suite mục tiêu **252**.
+- Mười test importer/source/verifier đã vượt full suite Windows **252/252**.
 
 ## Next exact action
 
-Push MAP database pipeline; người dùng pull và chạy full `mvn test`, kỳ vọng **252/252**.
-Chưa import MAP nếu chưa có checksum confirmation riêng và chưa merge `main`.
+Dry-run lại đúng MAP candidate archive để ghi nhận version/count/length/SHA-256 trước khi xin
+xác nhận import. Chưa import MAP và chưa merge `main`.
