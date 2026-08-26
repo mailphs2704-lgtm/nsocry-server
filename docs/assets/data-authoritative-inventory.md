@@ -105,8 +105,17 @@ ngầm và không mặc định thay đổi dữ liệu.
 - Chưa tạo seed archive/manifest, schema JDBC, importer hoặc runtime publisher.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
+## DATA candidate authoritative VERIFIED
+
+- Version: 7.
+- Task group count: 43.
+- EXP count: 131.
+- Payload length: 85154 byte.
+- SHA-256: `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- `databaseChanged=false`, `runtimeSnapshotPublished=false`,
+  `serverStartupWired=false`.
+
 ## Next exact action
 
-EXP unsigned count đạt **308/308 VERIFIED** và shaded JAR build thành công. Chạy lại
-`data-seed-dry-run data-dry-run.properties` để khóa candidate version/count/payloadLength/
-SHA-256.
+Xây DATA archive service và manifest parser/dry-run để lưu rồi đọc lại đúng candidate trước mọi
+persistence; chưa import database hoặc nối startup.
