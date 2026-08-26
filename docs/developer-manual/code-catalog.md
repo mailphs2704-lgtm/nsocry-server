@@ -756,6 +756,17 @@
   - **Dòng 6 — `public record MapRawByteDifference(String entityType, int entityId, String field, int value) {`**: Ghi nhận giá trị MAP raw byte 128..255 để phân biệt wire byte với signed Java byte.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.assets.conversion.ReferenceDataAssetConverter`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceDataAssetConverter.java`
+- **Vai trò tóm tắt:** Ghép dump DATA authoritative và progression đã truy vết thành bundle client V7 hoàn chỉnh.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class ReferenceDataAssetConverter {`**: Điều phối inventory gate, graphics encoder, task route, EXP, progression và effect-template mà không mở database hoặc publish runtime.
+  - **Dòng 29 — `public static DataAssetBundle convert(`**: Yêu cầu dump, base-version, hệ số MAX_PERCENT và đủ mười bảng progression để tạo `DataAssetBundle` bất biến.
+- **Bất biến/lỗi chính:** giữ thứ tự task, bảo toàn raw byte 128..255, count tối đa 127; từ chối version overflow, hệ số âm/không hữu hạn và progression thiếu.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.assets.conversion.ReferenceDataDumpInventoryParser`
 
 - **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceDataDumpInventoryParser.java`
