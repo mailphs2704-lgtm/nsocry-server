@@ -68,18 +68,27 @@ ngầm và không mặc định thay đổi dữ liệu.
   image id hợp lệ cùng dx/dy raw byte.
 - `encodeEffectTemplates(...)` ghi signed-byte count, id/type raw byte, modified UTF-8 name và
   icon short đúng contract `DataOutputStream.writeUTF`.
-- Sáu fixture test mới bảo vệ byte chính xác, thứ tự skill field, UTF tail, alias và range;
-  full suite Windows mục tiêu **282/282** đang PENDING.
+- Sáu fixture test bảo vệ byte chính xác, thứ tự skill field, UTF tail, alias và range; full
+  suite Windows **282/282 VERIFIED**.
+- `ReferenceDataAssetConverter.convert(...)` yêu cầu explicit dump, DATA base-version,
+  `maxPercentAdd` và đủ mười bảng progression; không đọc cấu hình hoặc database ngầm.
+- Converter giữ task group/route order, bảo toàn raw-byte NPC/map, đọc EXP thành `long[]`, sao
+  chép progression và chỉ áp dụng `(int) (num + num * maxPercentAdd)` cho `MAX_PERCENT`.
+- Khi `maxPercentAdd > 0`, DATA version tăng đúng một đơn vị; version vượt raw byte, hệ số âm/
+  không hữu hạn, thiếu bảng hoặc count vượt 127 đều bị chặn.
+- Bốn test mới khóa round-trip qua `DataAssetCodec`, nhánh zero-percent, progression thiếu và
+  version overflow; full suite Windows mục tiêu **286/286** đang PENDING.
 
 ## Ranh giới chưa làm
 
-- Chưa ghép task route, EXP và progression thành `DataAssetBundle` từ dump/reference.
-- Chưa tái tạo payload DATA hoàn chỉnh từ dump.
+- Đã ghép task route, EXP và progression thành `DataAssetBundle` từ fixture; chưa khóa candidate
+  bằng dump/progression authoritative thực tế.
+- Chưa tái tạo và xác minh payload DATA production hoàn chỉnh.
 - Chưa chốt số lượng thực tế, payload length và SHA-256 bằng Windows verification.
 - Chưa tạo seed archive/manifest, schema JDBC, importer hoặc runtime publisher.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
 ## Next exact action
 
-Chạy full Maven suite Windows mục tiêu **282/282**. Sau VERIFIED mới viết
-`ReferenceDataAssetConverter` ghép task/EXP/progression với các block đã khóa.
+Chạy full Maven suite Windows mục tiêu **286/286**. Sau VERIFIED mới tạo DATA candidate
+deterministic và khóa payload length/SHA-256; chưa ghi database hoặc nối startup.
