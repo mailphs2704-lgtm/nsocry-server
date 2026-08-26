@@ -2100,3 +2100,19 @@ và khóa payload length/SHA-256; chưa ghi database hoặc nối startup.
 
 Pull nhánh và chạy full Maven suite 291/291. Sau VERIFIED mới chạy converter với nguồn
 authoritative thật để khóa DATA candidate; chưa ghi database hoặc nối startup.
+
+## 2026-08-26 — DATA candidate đạt 291/291 và khóa nguồn progression
+
+- Người dùng xác nhận full Maven suite Windows **291/291**, không failure/error/skipped.
+- DATA artifact/manifest/generator/validator deterministic: VERIFIED Windows.
+- Xác định source authoritative đủ mười bảng tại
+  `source-reference/NSOKISS-inspection/src/main/java/com/nsoz/server/GameData.java`.
+- Thêm parser mapping trực tiếp mười declaration sang `ProgressionTable`, không compile/chạy
+  legacy và không copy bộ số vào source NSOCry.
+- Thêm năm test; full suite Windows mục tiêu **296/296** đang PENDING.
+- Database/runtime/startup không đổi; tiến độ gameplay giữ 18%; chưa merge `main`.
+
+### Next exact action
+
+Pull nhánh và chạy full Maven suite 296/296. Sau VERIFIED mới thêm DATA dry-run command đọc hai
+nguồn authoritative và in version/count/length/SHA-256.
