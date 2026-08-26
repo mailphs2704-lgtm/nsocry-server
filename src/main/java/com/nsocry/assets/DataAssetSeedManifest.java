@@ -15,7 +15,7 @@ public record DataAssetSeedManifest(
     /** Kiểm tra count wire, payload length và chuẩn hóa SHA-256 chữ thường. */
     public DataAssetSeedManifest {
         requireRange(taskGroupCount, 0, 127, "taskGroupCount");
-        requireRange(experienceCount, 0, 127, "experienceCount");
+        requireRange(experienceCount, 0, 255, "experienceCount");
         requireRange(payloadLength, 0, Integer.MAX_VALUE, "payloadLength");
         Objects.requireNonNull(payloadSha256, "payloadSha256");
         payloadSha256 = payloadSha256.toLowerCase(Locale.ROOT);
