@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_WIRE_ENCODER_PENDING_WINDOWS
+**Trạng thái:** DATA_ASSET_CONVERTER_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -20,7 +20,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows: **276/276**, không failure/error/skipped.
+- Full Maven suite Windows: **282/282**, không failure/error/skipped.
 - ITEM pipeline: version 26, 161 option, 1213 item, payload 66811 byte, JDBC VERIFIED.
 - SKILL pipeline: version 26, 72 option, 7 class, 91 template, 967 level,
   3883 level-option, payload 42402 byte, JDBC VERIFIED.
@@ -30,11 +30,13 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- Inventory parser giữ trạng thái **276/276 VERIFIED**.
-- `ReferenceDataWireEncoder` encode độc lập năm graphics block và effect-template tail theo
-  byte contract client V7.
-- Skill frame bắt buộc đủ 13 field; raw byte/short/count đều có range gate.
-- Sáu fixture test mới; full suite Windows mục tiêu **282/282** đang PENDING.
+- DATA graphics/effect-template wire encoder: **282/282 VERIFIED**.
+- `ReferenceDataAssetConverter` ghép năm graphics block, task route, EXP, đủ mười bảng
+  progression và effect-template tail thành `DataAssetBundle`.
+- Task raw byte 128..255 được bảo toàn; MAX_PERCENT chỉ biến đổi khi hệ số dương và DATA version
+  tăng đúng một đơn vị.
+- Bốn test mới khóa round-trip container, zero-percent, thiếu progression và version overflow;
+  full suite Windows mục tiêu **286/286** đang PENDING.
 
 ## Tác động và giới hạn
 
@@ -47,5 +49,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Push checkpoint và chạy full Maven suite Windows 282/282. Sau VERIFIED mới viết converter DATA
-ghép task route, EXP và progression; chưa nối startup và chưa merge `main`.
+Pull checkpoint và chạy full Maven suite Windows 286/286. Sau VERIFIED mới tạo DATA candidate
+deterministic kèm payload length/SHA-256; chưa ghi database, chưa nối startup và chưa merge
+`main`.
