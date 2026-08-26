@@ -76,6 +76,17 @@
   - **Dòng 24 — `public void publish(ClientAssetSnapshot snapshot) {`**: Publish snapshot hoàn chỉnh mới trong một thao tác nguyên tử.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.assets.AtomicMapAssetRuntimeSnapshotStore`
+
+- **Source:** `src/main/java/com/nsocry/assets/AtomicMapAssetRuntimeSnapshotStore.java`
+- **Vai trò tóm tắt:** Kho runtime thay toàn bộ MAP snapshot nguyên tử, không lộ trạng thái bán phần.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 8 — `public final class AtomicMapAssetRuntimeSnapshotStore {`**: Kho runtime thay toàn bộ MAP snapshot nguyên tử, không lộ trạng thái bán phần.
+  - **Dòng 12 — `public Optional<MapAssetRuntimeSnapshot> currentSnapshot() {`**: Trả snapshot hiện hành hoặc rỗng khi chưa vượt gate.
+  - **Dòng 17 — `public void publish(MapAssetRuntimeSnapshot snapshot) {`**: Publish một snapshot hoàn chỉnh bằng atomic swap.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.assets.AtomicSkillAssetRuntimeSnapshotStore`
 
 - **Source:** `src/main/java/com/nsocry/assets/AtomicSkillAssetRuntimeSnapshotStore.java`
@@ -340,6 +351,33 @@
   - **Dòng 13 — `public final class MapAssetCodec {`**: Encoder và parser kiểm chứng payload MAP dành riêng cho client V7 build 217.
   - **Dòng 22 — `public static byte[] encode(MapAssetBundle bundle) throws IOException {`**: Mã hóa map/NPC/mob catalog và kiểm soát đúng giới hạn kiểu count trên wire.
   - **Dòng 51 — `public static MapAssetBundle decode(byte[] payload) throws IOException {`**: Parse lại payload MAP và từ chối count âm hoặc byte dư.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.assets.MapAssetRuntimePublishService`
+
+- **Source:** `src/main/java/com/nsocry/assets/MapAssetRuntimePublishService.java`
+- **Vai trò tóm tắt:** Đọc, xác minh và publish MAP runtime theo nguyên tắc tất cả hoặc không.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public final class MapAssetRuntimePublishService {`**: Đọc, xác minh và publish MAP runtime theo nguyên tắc tất cả hoặc không.
+  - **Dòng 13 — `public MapAssetRuntimePublishService(`**: Tạo service từ source, manifest khóa và atomic store đích.
+  - **Dòng 23 — `public MapAssetRuntimeSnapshot rebuildAndPublish()`**: Publish chỉ sau khi JDBC bundle khớp version/count/length/SHA-256.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.assets.MapAssetRuntimeSnapshot`
+
+- **Source:** `src/main/java/com/nsocry/assets/MapAssetRuntimeSnapshot.java`
+- **Vai trò tóm tắt:** Snapshot MAP bất biến đã vượt version, count, length và checksum gate.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public final class MapAssetRuntimeSnapshot {`**: Snapshot MAP bất biến đã vượt version, count, length và checksum gate.
+  - **Dòng 40 — `public byte version() { return version; }`**: Trả version wire đã khóa.
+  - **Dòng 42 — `public int mapCount() { return mapCount; }`**: Trả số map name trong payload.
+  - **Dòng 44 — `public int npcCount() { return npcCount; }`**: Trả số NPC template trong payload.
+  - **Dòng 46 — `public int mobCount() { return mobCount; }`**: Trả số mob template trong payload.
+  - **Dòng 48 — `public int payloadLength() { return payloadLength; }`**: Trả độ dài payload đã khóa.
+  - **Dòng 50 — `public String payloadSha256() { return payloadSha256; }`**: Trả SHA-256 đã đối chiếu với payload.
+  - **Dòng 52 — `public byte[] payload() { return Arrays.copyOf(payload, payload.length); }`**: Trả defensive copy để session không sửa snapshot dùng chung.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
 ### `com.nsocry.assets.MapAssetSeedArtifact`
@@ -976,6 +1014,16 @@
 - **Trạng thái:** `IMPLEMENTED`
 - **API public/protected phát hiện được:**
   - **Dòng 13 — `public final class MapAssetDatabaseVerifyCommand {`**: Xác minh dữ liệu MAP trong database tái tạo đúng payload candidate.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.MapAssetRuntimePublishCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/MapAssetRuntimePublishCommand.java`
+- **Vai trò tóm tắt:** Publish thử MAP snapshot từ JDBC sau toàn bộ gate; không ghi database.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 13 — `public final class MapAssetRuntimePublishCommand {`**: Publish thử MAP snapshot từ JDBC sau toàn bộ gate; không ghi database.
+  - **Dòng 17 — `public static void main(String[] args) throws Exception {`**: Đọc archive, preflight schema và publish vào atomic store cục bộ của command.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
 ### `com.nsocry.bootstrap.MapAssetSchemaPreflightCommand`

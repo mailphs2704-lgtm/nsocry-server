@@ -32,6 +32,7 @@ public final class NsocryLauncher {
             case MAP_SCHEMA_PREFLIGHT -> MapAssetSchemaPreflightCommand.main(forwarded);
             case MAP_SEED_IMPORT -> MapAssetSeedImportCommand.main(forwarded);
             case MAP_SEED_DB_VERIFY -> MapAssetDatabaseVerifyCommand.main(forwarded);
+            case MAP_RUNTIME_PUBLISH -> MapAssetRuntimePublishCommand.main(forwarded);
             case HELP -> printUsage();
         }
     }
@@ -63,6 +64,7 @@ public final class NsocryLauncher {
             case "map-schema-preflight" -> LaunchCommand.MAP_SCHEMA_PREFLIGHT;
             case "map-seed-import" -> LaunchCommand.MAP_SEED_IMPORT;
             case "map-seed-db-verify" -> LaunchCommand.MAP_SEED_DB_VERIFY;
+            case "map-runtime-publish" -> LaunchCommand.MAP_RUNTIME_PUBLISH;
             case "help", "--help", "-h" -> LaunchCommand.HELP;
             default -> throw new IllegalArgumentException("unknown NSOCry command: " + args[0]);
         };
@@ -93,6 +95,7 @@ public final class NsocryLauncher {
         System.out.println("  java -jar nsocry-server.jar map-schema-preflight [config-path]");
         System.out.println("  java -jar nsocry-server.jar map-seed-import <archive-path>");
         System.out.println("  java -jar nsocry-server.jar map-seed-db-verify <archive-path>");
+        System.out.println("  java -jar nsocry-server.jar map-runtime-publish <archive-path>");
         System.out.println("  java -jar nsocry-server.jar help");
     }
 
@@ -116,6 +119,7 @@ public final class NsocryLauncher {
         MAP_SCHEMA_PREFLIGHT,
         MAP_SEED_IMPORT,
         MAP_SEED_DB_VERIFY,
+        MAP_RUNTIME_PUBLISH,
         HELP
     }
 

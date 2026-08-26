@@ -1923,3 +1923,20 @@ archive; chưa publish runtime snapshot.
 
 Xây MAP runtime snapshot bất biến, atomic store và publish service có validation/checksum gate;
 chưa nối server startup.
+
+## 2026-08-26 — Xây MAP runtime snapshot và atomic publish
+
+- Thêm snapshot bất biến tự kiểm tra payload length/SHA-256 và trả defensive copy.
+- Thêm atomic store chỉ nhận snapshot hoàn chỉnh.
+- Publish service thực hiện JDBC source → manifest validation → encode → snapshot → atomic swap.
+- Checksum/source failure không thay snapshot đang phục vụ.
+- Thêm command `map-runtime-publish` có schema gate và report database/runtime/startup rõ ràng.
+- Thêm mười một test cho publish thành công, checksum/source failure, defensive copy,
+  dependency null, tamper, report/current snapshot và launcher route.
+- Database không đổi; server startup chưa nối; tiến độ gameplay giữ nguyên 18%.
+- Full suite Windows mục tiêu 263 đang PENDING.
+
+### Next exact action
+
+Push checkpoint và chạy full Maven suite 263/263. Sau VERIFIED mới chạy publish command trên
+JDBC thật; chưa nối startup.

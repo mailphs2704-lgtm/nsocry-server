@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_DATABASE_PIPELINE_VERIFIED_END_TO_END
+**Trạng thái:** MAP_RUNTIME_PUBLISH_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -154,7 +154,17 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
   44 NPC, 258 mob, 14401 byte, cùng SHA-256 candidate.
 - MAP database pipeline hiện `VERIFIED_END_TO_END`.
 
+## MAP runtime publish đang xây
+
+- Snapshot tự đối chiếu payload length và SHA-256 rồi giữ defensive copy.
+- Atomic store không cho session thấy snapshot bán phần.
+- Publish service chỉ swap sau JDBC load + manifest validation + encode thành công; failure
+  giữ nguyên snapshot cũ.
+- Command `map-runtime-publish` chỉ publish trong tiến trình cục bộ và báo rõ
+  `serverStartupWired=false`.
+- Mười một test mới đang PENDING Windows; full suite mục tiêu **263**.
+
 ## Next exact action
 
-Xây MAP runtime snapshot bất biến, atomic store và publish service có checksum gate. Chưa nối
-server startup và chưa merge `main`.
+Push MAP runtime publish checkpoint; người dùng pull và chạy full `mvn test`, kỳ vọng
+**263/263**. Chưa nối server startup và chưa merge `main`.

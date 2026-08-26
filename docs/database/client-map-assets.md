@@ -73,7 +73,17 @@ Không đưa placement/runtime field vào bốn bảng catalog chỉ vì field c
 - Importer transaction, JDBC source và database payload verifier: `VERIFIED_END_TO_END` với
   version 7, 177/44/258, payload 14401 byte và SHA-256
   `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
-- Runtime publish/startup integration: `TRACE_REQUIRED`, chưa thực hiện.
+- Runtime snapshot/store/publish command: `IMPLEMENTED_PENDING`; startup integration vẫn
+  `TRACE_REQUIRED`.
+
+## Runtime snapshot MAP
+
+- `MapAssetRuntimeSnapshot` giữ metadata và defensive-copy payload đã tự tính lại SHA-256.
+- `AtomicMapAssetRuntimeSnapshotStore` chỉ atomic-swap snapshot hoàn chỉnh.
+- Publish service đọc JDBC source, validate manifest, encode payload rồi mới swap store.
+- Source/checksum failure giữ nguyên snapshot cũ; không lộ trạng thái bán phần.
+- `map-runtime-publish <archive-path>` chứng minh luồng trong tiến trình riêng và luôn báo
+  `serverStartupWired=false`; command không ghi database.
 
 ## Import và xác minh database
 

@@ -96,6 +96,16 @@ java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-seed-db-verify "source-ref
 Import chỉ được chạy sau backup + V004 READY + xác nhận full SHA-256. Verifier đọc ngược
 database và phải trả đúng checksum candidate; cả hai command chưa publish runtime snapshot.
 
+### Publish thử MAP runtime snapshot
+
+```powershell
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-runtime-publish "source-reference\database-map-seed-v7-candidate.zip"
+```
+
+Command đọc JDBC, đối chiếu manifest/checksum rồi publish vào atomic store cục bộ. Output
+phải ghi `databaseChanged=false`, `runtimeSnapshotPublished=true` và
+`serverStartupWired=false`; snapshot không tồn tại sau khi command kết thúc.
+
 ## ITEM schema preflight
 
 ```powershell
