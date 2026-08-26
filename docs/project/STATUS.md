@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** CLIENT_ASSET_STARTUP_GATE_PENDING_WINDOWS
+**Trạng thái:** CLIENT_ASSET_STARTUP_GATE_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -20,7 +20,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows: **263/263**, không failure/error/skipped.
+- Full Maven suite Windows: **269/269**, không failure/error/skipped.
 - ITEM pipeline: version 26, 161 option, 1213 item, payload 66811 byte, JDBC VERIFIED.
 - SKILL pipeline: version 26, 72 option, 7 class, 91 template, 967 level,
   3883 level-option, payload 42402 byte, JDBC VERIFIED.
@@ -34,7 +34,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - `ClientAssetStartupExpectation` khóa bốn version và kích thước tối thiểu của năm phần asset.
 - `ClientAssetStartupGate` chỉ gọi atomic publisher sau khi toàn snapshot đạt expectation.
 - Sai manifest, payload ngắn hoặc appearance ngắn bị chặn trước publish; snapshot cũ giữ nguyên.
-- Sáu test mới; full suite Windows mục tiêu **269/269** đang PENDING.
+- Sáu test mới và full suite Windows **269/269** đã VERIFIED.
 
 ## Tác động và giới hạn
 
@@ -47,5 +47,5 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Push checkpoint và chạy full Maven suite 269/269 trên Windows. Sau VERIFIED mới xây nguồn
-authoritative cho DATA; chưa nối startup và chưa merge `main`.
+Xây inventory/converter cho nguồn DATA authoritative từ reference, bắt đầu bằng kiểm kê chính
+xác cấu trúc và byte contract; chưa import database, chưa nối startup và chưa merge `main`.
