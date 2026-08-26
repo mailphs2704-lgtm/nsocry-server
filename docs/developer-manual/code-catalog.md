@@ -830,6 +830,17 @@
   - **Dòng 34 — `public static byte[] encodeEffectTemplates(String dump) {`**: Encode tail effect-template: signed-byte count, id/type raw byte, UTF name và icon short.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.assets.conversion.ReferenceGameDataProgressionParser`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceGameDataProgressionParser.java`
+- **Vai trò tóm tắt:** Đọc đúng mười mảng progression từ source GameData reference mà không compile source legacy.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 9 — `public final class ReferenceGameDataProgressionParser {`**: Khóa mapping giữa tên hằng reference và `ProgressionTable` NSOCry.
+  - **Dòng 27 — `public static EnumMap<ProgressionTable, int[]> parse(String javaSource) {`**: Yêu cầu đủ đúng mười declaration và trả các mảng theo wire mapping.
+- **Bất biến/lỗi chính:** không đánh giá biểu thức Java, không compile source legacy; chỉ nhận literal integer, declaration duy nhất, mảng không rỗng và tối đa 127 phần tử.
+- **Khi sửa:** đối chiếu trực tiếp `GameData.java`, cập nhật fixture + DATA inventory + STATUS/WORKLOG.
+
 ### `com.nsocry.assets.conversion.ReferenceItemAssetConverter`
 
 - **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceItemAssetConverter.java`
