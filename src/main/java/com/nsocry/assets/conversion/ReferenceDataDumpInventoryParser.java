@@ -239,7 +239,12 @@ public final class ReferenceDataDumpInventoryParser {
                 if (values.put(key, value()) != null) throw failure("JSON object trùng key");
                 whitespace();
                 if (takeIf('}')) return values;
-                take(',');
+                if (!takeIf(',')) {
+                    whitespace();
+                    if (index >= source.length() || source.charAt(index) != '"') {
+                        throw failure("JSON object cần dấu phẩy hoặc key kế tiếp");
+                    }
+                }
             }
         }
 
