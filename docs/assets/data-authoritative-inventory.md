@@ -107,6 +107,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Effect short narrowing đã đạt **303/303 VERIFIED**. Dry-run tiếp theo phát hiện
-`nj_part.id=295` thiếu dấu phẩy trong object chứa `id=7665`. Đối chiếu ba bản database.sql
-local để xác định nguồn đúng; converter không tự chữa JSON malformed.
+Dump và database live xác nhận `nj_part.id=295` cùng thiếu comma; reference dùng
+`json-simple 1.1` permissive. Compatibility có kiểm soát và ba test đang chờ full suite
+Windows **306/306**. Sau pass, package và chạy lại DATA dry-run.
