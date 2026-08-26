@@ -17,6 +17,7 @@ public final class ReferenceDataDumpInventoryParser {
     static final String OTHERS_MARKER = "INSERT INTO `others` (`id`, `name`, `value`) VALUES";
     static final String EFFECT_TEMPLATE_MARKER = "INSERT INTO `effect` (`id`, `name`, `type`, `icon`) VALUES";
     private static final int MAX_SIGNED_BYTE_COUNT = 127;
+    private static final int MAX_UNSIGNED_BYTE_COUNT = 255;
 
     private ReferenceDataDumpInventoryParser() {
     }
@@ -102,7 +103,7 @@ public final class ReferenceDataDumpInventoryParser {
             }
         }
         if (experience == null) throw error("others thiếu row exp");
-        requireSignedCount(experience.size(), "experience count");
+        requireUnsignedCount(experience.size(), "experience count");
 
         for (List<String> row : templates) {
             rawDifferences += rawByte(integer(row.get(0), "effect id"), "effect id");
@@ -177,6 +178,11 @@ public final class ReferenceDataDumpInventoryParser {
 
     private static void requireSignedCount(int count, String field) {
         if (count > MAX_SIGNED_BYTE_COUNT) throw error(field + " vượt giới hạn 127");
+    }
+
+    /** EXP count được client đọc theo unsigned byte; database live có 131 phần tử. */
+    private static void requireUnsignedCount(int count, String field) {
+        if (count > MAX_UNSIGNED_BYTE_COUNT) throw error(field + " vượt giới hạn 255");
     }
 
     private static void requireSize(List<?> values, int expected, String field) {
