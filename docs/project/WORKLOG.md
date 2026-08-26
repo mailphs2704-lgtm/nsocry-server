@@ -1892,3 +1892,18 @@ xác nhận import riêng; không publish runtime.
 
 Chờ xác nhận riêng `ĐỒNG Ý IMPORT MAP`. Sau xác nhận, command import vẫn bắt nhập lại đúng
 toàn bộ SHA-256; chưa publish runtime snapshot.
+
+## 2026-08-26 — MAP seed đã import, chờ database verification
+
+- Chủ dự án xác nhận rõ `ĐỒNG Ý IMPORT MAP`.
+- Command hiển thị candidate 177 map, 44 NPC, 258 mob, payload 14401 byte và yêu cầu nhập
+  đúng toàn bộ SHA-256.
+- Transaction import thành công; checksum khớp
+  `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
+- `databaseChanged=true`; `runtimeSnapshotPublished=false`.
+- Lần thử trước khi MariaDB chạy bị chặn ở schema preflight, không mở transaction/ghi dữ liệu.
+
+### Next exact action
+
+Chạy `map-seed-db-verify` bằng đúng candidate để chứng minh JDBC source tái tạo payload giống
+archive; chưa publish runtime snapshot.

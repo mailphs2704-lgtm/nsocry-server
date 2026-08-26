@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_SEED_AWAITING_IMPORT_CONFIRMATION
+**Trạng thái:** MAP_SEED_IMPORTED_PENDING_VERIFY
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -148,8 +148,10 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Candidate version 7 đã dry-run VERIFIED: 177 map, 44 NPC, 258 mob, payload 14401 byte,
   SHA-256 `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
 - Dry-run báo `databaseChanged=false`, `runtimeSnapshotPublished=false`.
+- Chủ dự án đã xác nhận `ĐỒNG Ý IMPORT MAP`; transaction import thành công với count/checksum
+  đúng candidate. Import làm `databaseChanged=true`, runtime vẫn chưa publish.
 
 ## Next exact action
 
-Chờ chủ dự án xác nhận rõ `ĐỒNG Ý IMPORT MAP`; sau đó chạy import bằng đúng full SHA-256 đã
-khóa. Chưa publish runtime và chưa merge `main`.
+Chạy `map-seed-db-verify` để đọc ngược V004 và đối chiếu payload/count/length/SHA-256. Chưa
+publish runtime và chưa merge `main`.
