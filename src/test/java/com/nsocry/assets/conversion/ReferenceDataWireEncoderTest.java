@@ -23,7 +23,7 @@ class ReferenceDataWireEncoderTest {
 
     @Test
     void encodesEverySkillFrameFieldInReferenceOrder() throws Exception {
-        byte[] payload = ReferenceDataWireEncoder.encodeGraphics(validDump()).get(ClientGraphicBlock.SKILL);
+        byte[] payload = ReferenceDataWireEncoder.encodeGraphics(validDump()).get(ClientGraphicBlock.SKILL_PAINT);
         try (DataInputStream input = new DataInputStream(new ByteArrayInputStream(payload))) {
             assertEquals(1, input.readUnsignedShort());
             assertEquals(20, input.readShort());
