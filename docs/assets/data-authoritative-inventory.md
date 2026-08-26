@@ -107,6 +107,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-json-simple compatibility đạt **306/306 VERIFIED**. Database live xác nhận EXP count **131**,
-nên parser/converter/codec/manifest đã dùng unsigned byte `0..255` riêng cho EXP. Chạy full
-suite Windows **308/308**, package và chạy lại DATA dry-run.
+EXP unsigned count đạt **308/308 VERIFIED** và shaded JAR build thành công. Chạy lại
+`data-seed-dry-run data-dry-run.properties` để khóa candidate version/count/payloadLength/
+SHA-256.
