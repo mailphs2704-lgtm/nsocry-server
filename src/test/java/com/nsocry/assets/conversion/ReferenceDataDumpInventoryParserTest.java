@@ -77,14 +77,16 @@ class ReferenceDataDumpInventoryParserTest {
     }
 
     @Test
-    void rejectsSignedByteCountAboveWireLimit() {
-        StringBuilder experience = new StringBuilder("[");
-        for (int index = 0; index < 128; index++) {
-            if (index > 0) experience.append(',');
-            experience.append(index);
-        }
-        experience.append(']');
-        String dump = validDump().replace("[100,200]", experience);
+    void acceptsLiveUnsignedExperienceCount() {
+        String dump = validDump().replace("[100,200]", experience(131));
+
+        assertEquals(131, ReferenceDataDumpInventoryParser.parse(dump).experienceCount());
+    }
+
+    @Test
+    void rejectsExperienceCountAboveUnsignedByte() {
+        String dump = validDump().replace("[100,200]", experience(256));
+
         assertThrows(IllegalArgumentException.class,
                 () -> ReferenceDataDumpInventoryParser.parse(dump));
     }
@@ -94,6 +96,15 @@ class ReferenceDataDumpInventoryParserTest {
         String dump = validDump().replace("(1, '[1,2,3]')", "(2, '[1,2,3]'),(1, '[4,5,6]')");
         assertThrows(IllegalArgumentException.class,
                 () -> ReferenceDataDumpInventoryParser.parse(dump));
+    }
+
+    private static String experience(int count) {
+        StringBuilder values = new StringBuilder("[");
+        for (int index = 0; index < count; index++) {
+            if (index > 0) values.append(',');
+            values.append(index);
+        }
+        return values.append(']').toString();
     }
 
     private static String validDump() {
