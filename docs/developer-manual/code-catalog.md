@@ -220,6 +220,48 @@
   - **Dòng 62 — `public static DataAssetBundle decode(byte[] payload) throws IOException {`**: Parse lại container; effect-template là block cuối nên nhận toàn bộ byte còn lại.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.assets.DataAssetSeedArtifact`
+
+- **Source:** `src/main/java/com/nsocry/assets/DataAssetSeedArtifact.java`
+- **Vai trò tóm tắt:** DATA candidate bất biến gồm payload đã kiểm định và manifest xác định.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public final class DataAssetSeedArtifact {`**: Giữ candidate sau self-validation và sao chép payload khi nhận/trả.
+  - **Dòng 19 — `public byte[] payload() {`**: Trả defensive copy của payload đã khóa checksum.
+  - **Dòng 24 — `public DataAssetSeedManifest manifest() {`**: Trả metadata candidate.
+  - **Dòng 29 — `public String manifestText() {`**: Trả manifest key=value xác định.
+- **Khi sửa:** cập nhật generator/validator/test + manual + STATUS/WORKLOG.
+
+### `com.nsocry.assets.DataAssetSeedArtifactGenerator`
+
+- **Source:** `src/main/java/com/nsocry/assets/DataAssetSeedArtifactGenerator.java`
+- **Vai trò tóm tắt:** Sinh DATA candidate deterministic và tự kiểm định trước khi trả artifact.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public final class DataAssetSeedArtifactGenerator {`**: Điều phối encode, manifest, SHA-256 và validation.
+  - **Dòng 14 — `public static DataAssetSeedArtifact generate(DataAssetBundle bundle) {`**: Cùng bundle sinh cùng payload và manifest.
+- **Khi sửa:** giữ format `nsocry-data-seed-v1`, newline và thứ tự field ổn định.
+
+### `com.nsocry.assets.DataAssetSeedManifest`
+
+- **Source:** `src/main/java/com/nsocry/assets/DataAssetSeedManifest.java`
+- **Vai trò tóm tắt:** Khóa version, task/EXP count, payload length và SHA-256 của DATA candidate.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 8 — `public record DataAssetSeedManifest(`**: Metadata bất biến của candidate.
+  - **Dòng 16 — `public DataAssetSeedManifest {`**: Gate count signed-byte, length và SHA-256 hex.
+- **Khi sửa:** không nới wire boundary hoặc chuẩn checksum nếu thiếu migration format.
+
+### `com.nsocry.assets.DataAssetSeedValidator`
+
+- **Source:** `src/main/java/com/nsocry/assets/DataAssetSeedValidator.java`
+- **Vai trò tóm tắt:** Encode lại bundle và đối chiếu toàn bộ manifest candidate.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 10 — `public final class DataAssetSeedValidator {`**: Validation không truy cập database/runtime.
+  - **Dòng 15 — `public static void validate(DataAssetBundle bundle, DataAssetSeedManifest manifest) {`**: Từ chối khác biệt version/count/length/SHA-256.
+- **Khi sửa:** checksum phải tính từ đúng payload `DataAssetCodec`; cập nhật test tamper/mismatch.
+
 ### `com.nsocry.assets.DataAssetSource`
 
 - **Source:** `src/main/java/com/nsocry/assets/DataAssetSource.java`
