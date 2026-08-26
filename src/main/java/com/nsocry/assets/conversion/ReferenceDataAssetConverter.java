@@ -13,6 +13,7 @@ import java.util.Objects;
 /** Ghép dump DATA authoritative và progression đã truy vết thành bundle client V7 hoàn chỉnh. */
 public final class ReferenceDataAssetConverter {
     private static final int MAX_SIGNED_BYTE_COUNT = 127;
+    private static final int MAX_UNSIGNED_BYTE_COUNT = 255;
 
     private ReferenceDataAssetConverter() {
     }
@@ -88,7 +89,7 @@ public final class ReferenceDataAssetConverter {
         if (values == null) {
             throw new IllegalArgumentException("others thiếu row exp");
         }
-        requireSignedCount(values.size(), "experience count");
+        requireUnsignedCount(values.size(), "experience count");
         long[] result = new long[values.size()];
         for (int index = 0; index < values.size(); index++) {
             result[index] = ReferenceDataDumpInventoryParser.number(values.get(index), "experience");
@@ -123,6 +124,13 @@ public final class ReferenceDataAssetConverter {
         }
         if (!Double.isFinite(maxPercentAdd) || maxPercentAdd < 0) {
             throw new IllegalArgumentException("maxPercentAdd phải hữu hạn và không âm");
+        }
+    }
+
+    /** EXP count có wire unsigned byte theo dữ liệu live 131 phần tử. */
+    private static void requireUnsignedCount(int count, String field) {
+        if (count > MAX_UNSIGNED_BYTE_COUNT) {
+            throw new IllegalArgumentException(field + " vượt giới hạn 255");
         }
     }
 
