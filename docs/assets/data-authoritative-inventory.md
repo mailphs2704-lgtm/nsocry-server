@@ -86,8 +86,12 @@ ngầm và không mặc định thay đổi dữ liệu.
   `ProgressionTable`; parser không compile/chạy legacy và không sao chép bộ số vào production.
 - Chỉ declaration `public static final int[]` duy nhất với literal integer được nhận; thiếu,
   trùng, biểu thức Java, mảng rỗng hoặc count vượt 127 đều bị chặn.
-- Năm test mới khóa mapping và failure boundary; full suite Windows mục tiêu **296/296** đang
-  PENDING.
+- Năm test progression parser đã đạt full suite Windows **296/296 VERIFIED**.
+- Command `data-seed-dry-run <data-properties-path>` yêu cầu explicit `dump.path`,
+  `game-data.path`, `data.version` và `max-percent-add`; path tương đối resolve cạnh config.
+- Command chỉ đọc file bounded, tạo candidate trong bộ nhớ và in version/task/EXP count,
+  payloadLength/SHA-256 cùng ba cờ tác động false; không ghi archive/JDBC/runtime.
+- Bốn test command và một route test mới; full suite Windows mục tiêu **301/301** đang PENDING.
 
 ## Ranh giới chưa làm
 
@@ -100,6 +104,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy full Maven suite Windows mục tiêu **296/296**. Sau VERIFIED mới thêm command dry-run đọc
-database.sql + GameData.java authoritative để in DATA candidate version/count/payloadLength/
-SHA-256; chưa ghi database hoặc nối startup.
+Chạy full Maven suite Windows mục tiêu **301/301**. Sau VERIFIED mới tạo properties trỏ đúng
+database.sql + GameData.java reference và chạy dry-run để khóa DATA candidate thật.
