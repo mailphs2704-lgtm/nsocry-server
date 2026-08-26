@@ -29,6 +29,19 @@ class DataAssetCodecTest {
     }
 
     @Test
+    void roundTripsLiveUnsignedExperienceCount() throws Exception {
+        long[] experience = new long[131];
+        for (int index = 0; index < experience.length; index++) experience[index] = index;
+        DataAssetBundle bundle = new DataAssetBundle(
+                (byte) 7, graphics(), List.of(), experience, progression(), new byte[0]);
+
+        DataAssetBundle decoded = DataAssetCodec.decode(DataAssetCodec.encode(bundle));
+
+        assertEquals(131, decoded.experienceThresholds().length);
+        assertArrayEquals(experience, decoded.experienceThresholds());
+    }
+
+    @Test
     void rejectsGraphicLengthBeyondRemainingPayload() {
         byte[] invalid = {26, 0, 0, 0, 5, 1};
 
