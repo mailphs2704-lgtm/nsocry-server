@@ -2085,3 +2085,18 @@ Push checkpoint và chạy full Maven suite Windows 282/282. Sau VERIFIED mới 
 
 Pull nhánh và chạy full Maven suite 286/286. Sau VERIFIED mới tạo DATA candidate deterministic
 và khóa payload length/SHA-256; chưa ghi database hoặc nối startup.
+
+## 2026-08-26 — DATA asset converter đạt 286/286 và xây deterministic candidate
+
+- Người dùng xác nhận full Maven suite Windows **286/286**, không failure/error/skipped.
+- DATA converter, raw task byte, EXP long, đủ progression và nhánh MAX_PERCENT/version:
+  VERIFIED Windows.
+- Thêm DATA seed artifact, manifest, generator và validator; candidate khóa version, task/EXP
+  count, payload length và SHA-256, đồng thời defensive-copy payload.
+- Thêm năm test; full suite Windows mục tiêu **291/291** đang PENDING.
+- Database/runtime/startup không đổi; tiến độ gameplay giữ 18%; chưa merge `main`.
+
+### Next exact action
+
+Pull nhánh và chạy full Maven suite 291/291. Sau VERIFIED mới chạy converter với nguồn
+authoritative thật để khóa DATA candidate; chưa ghi database hoặc nối startup.
