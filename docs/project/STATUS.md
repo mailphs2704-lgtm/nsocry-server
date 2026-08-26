@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_RUNTIME_PUBLISH_VERIFIED
+**Trạng thái:** MAP_RUNTIME_PUBLISH_VERIFIED_JDBC
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -163,8 +163,11 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Command `map-runtime-publish` chỉ publish trong tiến trình cục bộ và báo rõ
   `serverStartupWired=false`.
 - Mười một test snapshot/store/publish đã vượt full suite Windows **263/263**.
+- Publish command trên JDBC thật đã tạo snapshot version 7, 177/44/258, payload 14401 byte,
+  SHA-256 khớp candidate; report `runtimeSnapshotPublished=true`.
+- Snapshot command chỉ sống trong tiến trình đã kết thúc; `serverStartupWired=false`.
 
 ## Next exact action
 
-Chạy `map-runtime-publish` bằng đúng candidate trên JDBC thật để xác minh metadata/checksum
-snapshot. Chưa nối server startup và chưa merge `main`.
+Thiết kế và triển khai composition snapshot client tĩnh cho startup, bắt đầu bằng contract/gate
+không cho publish asset bán phần. Chưa merge `main`.

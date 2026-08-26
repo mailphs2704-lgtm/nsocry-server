@@ -1953,3 +1953,18 @@ JDBC thật; chưa nối startup.
 
 Chạy `map-runtime-publish` trên JDBC thật bằng đúng candidate đã khóa; xác minh count/length/
 SHA-256 và `serverStartupWired=false`.
+
+## 2026-08-26 — MAP runtime publish VERIFIED trên JDBC thật
+
+- Command tạo `MAP runtime snapshot PUBLISHED` từ dữ liệu V004.
+- Version 7; 177 map; 44 NPC; 258 mob; payload length 14401 byte.
+- SHA-256 khớp candidate:
+  `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
+- `databaseChanged=false`, `runtimeSnapshotPublished=true`, `serverStartupWired=false`.
+- Snapshot chỉ thuộc tiến trình command và không còn sống sau khi command kết thúc.
+- Tiến độ gameplay giữ nguyên 18% vì startup/session client chưa nhận snapshot.
+
+### Next exact action
+
+Xây composition snapshot client tĩnh cho startup với gate cấm DATA/MAP/SKILL/ITEM/appearance
+bán phần; chưa thay đổi startup trước khi contract/test hoàn chỉnh.

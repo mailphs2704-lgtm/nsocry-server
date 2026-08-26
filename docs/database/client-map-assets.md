@@ -84,6 +84,8 @@ Không đưa placement/runtime field vào bốn bảng catalog chỉ vì field c
 - Source/checksum failure giữ nguyên snapshot cũ; không lộ trạng thái bán phần.
 - `map-runtime-publish <archive-path>` chứng minh luồng trong tiến trình riêng và luôn báo
   `serverStartupWired=false`; command không ghi database.
+- Command trên JDBC thật đã VERIFIED version 7, 177/44/258, 14401 byte và checksum candidate;
+  đây chưa phải startup integration.
 
 ## Import và xác minh database
 
