@@ -81,8 +81,13 @@ ngầm và không mặc định thay đổi dữ liệu.
   `nsocry-data-seed-v1` khóa version, task-group count, EXP count, payload length và SHA-256.
 - `DataAssetSeedValidator` encode lại cùng bundle và từ chối mọi mismatch; artifact sao chép
   payload khi nhận/trả để checksum không bị caller làm sai.
-- Năm test mới bảo vệ determinism, metadata, checksum mismatch, defensive copy và raw task byte;
-  full suite Windows mục tiêu **291/291** đang PENDING.
+- Năm test DATA candidate đã đạt full suite Windows **291/291 VERIFIED**.
+- `ReferenceGameDataProgressionParser` ánh xạ trực tiếp mười hằng `GameData.java` sang
+  `ProgressionTable`; parser không compile/chạy legacy và không sao chép bộ số vào production.
+- Chỉ declaration `public static final int[]` duy nhất với literal integer được nhận; thiếu,
+  trùng, biểu thức Java, mảng rỗng hoặc count vượt 127 đều bị chặn.
+- Năm test mới khóa mapping và failure boundary; full suite Windows mục tiêu **296/296** đang
+  PENDING.
 
 ## Ranh giới chưa làm
 
@@ -95,6 +100,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy full Maven suite Windows mục tiêu **291/291**. Sau VERIFIED mới chạy converter trên nguồn
-authoritative thật để khóa DATA candidate version/count/payloadLength/SHA-256; chưa ghi database
-hoặc nối startup.
+Chạy full Maven suite Windows mục tiêu **296/296**. Sau VERIFIED mới thêm command dry-run đọc
+database.sql + GameData.java authoritative để in DATA candidate version/count/payloadLength/
+SHA-256; chưa ghi database hoặc nối startup.
