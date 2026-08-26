@@ -44,6 +44,14 @@ class ReferenceDataWireEncoderTest {
     }
 
     @Test
+    void narrowsReferenceEffectImageToLowSixteenBits() {
+        String dump = validDump().replace("\"imgId\":5", "\"imgId\":260910");
+
+        assertArrayEquals(bytes(0, 1, 0, 1, 1, 251, 46, 128, 255),
+                ReferenceDataWireEncoder.encodeGraphics(dump).get(ClientGraphicBlock.EFFECT));
+    }
+
+    @Test
     void acceptsLegacyEffectImageIdAlias() {
         String dump = validDump().replace("{\"imgId\":5,\"dx\":128,\"dy\":-1}",
                 "{\"id\":5,\"dx\":128,\"dy\":-1}");
