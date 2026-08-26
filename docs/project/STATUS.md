@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** CLIENT_ASSET_STARTUP_GATE_VERIFIED
+**Trạng thái:** DATA_AUTHORITATIVE_INVENTORY_COMPLETE
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -47,5 +47,5 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Xây inventory/converter cho nguồn DATA authoritative từ reference, bắt đầu bằng kiểm kê chính
-xác cấu trúc và byte contract; chưa import database, chưa nối startup và chưa merge `main`.
+Viết `ReferenceDataDumpInventoryParser` và test fixture để khóa marker, arity, thứ tự,
+JSON/count/raw-byte contract; chưa import database, chưa nối startup và chưa merge `main`.
