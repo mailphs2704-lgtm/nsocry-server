@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_AUTHORITATIVE_CONFIG_PENDING
+**Trạng thái:** DATA_EFFECT_SHORT_NARROWING_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -30,11 +30,13 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- DATA authoritative dry-run command và launcher route: **301/301 VERIFIED**.
-- Command đã sẵn sàng đọc dump + GameData thật và khóa version/count/length/SHA-256.
-- Chưa chạy production candidate vì hai giá trị `game.data.version` và
-  `game.upgrade.percent.add` trong config reference local chưa được xác nhận; không được tự
-  mặc định hoặc suy diễn.
+- DATA authoritative dry-run command: **301/301 VERIFIED**.
+- Dry-run thật phát hiện `nj_effect.imgId=260910`; reference nạp bằng
+  `Long.shortValue()` rồi `writeShort`, nghĩa là wire giữ đúng 16 bit thấp `0xFB2E`.
+- Inventory/encoder đã tái hiện đúng narrowing thay vì yêu cầu source nằm trong signed-short;
+  các short khác vẫn giữ range gate cũ.
+- Hai test mới khóa inventory acceptance và exact bytes; full suite Windows mục tiêu
+  **303/303** đang PENDING.
 
 ## Tác động và giới hạn
 
@@ -47,7 +49,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Đọc đúng `game.data.version` và `game.upgrade.percent.add` từ
-`source-reference/NSOKISS-inspection/config.properties` trên máy chủ dự án. Sau khi xác nhận
-mới tạo properties DATA dry-run và khóa candidate thật; chưa ghi database, chưa nối startup và
-chưa merge `main`.
+Pull checkpoint, chạy full Maven suite Windows 303/303, package lại JAR rồi chạy lại đúng
+`data-seed-dry-run data-dry-run.properties`. Chưa ghi database, chưa nối startup và chưa merge
+`main`.
