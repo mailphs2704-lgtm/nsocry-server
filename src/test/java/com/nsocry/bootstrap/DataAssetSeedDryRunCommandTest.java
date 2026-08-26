@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.nsocry.assets.DataAssetSeedArtifact;
-import com.nsocry.assets.conversion.ReferenceDataDumpInventoryParser;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -16,6 +15,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 class DataAssetSeedDryRunCommandTest {
+    private static final String ARROW = "INSERT INTO `nj_arrow` (`id`, `imgId`) VALUES";
+    private static final String EFFECT = "INSERT INTO `nj_effect` (`id`, `info`) VALUES";
+    private static final String IMAGE = "INSERT INTO `nj_image` (`id`, `smallImage`) VALUES";
+    private static final String PART = "INSERT INTO `nj_part` (`id`, `type`, `part`) VALUES";
+    private static final String SKILL = "INSERT INTO `nj_skill` (`id`, `skillId`, `effId`, `numEff`, `skillStand`, `skillFly`) VALUES";
+    private static final String TASK = "INSERT INTO `task` (`id`, `npcs`, `maps`) VALUES";
+    private static final String OTHERS = "INSERT INTO `others` (`id`, `name`, `value`) VALUES";
+    private static final String EFFECT_TEMPLATE = "INSERT INTO `effect` (`id`, `name`, `type`, `icon`) VALUES";
+
     @TempDir
     Path directory;
 
@@ -90,17 +98,17 @@ class DataAssetSeedDryRunCommandTest {
                 + "\"effS1Id\":27,\"e1dx\":28,\"e1dy\":29,\"effS2Id\":30,"
                 + "\"e2dx\":31,\"e2dy\":32,\"arrowId\":33,\"adx\":34,\"ady\":35}";
         return String.join("\n",
-                statement(ReferenceDataDumpInventoryParser.ARROW_MARKER, "(1, '[2,3,4]')"),
-                statement(ReferenceDataDumpInventoryParser.EFFECT_PAINT_MARKER,
+                statement(ARROW, "(1, '[2,3,4]')"),
+                statement(EFFECT,
                         "(1, '[{\"imgId\":5,\"dx\":1,\"dy\":-1}]')"),
-                statement(ReferenceDataDumpInventoryParser.IMAGE_MARKER, "(1, '[6,7,8,9,10]')"),
-                statement(ReferenceDataDumpInventoryParser.PART_MARKER,
+                statement(IMAGE, "(1, '[6,7,8,9,10]')"),
+                statement(PART,
                         "(0, 2, '[{\"id\":11,\"dx\":12,\"dy\":-3}]')"),
-                statement(ReferenceDataDumpInventoryParser.SKILL_PAINT_MARKER,
+                statement(SKILL,
                         "(1, 20, 21, 22, '[" + frame + "]', '[]')"),
-                statement(ReferenceDataDumpInventoryParser.TASK_MARKER, "(0, '[1,2]', '[3,4]')"),
-                statement(ReferenceDataDumpInventoryParser.OTHERS_MARKER, "(1, 'exp', '[100,200]')"),
-                statement(ReferenceDataDumpInventoryParser.EFFECT_TEMPLATE_MARKER,
+                statement(TASK, "(0, '[1,2]', '[3,4]')"),
+                statement(OTHERS, "(1, 'exp', '[100,200]')"),
+                statement(EFFECT_TEMPLATE,
                         "(1, 'Food', 2, 10)"));
     }
 
