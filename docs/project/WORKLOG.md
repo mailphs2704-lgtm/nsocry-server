@@ -2144,3 +2144,19 @@ authoritative thật để khóa candidate.
 
 Đọc hai khóa DATA trong `source-reference/NSOKISS-inspection/config.properties`, sau đó mới
 tạo properties dry-run authoritative.
+
+## 2026-08-26 — DATA dry-run phát hiện effect image short narrowing
+
+- Config authoritative xác nhận `game.data.version=7` và
+  `game.upgrade.percent.add=0`.
+- Dry-run thật bị gate tại `nj_effect.imgId=260910`.
+- Đối chiếu `Server.setDataEffect()` và load path: reference gọi `Long.shortValue()`, sau đó
+  `DataOutputStream.writeShort`; wire authoritative là 16 bit thấp `0xFB2E`.
+- Sửa inventory/encoder theo đúng contract này; không clamp và không nới range cho các field
+  short khác.
+- Thêm hai test; full suite Windows mục tiêu **303/303** đang PENDING.
+- Database/runtime/startup không đổi; chưa merge `main`.
+
+### Next exact action
+
+Pull, chạy 303 test, package JAR và chạy lại DATA dry-run cùng properties đã tạo.
