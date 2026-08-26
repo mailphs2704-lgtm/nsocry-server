@@ -76,8 +76,13 @@ ngầm và không mặc định thay đổi dữ liệu.
   chép progression và chỉ áp dụng `(int) (num + num * maxPercentAdd)` cho `MAX_PERCENT`.
 - Khi `maxPercentAdd > 0`, DATA version tăng đúng một đơn vị; version vượt raw byte, hệ số âm/
   không hữu hạn, thiếu bảng hoặc count vượt 127 đều bị chặn.
-- Bốn test mới khóa round-trip qua `DataAssetCodec`, nhánh zero-percent, progression thiếu và
-  version overflow; full suite Windows mục tiêu **286/286** đang PENDING.
+- Bốn test converter đã đạt full suite Windows **286/286 VERIFIED**.
+- `DataAssetSeedArtifactGenerator` encode bundle thành candidate deterministic; manifest format
+  `nsocry-data-seed-v1` khóa version, task-group count, EXP count, payload length và SHA-256.
+- `DataAssetSeedValidator` encode lại cùng bundle và từ chối mọi mismatch; artifact sao chép
+  payload khi nhận/trả để checksum không bị caller làm sai.
+- Năm test mới bảo vệ determinism, metadata, checksum mismatch, defensive copy và raw task byte;
+  full suite Windows mục tiêu **291/291** đang PENDING.
 
 ## Ranh giới chưa làm
 
@@ -90,5 +95,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy full Maven suite Windows mục tiêu **286/286**. Sau VERIFIED mới tạo DATA candidate
-deterministic và khóa payload length/SHA-256; chưa ghi database hoặc nối startup.
+Chạy full Maven suite Windows mục tiêu **291/291**. Sau VERIFIED mới chạy converter trên nguồn
+authoritative thật để khóa DATA candidate version/count/payloadLength/SHA-256; chưa ghi database
+hoặc nối startup.
