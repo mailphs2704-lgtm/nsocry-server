@@ -1846,3 +1846,22 @@ rồi chạy lại `map-schema-preflight`; chưa import MAP seed.
 
 Xây importer transaction, JDBC source và database payload verifier cho MAP V004. Chưa import
 candidate nếu chưa có full SHA-256 confirmation riêng của chủ dự án.
+
+## 2026-08-26 — Xây MAP importer và JDBC payload verification
+
+- Thêm importer thay bốn bảng MAP trong một transaction SERIALIZABLE; artifact lỗi bị chặn
+  trước khi mở connection và batch lỗi rollback toàn bộ.
+- Ghi `menu_row_count` để bảo toàn hàng rỗng, menu entry giữ đúng row/choice order.
+- Thêm JDBC source đọc repeatable-read snapshot, kiểm tra ID liên tục, row/choice order và
+  miền signed byte/short trước khi dựng `MapAssetBundle`.
+- Thêm database verifier encode lại bundle JDBC rồi đối chiếu manifest count/length/SHA-256.
+- Thêm command import có full-checksum confirmation và command verify chỉ đọc.
+- Thêm mười test cho checksum gate, verifier report, launcher route, transaction/rollback và
+  JDBC snapshot.
+- Database/runtime không đổi bởi checkpoint code; V004 vẫn READY, MAP seed chưa import.
+- Tiến độ gameplay giữ nguyên 17%; full suite Windows mục tiêu 252 đang PENDING.
+
+### Next exact action
+
+Push checkpoint và chạy full Maven suite 252/252. Chỉ sau VERIFIED mới chuẩn bị xác nhận
+import MAP candidate; chưa publish runtime snapshot.

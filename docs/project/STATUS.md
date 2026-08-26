@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_V004_READY
+**Trạng thái:** MAP_DATABASE_PIPELINE_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -136,7 +136,17 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
   `databaseChanged=false`.
 - Chưa import MAP seed, chưa tạo JDBC asset source và chưa publish runtime.
 
+## MAP database pipeline đang xây
+
+- Importer validate archive trước connection, thay đủ bốn bảng trong transaction SERIALIZABLE
+  và rollback toàn bộ nếu delete/insert/batch thất bại.
+- `menu_row_count` bảo toàn hàng menu rỗng; raw signed byte mob giữ đúng bit pattern wire.
+- JDBC source đọc repeatable-read snapshot, buộc ID/order liên tục và kiểm tra reference/range.
+- Database verifier dựng lại payload và so count/length/SHA-256 với manifest candidate.
+- Hai launcher command mới: `map-seed-import` và `map-seed-db-verify`.
+- Mười test mới đang PENDING Windows; full suite mục tiêu **252**.
+
 ## Next exact action
 
-Xây MAP seed importer transaction và JDBC source/verification trên schema V004 READY. Chưa
-import MAP nếu chưa có checksum confirmation riêng và chưa merge `main`.
+Push MAP database pipeline; người dùng pull và chạy full `mvn test`, kỳ vọng **252/252**.
+Chưa import MAP nếu chưa có checksum confirmation riêng và chưa merge `main`.

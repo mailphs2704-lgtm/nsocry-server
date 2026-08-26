@@ -69,4 +69,17 @@ Không đưa placement/runtime field vào bốn bảng catalog chỉ vì field c
 
 - Schema contract, migration draft, JDBC inspector, launcher command: `IMPLEMENTED_PENDING`.
 - Unit test Linux/Windows full suite: `PENDING` tại checkpoint tạo V004.
-- Migration/import/JDBC source/runtime publish: `TRACE_REQUIRED`, chưa thực hiện.
+- Migration V004: `VERIFIED` trên database thật; preflight sau migration READY.
+- Importer transaction, JDBC source và database payload verifier: `IMPLEMENTED_PENDING`.
+- Runtime publish/startup integration: `TRACE_REQUIRED`, chưa thực hiện.
+
+## Import và xác minh database
+
+- `map-seed-import <archive-path>` đọc archive đã xác minh, yêu cầu V004 READY và bắt nhập
+  toàn bộ SHA-256 trước transaction SERIALIZABLE.
+- Importer xóa/ghi lại đủ bốn bảng trong một transaction; batch lỗi sẽ rollback toàn bộ.
+- `menu_row_count` được ghi riêng nên hàng menu rỗng không bị mất.
+- `JdbcMapAssetSource` đọc bốn bảng trong repeatable-read snapshot, buộc ID/order liên tục và
+  kiểm tra range trước khi dựng bundle bất biến.
+- `map-seed-db-verify <archive-path>` encode bundle JDBC rồi so toàn bộ count/length/SHA-256
+  với manifest candidate; command chỉ đọc và không publish runtime.

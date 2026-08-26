@@ -969,6 +969,15 @@
   - **Dòng 26 — `public static void main(String[] args) throws Exception {`**: Kiểm định archive/schema, yêu cầu nhập đúng SHA-256 rồi mới mở transaction import.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.bootstrap.MapAssetDatabaseVerifyCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/MapAssetDatabaseVerifyCommand.java`
+- **Vai trò tóm tắt:** Xác minh dữ liệu MAP trong database tái tạo đúng payload candidate.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 13 — `public final class MapAssetDatabaseVerifyCommand {`**: Xác minh dữ liệu MAP trong database tái tạo đúng payload candidate.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.bootstrap.MapAssetSchemaPreflightCommand`
 
 - **Source:** `src/main/java/com/nsocry/bootstrap/MapAssetSchemaPreflightCommand.java`
@@ -997,6 +1006,16 @@
 - **API public/protected phát hiện được:**
   - **Dòng 8 — `public final class MapAssetSeedDryRunCommand {`**: Xác minh MAP archive offline; không mở database hoặc publish runtime.
   - **Dòng 13 — `public static void main(String[] args) throws Exception {`**: Entry CLI yêu cầu đúng một archive path rồi xác minh không mutation.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.bootstrap.MapAssetSeedImportCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/MapAssetSeedImportCommand.java`
+- **Vai trò tóm tắt:** Command tương tác import MAP đã duyệt; không migration hoặc publish runtime.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 15 — `public final class MapAssetSeedImportCommand {`**: Command tương tác import MAP đã duyệt; không migration hoặc publish runtime.
+  - **Dòng 18 — `public static void main(String[] args)throws Exception{`**: Archive + V004 READY + full SHA-256 là ba gate trước transaction.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
 ### `com.nsocry.bootstrap.NsocryLauncher`
@@ -1493,6 +1512,25 @@
   - **Dòng 32 — `public MapAssetSchemaPreflightReport inspect() throws ClientAssetSourceException {`**: Dùng connection read-only, chỉ đọc metadata và không thực hiện DDL/DML.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.persistence.JdbcMapAssetSeedImporter`
+
+- **Source:** `src/main/java/com/nsocry/persistence/JdbcMapAssetSeedImporter.java`
+- **Vai trò tóm tắt:** Thay toàn bộ MAP seed đã kiểm định trong một transaction SERIALIZABLE.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 9 — `public final class JdbcMapAssetSeedImporter {`**: Thay toàn bộ MAP seed đã kiểm định trong một transaction SERIALIZABLE.
+  - **Dòng 23 — `public MapAssetSeedValidationResult importSeed(byte[] payload, String manifestText)`**: Validate trước connection; commit đủ bốn bảng hoặc rollback toàn bộ.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.persistence.JdbcMapAssetSource`
+
+- **Source:** `src/main/java/com/nsocry/persistence/JdbcMapAssetSource.java`
+- **Vai trò tóm tắt:** Adapter JDBC tái dựng MAP catalog trong một repeatable-read snapshot.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 9 — `public final class JdbcMapAssetSource implements MapAssetSource {`**: Adapter JDBC tái dựng MAP catalog trong một repeatable-read snapshot.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.persistence.JdbcSkillAssetSchemaInspector`
 
 - **Source:** `src/main/java/com/nsocry/persistence/JdbcSkillAssetSchemaInspector.java`
@@ -1552,6 +1590,16 @@
 - **Trạng thái:** `IMPLEMENTED`
 - **API public/protected phát hiện được:**
   - **Dòng 7 — `public record MapAssetSchemaPreflightReport(boolean ready, List<String> differences) {`**: Kết quả đối chiếu schema MAP V004, gồm trạng thái và toàn bộ sai khác.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.persistence.MapAssetSeedImportException`
+
+- **Source:** `src/main/java/com/nsocry/persistence/MapAssetSeedImportException.java`
+- **Vai trò tóm tắt:** Lỗi validation hoặc transaction khi thay thế MAP seed.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 4 — `public final class MapAssetSeedImportException extends Exception {`**: Lỗi validation hoặc transaction khi thay thế MAP seed.
+  - **Dòng 6 — `public MapAssetSeedImportException(String message, Throwable cause) { super(message, cause); }`**: Giữ thông báo nghiệp vụ và nguyên nhân gốc.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
 ### `com.nsocry.persistence.MariaDbDataSourceFactory`

@@ -86,6 +86,16 @@ java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-schema-preflight
 Command chỉ đọc `information_schema`, luôn báo `databaseChanged=false`. Trước khi V004 được
 chạy, kết quả đúng là `MAP schema preflight NOT_READY`; không tự chạy migration draft.
 
+### Import và xác minh MAP seed
+
+```powershell
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-seed-import "source-reference\database-map-seed-v7-candidate.zip"
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar map-seed-db-verify "source-reference\database-map-seed-v7-candidate.zip"
+```
+
+Import chỉ được chạy sau backup + V004 READY + xác nhận full SHA-256. Verifier đọc ngược
+database và phải trả đúng checksum candidate; cả hai command chưa publish runtime snapshot.
+
 ## ITEM schema preflight
 
 ```powershell

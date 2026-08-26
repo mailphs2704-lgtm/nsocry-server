@@ -30,6 +30,8 @@ public final class NsocryLauncher {
             case MAP_SEED_CONVERT -> MapAssetSeedConvertCommand.main(forwarded);
             case MAP_SEED_DRY_RUN -> MapAssetSeedDryRunCommand.main(forwarded);
             case MAP_SCHEMA_PREFLIGHT -> MapAssetSchemaPreflightCommand.main(forwarded);
+            case MAP_SEED_IMPORT -> MapAssetSeedImportCommand.main(forwarded);
+            case MAP_SEED_DB_VERIFY -> MapAssetDatabaseVerifyCommand.main(forwarded);
             case HELP -> printUsage();
         }
     }
@@ -59,6 +61,8 @@ public final class NsocryLauncher {
             case "map-seed-convert" -> LaunchCommand.MAP_SEED_CONVERT;
             case "map-seed-dry-run" -> LaunchCommand.MAP_SEED_DRY_RUN;
             case "map-schema-preflight" -> LaunchCommand.MAP_SCHEMA_PREFLIGHT;
+            case "map-seed-import" -> LaunchCommand.MAP_SEED_IMPORT;
+            case "map-seed-db-verify" -> LaunchCommand.MAP_SEED_DB_VERIFY;
             case "help", "--help", "-h" -> LaunchCommand.HELP;
             default -> throw new IllegalArgumentException("unknown NSOCry command: " + args[0]);
         };
@@ -87,6 +91,8 @@ public final class NsocryLauncher {
         System.out.println("  java -jar nsocry-server.jar map-seed-convert <dump-path>");
         System.out.println("  java -jar nsocry-server.jar map-seed-dry-run <archive-path>");
         System.out.println("  java -jar nsocry-server.jar map-schema-preflight [config-path]");
+        System.out.println("  java -jar nsocry-server.jar map-seed-import <archive-path>");
+        System.out.println("  java -jar nsocry-server.jar map-seed-db-verify <archive-path>");
         System.out.println("  java -jar nsocry-server.jar help");
     }
 
@@ -108,6 +114,8 @@ public final class NsocryLauncher {
         MAP_SEED_CONVERT,
         MAP_SEED_DRY_RUN,
         MAP_SCHEMA_PREFLIGHT,
+        MAP_SEED_IMPORT,
+        MAP_SEED_DB_VERIFY,
         HELP
     }
 
