@@ -1,7 +1,8 @@
 # Chỉ mục package/module NSOCry
 
 > Source NSOCry đang phát triển theo Architecture Lock v1. Protocol/session/network và
-> client asset pipeline ITEM/SKILL/MAP hiện ACTIVE; gameplay runtime còn PENDING.
+> client asset pipeline ITEM/SKILL/MAP và DATA candidate hiện ACTIVE; gameplay runtime còn
+> PENDING, dự án đang `PAUSED_BY_OWNER`.
 
 ## Chuẩn namespace
 
@@ -41,3 +42,4 @@
 - [Package authentication](authentication.md)
 - [MAP asset conversion](../code-reference/map-asset-conversion.md)
 - [MAP seed archive và command](../code-reference/map-seed-archive.md)
+- [DATA authoritative inventory và candidate](../assets/data-authoritative-inventory.md)

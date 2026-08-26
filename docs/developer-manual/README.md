@@ -16,6 +16,7 @@ không cần đọc tuần tự toàn bộ source.
 | Điều tra lỗi vận hành | [Vận hành và xử lý lỗi](operations-troubleshooting.md) |
 | Biết phần nào chưa đủ dữ liệu | [Sổ truy vết](trace-register.md) |
 | Biết luật cập nhật tài liệu | [Chuẩn bảo trì manual](maintenance-standard.md) |
+| Hiểu DATA candidate authoritative | [DATA inventory/candidate](../assets/data-authoritative-inventory.md) |
 | Khung package/type/method đã khóa | [Architecture Lock](../architecture/architecture-lock.md) |
 | Contract máy đọc được | [planned-contracts.tsv](../architecture/planned-contracts.tsv) |
 
@@ -56,3 +57,4 @@ khi tạo code.
 - Không đổi contract `LOCKED` nếu chưa có ADR và xác nhận chủ dự án.
 - Sau sửa phải cập nhật code catalog/module manual, STATUS và WORKLOG.
 - Chỉ gọi VERIFIED khi có output chạy thật; catalog không phải bằng chứng test.
+- Khi STATUS là `PAUSED_BY_OWNER`, không triển khai tiếp nếu chưa có yêu cầu rõ từ chủ dự án.

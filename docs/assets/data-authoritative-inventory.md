@@ -47,10 +47,13 @@ ngầm và không mặc định thay đổi dữ liệu.
 - Mỗi marker bắt buộc xuất hiện đúng một lần và mọi row phải đúng arity.
 - Giữ thứ tự row của dump ở nơi reference giữ thứ tự truy vấn; không tự sắp xếp khi byte contract
   không có `ORDER BY`.
-- Mọi count được client đọc bằng signed byte phải nằm trong `0..127`.
+- Mọi count được client đọc bằng signed byte phải nằm trong `0..127`; riêng EXP đã được database
+  live/client behavior xác nhận là unsigned byte `0..255` và candidate thật có 131 phần tử.
 - ID/offset raw byte cho phép bit pattern `0..255`; converter phải báo cáo giá trị `128..255`
   thay vì làm mất bit khi ép kiểu.
-- JSON phải được parse nghiêm ngặt, đúng schema từng cột, từ chối byte dư và mảng lệch chiều dài.
+- JSON phải đúng schema từng cột, từ chối byte dư và mảng lệch chiều dài. Compatibility duy nhất
+  được phép là hành vi `json-simple 1.1` thiếu comma giữa hai member object khi token kế tiếp là
+  key string; evidence là `nj_part.id=295` trong cả dump và database live. Array vẫn strict.
 - Năm graphics block phải được encode riêng và so khớp lại qua `DataAssetCodec`.
 - Effect-template tail phải có parser riêng; không coi toàn bộ tail là blob chưa kiểm định.
 - Candidate phải xác định: cùng dump + version + max-percent-add sinh cùng payload và SHA-256.
@@ -76,7 +79,7 @@ ngầm và không mặc định thay đổi dữ liệu.
 - Converter giữ task group/route order, bảo toàn raw-byte NPC/map, đọc EXP thành `long[]`, sao
   chép progression và chỉ áp dụng `(int) (num + num * maxPercentAdd)` cho `MAX_PERCENT`.
 - Khi `maxPercentAdd > 0`, DATA version tăng đúng một đơn vị; version vượt raw byte, hệ số âm/
-  không hữu hạn, thiếu bảng hoặc count vượt 127 đều bị chặn.
+  không hữu hạn, thiếu bảng hoặc count vượt wire boundary đều bị chặn.
 - Bốn test converter đã đạt full suite Windows **286/286 VERIFIED**.
 - `DataAssetSeedArtifactGenerator` encode bundle thành candidate deterministic; manifest format
   `nsocry-data-seed-v1` khóa version, task-group count, EXP count, payload length và SHA-256.
@@ -93,16 +96,17 @@ ngầm và không mặc định thay đổi dữ liệu.
 - Command chỉ đọc file bounded, tạo candidate trong bộ nhớ và in version/task/EXP count,
   payloadLength/SHA-256 cùng ba cờ tác động false; không ghi archive/JDBC/runtime.
 - Bốn test command và một route test đã đạt full suite Windows **301/301 VERIFIED**.
-- Candidate thật đang chờ xác nhận trực tiếp hai giá trị
-  `game.data.version`/`game.upgrade.percent.add` từ config reference local; không mặc định.
+- Config authoritative đã xác nhận `game.data.version=7` và
+  `game.upgrade.percent.add=0`; converter không dùng mặc định ngầm.
+- Full suite Windows gần nhất **308/308 VERIFIED** khóa thêm `json-simple 1.1` object
+  compatibility, effect image low-16-bit narrowing và EXP unsigned count 131.
 
 ## Ranh giới chưa làm
 
-- Đã ghép task route, EXP và progression thành `DataAssetBundle` từ fixture; chưa khóa candidate
-  bằng dump/progression authoritative thực tế.
-- Chưa tái tạo và xác minh payload DATA production hoàn chỉnh.
-- Chưa chốt số lượng thực tế, payload length và SHA-256 bằng Windows verification.
-- Chưa tạo seed archive/manifest, schema JDBC, importer hoặc runtime publisher.
+- Đã ghép task route, EXP và progression, tái tạo và xác minh candidate authoritative thực tế.
+- Chưa có archive service/manifest parser để lưu và đọc lại candidate. Manifest model/generator
+  trong bộ nhớ đã có nhưng chưa phải archive vận hành.
+- Chưa thiết kế schema JDBC DATA, importer, database verifier hoặc runtime publisher.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
 ## DATA candidate authoritative VERIFIED
@@ -117,5 +121,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Xây DATA archive service và manifest parser/dry-run để lưu rồi đọc lại đúng candidate trước mọi
-persistence; chưa import database hoặc nối startup.
+Dự án đang `PAUSED_BY_OWNER`. Khi được yêu cầu tiếp tục, xây DATA archive service và manifest
+parser/dry-run để lưu rồi đọc lại đúng candidate trước mọi persistence; chưa import database
+hoặc nối startup.

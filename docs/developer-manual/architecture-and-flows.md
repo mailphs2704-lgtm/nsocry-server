@@ -63,7 +63,8 @@ DATA/MAP/SKILL/ITEM/appearance cùng sẵn sàng. Không publish snapshot bán p
    Nếu lỗi, provider không được gọi và snapshot đang phục vụ không đổi.
 
 Checkpoint này chỉ khóa contract/gate, chưa tạo expectation production và chưa nối startup.
-DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số liệu giả để bật server.
+DATA candidate đã có dữ liệu authoritative; archive/persistence/runtime DATA và appearance còn
+`TRACE_REQUIRED`, vì vậy không được dùng số liệu giả để bật server.
 
 ## 4. DATA
 
@@ -74,7 +75,16 @@ DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số li�
   đưa vào `DataAssetCodec`.
 - Skill frame không dùng map động tại runtime: JSON chỉ là input conversion, mọi field bắt buộc
   được đọc và ghi theo thứ tự wire cố định.
-- Converter hoàn chỉnh cho task/EXP/progression vẫn `TRACE_REQUIRED`.
+- `ReferenceDataAssetConverter` đã ghép task route, EXP và mười bảng progression thành bundle.
+- `ReferenceGameDataProgressionParser` đọc literal integer từ `GameData.java` mà không compile
+  hoặc chạy source legacy.
+- `DataAssetSeedArtifactGenerator` tạo candidate deterministic trong bộ nhớ; dry-run command
+  đọc config explicit và in version/count/length/SHA-256.
+- Candidate authoritative VERIFIED: version 7, 43 task group, 131 EXP, 85154 byte,
+  SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- Compatibility có evidence: effect image giữ 16 bit thấp theo `Long.shortValue()`;
+  `json-simple 1.1` cho phép thiếu comma giữa member object; EXP count là unsigned byte.
+- Archive lưu trữ, JDBC DATA, runtime publish và startup wiring vẫn `TRACE_REQUIRED`.
 
 ## 5. ITEM
 
@@ -100,8 +110,9 @@ DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số li�
 - Converter chỉ đưa catalog client lên payload: map name, NPC template/menu, mob template.
 - Placement, zone, waypoint, spawn và animation không thuộc MAP catalog này.
 - Strict JSON parser chỉ nhận `array<array<string>>` cho menu NPC.
-- Artifact và archive v7 đã VERIFIED qua 233 test.
-- Schema/import/runtime MAP vẫn `TRACE_REQUIRED` cho đến khi contract database được chốt.
+- Artifact/archive v7, schema V004, transaction import, JDBC payload verification và runtime
+  publish command đã VERIFIED.
+- MAP ownership/zone và startup wiring vẫn `TRACE_REQUIRED`.
 
 ## 8. Database safety flow
 

@@ -36,14 +36,16 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - SHA-256: `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
 - `databaseChanged=false`, `runtimeSnapshotPublished=false`,
   `serverStartupWired=false`.
+- Handoff, Developer Manual, trace register, package index và DATA inventory đã đồng bộ tại
+  checkpoint tạm dừng; code catalog đã tái sinh đủ 199 source production.
 
 ## Tác động và giới hạn
 
 - `databaseChanged=false`.
 - `runtimeSnapshotPublished=false` trong checkpoint này.
 - `serverStartupWired=false`.
-- DATA và appearance production vẫn `TRACE_REQUIRED`; không được dùng bundle rỗng/số liệu giả
-  để bật startup.
+- DATA candidate authoritative đã VERIFIED; archive/persistence/runtime DATA và appearance
+  production vẫn `TRACE_REQUIRED`. Không được dùng bundle rỗng/số liệu giả để bật startup.
 - Client thật chưa vào gameplay.
 
 ## Next exact action

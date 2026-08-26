@@ -34,10 +34,14 @@ Theo thứ tự:
 - Contract `RESERVED` là ranh giới đã dành trước, không phải bằng chứng chức năng đã hoàn thành.
 - Phản hồi và cách làm việc phải tuân thủ `OWNER-COLLABORATION.md`; không bắt người dùng
   kể lại tiến độ đã có trên GitHub.
+- Nếu STATUS là `PAUSED_BY_OWNER`, không tự triển khai Next exact action. Chỉ tiếp tục khi chủ
+  dự án yêu cầu rõ; điểm tiếp tục hiện tại là DATA archive service + manifest parser/dry-run.
+- Không làm lại full suite 308/308 hoặc DATA candidate version 7/SHA-256 đã VERIFIED nếu input
+  source và converter chưa thay đổi.
 
 ## 4. Prompt tiếp tục dành cho Chat thường
 
-> Hãy đọc repository public `mailphs2704-lgtm/nsocry-server`, bắt đầu từ `docs/START-HERE.md`, sau đó đọc REQUIREMENTS, STATUS, entry WORKLOG mới nhất, `docs/architecture/architecture-lock.md`, `docs/architecture/planned-contracts.tsv` và tài liệu liên quan. Tóm tắt đúng trạng thái, liệt kê phần VERIFIED không được làm lại, rồi tiếp tục “Next exact action”. Không tự sửa requirement PROPOSED/UNKNOWN và không đổi khung kiến trúc nếu chưa qua ADR cùng xác nhận của chủ dự án.
+> Hãy đọc repository public `mailphs2704-lgtm/nsocry-server`, bắt đầu từ `docs/START-HERE.md`, sau đó đọc REQUIREMENTS, STATUS, entry WORKLOG mới nhất, `docs/architecture/architecture-lock.md`, `docs/architecture/planned-contracts.tsv` và tài liệu liên quan. Tóm tắt đúng trạng thái, liệt kê phần VERIFIED không được làm lại. Nếu STATUS là `PAUSED_BY_OWNER`, dừng ở báo cáo checkpoint; chỉ tiếp tục “Next exact action” khi chủ dự án yêu cầu rõ. Không tự sửa requirement PROPOSED/UNKNOWN và không đổi khung kiến trúc nếu chưa qua ADR cùng xác nhận của chủ dự án.
 
 Nếu Chat thường không truy cập được GitHub, đính kèm bốn file trên. Không cần tải lại toàn bộ source chỉ để định hướng.
 

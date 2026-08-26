@@ -21,11 +21,14 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 
 - Nhánh phát triển: `agent/document-nsokiss-runtime`; Draft PR #1; chưa merge `main`.
 - Architecture Lock v1 đang hiệu lực; cấm tự đổi package/contract LOCKED.
-- Windows full suite gần nhất: 233/233 VERIFIED.
+- Trạng thái quản trị: `PAUSED_BY_OWNER`; không tự tiếp tục implementation khi chưa có yêu cầu mới.
+- Windows full suite gần nhất: **308/308 VERIFIED**.
 - ITEM và SKILL seed/database pipeline: VERIFIED_END_TO_END.
-- MAP converter/artifact/archive/convert/dry-run: VERIFIED; schema/import/runtime chưa làm.
-- Database hiện không thay đổi bởi checkpoint MAP; startup chưa nối full client snapshot.
-- Tiến độ đến gameplay cơ bản: 17%.
+- MAP schema/import/JDBC payload và runtime publish command: VERIFIED; startup ownership chưa nối.
+- DATA authoritative candidate: version 7, 43 task group, 131 EXP, payload 85154 byte,
+  SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- DATA checkpoint không đổi database/runtime/startup; archive/persistence/runtime DATA chưa làm.
+- Tiến độ đến gameplay cơ bản: 18%.
 - Developer Manual và code catalog là điểm tra cứu source dành cho chủ server.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
@@ -48,6 +51,10 @@ Khi cần hiểu hoặc sửa code, bắt đầu tại [developer-manual/README.
 > Đọc `docs/START-HERE.md`, REQUIREMENTS, STATUS, Developer Manual, Architecture Lock,
 > phần mới nhất WORKLOG, ADR và tài liệu module liên quan. Tiếp tục đúng “Next exact action”.
 > Không làm lại VERIFIED; phần thiếu evidence phải dùng TRACE_REQUIRED.
+
+Khi STATUS là `PAUSED_BY_OWNER`, chỉ được đọc/giải thích hoặc cập nhật checkpoint theo yêu cầu;
+không tự bắt đầu Next exact action. Khi chủ dự án yêu cầu tiếp tục, bắt đầu từ DATA archive
+service + manifest parser/dry-run, không làm lại candidate và 308 test đã VERIFIED.
 
 ## Trước khi kết thúc mỗi phiên
 

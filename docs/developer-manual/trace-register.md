@@ -6,7 +6,7 @@ WORKLOG.
 
 | ID | Phạm vi | Thiếu dữ liệu gì | Điều kiện đóng truy vết |
 | --- | --- | --- | --- |
-| TR-001 | DATA client asset | nguồn authoritative, codec/command đầy đủ | fixture + converter + checksum + Windows test |
+| TR-001 | DATA client asset | candidate authoritative đã VERIFIED; còn archive read-back, JDBC/runtime và startup wiring | archive checksum dry-run + persistence/runtime contract + startup integration test |
 | TR-002 | Appearance client asset | ranh giới item/fashion/effect paint | client read path + immutable model + codec test |
 | TR-003 CLOSED | MAP database | V004 READY; backup/migration/import/JDBC payload đã VERIFIED_END_TO_END | Mở truy vết mới nếu schema/payload version thay đổi |
 | TR-004 | MAP runtime | snapshot/store/publish service và startup composition gate đã có; chưa có ownership map/zone hoặc startup wiring | full asset sources + startup integration test |
