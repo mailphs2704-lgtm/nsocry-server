@@ -30,6 +30,24 @@ class ReferenceDataDumpInventoryParserTest {
     }
 
     @Test
+    void acceptsJsonSimpleMissingObjectCommaCompatibility() {
+        String dump = validDump().replace(
+                "{\"id\":5,\"dx\":0,\"dy\":0}",
+                "{\"id\":5,\"dx\":0\"dy\":0}");
+
+        DataDumpInventoryReport report = ReferenceDataDumpInventoryParser.parse(dump);
+        assertEquals(1, report.partCount());
+    }
+
+    @Test
+    void stillRejectsMissingArrayComma() {
+        String dump = validDump().replace("[100,200]", "[100 200]");
+
+        assertThrows(IllegalArgumentException.class,
+                () -> ReferenceDataDumpInventoryParser.parse(dump));
+    }
+
+    @Test
     void rejectsDuplicateMarker() {
         assertThrows(IllegalArgumentException.class,
                 () -> ReferenceDataDumpInventoryParser.parse(validDump()
