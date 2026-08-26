@@ -22,6 +22,14 @@ class ReferenceDataDumpInventoryParserTest {
     }
 
     @Test
+    void acceptsReferenceEffectImageOutsideSignedShort() {
+        String dump = validDump().replace("\"imgId\":4", "\"imgId\":260910");
+
+        DataDumpInventoryReport report = ReferenceDataDumpInventoryParser.parse(dump);
+        assertEquals(1, report.effectPaintCount());
+    }
+
+    @Test
     void rejectsDuplicateMarker() {
         assertThrows(IllegalArgumentException.class,
                 () -> ReferenceDataDumpInventoryParser.parse(validDump()
