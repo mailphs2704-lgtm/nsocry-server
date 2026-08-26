@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_DUMP_INVENTORY_PARSER_PENDING_WINDOWS
+**Trạng thái:** DATA_DUMP_INVENTORY_PARSER_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -20,7 +20,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows: **269/269**, không failure/error/skipped.
+- Full Maven suite Windows: **276/276**, không failure/error/skipped.
 - ITEM pipeline: version 26, 161 option, 1213 item, payload 66811 byte, JDBC VERIFIED.
 - SKILL pipeline: version 26, 72 option, 7 class, 91 template, 967 level,
   3883 level-option, payload 42402 byte, JDBC VERIFIED.
@@ -33,7 +33,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - `ReferenceDataDumpInventoryParser` chỉ parse tám statement DATA authoritative; không thực thi SQL.
 - Parser khóa marker duy nhất, arity, thứ tự ID, JSON/count/raw-byte và task route cùng chiều dài.
 - `DataDumpInventoryReport` trả count của tám nguồn cùng số raw-byte difference.
-- Bảy fixture test mới; full suite Windows mục tiêu **276/276** đang PENDING.
+- Bảy fixture test mới và full suite Windows **276/276** đã VERIFIED.
 
 ## Tác động và giới hạn
 
@@ -46,5 +46,5 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chạy full Maven suite Windows mục tiêu **276/276**; chưa import database, chưa nối startup và
-chưa merge `main`.
+Tạm dừng phát triển NSOCry theo yêu cầu của chủ dự án và chờ việc hỗ trợ mới; chưa import
+database, chưa nối startup và chưa merge `main`.

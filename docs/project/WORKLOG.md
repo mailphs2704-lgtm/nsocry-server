@@ -2033,3 +2033,17 @@ candidate; chưa merge `main`.
 
 Push checkpoint và chạy full Maven suite Windows 276/276. Sau VERIFIED mới viết graphics và
 effect-template encoder cho converter DATA.
+
+## 2026-08-26 — DATA dump inventory parser đạt 276/276
+
+- Người dùng xác nhận full Maven suite Windows **276/276**, không failure/error/skipped.
+- Marker/arity/order, JSON nghiêm ngặt, signed-byte count, task route alignment và raw-byte
+  reporting: VERIFIED Windows.
+- Database không đổi, runtime snapshot không publish và startup không đổi.
+- Tiến độ gameplay giữ 18%; parser là gate an toàn cho converter, chưa tạo DATA production.
+- Chủ dự án yêu cầu tạm dừng phát triển NSOCry để chuyển sang một việc hỗ trợ khác.
+
+### Next exact action
+
+Chờ yêu cầu hỗ trợ mới của chủ dự án; chưa viết graphics/effect-template encoder, chưa merge
+`main`.
