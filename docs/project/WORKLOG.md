@@ -2232,3 +2232,17 @@ Chạy DATA authoritative dry-run bằng JAR vừa package và ghi report.
 ### Next exact action
 
 Xây archive/manifest parser và dry-run verifier cho DATA candidate; chưa migration/import/startup.
+
+## 2026-08-26 — Chủ dự án yêu cầu tạm dừng
+
+- Chốt tại DATA authoritative candidate VERIFIED:
+  version 7, 43 task group, 131 EXP, payload 85154 byte,
+  SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- Full Maven suite gần nhất: **308/308 VERIFIED**.
+- Database/runtime/startup không đổi trong DATA checkpoint; tiến độ gameplay giữ 18%.
+- Chưa merge `main`; nhánh tiếp tục là `agent/document-nsokiss-runtime`.
+- Dự án chuyển sang `PAUSED_BY_OWNER`.
+
+### Khi tiếp tục
+
+Bắt đầu từ DATA archive service + manifest parser/dry-run; không làm lại checkpoint VERIFIED.
