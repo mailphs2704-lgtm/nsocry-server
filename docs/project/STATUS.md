@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_PROGRESSION_PARSER_PENDING_WINDOWS
+**Trạng thái:** DATA_DRY_RUN_COMMAND_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -20,7 +20,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows: **291/291**, không failure/error/skipped.
+- Full Maven suite Windows: **296/296**, không failure/error/skipped.
 - ITEM pipeline: version 26, 161 option, 1213 item, payload 66811 byte, JDBC VERIFIED.
 - SKILL pipeline: version 26, 72 option, 7 class, 91 template, 967 level,
   3883 level-option, payload 42402 byte, JDBC VERIFIED.
@@ -30,13 +30,12 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- DATA deterministic seed candidate: **291/291 VERIFIED**.
-- `ReferenceGameDataProgressionParser` đọc đúng mười mảng authoritative từ source reference
-  `GameData.java`, không compile/chạy source legacy và không chép số vào NSOCry.
-- Parser khóa mapping wire, declaration duy nhất, literal integer, mảng không rỗng và count tối
-  đa 127.
-- Năm test mới khóa mapping, whitespace/số âm, bảng thiếu, declaration trùng và biểu thức bị cấm;
-  full suite Windows mục tiêu **296/296** đang PENDING.
+- GameData progression parser: **296/296 VERIFIED**.
+- `data-seed-dry-run <data-properties-path>` đọc dump + GameData authoritative, version và
+  max-percent-add explicit; tạo candidate trong bộ nhớ rồi in count/length/SHA-256.
+- File/config được gate về sự tồn tại, regular-file và kích thước; command không ghi archive,
+  database hoặc runtime.
+- Bốn test command và một test launcher mới; full suite Windows mục tiêu **301/301** đang PENDING.
 
 ## Tác động và giới hạn
 
@@ -49,6 +48,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Pull checkpoint và chạy full Maven suite Windows 296/296. Sau VERIFIED mới thêm command dry-run
-đọc database.sql + GameData.java authoritative và in DATA candidate version/count/length/SHA-256;
-không ghi database, không nối startup và chưa merge `main`.
+Pull checkpoint và chạy full Maven suite Windows 301/301. Sau VERIFIED mới tạo properties trỏ
+đúng reference thật và chạy `data-seed-dry-run` để khóa DATA candidate; chưa ghi database,
+chưa nối startup và chưa merge `main`.
