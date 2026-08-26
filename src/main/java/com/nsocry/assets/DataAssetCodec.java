@@ -14,6 +14,7 @@ import java.util.Objects;
 /** Encoder và parser cấp container cho payload DATA tổng hợp. */
 public final class DataAssetCodec {
     private static final int MAX_SIGNED_BYTE_COUNT = 127;
+    private static final int MAX_UNSIGNED_BYTE_COUNT = 255;
 
     private DataAssetCodec() {
     }
@@ -22,7 +23,7 @@ public final class DataAssetCodec {
     public static byte[] encode(DataAssetBundle bundle) throws IOException {
         Objects.requireNonNull(bundle, "bundle");
         requireSignedCount(bundle.taskRoutes().size(), "task route groups");
-        requireSignedCount(bundle.experienceThresholds().length, "experience thresholds");
+        requireUnsignedCount(bundle.experienceThresholds().length, "experience thresholds");
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         try (DataOutputStream output = new DataOutputStream(buffer)) {
             output.writeByte(bundle.version());
@@ -78,7 +79,7 @@ public final class DataAssetCodec {
                 }
                 groups.add(group);
             }
-            int experienceCount = readSignedCount(input, "experience thresholds");
+            int experienceCount = input.readUnsignedByte();
             long[] experience = new long[experienceCount];
             for (int index = 0; index < experienceCount; index++) {
                 experience[index] = input.readLong();
@@ -114,6 +115,13 @@ public final class DataAssetCodec {
             throw new IOException(name + " count is negative");
         }
         return count;
+    }
+
+    /** Kiểm soát EXP count mà client đọc theo unsigned byte. */
+    private static void requireUnsignedCount(int count, String name) {
+        if (count > MAX_UNSIGNED_BYTE_COUNT) {
+            throw new IllegalArgumentException(name + " count exceeds wire limit 255");
+        }
     }
 
     /** Kiểm soát count mà client đọc bằng readByte. */
