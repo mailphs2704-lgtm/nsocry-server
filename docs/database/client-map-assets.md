@@ -70,7 +70,9 @@ Không đưa placement/runtime field vào bốn bảng catalog chỉ vì field c
 - Schema contract, migration draft, JDBC inspector, launcher command: `IMPLEMENTED_PENDING`.
 - Unit test Linux/Windows full suite: `PENDING` tại checkpoint tạo V004.
 - Migration V004: `VERIFIED` trên database thật; preflight sau migration READY.
-- Importer transaction, JDBC source và database payload verifier: `IMPLEMENTED_PENDING`.
+- Importer transaction, JDBC source và database payload verifier: `VERIFIED_END_TO_END` với
+  version 7, 177/44/258, payload 14401 byte và SHA-256
+  `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
 - Runtime publish/startup integration: `TRACE_REQUIRED`, chưa thực hiện.
 
 ## Import và xác minh database

@@ -8,7 +8,7 @@ WORKLOG.
 | --- | --- | --- | --- |
 | TR-001 | DATA client asset | nguồn authoritative, codec/command đầy đủ | fixture + converter + checksum + Windows test |
 | TR-002 | Appearance client asset | ranh giới item/fashion/effect paint | client read path + immutable model + codec test |
-| TR-003 | MAP database | V004 draft đã chốt 4 bảng/18 cột; chưa có backup, migration thật hoặc JDBC source | backup + xác nhận migration + READY + JDBC payload verification |
+| TR-003 CLOSED | MAP database | V004 READY; backup/migration/import/JDBC payload đã VERIFIED_END_TO_END | Mở truy vết mới nếu schema/payload version thay đổi |
 | TR-004 | MAP runtime | ownership map/zone và snapshot composition | full asset sources + startup integration test |
 | TR-005 | Player load/save | schema character đầy đủ và transaction boundary | field mapping + repository contract + integration test |
 | TR-006 | Select player | command payload và lifecycle sau auth | client/server fixture + session transition test |

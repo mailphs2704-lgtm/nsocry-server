@@ -1907,3 +1907,19 @@ toàn bộ SHA-256; chưa publish runtime snapshot.
 
 Chạy `map-seed-db-verify` bằng đúng candidate để chứng minh JDBC source tái tạo payload giống
 archive; chưa publish runtime snapshot.
+
+## 2026-08-26 — MAP database pipeline VERIFIED_END_TO_END
+
+- JDBC source đọc ngược database và verifier báo `MAP database payload VERIFIED`.
+- Version 7; 177 map; 44 NPC; 258 mob; payload length 14401 byte.
+- SHA-256 khớp candidate:
+  `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
+- Verifier chỉ đọc: `databaseChanged=false`, `runtimeSnapshotPublished=false`.
+- MAP database pipeline chuyển sang `VERIFIED_END_TO_END`; TR-003 được đóng.
+- Tiến độ đến gameplay cơ bản tăng từ 17% lên 18% vì schema, import và JDBC payload thật đã
+  hoàn tất; startup/runtime MAP vẫn chưa nối.
+
+### Next exact action
+
+Xây MAP runtime snapshot bất biến, atomic store và publish service có validation/checksum gate;
+chưa nối server startup.

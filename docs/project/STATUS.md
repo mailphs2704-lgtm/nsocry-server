@@ -2,9 +2,9 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_SEED_IMPORTED_PENDING_VERIFY
+**Trạng thái:** MAP_DATABASE_PIPELINE_VERIFIED_END_TO_END
 
-**Tiến độ đến gameplay cơ bản:** 17%
+**Tiến độ đến gameplay cơ bản:** 18%
 
 **Nguồn lịch sử:** `docs/project/WORKLOG.md`
 
@@ -150,8 +150,11 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Dry-run báo `databaseChanged=false`, `runtimeSnapshotPublished=false`.
 - Chủ dự án đã xác nhận `ĐỒNG Ý IMPORT MAP`; transaction import thành công với count/checksum
   đúng candidate. Import làm `databaseChanged=true`, runtime vẫn chưa publish.
+- JDBC database verifier đã đọc ngược V004 và tái tạo đúng payload version 7: 177 map,
+  44 NPC, 258 mob, 14401 byte, cùng SHA-256 candidate.
+- MAP database pipeline hiện `VERIFIED_END_TO_END`.
 
 ## Next exact action
 
-Chạy `map-seed-db-verify` để đọc ngược V004 và đối chiếu payload/count/length/SHA-256. Chưa
-publish runtime và chưa merge `main`.
+Xây MAP runtime snapshot bất biến, atomic store và publish service có checksum gate. Chưa nối
+server startup và chưa merge `main`.
