@@ -2065,3 +2065,23 @@ Chờ yêu cầu hỗ trợ mới của chủ dự án; chưa viết graphics/ef
 
 Push checkpoint và chạy full Maven suite Windows 282/282. Sau VERIFIED mới viết
 `ReferenceDataAssetConverter` ghép task route, EXP và progression.
+
+## 2026-08-26 — DATA wire encoder đạt 282/282 và xây asset converter
+
+- Người dùng xác nhận full Maven suite Windows **282/282**, không failure/error/skipped.
+- Graphics/effect-template byte contract, skill frame 13 field, UTF tail, alias và range gate:
+  VERIFIED Windows.
+- Lỗi compile trước verification do production và test dùng enum không tồn tại
+  `ClientGraphicBlock.SKILL`; enum authoritative là `SKILL_PAINT`. Hai tham chiếu đã được sửa,
+  không thay đổi wire order hay payload.
+- Thêm `ReferenceDataAssetConverter` ghép graphics, task route, EXP, mười bảng progression và
+  effect-template thành `DataAssetBundle`.
+- Converter yêu cầu version/hệ số/progression explicit, bảo toàn raw byte task route, chỉ biến
+  đổi MAX_PERCENT khi hệ số dương và chặn version overflow.
+- Thêm bốn test; full suite Windows mục tiêu **286/286** đang PENDING.
+- Database/runtime/startup không đổi; tiến độ gameplay giữ 18%; chưa merge `main`.
+
+### Next exact action
+
+Pull nhánh và chạy full Maven suite 286/286. Sau VERIFIED mới tạo DATA candidate deterministic
+và khóa payload length/SHA-256; chưa ghi database hoặc nối startup.
