@@ -2116,3 +2116,18 @@ authoritative thật để khóa DATA candidate; chưa ghi database hoặc nối
 
 Pull nhánh và chạy full Maven suite 296/296. Sau VERIFIED mới thêm DATA dry-run command đọc hai
 nguồn authoritative và in version/count/length/SHA-256.
+
+## 2026-08-26 — Progression parser đạt 296/296 và xây DATA dry-run command
+
+- Người dùng xác nhận full Maven suite Windows **296/296**, không failure/error/skipped.
+- Mapping/parser mười bảng GameData authoritative: VERIFIED Windows.
+- Thêm `data-seed-dry-run` nhận một properties path với dump/GameData/version/hệ số explicit.
+- Command đọc file bounded, tạo candidate trong bộ nhớ và in version/count/length/SHA-256;
+  không ghi archive, database hoặc runtime.
+- Thêm bốn test command và một test launcher; mục tiêu **301/301** đang PENDING.
+- Database/runtime/startup không đổi; tiến độ gameplay giữ 18%; chưa merge `main`.
+
+### Next exact action
+
+Pull nhánh và chạy full Maven suite 301/301. Sau VERIFIED mới chạy dry-run trên hai nguồn
+authoritative thật để khóa candidate.
