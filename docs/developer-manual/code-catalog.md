@@ -1065,6 +1065,19 @@
 
 **Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
 
+### `com.nsocry.bootstrap.DataAssetSeedDryRunCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSeedDryRunCommand.java`
+- **Vai trò tóm tắt:** Dry-run DATA candidate từ dump và GameData authoritative; không ghi database/runtime/file.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 18 — `public final class DataAssetSeedDryRunCommand {`**: Composition CLI bounded cho DATA offline.
+  - **Dòng 27 — `public static void main(String[] args) throws Exception {`**: Yêu cầu đúng một data-properties path.
+  - **Dòng 35 — `static DataAssetSeedArtifact dryRun(Path configurationPath, PrintStream output) throws Exception {`**: Đọc hai nguồn, parse progression, convert, self-validate và in metadata.
+- **Đầu vào:** `dump.path`, `game-data.path`, `data.version`, `max-percent-add`; path tương đối được resolve cạnh config.
+- **Tác động:** chỉ đọc file và tạo artifact trong bộ nhớ; `databaseChanged=false`, `runtimeSnapshotPublished=false`, `serverStartupWired=false`.
+- **Khi sửa:** giữ hard limit, input explicit, không thêm default production hoặc quyền ghi ngầm.
+
 ### `com.nsocry.bootstrap.FirstAdministratorCommand`
 
 - **Source:** `src/main/java/com/nsocry/bootstrap/FirstAdministratorCommand.java`
