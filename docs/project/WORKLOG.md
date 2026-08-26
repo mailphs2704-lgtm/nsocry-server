@@ -2174,3 +2174,17 @@ Pull, chạy 303 test, package JAR và chạy lại DATA dry-run cùng propertie
 ### Next exact action
 
 So sánh occurrence `"id":7665` trong ba bản database.sql local và chọn evidence authoritative.
+
+## 2026-08-26 — Xác nhận json-simple compatibility cho nj_part row 295
+
+- Hai dump và database live `nsotien_0` đều chứa cùng object thiếu comma; `JSON_VALID(part)=0`.
+- NSOKISS reference dùng `json-simple 1.1`, cho phép member object kế tiếp không có comma.
+- Parser NSOCry chỉ mô phỏng đúng trường hợp token kế tiếp là key string; array thiếu comma và
+  malformed khác vẫn bị từ chối.
+- Thêm ba test cho acceptance, exact PART bytes và array strictness; mục tiêu **306/306**
+  đang PENDING.
+- Không sửa dump/database live; runtime/startup không đổi; chưa merge `main`.
+
+### Next exact action
+
+Pull, chạy 306 test, package JAR và chạy lại DATA authoritative dry-run.
