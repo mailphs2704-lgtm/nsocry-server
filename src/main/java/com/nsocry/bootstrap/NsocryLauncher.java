@@ -16,6 +16,7 @@ public final class NsocryLauncher {
         switch (request.command()) {
             case SERVER -> NsocryServerApplication.main(forwarded);
             case CREATE_ADMIN -> FirstAdministratorCommand.main(forwarded);
+            case DATA_SEED_DRY_RUN -> DataAssetSeedDryRunCommand.main(forwarded);
             case ITEM_SEED_CONVERT -> ItemAssetSeedConvertCommand.main(forwarded);
             case ITEM_SEED_DRY_RUN -> ItemAssetSeedDryRunCommand.main(forwarded);
             case ITEM_SEED_IMPORT -> ItemAssetSeedImportCommand.main(forwarded);
@@ -48,6 +49,7 @@ public final class NsocryLauncher {
         LaunchCommand command = switch (args[0]) {
             case "server" -> LaunchCommand.SERVER;
             case "create-admin" -> LaunchCommand.CREATE_ADMIN;
+            case "data-seed-dry-run" -> LaunchCommand.DATA_SEED_DRY_RUN;
             case "item-seed-convert" -> LaunchCommand.ITEM_SEED_CONVERT;
             case "item-seed-dry-run" -> LaunchCommand.ITEM_SEED_DRY_RUN;
             case "item-seed-import" -> LaunchCommand.ITEM_SEED_IMPORT;
@@ -79,6 +81,7 @@ public final class NsocryLauncher {
         System.out.println("NSOCry commands:");
         System.out.println("  java -jar nsocry-server.jar server [config-path]");
         System.out.println("  java -jar nsocry-server.jar create-admin [config-path]");
+        System.out.println("  java -jar nsocry-server.jar data-seed-dry-run <data-properties-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-convert <dump-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-dry-run <archive-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-import <archive-path>");
@@ -103,6 +106,7 @@ public final class NsocryLauncher {
     enum LaunchCommand {
         SERVER,
         CREATE_ADMIN,
+        DATA_SEED_DRY_RUN,
         ITEM_SEED_CONVERT,
         ITEM_SEED_DRY_RUN,
         ITEM_SEED_IMPORT,
