@@ -26,7 +26,7 @@ public final class ReferenceDataWireEncoder {
         blocks.put(ClientGraphicBlock.EFFECT, encode(output -> writeEffects(output, dump)));
         blocks.put(ClientGraphicBlock.IMAGE, encode(output -> writeImages(output, dump)));
         blocks.put(ClientGraphicBlock.PART, encode(output -> writeParts(output, dump)));
-        blocks.put(ClientGraphicBlock.SKILL, encode(output -> writeSkills(output, dump)));
+        blocks.put(ClientGraphicBlock.SKILL_PAINT, encode(output -> writeSkills(output, dump)));
         return blocks;
     }
 
