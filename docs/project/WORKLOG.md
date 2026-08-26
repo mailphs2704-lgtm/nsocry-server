@@ -2001,3 +2001,17 @@ authoritative cho DATA; không tạo expectation giả và chưa nối startup.
 
 Xây inventory/converter cho nguồn DATA authoritative từ reference, bắt đầu bằng kiểm kê chính
 xác cấu trúc và byte contract; chưa import database, chưa nối startup.
+
+## 2026-08-26 — Chốt inventory nguồn DATA authoritative
+
+- Đối chiếu `Server.setData()` và `Service.updateData()` với dump/reference.
+- Chốt nguồn: `nj_arrow`, `nj_effect`, `nj_image`, `nj_part`, `nj_skill`, `task`,
+  `others.exp`, mười bảng progression trong `GameData` và bảng `effect`.
+- Chốt thứ tự container, nguồn version và nhánh biến đổi `MAX_PERCENT`.
+- Ghi contract converter tại `docs/assets/data-authoritative-inventory.md`.
+- Database/runtime/startup không đổi; tiến độ gameplay giữ 18%.
+
+### Next exact action
+
+Viết inventory parser và fixture test trước khi encode graphics/effect-template hoặc tạo DATA
+candidate; chưa merge `main`.
