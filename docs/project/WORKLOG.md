@@ -2131,3 +2131,16 @@ nguồn authoritative và in version/count/length/SHA-256.
 
 Pull nhánh và chạy full Maven suite 301/301. Sau VERIFIED mới chạy dry-run trên hai nguồn
 authoritative thật để khóa candidate.
+
+## 2026-08-26 — DATA dry-run command đạt 301/301
+
+- Người dùng xác nhận full Maven suite Windows **301/301**, không failure/error/skipped.
+- Command đọc input bounded, converter/candidate self-validation và launcher route: VERIFIED.
+- Chưa chạy candidate thật vì phải đọc trực tiếp `game.data.version` và
+  `game.upgrade.percent.add` từ config reference local; không suy diễn giá trị.
+- Database/runtime/startup không đổi; tiến độ gameplay giữ 18%; chưa merge `main`.
+
+### Next exact action
+
+Đọc hai khóa DATA trong `source-reference/NSOKISS-inspection/config.properties`, sau đó mới
+tạo properties dry-run authoritative.
