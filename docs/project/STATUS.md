@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_REFERENCE_PART_ROW_295_CONFLICT
+**Trạng thái:** DATA_JSON_SIMPLE_COMPAT_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -31,10 +31,12 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 ## Checkpoint đang xây
 
 - Effect image legacy short narrowing: **303/303 VERIFIED**.
-- Dry-run tiến đến `nj_part.id=295` rồi từ chối JSON source không hợp lệ:
-  `{"dx":-5"dy":-9,"id":7665}` (thiếu dấu phẩy sau `-5`, offset 61).
-- Converter không tự sửa dữ liệu reference. Cần đối chiếu bản `NSOKISS/database.sql` và bản
-  server đang chạy trước khi chọn nguồn/correction có bằng chứng.
+- Dump và database live `nsotien_0.nj_part.id=295` đều giữ object thiếu comma tại
+  `{"dx":-5"dy":-9,"id":7665}`.
+- Reference dùng `json-simple 1.1`; compatibility parser cho phép thiếu comma giữa hai member
+  object chỉ khi token kế tiếp bắt đầu bằng key string. Array thiếu comma và cú pháp khác vẫn fail.
+- Ba test mới khóa acceptance, exact PART wire và array strictness; full suite Windows mục tiêu
+  **306/306** đang PENDING.
 
 ## Tác động và giới hạn
 
@@ -47,6 +49,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Đối chiếu object chứa `"id":7665` trong ba bản database.sql local. Nếu bản server đang chạy có
-dấu phẩy hợp lệ, dùng bản đó làm authoritative hoặc tạo correction được ghi bằng checksum; không
-nới JSON parser, chưa ghi database, chưa nối startup và chưa merge `main`.
+Pull checkpoint, chạy full Maven suite Windows 306/306, package lại JAR rồi chạy lại
+`data-seed-dry-run data-dry-run.properties`. Chưa ghi database, chưa nối startup và chưa merge
+`main`.
