@@ -1968,3 +1968,23 @@ SHA-256 và `serverStartupWired=false`.
 
 Xây composition snapshot client tĩnh cho startup với gate cấm DATA/MAP/SKILL/ITEM/appearance
 bán phần; chưa thay đổi startup trước khi contract/test hoàn chỉnh.
+
+## 2026-08-26 — Xây gate composition asset trước startup
+
+- Tái sử dụng `ClientAssetSnapshot`/assembler/build service hiện hữu; không tạo pipeline song
+  song và không viết lại contract đã ổn định.
+- Thêm `ClientAssetStartupExpectation` để khóa manifest dự kiến, kích thước tối thiểu của từng
+  payload DATA/MAP/SKILL/ITEM và kích thước tối thiểu appearance từ cấu hình quản trị.
+- Thêm `ClientAssetStartupGate` làm publisher decorator: kiểm tra đủ toàn snapshot rồi mới
+  chuyển đúng một lần sang atomic provider.
+- Manifest sai, payload ngắn, appearance ngắn hoặc dependency thiếu đều bị chặn trước publish;
+  snapshot đang phục vụ không đổi.
+- Thêm sáu test cho happy path, sai manifest, payload thiếu, appearance thiếu, expectation sai
+  và dependency null. Full suite Windows mục tiêu **269/269** đang PENDING.
+- Không đổi database, không publish snapshot production và chưa nối startup. Tiến độ gameplay
+  giữ 18% cho đến khi test đạt và DATA/appearance production có nguồn authoritative.
+
+### Next exact action
+
+Push checkpoint, chạy full Maven suite 269/269 trên Windows. Sau VERIFIED mới xây nguồn
+authoritative cho DATA; không tạo expectation giả và chưa nối startup.

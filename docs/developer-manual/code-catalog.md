@@ -160,6 +160,30 @@
   - **Dòng 6 — `public ClientAssetSourceException(String message, Throwable cause) {`**: Tạo lỗi kèm nguyên nhân gốc để tầng vận hành có thể ghi nhận an toàn.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.assets.ClientAssetStartupExpectation`
+
+- **Source:** `src/main/java/com/nsocry/assets/ClientAssetStartupExpectation.java`
+- **Vai trò tóm tắt:** Tiêu chuẩn tối thiểu mà một bộ asset client phải đạt trước khi server được phép phục vụ.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 13 — `public final class ClientAssetStartupExpectation {`**: Tiêu chuẩn tối thiểu mà một bộ asset client phải đạt trước khi server được phép phục vụ.
+  - **Dòng 19 — `public ClientAssetStartupExpectation(`**: Tạo tiêu chuẩn gồm đúng bốn payload DATA/MAP/SKILL/ITEM và phần appearance.
+  - **Dòng 41 — `public ClientVersionManifest manifest() {`**: Manifest phiên bản đã được quản trị viên khóa cho lần startup.
+  - **Dòng 46 — `public int minimumPayloadLength(ClientDataSet dataSet) {`**: Kích thước payload tối thiểu của một nhóm dữ liệu, tính cả byte version.
+  - **Dòng 51 — `public int minimumAppearanceLength() {`**: Kích thước tối thiểu của appearance payload.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.assets.ClientAssetStartupGate`
+
+- **Source:** `src/main/java/com/nsocry/assets/ClientAssetStartupGate.java`
+- **Vai trò tóm tắt:** Gate cuối trước startup: chỉ chuyển nguyên snapshot cho publisher khi đủ năm nhóm asset,
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 11 — `public final class ClientAssetStartupGate implements ClientAssetSnapshotPublisher {`**: Gate cuối trước startup: chỉ chuyển nguyên snapshot cho publisher khi đủ năm nhóm asset,
+  - **Dòng 16 — `public ClientAssetStartupGate(`**: Khởi tạo gate bằng tiêu chuẩn độc lập và publisher nguyên tử phía sau.
+  - **Dòng 28 — `public void publish(ClientAssetSnapshot snapshot) {`**: Kiểm tra toàn bộ snapshot trước rồi mới gọi publisher đúng một lần.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.assets.ClientGraphicBlock`
 
 - **Source:** `src/main/java/com/nsocry/assets/ClientGraphicBlock.java`

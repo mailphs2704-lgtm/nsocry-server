@@ -49,6 +49,22 @@ flowchart TD
 Mỗi asset family tiến độc lập nhưng startup chỉ được publish client snapshot đầy đủ khi
 DATA/MAP/SKILL/ITEM/appearance cùng sẵn sàng. Không publish snapshot bán phần.
 
+### Gate composition trước startup
+
+`ClientAssetSnapshotAssembler` ghép năm nguồn theo nguyên tắc tất cả hoặc không.
+`ClientAssetStartupGate` là lớp kiểm tra cuối giữa build service và atomic provider:
+
+1. `ClientAssetStartupExpectation` phải lấy từ artifact/version đã được quản trị khóa, không
+   được suy ngược tiêu chuẩn từ snapshot sắp publish.
+2. Gate so đủ bốn byte version DATA/MAP/SKILL/ITEM với manifest dự kiến.
+3. Gate kiểm tra kích thước tối thiểu riêng cho bốn payload và appearance để bundle giả/rỗng
+   không thể vượt qua chỉ vì cấu trúc Java hợp lệ.
+4. Chỉ khi tất cả đạt, gate mới chuyển nguyên snapshot sang atomic provider đúng một lần.
+   Nếu lỗi, provider không được gọi và snapshot đang phục vụ không đổi.
+
+Checkpoint này chỉ khóa contract/gate, chưa tạo expectation production và chưa nối startup.
+DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số liệu giả để bật server.
+
 ## 4. ITEM
 
 - Converter đọc bảng reference ITEM, dựng `ItemAssetBundle`.

@@ -9,12 +9,12 @@ WORKLOG.
 | TR-001 | DATA client asset | nguồn authoritative, codec/command đầy đủ | fixture + converter + checksum + Windows test |
 | TR-002 | Appearance client asset | ranh giới item/fashion/effect paint | client read path + immutable model + codec test |
 | TR-003 CLOSED | MAP database | V004 READY; backup/migration/import/JDBC payload đã VERIFIED_END_TO_END | Mở truy vết mới nếu schema/payload version thay đổi |
-| TR-004 | MAP runtime | snapshot/store/publish service đã có; chưa có ownership map/zone hoặc startup composition | full asset sources + startup integration test |
+| TR-004 | MAP runtime | snapshot/store/publish service và startup composition gate đã có; chưa có ownership map/zone hoặc startup wiring | full asset sources + startup integration test |
 | TR-005 | Player load/save | schema character đầy đủ và transaction boundary | field mapping + repository contract + integration test |
 | TR-006 | Select player | command payload và lifecycle sau auth | client/server fixture + session transition test |
 | TR-007 | World/map entry | zone allocation, spawn, leave/reconnect | static call graph + concurrency decision + loopback test |
 | TR-008 | Combat | damage formula, target validation, cooldown | reference evidence + gameplay contract + deterministic tests |
-| TR-009 | Skill runtime | template lookup và mutable cooldown/state | typed runtime design + startup snapshot composition |
+| TR-009 | Skill runtime | template lookup, mutable cooldown/state và adapter vào composition production | typed runtime design + startup integration test |
 | TR-010 | Inventory/equipment | slot rules, persistence, item options | schema mapping + invariants + transactional tests |
 | TR-011 | Mob/NPC | spawn AI, menu action routing | command mapping + world ownership + fixtures |
 | TR-012 | Task | progression conditions/rewards | data source + state transition matrix + tests |
