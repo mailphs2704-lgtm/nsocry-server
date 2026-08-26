@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_EFFECT_SHORT_NARROWING_PENDING_WINDOWS
+**Trạng thái:** DATA_REFERENCE_PART_ROW_295_CONFLICT
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -20,7 +20,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows: **301/301**, không failure/error/skipped.
+- Full Maven suite Windows: **303/303**, không failure/error/skipped.
 - ITEM pipeline: version 26, 161 option, 1213 item, payload 66811 byte, JDBC VERIFIED.
 - SKILL pipeline: version 26, 72 option, 7 class, 91 template, 967 level,
   3883 level-option, payload 42402 byte, JDBC VERIFIED.
@@ -30,13 +30,11 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- DATA authoritative dry-run command: **301/301 VERIFIED**.
-- Dry-run thật phát hiện `nj_effect.imgId=260910`; reference nạp bằng
-  `Long.shortValue()` rồi `writeShort`, nghĩa là wire giữ đúng 16 bit thấp `0xFB2E`.
-- Inventory/encoder đã tái hiện đúng narrowing thay vì yêu cầu source nằm trong signed-short;
-  các short khác vẫn giữ range gate cũ.
-- Hai test mới khóa inventory acceptance và exact bytes; full suite Windows mục tiêu
-  **303/303** đang PENDING.
+- Effect image legacy short narrowing: **303/303 VERIFIED**.
+- Dry-run tiến đến `nj_part.id=295` rồi từ chối JSON source không hợp lệ:
+  `{"dx":-5"dy":-9,"id":7665}` (thiếu dấu phẩy sau `-5`, offset 61).
+- Converter không tự sửa dữ liệu reference. Cần đối chiếu bản `NSOKISS/database.sql` và bản
+  server đang chạy trước khi chọn nguồn/correction có bằng chứng.
 
 ## Tác động và giới hạn
 
@@ -49,6 +47,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Pull checkpoint, chạy full Maven suite Windows 303/303, package lại JAR rồi chạy lại đúng
-`data-seed-dry-run data-dry-run.properties`. Chưa ghi database, chưa nối startup và chưa merge
-`main`.
+Đối chiếu object chứa `"id":7665` trong ba bản database.sql local. Nếu bản server đang chạy có
+dấu phẩy hợp lệ, dùng bản đó làm authoritative hoặc tạo correction được ghi bằng checksum; không
+nới JSON parser, chưa ghi database, chưa nối startup và chưa merge `main`.
