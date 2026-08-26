@@ -70,7 +70,7 @@ public final class ReferenceDataWireEncoder {
             for (Object frame : frames) {
                 Map<?, ?> object = object(frame, "effect frame");
                 Object image = object.containsKey("imgId") ? object.get("imgId") : required(object, "id");
-                output.writeShort(wireShort(number(image, "effect image id"), "effect image id"));
+                output.writeShort(ReferenceDataDumpInventoryParser.legacyShort(number(image, "effect image id")));
                 output.writeByte(wireByte(number(required(object, "dx"), "effect dx"), "effect dx"));
                 output.writeByte(wireByte(number(required(object, "dy"), "effect dy"), "effect dy"));
             }
