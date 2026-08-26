@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_DUMP_INVENTORY_PARSER_VERIFIED
+**Trạng thái:** DATA_WIRE_ENCODER_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -30,10 +30,11 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- `ReferenceDataDumpInventoryParser` chỉ parse tám statement DATA authoritative; không thực thi SQL.
-- Parser khóa marker duy nhất, arity, thứ tự ID, JSON/count/raw-byte và task route cùng chiều dài.
-- `DataDumpInventoryReport` trả count của tám nguồn cùng số raw-byte difference.
-- Bảy fixture test mới và full suite Windows **276/276** đã VERIFIED.
+- Inventory parser giữ trạng thái **276/276 VERIFIED**.
+- `ReferenceDataWireEncoder` encode độc lập năm graphics block và effect-template tail theo
+  byte contract client V7.
+- Skill frame bắt buộc đủ 13 field; raw byte/short/count đều có range gate.
+- Sáu fixture test mới; full suite Windows mục tiêu **282/282** đang PENDING.
 
 ## Tác động và giới hạn
 
@@ -46,5 +47,5 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Tạm dừng phát triển NSOCry theo yêu cầu của chủ dự án và chờ việc hỗ trợ mới; chưa import
-database, chưa nối startup và chưa merge `main`.
+Push checkpoint và chạy full Maven suite Windows 282/282. Sau VERIFIED mới viết converter DATA
+ghép task route, EXP và progression; chưa nối startup và chưa merge `main`.

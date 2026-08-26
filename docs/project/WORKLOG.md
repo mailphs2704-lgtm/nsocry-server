@@ -2047,3 +2047,21 @@ effect-template encoder cho converter DATA.
 
 Chờ yêu cầu hỗ trợ mới của chủ dự án; chưa viết graphics/effect-template encoder, chưa merge
 `main`.
+
+## 2026-08-26 — Xây DATA graphics/effect-template wire encoder
+
+- Chủ dự án yêu cầu tiếp tục NSOCry; tiếp quản từ parser **276/276 VERIFIED**, không làm lại.
+- Phân tích tĩnh byte contract tại năm hàm graphics và effect-template manager của reference.
+- Thêm `ReferenceDataWireEncoder`: encode ARROW/EFFECT/IMAGE/PART/SKILL độc lập và encode
+  effect-template tail; luôn chạy inventory gate trước khi tạo byte.
+- Skill frame khóa đúng 13 field/thứ tự; effect image hỗ trợ `imgId` và alias `id`; raw-byte,
+  signed-count và short đều được kiểm tra range trước khi ghi.
+- Thêm sáu fixture test; full suite Windows mục tiêu **282/282** đang PENDING vì môi trường Work
+  không có Maven/JDK.
+- Database không đổi, runtime snapshot không publish, startup không đổi; tiến độ gameplay giữ
+  18% vì chưa có DATA candidate hoàn chỉnh.
+
+### Next exact action
+
+Push checkpoint và chạy full Maven suite Windows 282/282. Sau VERIFIED mới viết
+`ReferenceDataAssetConverter` ghép task route, EXP và progression.

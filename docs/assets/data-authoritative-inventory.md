@@ -56,19 +56,30 @@ ngầm và không mặc định thay đổi dữ liệu.
 - Candidate phải xác định: cùng dump + version + max-percent-add sinh cùng payload và SHA-256.
 - Candidate không được mở `DataSource`, ghi database hoặc publish runtime.
 
+## Thành phần đã triển khai
+
+- `ReferenceDataDumpInventoryParser` và bảy fixture test đã đạt full suite Windows **276/276**.
+- `ReferenceDataWireEncoder.encodeGraphics(...)` tái tạo riêng năm block ARROW/EFFECT/IMAGE/
+  PART/SKILL. Encoder gọi inventory gate trước, giữ thứ tự row dump và ghi số theo big-endian
+  của `DataOutputStream`.
+- Skill frame ghi đúng thứ tự: status, ba cụm effect-id/dx/dy, arrow-id/adx/ady; thiếu bất kỳ
+  field nào đều bị từ chối, không tự điền 0.
+- Effect paint chấp nhận tên khóa `imgId` và alias reference `id`, nhưng vẫn yêu cầu duy nhất một
+  image id hợp lệ cùng dx/dy raw byte.
+- `encodeEffectTemplates(...)` ghi signed-byte count, id/type raw byte, modified UTF-8 name và
+  icon short đúng contract `DataOutputStream.writeUTF`.
+- Sáu fixture test mới bảo vệ byte chính xác, thứ tự skill field, UTF tail, alias và range;
+  full suite Windows mục tiêu **282/282** đang PENDING.
+
 ## Ranh giới chưa làm
 
-- `ReferenceDataDumpInventoryParser` đã IMPLEMENTED_PENDING_WINDOWS: parser chỉ đọc tám
-  statement authoritative, khóa arity/thứ tự ID, JSON nghiêm ngặt, signed-byte count,
-  task route cùng chiều dài và báo cáo raw-byte difference.
-- Bảy fixture test bảo vệ happy path, marker trùng, sai arity, task lệch chiều dài, JSON có
-  byte dư, count 128 và ID không tăng; chưa được gọi VERIFIED khi Windows chưa chạy.
-- Chưa tái tạo payload DATA từ dump.
+- Chưa ghép task route, EXP và progression thành `DataAssetBundle` từ dump/reference.
+- Chưa tái tạo payload DATA hoàn chỉnh từ dump.
 - Chưa chốt số lượng thực tế, payload length và SHA-256 bằng Windows verification.
 - Chưa tạo seed archive/manifest, schema JDBC, importer hoặc runtime publisher.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
 ## Next exact action
 
-Chạy full Maven suite Windows mục tiêu **276/276**. Sau VERIFIED mới viết các
-graphics/effect-template encoder và `ReferenceDataAssetConverter` cho dump thật.
+Chạy full Maven suite Windows mục tiêu **282/282**. Sau VERIFIED mới viết
+`ReferenceDataAssetConverter` ghép task/EXP/progression với các block đã khóa.

@@ -65,7 +65,18 @@ DATA/MAP/SKILL/ITEM/appearance cùng sẵn sàng. Không publish snapshot bán p
 Checkpoint này chỉ khóa contract/gate, chưa tạo expectation production và chưa nối startup.
 DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số liệu giả để bật server.
 
-## 4. ITEM
+## 4. DATA
+
+- Inventory parser khóa tám statement SQL authoritative mà không thực thi dump.
+- `ReferenceDataWireEncoder` chỉ chịu trách nhiệm năm graphics block và effect-template tail;
+  không đọc config, database hoặc publish runtime.
+- Mỗi block được encode độc lập để converter hoàn chỉnh có thể đối chiếu length/byte trước khi
+  đưa vào `DataAssetCodec`.
+- Skill frame không dùng map động tại runtime: JSON chỉ là input conversion, mọi field bắt buộc
+  được đọc và ghi theo thứ tự wire cố định.
+- Converter hoàn chỉnh cho task/EXP/progression vẫn `TRACE_REQUIRED`.
+
+## 5. ITEM
 
 - Converter đọc bảng reference ITEM, dựng `ItemAssetBundle`.
 - Structure validator kiểm tra ID/count/reference/range.
@@ -75,7 +86,7 @@ DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số li�
 - V002 + importer + JDBC verifier đã VERIFIED_END_TO_END.
 - Runtime composition chung vẫn chưa nối.
 
-## 5. SKILL
+## 6. SKILL
 
 - Converter dựng class → template → level → option.
 - Bốn raw byte point 150/150/140/140 được bảo toàn.
@@ -84,7 +95,7 @@ DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số li�
 - Snapshot factory tính lại SHA-256; atomic store chỉ nhận snapshot hoàn chỉnh.
 - Command publish hiện chỉ chứng minh luồng trong tiến trình riêng; startup chưa nối.
 
-## 6. MAP
+## 7. MAP
 
 - Converter chỉ đưa catalog client lên payload: map name, NPC template/menu, mob template.
 - Placement, zone, waypoint, spawn và animation không thuộc MAP catalog này.
@@ -92,7 +103,7 @@ DATA/appearance còn `TRACE_REQUIRED`, vì vậy không được dùng số li�
 - Artifact và archive v7 đã VERIFIED qua 233 test.
 - Schema/import/runtime MAP vẫn `TRACE_REQUIRED` cho đến khi contract database được chốt.
 
-## 7. Database safety flow
+## 8. Database safety flow
 
 Mọi thay đổi database bắt buộc:
 

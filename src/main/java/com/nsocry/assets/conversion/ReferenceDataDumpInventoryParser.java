@@ -114,7 +114,7 @@ public final class ReferenceDataDumpInventoryParser {
                 tasks.size(), experience.size(), templates.size(), rawDifferences);
     }
 
-    private static List<List<String>> rows(String dump, String marker, int arity, String table) {
+    static List<List<String>> rows(String dump, String marker, int arity, String table) {
         List<List<String>> rows = ReferenceItemSqlDumpParser.parseValues(dump, marker);
         for (List<String> row : rows) {
             if (row.size() != arity) throw error(table + " row phải có " + arity + " cột");
@@ -131,29 +131,29 @@ public final class ReferenceDataDumpInventoryParser {
         }
     }
 
-    private static List<?> array(String json, String field) {
+    static List<?> array(String json, String field) {
         Object value = new JsonParser(json).parse();
         if (!(value instanceof List<?> list)) throw error(field + " phải là JSON array");
         return list;
     }
 
-    private static Map<?, ?> object(Object value, String field) {
+    static Map<?, ?> object(Object value, String field) {
         if (!(value instanceof Map<?, ?> map)) throw error(field + " phải là JSON object");
         return map;
     }
 
-    private static Object required(Map<?, ?> object, String key) {
+    static Object required(Map<?, ?> object, String key) {
         Object value = object.get(key);
         if (value == null) throw error("JSON object thiếu field " + key);
         return value;
     }
 
-    private static long number(Object value, String field) {
+    static long number(Object value, String field) {
         if (!(value instanceof Long number)) throw error(field + " phải là integer JSON");
         return number;
     }
 
-    private static int integer(String value, String field) {
+    static int integer(String value, String field) {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException exception) {

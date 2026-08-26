@@ -766,6 +766,17 @@
   - **Dòng 25 — `public static DataDumpInventoryReport parse(String dump) {`**: Parse đúng tám statement, kiểm tra wire-boundary và trả count phục vụ converter.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.assets.conversion.ReferenceDataWireEncoder`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceDataWireEncoder.java`
+- **Vai trò tóm tắt:** Tái tạo năm graphics block và effect-template tail theo byte contract DATA client V7.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class ReferenceDataWireEncoder {`**: Tái tạo năm graphics block và effect-template tail theo byte contract DATA client V7.
+  - **Dòng 21 — `public static EnumMap<ClientGraphicBlock, byte[]> encodeGraphics(String dump) {`**: Parse dump đã kiểm kê và encode đủ năm graphics block theo đúng thứ tự wire.
+  - **Dòng 34 — `public static byte[] encodeEffectTemplates(String dump) {`**: Encode tail effect-template: signed-byte count, id/type raw byte, UTF name và icon short.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.assets.conversion.ReferenceItemAssetConverter`
 
 - **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceItemAssetConverter.java`
