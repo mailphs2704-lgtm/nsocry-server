@@ -19,7 +19,7 @@ từ model gameplay.
 | 5 | part | bảng `nj_part` | encode theo `Server.setDataPart()`, bọc `int length` |
 | 6 | skill paint | bảng `nj_skill` | encode theo `Server.setDataSkill()`, bọc `int length` |
 | 7 | task route | bảng `task`, cột JSON `npcs` và `maps` | giữ thứ tự row; hai mảng phải cùng chiều dài |
-| 8 | EXP | bảng `others`, row `name='exp'`, cột JSON `value` | `byte count`, rồi `long` big-endian |
+| 8 | EXP | bảng `others`, row `name='exp'`, cột JSON `value` | unsigned `byte count`, rồi `long` big-endian |
 | 9 | progression | hằng số trong `GameData.java` | đúng thứ tự 10 bảng bên dưới |
 | 10 | effect template | bảng `effect` | tail encode theo `EffectTemplateManager.setData()` |
 
@@ -107,6 +107,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Dump và database live xác nhận `nj_part.id=295` cùng thiếu comma; reference dùng
-`json-simple 1.1` permissive. Compatibility có kiểm soát và ba test đang chờ full suite
-Windows **306/306**. Sau pass, package và chạy lại DATA dry-run.
+json-simple compatibility đạt **306/306 VERIFIED**. Database live xác nhận EXP count **131**,
+nên parser/converter/codec/manifest đã dùng unsigned byte `0..255` riêng cho EXP. Chạy full
+suite Windows **308/308**, package và chạy lại DATA dry-run.
