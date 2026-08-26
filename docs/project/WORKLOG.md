@@ -2217,3 +2217,18 @@ Pull, chạy 308 test, package JAR và chạy lại DATA authoritative dry-run.
 ### Next exact action
 
 Chạy DATA authoritative dry-run bằng JAR vừa package và ghi report.
+
+## 2026-08-26 — DATA authoritative candidate VERIFIED
+
+- Dry-run hoàn tất từ database.sql + GameData.java reference với config version 7,
+  max-percent-add 0.
+- Version 7; 43 task group; 131 EXP; payload length 85154 byte.
+- SHA-256: `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- Candidate chỉ sống trong bộ nhớ; không tạo archive, không ghi database và không publish runtime.
+- `databaseChanged=false`, `runtimeSnapshotPublished=false`,
+  `serverStartupWired=false`.
+- Full suite nền: **308/308 VERIFIED**; tiến độ gameplay giữ 18%; chưa merge `main`.
+
+### Next exact action
+
+Xây archive/manifest parser và dry-run verifier cho DATA candidate; chưa migration/import/startup.
