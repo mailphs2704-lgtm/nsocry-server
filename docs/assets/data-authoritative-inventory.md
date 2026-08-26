@@ -107,5 +107,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy full Maven suite Windows **303/303**, package lại JAR và chạy lại DATA authoritative
-dry-run để tiếp tục khóa candidate version/count/payloadLength/SHA-256.
+Effect short narrowing đã đạt **303/303 VERIFIED**. Dry-run tiếp theo phát hiện
+`nj_part.id=295` thiếu dấu phẩy trong object chứa `id=7665`. Đối chiếu ba bản database.sql
+local để xác định nguồn đúng; converter không tự chữa JSON malformed.
