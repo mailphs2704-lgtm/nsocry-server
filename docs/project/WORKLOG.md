@@ -2188,3 +2188,18 @@ So sánh occurrence `"id":7665` trong ba bản database.sql local và chọn evi
 ### Next exact action
 
 Pull, chạy 306 test, package JAR và chạy lại DATA authoritative dry-run.
+
+## 2026-08-26 — json-simple đạt 306/306, xác nhận EXP unsigned count
+
+- Người dùng xác nhận full Maven suite Windows **306/306**, không failure/error/skipped.
+- json-simple missing object comma compatibility: VERIFIED Windows.
+- Database live `nsotien_0.others` xác nhận EXP JSON hợp lệ, count **131**.
+- Vì server ghi `writeByte(exps.length)` và client hoạt động, EXP count là unsigned byte
+  `0..255`; task/progression không thay boundary.
+- Đồng bộ parser, converter, DataAssetCodec và manifest; thêm hai test 131/256.
+- Full suite Windows mục tiêu **308/308** đang PENDING.
+- Database/runtime/startup không đổi; chưa merge `main`.
+
+### Next exact action
+
+Pull, chạy 308 test, package JAR và chạy lại DATA authoritative dry-run.
