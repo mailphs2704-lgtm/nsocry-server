@@ -38,6 +38,16 @@ class ReferenceDataWireEncoderTest {
     }
 
     @Test
+    void encodesPartWithJsonSimpleMissingObjectComma() {
+        String dump = validDump().replace(
+                "{\"id\":11,\"dx\":12,\"dy\":-3}",
+                "{\"id\":11,\"dx\":12\"dy\":-3}");
+
+        assertArrayEquals(bytes(0, 1, 2, 0, 11, 12, 253),
+                ReferenceDataWireEncoder.encodeGraphics(dump).get(ClientGraphicBlock.PART));
+    }
+
+    @Test
     void encodesEffectTemplateTailWithModifiedUtfContract() {
         assertArrayEquals(bytes(1, 200, 255, 0, 4, 70, 111, 111, 100, 0, 10),
                 ReferenceDataWireEncoder.encodeEffectTemplates(validDump()));
