@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_RUNTIME_PUBLISH_PENDING_WINDOWS
+**Trạng thái:** MAP_RUNTIME_PUBLISH_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -59,7 +59,7 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Raw point được bảo toàn: level 957=150, 958=150, 962=140, 966=140.
 - Schema V003 READY; database đã import và JDBC payload verification khớp.
 - Runtime publish thử đã được tách khỏi startup; database không bị ghi.
-- Windows full suite gần nhất do người dùng xác nhận: **252/252**, không failure/error/skipped.
+- Windows full suite gần nhất do người dùng xác nhận: **263/263**, không failure/error/skipped.
 
 ### MAP đã xác nhận theo nhóm
 
@@ -162,9 +162,9 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
   giữ nguyên snapshot cũ.
 - Command `map-runtime-publish` chỉ publish trong tiến trình cục bộ và báo rõ
   `serverStartupWired=false`.
-- Mười một test mới đang PENDING Windows; full suite mục tiêu **263**.
+- Mười một test snapshot/store/publish đã vượt full suite Windows **263/263**.
 
 ## Next exact action
 
-Push MAP runtime publish checkpoint; người dùng pull và chạy full `mvn test`, kỳ vọng
-**263/263**. Chưa nối server startup và chưa merge `main`.
+Chạy `map-runtime-publish` bằng đúng candidate trên JDBC thật để xác minh metadata/checksum
+snapshot. Chưa nối server startup và chưa merge `main`.

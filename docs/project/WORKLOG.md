@@ -1940,3 +1940,16 @@ chưa nối server startup.
 
 Push checkpoint và chạy full Maven suite 263/263. Sau VERIFIED mới chạy publish command trên
 JDBC thật; chưa nối startup.
+
+## 2026-08-26 — MAP runtime publish đạt 263/263
+
+- Người dùng xác nhận full Maven suite **263/263**, không failure/error/skipped.
+- Snapshot integrity, defensive copy, atomic store, failure preservation, command report và
+  launcher route: VERIFIED Windows.
+- Database không đổi; startup chưa nối; chưa có snapshot MAP sống trong server process.
+- Tiến độ gameplay giữ nguyên 18% cho đến khi runtime composition/startup được triển khai.
+
+### Next exact action
+
+Chạy `map-runtime-publish` trên JDBC thật bằng đúng candidate đã khóa; xác minh count/length/
+SHA-256 và `serverStartupWired=false`.
