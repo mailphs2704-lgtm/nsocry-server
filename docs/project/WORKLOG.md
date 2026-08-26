@@ -1878,3 +1878,17 @@ import MAP candidate; chưa publish runtime snapshot.
 
 Chạy dry-run đúng MAP candidate để khóa version/count/payloadLength/SHA-256. Sau đó mới xin
 xác nhận import riêng; không publish runtime.
+
+## 2026-08-26 — MAP candidate dry-run VERIFIED
+
+- Version: 7.
+- Count: 177 map, 44 NPC, 258 mob.
+- Payload length: 14401 byte.
+- SHA-256: `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
+- Dry-run chỉ đọc archive: `databaseChanged=false`, `runtimeSnapshotPublished=false`.
+- Schema V004 vẫn READY; MAP seed chưa được import.
+
+### Next exact action
+
+Chờ xác nhận riêng `ĐỒNG Ý IMPORT MAP`. Sau xác nhận, command import vẫn bắt nhập lại đúng
+toàn bộ SHA-256; chưa publish runtime snapshot.

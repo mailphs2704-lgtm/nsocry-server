@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-25 UTC
 
-**Trạng thái:** MAP_DATABASE_PIPELINE_VERIFIED
+**Trạng thái:** MAP_SEED_AWAITING_IMPORT_CONFIRMATION
 
 **Tiến độ đến gameplay cơ bản:** 17%
 
@@ -145,8 +145,11 @@ STATUS chỉ mô tả checkpoint hiện tại. Không append lịch sử hoặc 
 - Database verifier dựng lại payload và so count/length/SHA-256 với manifest candidate.
 - Hai launcher command mới: `map-seed-import` và `map-seed-db-verify`.
 - Mười test importer/source/verifier đã vượt full suite Windows **252/252**.
+- Candidate version 7 đã dry-run VERIFIED: 177 map, 44 NPC, 258 mob, payload 14401 byte,
+  SHA-256 `1d97991f932960340e4097b86b39ffd6b67bccdca158d025a018ff4af344a8de`.
+- Dry-run báo `databaseChanged=false`, `runtimeSnapshotPublished=false`.
 
 ## Next exact action
 
-Dry-run lại đúng MAP candidate archive để ghi nhận version/count/length/SHA-256 trước khi xin
-xác nhận import. Chưa import MAP và chưa merge `main`.
+Chờ chủ dự án xác nhận rõ `ĐỒNG Ý IMPORT MAP`; sau đó chạy import bằng đúng full SHA-256 đã
+khóa. Chưa publish runtime và chưa merge `main`.
