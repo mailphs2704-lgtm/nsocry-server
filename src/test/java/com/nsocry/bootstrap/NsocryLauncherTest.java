@@ -30,6 +30,14 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesDataSeedDryRunConfiguration() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"data-seed-dry-run", "config/data.properties"});
+        assertEquals(NsocryLauncher.LaunchCommand.DATA_SEED_DRY_RUN, request.command());
+        assertEquals(Path.of("config/data.properties"), request.configurationPath());
+    }
+
+    @Test
     void parsesItemSeedDryRunArchive() {
         NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
                 new String[] {"item-seed-dry-run", "seed/item.zip"});
