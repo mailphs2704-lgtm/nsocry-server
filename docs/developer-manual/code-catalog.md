@@ -702,6 +702,15 @@
 
 **Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
 
+### `com.nsocry.assets.conversion.DataDumpInventoryReport`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/DataDumpInventoryReport.java`
+- **Vai trò tóm tắt:** Kết quả kiểm kê các row authoritative cần để dựng payload DATA.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 4 — `public record DataDumpInventoryReport(`**: Kết quả kiểm kê các row authoritative cần để dựng payload DATA.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.assets.conversion.ItemAssetConversionReport`
 
 - **Source:** `src/main/java/com/nsocry/assets/conversion/ItemAssetConversionReport.java`
@@ -745,6 +754,16 @@
 - **Trạng thái:** `IMPLEMENTED`
 - **API public/protected phát hiện được:**
   - **Dòng 6 — `public record MapRawByteDifference(String entityType, int entityId, String field, int value) {`**: Ghi nhận giá trị MAP raw byte 128..255 để phân biệt wire byte với signed Java byte.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.assets.conversion.ReferenceDataDumpInventoryParser`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceDataDumpInventoryParser.java`
+- **Vai trò tóm tắt:** Kiểm kê tám nguồn SQL authoritative của DATA mà không thực thi dump.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 10 — `public final class ReferenceDataDumpInventoryParser {`**: Kiểm kê tám nguồn SQL authoritative của DATA mà không thực thi dump.
+  - **Dòng 25 — `public static DataDumpInventoryReport parse(String dump) {`**: Parse đúng tám statement, kiểm tra wire-boundary và trả count phục vụ converter.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
 ### `com.nsocry.assets.conversion.ReferenceItemAssetConverter`

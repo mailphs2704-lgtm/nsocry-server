@@ -2015,3 +2015,21 @@ xác cấu trúc và byte contract; chưa import database, chưa nối startup.
 
 Viết inventory parser và fixture test trước khi encode graphics/effect-template hoặc tạo DATA
 candidate; chưa merge `main`.
+
+## 2026-08-26 — Xây DATA dump inventory parser
+
+- Thêm `ReferenceDataDumpInventoryParser` chỉ đọc đúng tám `INSERT` authoritative bằng SQL
+  tuple parser hiện hữu; không thực thi SQL và không mở database.
+- Khóa marker duy nhất, arity, ID tăng theo thứ tự dump, JSON integer/array/object nghiêm ngặt,
+  count signed-byte, task `npcs/maps` cùng chiều dài và raw-byte `128..255` report.
+- Thêm `DataDumpInventoryReport` và bảy fixture test cho success/failure boundary.
+- Regenerate Developer Manual code catalog và `git diff --check` pass.
+- Production classes mới compile pass bằng module `jdk.compiler`; Linux Maven/JUnit vẫn PENDING
+  vì runtime hiện tại không có Maven. Full suite Windows mục tiêu **276/276**; không suy diễn kết
+  quả từ số test.
+- Database không đổi, runtime snapshot không publish, startup không đổi; tiến độ gameplay giữ 18%.
+
+### Next exact action
+
+Push checkpoint và chạy full Maven suite Windows 276/276. Sau VERIFIED mới viết graphics và
+effect-template encoder cho converter DATA.

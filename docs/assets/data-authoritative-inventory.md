@@ -58,6 +58,11 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Ranh giới chưa làm
 
+- `ReferenceDataDumpInventoryParser` đã IMPLEMENTED_PENDING_WINDOWS: parser chỉ đọc tám
+  statement authoritative, khóa arity/thứ tự ID, JSON nghiêm ngặt, signed-byte count,
+  task route cùng chiều dài và báo cáo raw-byte difference.
+- Bảy fixture test bảo vệ happy path, marker trùng, sai arity, task lệch chiều dài, JSON có
+  byte dư, count 128 và ID không tăng; chưa được gọi VERIFIED khi Windows chưa chạy.
 - Chưa tái tạo payload DATA từ dump.
 - Chưa chốt số lượng thực tế, payload length và SHA-256 bằng Windows verification.
 - Chưa tạo seed archive/manifest, schema JDBC, importer hoặc runtime publisher.
@@ -65,6 +70,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Viết `ReferenceDataDumpInventoryParser` và test trên fixture nhỏ để khóa marker, arity, thứ tự,
-JSON/count/raw-byte contract. Sau khi parser pass mới viết các graphics/effect-template encoder và
-`ReferenceDataAssetConverter` cho dump thật.
+Chạy full Maven suite Windows mục tiêu **276/276**. Sau VERIFIED mới viết các
+graphics/effect-template encoder và `ReferenceDataAssetConverter` cho dump thật.

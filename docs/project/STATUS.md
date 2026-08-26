@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_AUTHORITATIVE_INVENTORY_COMPLETE
+**Trạng thái:** DATA_DUMP_INVENTORY_PARSER_PENDING_WINDOWS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -30,11 +30,10 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- Tái sử dụng composition có sẵn gồm DATA/MAP/SKILL/ITEM/appearance; không thêm pipeline trùng.
-- `ClientAssetStartupExpectation` khóa bốn version và kích thước tối thiểu của năm phần asset.
-- `ClientAssetStartupGate` chỉ gọi atomic publisher sau khi toàn snapshot đạt expectation.
-- Sai manifest, payload ngắn hoặc appearance ngắn bị chặn trước publish; snapshot cũ giữ nguyên.
-- Sáu test mới và full suite Windows **269/269** đã VERIFIED.
+- `ReferenceDataDumpInventoryParser` chỉ parse tám statement DATA authoritative; không thực thi SQL.
+- Parser khóa marker duy nhất, arity, thứ tự ID, JSON/count/raw-byte và task route cùng chiều dài.
+- `DataDumpInventoryReport` trả count của tám nguồn cùng số raw-byte difference.
+- Bảy fixture test mới; full suite Windows mục tiêu **276/276** đang PENDING.
 
 ## Tác động và giới hạn
 
@@ -47,5 +46,5 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Viết `ReferenceDataDumpInventoryParser` và test fixture để khóa marker, arity, thứ tự,
-JSON/count/raw-byte contract; chưa import database, chưa nối startup và chưa merge `main`.
+Chạy full Maven suite Windows mục tiêu **276/276**; chưa import database, chưa nối startup và
+chưa merge `main`.
