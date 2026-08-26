@@ -64,8 +64,9 @@ ngầm và không mặc định thay đổi dữ liệu.
   của `DataOutputStream`.
 - Skill frame ghi đúng thứ tự: status, ba cụm effect-id/dx/dy, arrow-id/adx/ady; thiếu bất kỳ
   field nào đều bị từ chối, không tự điền 0.
-- Effect paint chấp nhận tên khóa `imgId` và alias reference `id`, nhưng vẫn yêu cầu duy nhất một
-  image id hợp lệ cùng dx/dy raw byte.
+- Effect paint chấp nhận tên khóa `imgId` và alias reference `id`. Reference nạp image id
+  bằng `Long.shortValue()` rồi `writeShort`, nên converter giữ đúng 16 bit thấp kể cả giá trị
+  source vượt signed-short (đã gặp `260910 -> 0xFB2E`); dx/dy vẫn theo raw byte.
 - `encodeEffectTemplates(...)` ghi signed-byte count, id/type raw byte, modified UTF-8 name và
   icon short đúng contract `DataOutputStream.writeUTF`.
 - Sáu fixture test bảo vệ byte chính xác, thứ tự skill field, UTF tail, alias và range; full
@@ -106,6 +107,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Đọc hai giá trị cấu hình DATA authoritative từ
-`source-reference/NSOKISS-inspection/config.properties`. Sau xác nhận mới tạo properties và
-chạy dry-run candidate thật.
+Chạy full Maven suite Windows **303/303**, package lại JAR và chạy lại DATA authoritative
+dry-run để tiếp tục khóa candidate version/count/payloadLength/SHA-256.
