@@ -56,7 +56,7 @@ public final class ReferenceDataDumpInventoryParser {
                 Map<?, ?> object = object(frame, "effect frame");
                 Object image = object.containsKey("imgId") ? object.get("imgId") : object.get("id");
                 if (image == null) throw error("effect frame thiếu imgId/id");
-                checkedShort(number(image, "effect image id"), "effect image id");
+                legacyShort(number(image, "effect image id"));
                 rawDifferences += rawByte(number(required(object, "dx"), "effect dx"), "effect dx");
                 rawDifferences += rawByte(number(required(object, "dy"), "effect dy"), "effect dy");
             }
@@ -159,6 +159,11 @@ public final class ReferenceDataDumpInventoryParser {
         } catch (NumberFormatException exception) {
             throw new IllegalArgumentException(field + " không phải integer: " + value, exception);
         }
+    }
+
+    /** Tái hiện Long.shortValue() của reference: giữ đúng 16 bit thấp, kể cả source vượt short. */
+    static int legacyShort(long value) {
+        return (short) value;
     }
 
     private static int rawByte(long value, String field) {
