@@ -91,7 +91,9 @@ ngầm và không mặc định thay đổi dữ liệu.
   `game-data.path`, `data.version` và `max-percent-add`; path tương đối resolve cạnh config.
 - Command chỉ đọc file bounded, tạo candidate trong bộ nhớ và in version/task/EXP count,
   payloadLength/SHA-256 cùng ba cờ tác động false; không ghi archive/JDBC/runtime.
-- Bốn test command và một route test mới; full suite Windows mục tiêu **301/301** đang PENDING.
+- Bốn test command và một route test đã đạt full suite Windows **301/301 VERIFIED**.
+- Candidate thật đang chờ xác nhận trực tiếp hai giá trị
+  `game.data.version`/`game.upgrade.percent.add` từ config reference local; không mặc định.
 
 ## Ranh giới chưa làm
 
@@ -104,5 +106,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy full Maven suite Windows mục tiêu **301/301**. Sau VERIFIED mới tạo properties trỏ đúng
-database.sql + GameData.java reference và chạy dry-run để khóa DATA candidate thật.
+Đọc hai giá trị cấu hình DATA authoritative từ
+`source-reference/NSOKISS-inspection/config.properties`. Sau xác nhận mới tạo properties và
+chạy dry-run candidate thật.
