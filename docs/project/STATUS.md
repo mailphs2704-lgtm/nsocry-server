@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-08-26 UTC
 
-**Trạng thái:** DATA_AUTHORITATIVE_DRY_RUN_PENDING
+**Trạng thái:** DATA_CANDIDATE_VERIFIED
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -30,12 +30,12 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- EXP unsigned-byte count 0..255: **308/308 VERIFIED**.
-- Windows package/shaded JAR: BUILD SUCCESS.
-- DATA authoritative command chưa được chạy lại sau package; candidate version/count/length/
-  SHA-256 vẫn PENDING.
-- Các file local untracked (`backup/`, properties, diagnostic text và seed archives) thuộc
-  workspace người dùng, không được tự thêm/xóa.
+- Full Maven suite Windows: **308/308 VERIFIED**.
+- DATA authoritative candidate: **VERIFIED**.
+- Version 7; 43 task group; 131 EXP; payload length 85154 byte.
+- SHA-256: `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- `databaseChanged=false`, `runtimeSnapshotPublished=false`,
+  `serverStartupWired=false`.
 
 ## Tác động và giới hạn
 
@@ -48,5 +48,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chạy đúng `data-seed-dry-run data-dry-run.properties` bằng JAR vừa package và ghi nhận toàn bộ
-report. Chưa ghi database, chưa nối startup và chưa merge `main`.
+Xây DATA archive service và manifest parser/dry-run để lưu candidate deterministic, đọc lại và
+xác minh checksum trước mọi persistence. Chưa thiết kế/chạy migration hoặc import, chưa nối
+startup và chưa merge `main`.
