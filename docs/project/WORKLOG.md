@@ -2203,3 +2203,17 @@ Pull, chạy 306 test, package JAR và chạy lại DATA authoritative dry-run.
 ### Next exact action
 
 Pull, chạy 308 test, package JAR và chạy lại DATA authoritative dry-run.
+
+## 2026-08-26 — EXP unsigned đạt 308/308
+
+- Người dùng chạy full Maven suite Windows **308/308**, không failure/error/skipped.
+- Parser/converter/codec/manifest với EXP count 131: VERIFIED Windows.
+- `mvn -DskipTests package` và shade JAR: BUILD SUCCESS; warning trùng MANIFEST là warning
+  quen thuộc, không chặn artifact.
+- DATA dry-run chưa xuất hiện trong log đính kèm nên candidate vẫn PENDING.
+- Không chạm các file untracked của người dùng; database/runtime/startup không đổi; chưa merge
+  `main`.
+
+### Next exact action
+
+Chạy DATA authoritative dry-run bằng JAR vừa package và ghi report.
