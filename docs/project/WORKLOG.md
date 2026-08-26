@@ -2160,3 +2160,17 @@ tạo properties dry-run authoritative.
 ### Next exact action
 
 Pull, chạy 303 test, package JAR và chạy lại DATA dry-run cùng properties đã tạo.
+
+## 2026-08-26 — Effect short đạt 303/303, phát hiện nj_part row 295 malformed
+
+- Người dùng xác nhận full Maven suite Windows **303/303**, không failure/error/skipped.
+- Legacy short narrowing `260910 -> 0xFB2E`: VERIFIED Windows.
+- Dry-run tiếp tục và dừng tại `nj_part.id=295`, object thứ ba:
+  `{"dx":-5"dy":-9,"id":7665}`; thiếu dấu phẩy ở offset 61.
+- Đây là JSON không hợp lệ, không phải wire narrowing. Converter giữ fail-closed và không tự sửa.
+- Cần đối chiếu hai dump khác và database của NSOKISS đang chạy.
+- Database/runtime/startup không đổi; tiến độ gameplay giữ 18%; chưa merge `main`.
+
+### Next exact action
+
+So sánh occurrence `"id":7665` trong ba bản database.sql local và chọn evidence authoritative.
