@@ -41,6 +41,16 @@ read-only và so đúng type/unsigned/nullability. Command không thực thi V00
 - Importer, database checksum verifier, runtime publisher và startup wiring: chưa làm.
 - Trước khi chạy V005 phải backup, xác nhận database đích và được chủ dự án cho phép riêng.
 
+## Backup trước V005
+
+Chạy `tools/backup-nsocry-before-v005.ps1` từ root repo. Script khóa URL đúng
+`jdbc:mariadb://127.0.0.1:3306/nsocry`, đọc credential từ properties mà không in password,
+dùng file `.partial`, không ghi đè và chỉ đổi tên thành `.sql` sau khi dump thành công, file
+không rỗng. Output bắt buộc có size, SHA-256, `databaseChanged=false`, `v005Executed=false`.
+
+Các file `.sql` 0 byte do lần dump thất bại không phải backup hợp lệ và không được dùng để
+khôi phục hoặc làm bằng chứng trước migration.
+
 ## Luồng và xử lý lỗi
 
 1. `NsocryLauncher` route `data-schema-preflight` tới command.

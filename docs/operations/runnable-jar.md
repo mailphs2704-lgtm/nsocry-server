@@ -58,6 +58,10 @@ bảy cột `client_data_assets` còn thiếu và không mutation. `IllegalState
 NOT_READY là exit gate chủ động. Ký tự tiếng Việt thành `?` trong CMD chỉ là console encoding,
 không thay đổi identifier hoặc kết quả schema.
 
+Backup trước V005 dùng `tools/backup-nsocry-before-v005.ps1`; không truyền password qua command
+line, khóa đúng database `nsocry`, ghi `.partial` và chỉ công bố VERIFIED khi file không rỗng cùng
+SHA-256. Backup 0 byte hoặc dump exit code khác 0 bị từ chối và V005 vẫn chưa được chạy.
+
 ## Bảo mật đóng gói
 
 - Password database không nằm trong JAR.

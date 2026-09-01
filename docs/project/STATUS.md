@@ -50,6 +50,8 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - Build đã compile 210 production source và 76 test source trên Java 17.
 - Database NSOCry `127.0.0.1:3306/nsocry` đã kết nối được; preflight thật báo
   **NOT_READY VERIFIED**, đúng bảy cột V005 còn thiếu và `databaseChanged=false`.
+- Ba lần dump thủ công dùng password prompt thất bại với MariaDB 1045 và sinh file 0 byte;
+  các file này không phải backup. Script backup fail-closed đã thêm, đang PENDING chạy Windows.
 
 ## Tác động và giới hạn
 
@@ -63,6 +65,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chuẩn bị backup có timestamp/checksum cho database `nsocry`, xác minh database đích và chỉ chạy
-V005 sau xác nhận riêng của chủ dự án. Chưa chạy migration/import, chưa publish runtime, chưa
-nối startup và chưa merge `main`.
+Chạy script backup fail-closed, xác nhận file khác 0 và SHA-256; sau đó chỉ chạy V005 khi chủ dự
+án xác nhận riêng. Chưa chạy migration/import, chưa publish runtime, chưa nối startup và chưa
+merge `main`.
