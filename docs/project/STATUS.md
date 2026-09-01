@@ -2,7 +2,7 @@
 
 **Cập nhật:** 2026-09-01 UTC
 
-**Trạng thái:** IN_PROGRESS
+**Trạng thái:** PAUSED_BY_OWNER
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -36,8 +36,8 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - SHA-256: `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
 - `databaseChanged=false`, `runtimeSnapshotPublished=false`,
   `serverStartupWired=false`.
-- Handoff, Developer Manual, trace register, package index và DATA inventory đã đồng bộ tại
-  checkpoint tạm dừng; code catalog đã tái sinh đủ 199 source production.
+- Handoff, Developer Manual, trace register, package index, DATA inventory và code catalog đã
+  đồng bộ tại checkpoint tạm dừng.
 - DATA manifest parser canonical, archive service và command `data-seed-convert` /
   `data-seed-archive-dry-run`: **VERIFIED_END_TO_END_OFFLINE**.
 - Windows `mvn clean package`: 205 production source, 74 test source, **314/314 PASS**.
@@ -50,20 +50,17 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - Build đã compile 210 production source và 76 test source trên Java 17.
 - Database NSOCry `127.0.0.1:3306/nsocry` đã kết nối được; preflight thật báo
   **NOT_READY VERIFIED**, đúng bảy cột V005 còn thiếu và `databaseChanged=false`.
-- Ba lần dump thủ công dùng password prompt thất bại với MariaDB 1045 và sinh file 0 byte;
-  các file này không phải backup. Script backup fail-closed đã thêm, đang PENDING chạy Windows.
 - Backup hợp lệ trước V005: `nsocry-before-v005-20260901-174146.sql`, 234839 byte,
   SHA-256 `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`,
   `databaseChanged=false`, `v005Executed=false` — **VERIFIED**.
-- Chủ dự án đã xác nhận `ĐỒNG Ý CHẠY MIGRATION V005 TRÊN DATABASE NSOCRY`.
-- Script migration fail-closed khóa backup/target/pre-post preflight đã triển khai,
-  `IMPLEMENTED_PENDING_RUN_WINDOWS`; V005 vẫn chưa chạy tại thời điểm commit.
-- Lần chạy đầu dừng ở stderr NOT_READY do PowerShell ErrorActionPreference; migration command
-  chưa được gọi, `databaseChanged=false`. Bản sửa chỉ cho phép capture stderr có kiểm soát.
+- Script sửa đã chạy thành công: preflight trước NOT_READY, V005 migration thành công, preflight
+  sau READY; `databaseChanged=true`, `dataImported=false`, runtime/startup false.
+- Full Maven regression sau migration: **321/321 PASS**.
+- Lịch sử chi tiết checkpoint: `docs/project/WORKLOG-V005-CHECKPOINT.md`.
 
 ## Tác động và giới hạn
 
-- `databaseChanged=false`.
+- `databaseChanged=true` do migration V005 tạo bảng `client_data_assets`.
 - `runtimeSnapshotPublished=false` trong checkpoint này.
 - `serverStartupWired=false`.
 - DATA candidate authoritative đã VERIFIED; archive/persistence/runtime DATA và appearance
@@ -73,6 +70,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chạy script V005 fail-closed trên Windows, xác nhận preflight READY và các cờ tác động; sau đó
-chạy full regression. Chưa import DATA, chưa publish runtime, chưa nối startup và chưa merge
-`main`.
+Dự án tạm dừng theo yêu cầu chủ dự án. Khi tiếp tục, xây DATA transactional importer từ archive
+đã validate cùng rollback/overwrite gate và database checksum verifier; chưa import database thật
+nếu thiếu backup, preflight và xác nhận riêng mới. Chưa publish runtime, chưa nối startup hoặc
+merge `main`.

@@ -70,6 +70,10 @@ Sau xác nhận migration, chạy `tools/apply-data-v005.ps1`. Script chỉ ch�
 đã khóa, đúng URL database NSOCry và baseline NOT_READY; sau DDL phải nhận READY. Output cuối
 phân biệt `databaseChanged=true`, `dataImported=false`, runtime/startup false.
 
+Script migration đã chạy thành công trên Windows: baseline NOT_READY, V005, hậu kiểm READY;
+full regression sau migration 321/321 PASS. Database schema đã đổi, nhưng DATA chưa được import
+và runtime/startup chưa nối.
+
 ## Bảo mật đóng gói
 
 - Password database không nằm trong JAR.

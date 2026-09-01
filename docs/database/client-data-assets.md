@@ -3,7 +3,7 @@
 ## Mục tiêu
 
 Lưu đúng DATA candidate authoritative đã qua archive validation để bước import/runtime tương lai
-không phải đọc lại dump NSOKISS. V005 hiện là **DRAFT**; chưa được chạy trên database thật.
+không phải đọc lại dump NSOKISS. V005 đã chạy và đạt READY trên database NSOCry thật.
 
 ## Contract
 
@@ -38,6 +38,9 @@ read-only và so đúng type/unsigned/nullability. Command không thực thi V00
 - Preflight trên database NSOCry thật: `NOT_READY VERIFIED`; kết nối
   `127.0.0.1:3306/nsocry` thành công, báo đúng bảy cột `client_data_assets` còn thiếu và
   `databaseChanged=false`.
+- Sau xác nhận chủ dự án, V005 đã chạy thành công; preflight sau migration `READY VERIFIED`.
+- Full regression sau migration: 321/321 PASS.
+- `databaseChanged=true`, `dataImported=false`, runtime/startup false.
 - Importer, database checksum verifier, runtime publisher và startup wiring: chưa làm.
 - Trước khi chạy V005 phải backup, xác nhận database đích và được chủ dự án cho phép riêng.
 
@@ -61,7 +64,7 @@ Backup hợp lệ trước V005 đã VERIFIED trên Windows:
 Sau xác nhận của chủ dự án, migration phải chạy qua `tools/apply-data-v005.ps1`. Script khóa
 backup size/SHA-256, database URL, migration file và JAR; yêu cầu preflight trước là NOT_READY,
 chạy đúng V005 rồi yêu cầu preflight sau là READY. Script không import DATA và không publish
-runtime/startup. Trạng thái script hiện `IMPLEMENTED_PENDING_RUN_WINDOWS`.
+runtime/startup. Script đã chạy thành công trên Windows và khóa pre/post state.
 
 Lần chạy đầu dừng tại preflight NOT_READY vì PowerShell nâng stderr dự kiến thành terminating
 error; script chưa đi tới MariaDB client nên `databaseChanged=false`. Hàm preflight đã được sửa

@@ -115,6 +115,8 @@ ngầm và không mặc định thay đổi dữ liệu.
   V005 còn thiếu, `databaseChanged=false`.
 - Backup trước V005 đã VERIFIED: 234839 byte, SHA-256
   `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`; V005 chưa chạy.
+- V005 sau đó đã chạy theo xác nhận chủ dự án; preflight READY và full regression 321/321 PASS.
+- `databaseChanged=true`, `dataImported=false`, runtime/startup false.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
 ## DATA candidate authoritative VERIFIED
@@ -129,5 +131,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chờ xác nhận riêng để chạy V005, rồi xác minh schema READY và regression; chưa import DATA,
-chưa publish runtime hoặc nối startup.
+Dự án tạm dừng. Khi tiếp tục, xây transactional importer + rollback/overwrite gate và database
+checksum verifier; chưa import DATA thật nếu thiếu xác nhận riêng mới, chưa publish runtime hoặc
+nối startup.

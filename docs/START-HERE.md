@@ -28,9 +28,11 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - DATA authoritative candidate: version 7, 43 task group, 131 EXP, payload 85154 byte,
   SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
 - DATA archive convert + read-back độc lập: VERIFIED_END_TO_END_OFFLINE; persistence/runtime
-  DATA chưa làm.
-- DATA checkpoint không đổi database/runtime/startup.
+  archive đã xong.
+- DATA V005 migration: READY VERIFIED; full regression sau migration 321/321 PASS.
+- Database schema đã đổi; DATA chưa import, runtime/startup chưa nối.
 - Tiến độ đến gameplay cơ bản: 18%.
+- Trạng thái quản trị mới nhất: `PAUSED_BY_OWNER` sau checkpoint DATA V005.
 - Developer Manual và code catalog là điểm tra cứu source dành cho chủ server.
 
 Đọc chi tiết tại [project/STATUS.md](project/STATUS.md).
@@ -55,8 +57,8 @@ Khi cần hiểu hoặc sửa code, bắt đầu tại [developer-manual/README.
 > Không làm lại VERIFIED; phần thiếu evidence phải dùng TRACE_REQUIRED.
 
 Khi STATUS là `PAUSED_BY_OWNER`, chỉ được đọc/giải thích hoặc cập nhật checkpoint theo yêu cầu;
-không tự bắt đầu Next exact action. Dự án hiện đã tiếp tục; DATA V005/preflight đạt 321/321,
-không làm lại candidate hoặc full suite nếu input chưa đổi.
+không tự bắt đầu Next exact action. DATA V005/READY và full regression đạt 321/321; không làm
+lại candidate, migration hoặc full suite nếu input chưa đổi.
 
 ## Trước khi kết thúc mỗi phiên
 

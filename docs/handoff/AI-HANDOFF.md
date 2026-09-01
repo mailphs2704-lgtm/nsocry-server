@@ -38,6 +38,8 @@ Theo thứ tự:
   dự án yêu cầu rõ; điểm tiếp tục hiện tại là DATA archive service + manifest parser/dry-run.
 - Không làm lại full suite 321/321 hoặc DATA candidate version 7/SHA-256 đã VERIFIED nếu input
   source và converter chưa thay đổi.
+- Checkpoint mới nhất đang `PAUSED_BY_OWNER` sau V005 READY. Khi tiếp tục, bắt đầu từ DATA
+  transactional importer + database checksum verifier; mọi import thật cần xác nhận riêng mới.
 
 ## 4. Prompt tiếp tục dành cho Chat thường
 
