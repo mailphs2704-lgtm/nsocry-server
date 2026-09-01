@@ -1,0 +1,97 @@
+{
+  "schema": "nsocry.protocol.fixture/v1",
+  "name": "handshake-login-select-player",
+  "status": "VERIFIED_STATIC_REFERENCE",
+  "runtimeTested": false,
+  "notes": [
+    "Synthetic values only; contains no real credentials.",
+    "Independent clientToServer and serverToClient rolling cursors start at zero after key reconstruction.",
+    "Hex bytes are uppercase and space-separated.",
+    "UTF samples are ASCII, whose bytes are identical under Java modified UTF-8 and standard UTF-8."
+  ],
+  "keyExchange": {
+    "testKeyAscii": "CryTestKey",
+    "testKeyHex": "43 72 79 54 65 73 74 4B 65 79",
+    "clientTriggerFrameHex": "E5 00 00",
+    "serverKeyFrameHex": "E5 00 0B 0A 43 31 0B 2D 31 16 07 3F 2E 1C",
+    "reconstructionRule": "key[0]=encoded[0]; key[i]=encoded[i] XOR key[i-1]"
+  },
+  "clientToServer": {
+    "initialCursor": 0,
+    "frames": [
+      {
+        "name": "client_info",
+        "outerCommandSigned": -29,
+        "nestedCommandSigned": -125,
+        "payloadLength": 33,
+        "plainFrameHex": "E3 00 21 83 01 02 00 00 00 00 F0 00 00 01 40 01 01 00 04 4A 32 4D 45 00 00 00 00 00 00 00 00 00 00 00 01 30",
+        "encryptedFrameHex": "A0 72 58 D7 64 71 74 4B 65 79 B3 72 79 55 25 72 75 4B 61 33 71 3F 3C 54 65 73 74 4B 65 79 43 72 79 54 64 43",
+        "cursorAfter": 6,
+        "decodedValues": {
+          "clientType": 1,
+          "zoom": 2,
+          "gps": false,
+          "width": 240,
+          "height": 320,
+          "qwerty": true,
+          "touch": true,
+          "platform": "J2ME",
+          "clientWireField9Byte": 0,
+          "clientWireField10Int": 0,
+          "language": 0,
+          "provider": 0,
+          "agent": "0"
+        }
+      },
+      {
+        "name": "login",
+        "outerCommandSigned": -29,
+        "nestedCommandSigned": -127,
+        "payloadLength": 43,
+        "plainFrameHex": "E3 00 2B 81 00 08 74 65 73 74 75 73 65 72 00 08 74 65 73 74 70 61 73 73 00 06 32 2E 31 37 2E 30 00 00 00 00 00 07 66 69 78 74 75 72 65 00",
+        "encryptedFrameHex": "97 4B 4E F8 43 7A 0D 31 16 07 01 38 00 0B 43 7A 0D 31 16 07 04 2A 16 0A 43 74 4B 7A 54 44 5A 7B 65 79 43 72 79 53 03 1A 0C 3F 10 0B 26 72",
+        "cursorAfter": 2,
+        "decodedValues": {
+          "username": "testuser",
+          "password": "testpass",
+          "version": "2.17.0",
+          "reservedUtf1": "",
+          "reservedUtf2": "",
+          "clientToken": "fixture",
+          "serverId": 0
+        }
+      },
+      {
+        "name": "client_ok",
+        "outerCommandSigned": -28,
+        "nestedCommandSigned": -101,
+        "payloadLength": 1,
+        "plainFrameHex": "E4 00 01 9B",
+        "encryptedFrameHex": "9D 54 64 E8",
+        "cursorAfter": 6
+      },
+      {
+        "name": "select_player",
+        "outerCommandSigned": -28,
+        "nestedCommandSigned": -126,
+        "payloadLength": 11,
+        "plainFrameHex": "E4 00 0B 82 00 08 43 72 79 4E 69 6E 6A 61",
+        "encryptedFrameHex": "90 4B 6E FB 43 7A 3A 26 1C 3D 1D 25 0F 18",
+        "cursorAfter": 0,
+        "decodedValues": {
+          "characterName": "CryNinja"
+        }
+      }
+    ]
+  },
+  "serverToClientFullSize": {
+    "initialCursor": 0,
+    "decodedCommandSigned": -32,
+    "payloadLength": 32768,
+    "payloadPattern": "all zero bytes",
+    "plainHeaderHex": "E0 00 00 80 00",
+    "encryptedHeaderHex": "A3 72 79 D4 65",
+    "encryptedFrameByteLength": 32773,
+    "encryptedFrameSha256": "40e7b93f17d5318417174f2f5ce321e1b2078cd7e2420f24e91073a772fe278c"
+  }
+}

@@ -1,0 +1,131 @@
+# Kiến trúc và các luồng chính
+
+## 1. Luồng executable JAR
+
+`NsocryLauncher` là entry point duy nhất:
+
+1. Parse tên command và tối đa một path.
+2. Chuyển command sang bootstrap class tương ứng.
+3. Command tự tạo dependency ở composition boundary.
+4. Command report mutation rõ ràng.
+
+Không đặt SQL, codec hoặc gameplay rule trong launcher. Khi thêm command phải sửa đồng thời
+enum, parser, switch dispatch, usage, launcher test và `runnable-jar.md`.
+
+## 2. Luồng server/network
+
+```mermaid
+flowchart TD
+    A["NsocryServerApplication"] --> B["Configuration"]
+    A --> C["TCP server"]
+    C --> D["Session transport"]
+    D --> E["Frame codec"]
+    E --> F["Handshake processor"]
+    F --> G["Authentication port"]
+    G --> H["Persistence adapter"]
+```
+
+- Network sở hữu socket/lifecycle, không hiểu database.
+- Protocol compat sở hữu wire bytes/key/frame, không hiểu account/gameplay.
+- Session sở hữu phase và handshake decision.
+- Authentication dùng port; JDBC chỉ nằm trong persistence.
+
+Các luồng player/world/gameplay đầy đủ vẫn `TRACE_REQUIRED` vì client chưa vào gameplay.
+
+## 3. Luồng client asset chung
+
+```mermaid
+flowchart TD
+    A["Reference dump"] --> B["Offline converter"]
+    B --> C["Immutable bundle"]
+    C --> D["Structure validator"]
+    D --> E["Wire codec"]
+    E --> F["Manifest + SHA-256"]
+    F --> G["Validated archive"]
+    G --> H["Schema/import gate"]
+    H --> I["Runtime snapshot"]
+```
+
+Mỗi asset family tiến độc lập nhưng startup chỉ được publish client snapshot đầy đủ khi
+DATA/MAP/SKILL/ITEM/appearance cùng sẵn sàng. Không publish snapshot bán phần.
+
+### Gate composition trước startup
+
+`ClientAssetSnapshotAssembler` ghép năm nguồn theo nguyên tắc tất cả hoặc không.
+`ClientAssetStartupGate` là lớp kiểm tra cuối giữa build service và atomic provider:
+
+1. `ClientAssetStartupExpectation` phải lấy từ artifact/version đã được quản trị khóa, không
+   được suy ngược tiêu chuẩn từ snapshot sắp publish.
+2. Gate so đủ bốn byte version DATA/MAP/SKILL/ITEM với manifest dự kiến.
+3. Gate kiểm tra kích thước tối thiểu riêng cho bốn payload và appearance để bundle giả/rỗng
+   không thể vượt qua chỉ vì cấu trúc Java hợp lệ.
+4. Chỉ khi tất cả đạt, gate mới chuyển nguyên snapshot sang atomic provider đúng một lần.
+   Nếu lỗi, provider không được gọi và snapshot đang phục vụ không đổi.
+
+Checkpoint này chỉ khóa contract/gate, chưa tạo expectation production và chưa nối startup.
+DATA candidate đã có dữ liệu authoritative; archive/persistence/runtime DATA và appearance còn
+`TRACE_REQUIRED`, vì vậy không được dùng số liệu giả để bật server.
+
+## 4. DATA
+
+- Inventory parser khóa tám statement SQL authoritative mà không thực thi dump.
+- `ReferenceDataWireEncoder` chỉ chịu trách nhiệm năm graphics block và effect-template tail;
+  không đọc config, database hoặc publish runtime.
+- Mỗi block được encode độc lập để converter hoàn chỉnh có thể đối chiếu length/byte trước khi
+  đưa vào `DataAssetCodec`.
+- Skill frame không dùng map động tại runtime: JSON chỉ là input conversion, mọi field bắt buộc
+  được đọc và ghi theo thứ tự wire cố định.
+- `ReferenceDataAssetConverter` đã ghép task route, EXP và mười bảng progression thành bundle.
+- `ReferenceGameDataProgressionParser` đọc literal integer từ `GameData.java` mà không compile
+  hoặc chạy source legacy.
+- `DataAssetSeedArtifactGenerator` tạo candidate deterministic trong bộ nhớ; dry-run command
+  đọc config explicit và in version/count/length/SHA-256.
+- Candidate authoritative VERIFIED: version 7, 43 task group, 131 EXP, 85154 byte,
+  SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- Compatibility có evidence: effect image giữ 16 bit thấp theo `Long.shortValue()`;
+  `json-simple 1.1` cho phép thiếu comma giữa member object; EXP count là unsigned byte.
+- Archive lưu trữ, JDBC DATA, runtime publish và startup wiring vẫn `TRACE_REQUIRED`.
+
+## 5. ITEM
+
+- Converter đọc bảng reference ITEM, dựng `ItemAssetBundle`.
+- Structure validator kiểm tra ID/count/reference/range.
+- Codec tạo payload client version 26.
+- Artifact/manifest khóa count, length và SHA-256.
+- Archive dry-run xác minh lại payload.
+- V002 + importer + JDBC verifier đã VERIFIED_END_TO_END.
+- Runtime composition chung vẫn chưa nối.
+
+## 6. SKILL
+
+- Converter dựng class → template → level → option.
+- Bốn raw byte point 150/150/140/140 được bảo toàn.
+- V003/import/JDBC checksum đã VERIFIED_END_TO_END.
+- Runtime publish service dùng validation rồi tạo snapshot bất biến.
+- Snapshot factory tính lại SHA-256; atomic store chỉ nhận snapshot hoàn chỉnh.
+- Command publish hiện chỉ chứng minh luồng trong tiến trình riêng; startup chưa nối.
+
+## 7. MAP
+
+- Converter chỉ đưa catalog client lên payload: map name, NPC template/menu, mob template.
+- Placement, zone, waypoint, spawn và animation không thuộc MAP catalog này.
+- Strict JSON parser chỉ nhận `array<array<string>>` cho menu NPC.
+- Artifact/archive v7, schema V004, transaction import, JDBC payload verification và runtime
+  publish command đã VERIFIED.
+- MAP ownership/zone và startup wiring vẫn `TRACE_REQUIRED`.
+
+## 8. Database safety flow
+
+Mọi thay đổi database bắt buộc:
+
+1. Read-only schema preflight.
+2. Backup có size và SHA-256.
+3. Migration draft được review.
+4. Xác nhận rõ của chủ dự án.
+5. Chạy migration.
+6. Preflight READY.
+7. Import yêu cầu checksum confirmation.
+8. SQL post-check.
+9. JDBC encode → checksum verification.
+
+Thiếu bất kỳ bước nào thì trạng thái phải là PENDING/NOT_READY.

@@ -20,3 +20,6 @@ logs/
 .gradle/
 
 source-reference/NSOKISS.zip
+
+# Cấu hình cục bộ có thể chứa database secret.
+config/nsocry.properties
