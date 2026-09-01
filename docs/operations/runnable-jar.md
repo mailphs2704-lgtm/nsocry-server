@@ -53,6 +53,11 @@ convert báo `archiveRoundTripVerified=true` và archive dry-run độc lập gi
 kết quả đúng trên database hiện tại là `DATA schema preflight NOT_READY` cùng danh sách cột thiếu
 và `databaseChanged=false`.
 
+Preflight database NSOCry thật đã VERIFIED: kết nối `127.0.0.1:3306/nsocry` thành công, báo đúng
+bảy cột `client_data_assets` còn thiếu và không mutation. `IllegalStateException` sau báo cáo
+NOT_READY là exit gate chủ động. Ký tự tiếng Việt thành `?` trong CMD chỉ là console encoding,
+không thay đổi identifier hoặc kết quả schema.
+
 ## Bảo mật đóng gói
 
 - Password database không nằm trong JAR.

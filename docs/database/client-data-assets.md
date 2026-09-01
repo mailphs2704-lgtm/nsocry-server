@@ -35,6 +35,9 @@ read-only và so đúng type/unsigned/nullability. Command không thực thi V00
 - Test đã khóa exact schema, field thiếu/thừa/trùng/sai unsigned/nullability, connection
   read-only, SQL `information_schema`, output READY/NOT_READY và launcher routing.
 - Database thật: chưa thay đổi.
+- Preflight trên database NSOCry thật: `NOT_READY VERIFIED`; kết nối
+  `127.0.0.1:3306/nsocry` thành công, báo đúng bảy cột `client_data_assets` còn thiếu và
+  `databaseChanged=false`.
 - Importer, database checksum verifier, runtime publisher và startup wiring: chưa làm.
 - Trước khi chạy V005 phải backup, xác nhận database đích và được chủ dự án cho phép riêng.
 

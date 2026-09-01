@@ -111,6 +111,8 @@ ngầm và không mặc định thay đổi dữ liệu.
   read-back. Archive authoritative thật đã tạo và dry-run độc lập, giữ nguyên toàn bộ metadata.
 - Schema V005 draft, contract/inspector/preflight đã VERIFIED_BY_FULL_SUITE 321/321; importer,
   database verifier và runtime publisher chưa làm.
+- Preflight trên database NSOCry thật đã NOT_READY VERIFIED: kết nối thành công, đúng bảy cột
+  V005 còn thiếu, `databaseChanged=false`.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
 ## DATA candidate authoritative VERIFIED
@@ -125,5 +127,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy DATA schema preflight read-only trên database NSOCry hiện tại và xác nhận NOT_READY cùng
-`databaseChanged=false`; chưa chạy migration/import, chưa publish runtime hoặc nối startup.
+Chuẩn bị backup/checksum database NSOCry và chỉ chạy V005 sau xác nhận riêng của chủ dự án;
+chưa import DATA, chưa publish runtime hoặc nối startup.

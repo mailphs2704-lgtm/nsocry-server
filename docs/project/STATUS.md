@@ -48,6 +48,8 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - DATA persistence V005 draft, schema contract, JDBC inspector và preflight command:
   **VERIFIED_BY_FULL_SUITE 321/321**; chưa chạy database thật.
 - Build đã compile 210 production source và 76 test source trên Java 17.
+- Database NSOCry `127.0.0.1:3306/nsocry` đã kết nối được; preflight thật báo
+  **NOT_READY VERIFIED**, đúng bảy cột V005 còn thiếu và `databaseChanged=false`.
 
 ## Tác động và giới hạn
 
@@ -61,6 +63,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chạy `data-schema-preflight` read-only trên database NSOCry hiện tại và xác nhận kết quả đúng là
-NOT_READY trước V005, với `databaseChanged=false`. Chưa chạy migration/import, chưa publish
-runtime, chưa nối startup và chưa merge `main`.
+Chuẩn bị backup có timestamp/checksum cho database `nsocry`, xác minh database đích và chỉ chạy
+V005 sau xác nhận riêng của chủ dự án. Chưa chạy migration/import, chưa publish runtime, chưa
+nối startup và chưa merge `main`.
