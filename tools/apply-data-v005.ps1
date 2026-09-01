@@ -35,8 +35,15 @@ function Require-Property($Values, [string]$Key) {
 }
 
 function Invoke-Preflight([string]$ExpectedState) {
-    $output = & java -jar $JarPath data-schema-preflight $ConfigurationPath 2>&1
-    $exitCode = $LASTEXITCODE
+    $previousErrorActionPreference = $ErrorActionPreference
+    try {
+        # NOT_READY ghi stack trace ra stderr theo contract CLI; thu cả hai stream để tự đánh giá.
+        $ErrorActionPreference = "Continue"
+        $output = & java -jar $JarPath data-schema-preflight $ConfigurationPath 2>&1
+        $exitCode = $LASTEXITCODE
+    } finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+    }
     $text = ($output | Out-String)
     Write-Output $text.TrimEnd()
     if ($ExpectedState -eq "NOT_READY") {

@@ -58,6 +58,8 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - Chủ dự án đã xác nhận `ĐỒNG Ý CHẠY MIGRATION V005 TRÊN DATABASE NSOCRY`.
 - Script migration fail-closed khóa backup/target/pre-post preflight đã triển khai,
   `IMPLEMENTED_PENDING_RUN_WINDOWS`; V005 vẫn chưa chạy tại thời điểm commit.
+- Lần chạy đầu dừng ở stderr NOT_READY do PowerShell ErrorActionPreference; migration command
+  chưa được gọi, `databaseChanged=false`. Bản sửa chỉ cho phép capture stderr có kiểm soát.
 
 ## Tác động và giới hạn
 

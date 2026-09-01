@@ -63,6 +63,10 @@ backup size/SHA-256, database URL, migration file và JAR; yêu cầu preflight 
 chạy đúng V005 rồi yêu cầu preflight sau là READY. Script không import DATA và không publish
 runtime/startup. Trạng thái script hiện `IMPLEMENTED_PENDING_RUN_WINDOWS`.
 
+Lần chạy đầu dừng tại preflight NOT_READY vì PowerShell nâng stderr dự kiến thành terminating
+error; script chưa đi tới MariaDB client nên `databaseChanged=false`. Hàm preflight đã được sửa
+để thu stdout/stderr và exit code rồi tự đánh giá state, không nới các gate backup/target/READY.
+
 ## Luồng và xử lý lỗi
 
 1. `NsocryLauncher` route `data-schema-preflight` tới command.
