@@ -27,7 +27,9 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - MAP schema/import/JDBC payload và runtime publish command: VERIFIED; startup ownership chưa nối.
 - DATA authoritative candidate: version 7, 43 task group, 131 EXP, payload 85154 byte,
   SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
-- DATA checkpoint không đổi database/runtime/startup; archive/persistence/runtime DATA chưa làm.
+- DATA archive convert + read-back độc lập: VERIFIED_END_TO_END_OFFLINE; persistence/runtime
+  DATA chưa làm.
+- DATA checkpoint không đổi database/runtime/startup.
 - Tiến độ đến gameplay cơ bản: 18%.
 - Developer Manual và code catalog là điểm tra cứu source dành cho chủ server.
 

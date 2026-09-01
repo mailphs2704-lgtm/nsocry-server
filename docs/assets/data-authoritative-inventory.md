@@ -106,9 +106,9 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 - Đã ghép task route, EXP và progression, tái tạo và xác minh candidate authoritative thực tế.
 - DATA manifest parser canonical, archive service và hai command convert/archive-dry-run đã
-  **VERIFIED_BY_FULL_SUITE 314/314**. Archive dùng `data.bin` + `data.manifest`, atomic move,
-  không ghi đè, giới hạn giải nén và decode/encode/checksum read-back. Archive authoritative
-  thật chưa được tạo và dry-run bằng command.
+  **VERIFIED_END_TO_END_OFFLINE** cùng full suite 314/314. Archive dùng `data.bin` +
+  `data.manifest`, atomic move, không ghi đè, giới hạn giải nén và decode/encode/checksum
+  read-back. Archive authoritative thật đã tạo và dry-run độc lập, giữ nguyên toàn bộ metadata.
 - Chưa thiết kế schema JDBC DATA, importer, database verifier hoặc runtime publisher.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
@@ -124,5 +124,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Tạo candidate archive thật từ config authoritative rồi chạy archive dry-run để xác nhận
-round-trip giữ nguyên count/length/SHA-256; chưa import database hoặc nối startup.
+Thiết kế DATA persistence contract và migration V005 draft kèm schema preflight test; chưa chạy
+migration/import database, chưa publish runtime hoặc nối startup.

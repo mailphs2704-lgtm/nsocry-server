@@ -43,6 +43,11 @@ SHA-256. Dry-run phải decode payload, encode lại rồi đối chiếu toàn 
 báo `archiveRoundTripVerified=true` khi validation thành công. Cả hai command archive đều giữ
 `databaseChanged=false`, `runtimeSnapshotPublished=false` và `serverStartupWired=false`.
 
+Candidate authoritative đã VERIFIED trên Windows với version 7, 43 task group, 131 EXP,
+85154 byte và SHA-256
+`242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`;
+convert báo `archiveRoundTripVerified=true` và archive dry-run độc lập giữ nguyên metadata.
+
 ## Bảo mật đóng gói
 
 - Password database không nằm trong JAR.

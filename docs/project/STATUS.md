@@ -39,9 +39,12 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - Handoff, Developer Manual, trace register, package index và DATA inventory đã đồng bộ tại
   checkpoint tạm dừng; code catalog đã tái sinh đủ 199 source production.
 - DATA manifest parser canonical, archive service và command `data-seed-convert` /
-  `data-seed-archive-dry-run`: **VERIFIED_BY_FULL_SUITE**.
+  `data-seed-archive-dry-run`: **VERIFIED_END_TO_END_OFFLINE**.
 - Windows `mvn clean package`: 205 production source, 74 test source, **314/314 PASS**.
-- Candidate archive authoritative và archive command round-trip thật chưa chạy.
+- Candidate archive authoritative đã tạo và dry-run độc lập: version 7, 43 task group,
+  131 EXP, 85154 byte, SHA-256
+  `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- `archiveRoundTripVerified=true`; database/runtime/startup đều false.
 
 ## Tác động và giới hạn
 
@@ -49,12 +52,11 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - `runtimeSnapshotPublished=false` trong checkpoint này.
 - `serverStartupWired=false`.
 - DATA candidate authoritative đã VERIFIED; archive/persistence/runtime DATA và appearance
-  production vẫn `TRACE_REQUIRED`. Archive code đã qua full suite nhưng archive authoritative
-  read-back còn PENDING; không được dùng bundle rỗng/số liệu giả để bật startup.
+  production vẫn `TRACE_REQUIRED`. Archive offline đã VERIFIED; persistence/runtime DATA chưa
+  thiết kế hoặc triển khai. Không được dùng bundle rỗng/số liệu giả để bật startup.
 - Client thật chưa vào gameplay.
 
 ## Next exact action
 
-Chạy `data-seed-convert` rồi `data-seed-archive-dry-run` trên config authoritative để xác nhận
-archive thật giữ nguyên version 7, 43 task group, 131 EXP, payload 85154 byte và SHA-256 đã khóa;
-chưa ghi DATA vào database, chưa nối startup và chưa merge `main`.
+Thiết kế DATA persistence contract và migration V005 draft kèm schema preflight test; chưa chạy
+migration/import trên database thật, chưa publish runtime, chưa nối startup và chưa merge `main`.
