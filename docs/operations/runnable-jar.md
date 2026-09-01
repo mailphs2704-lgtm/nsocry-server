@@ -66,6 +66,10 @@ Backup Windows đã VERIFIED: `nsocry-before-v005-20260901-174146.sql`, 234839 b
 `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`;
 `databaseChanged=false`, `v005Executed=false`.
 
+Sau xác nhận migration, chạy `tools/apply-data-v005.ps1`. Script chỉ chấp nhận backup checkpoint
+đã khóa, đúng URL database NSOCry và baseline NOT_READY; sau DDL phải nhận READY. Output cuối
+phân biệt `databaseChanged=true`, `dataImported=false`, runtime/startup false.
+
 ## Bảo mật đóng gói
 
 - Password database không nằm trong JAR.

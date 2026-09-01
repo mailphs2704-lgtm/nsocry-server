@@ -55,6 +55,9 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - Backup hợp lệ trước V005: `nsocry-before-v005-20260901-174146.sql`, 234839 byte,
   SHA-256 `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`,
   `databaseChanged=false`, `v005Executed=false` — **VERIFIED**.
+- Chủ dự án đã xác nhận `ĐỒNG Ý CHẠY MIGRATION V005 TRÊN DATABASE NSOCRY`.
+- Script migration fail-closed khóa backup/target/pre-post preflight đã triển khai,
+  `IMPLEMENTED_PENDING_RUN_WINDOWS`; V005 vẫn chưa chạy tại thời điểm commit.
 
 ## Tác động và giới hạn
 
@@ -68,6 +71,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chờ chủ dự án xác nhận riêng để chạy migration V005 trên database `nsocry`; sau đó chạy preflight
-READY và full regression. Chưa import DATA, chưa publish runtime, chưa nối startup và chưa merge
+Chạy script V005 fail-closed trên Windows, xác nhận preflight READY và các cờ tác động; sau đó
+chạy full regression. Chưa import DATA, chưa publish runtime, chưa nối startup và chưa merge
 `main`.

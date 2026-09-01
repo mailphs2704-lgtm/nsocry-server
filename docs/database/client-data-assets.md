@@ -58,6 +58,11 @@ Backup hợp lệ trước V005 đã VERIFIED trên Windows:
 - SHA-256: `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`.
 - `databaseChanged=false`, `v005Executed=false`.
 
+Sau xác nhận của chủ dự án, migration phải chạy qua `tools/apply-data-v005.ps1`. Script khóa
+backup size/SHA-256, database URL, migration file và JAR; yêu cầu preflight trước là NOT_READY,
+chạy đúng V005 rồi yêu cầu preflight sau là READY. Script không import DATA và không publish
+runtime/startup. Trạng thái script hiện `IMPLEMENTED_PENDING_RUN_WINDOWS`.
+
 ## Luồng và xử lý lỗi
 
 1. `NsocryLauncher` route `data-schema-preflight` tới command.
