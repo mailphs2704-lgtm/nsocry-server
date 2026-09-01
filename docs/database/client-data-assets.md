@@ -51,6 +51,13 @@ không rỗng. Output bắt buộc có size, SHA-256, `databaseChanged=false`, `
 Các file `.sql` 0 byte do lần dump thất bại không phải backup hợp lệ và không được dùng để
 khôi phục hoặc làm bằng chứng trước migration.
 
+Backup hợp lệ trước V005 đã VERIFIED trên Windows:
+
+- File: `backups/nsocry-before-v005-20260901-174146.sql`.
+- Size: 234839 byte.
+- SHA-256: `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`.
+- `databaseChanged=false`, `v005Executed=false`.
+
 ## Luồng và xử lý lỗi
 
 1. `NsocryLauncher` route `data-schema-preflight` tới command.

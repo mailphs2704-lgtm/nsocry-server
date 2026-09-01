@@ -113,6 +113,8 @@ ngầm và không mặc định thay đổi dữ liệu.
   database verifier và runtime publisher chưa làm.
 - Preflight trên database NSOCry thật đã NOT_READY VERIFIED: kết nối thành công, đúng bảy cột
   V005 còn thiếu, `databaseChanged=false`.
+- Backup trước V005 đã VERIFIED: 234839 byte, SHA-256
+  `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`; V005 chưa chạy.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
 ## DATA candidate authoritative VERIFIED
@@ -127,5 +129,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chuẩn bị backup/checksum database NSOCry và chỉ chạy V005 sau xác nhận riêng của chủ dự án;
-chưa import DATA, chưa publish runtime hoặc nối startup.
+Chờ xác nhận riêng để chạy V005, rồi xác minh schema READY và regression; chưa import DATA,
+chưa publish runtime hoặc nối startup.

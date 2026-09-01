@@ -52,6 +52,9 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
   **NOT_READY VERIFIED**, đúng bảy cột V005 còn thiếu và `databaseChanged=false`.
 - Ba lần dump thủ công dùng password prompt thất bại với MariaDB 1045 và sinh file 0 byte;
   các file này không phải backup. Script backup fail-closed đã thêm, đang PENDING chạy Windows.
+- Backup hợp lệ trước V005: `nsocry-before-v005-20260901-174146.sql`, 234839 byte,
+  SHA-256 `9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`,
+  `databaseChanged=false`, `v005Executed=false` — **VERIFIED**.
 
 ## Tác động và giới hạn
 
@@ -65,6 +68,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chạy script backup fail-closed, xác nhận file khác 0 và SHA-256; sau đó chỉ chạy V005 khi chủ dự
-án xác nhận riêng. Chưa chạy migration/import, chưa publish runtime, chưa nối startup và chưa
-merge `main`.
+Chờ chủ dự án xác nhận riêng để chạy migration V005 trên database `nsocry`; sau đó chạy preflight
+READY và full regression. Chưa import DATA, chưa publish runtime, chưa nối startup và chưa merge
+`main`.

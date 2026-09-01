@@ -62,6 +62,10 @@ Backup trước V005 dùng `tools/backup-nsocry-before-v005.ps1`; không truyề
 line, khóa đúng database `nsocry`, ghi `.partial` và chỉ công bố VERIFIED khi file không rỗng cùng
 SHA-256. Backup 0 byte hoặc dump exit code khác 0 bị từ chối và V005 vẫn chưa được chạy.
 
+Backup Windows đã VERIFIED: `nsocry-before-v005-20260901-174146.sql`, 234839 byte, SHA-256
+`9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6`;
+`databaseChanged=false`, `v005Executed=false`.
+
 ## Bảo mật đóng gói
 
 - Password database không nằm trong JAR.
