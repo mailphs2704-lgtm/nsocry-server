@@ -38,6 +38,16 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesDataArchiveCommands() {
+        assertEquals(NsocryLauncher.LaunchCommand.DATA_SEED_CONVERT,
+                NsocryLauncher.parse(new String[] {"data-seed-convert", "data.properties"}).command());
+        assertEquals(NsocryLauncher.LaunchCommand.DATA_SEED_ARCHIVE_DRY_RUN,
+                NsocryLauncher.parse(new String[] {
+                        "data-seed-archive-dry-run", "seed/data.zip"
+                }).command());
+    }
+
+    @Test
     void parsesItemSeedDryRunArchive() {
         NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
                 new String[] {"item-seed-dry-run", "seed/item.zip"});

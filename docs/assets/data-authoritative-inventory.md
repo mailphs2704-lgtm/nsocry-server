@@ -104,8 +104,10 @@ ngầm và không mặc định thay đổi dữ liệu.
 ## Ranh giới chưa làm
 
 - Đã ghép task route, EXP và progression, tái tạo và xác minh candidate authoritative thực tế.
-- Chưa có archive service/manifest parser để lưu và đọc lại candidate. Manifest model/generator
-  trong bộ nhớ đã có nhưng chưa phải archive vận hành.
+- DATA manifest parser canonical, archive service và hai command convert/archive-dry-run đã
+  IMPLEMENTED_PENDING_VERIFY. Archive dùng `data.bin` + `data.manifest`, atomic move, không ghi
+  đè, giới hạn giải nén và decode/encode/checksum read-back; chưa được gọi VERIFIED khi Maven
+  suite chưa chạy.
 - Chưa thiết kế schema JDBC DATA, importer, database verifier hoặc runtime publisher.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
@@ -121,6 +123,6 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Dự án đang `PAUSED_BY_OWNER`. Khi được yêu cầu tiếp tục, xây DATA archive service và manifest
-parser/dry-run để lưu rồi đọc lại đúng candidate trước mọi persistence; chưa import database
-hoặc nối startup.
+Chạy full Maven suite cho DATA archive checkpoint, sửa mọi failure nếu có, sau đó tạo candidate
+archive thật từ config authoritative và xác nhận round-trip giữ nguyên count/length/SHA-256;
+chưa import database hoặc nối startup.

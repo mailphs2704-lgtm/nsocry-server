@@ -1,8 +1,8 @@
 # Trạng thái hiện tại của NSOCry
 
-**Cập nhật:** 2026-08-26 UTC
+**Cập nhật:** 2026-09-01 UTC
 
-**Trạng thái:** PAUSED_BY_OWNER
+**Trạng thái:** IN_PROGRESS
 
 **Tiến độ đến gameplay cơ bản:** 18%
 
@@ -38,6 +38,10 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
   `serverStartupWired=false`.
 - Handoff, Developer Manual, trace register, package index và DATA inventory đã đồng bộ tại
   checkpoint tạm dừng; code catalog đã tái sinh đủ 199 source production.
+- DATA manifest parser canonical, archive service và command `data-seed-convert` /
+  `data-seed-archive-dry-run`: **IMPLEMENTED_PENDING_VERIFY**.
+- Môi trường Work có Java runtime nhưng thiếu Maven/JDK compiler; chưa có output test mới và
+  không được cộng vào mốc 308/308 cũ.
 
 ## Tác động và giới hạn
 
@@ -45,11 +49,12 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 - `runtimeSnapshotPublished=false` trong checkpoint này.
 - `serverStartupWired=false`.
 - DATA candidate authoritative đã VERIFIED; archive/persistence/runtime DATA và appearance
-  production vẫn `TRACE_REQUIRED`. Không được dùng bundle rỗng/số liệu giả để bật startup.
+  production vẫn `TRACE_REQUIRED`. Archive read-back hiện PENDING_VERIFY; không được dùng bundle
+  rỗng/số liệu giả để bật startup.
 - Client thật chưa vào gameplay.
 
 ## Next exact action
 
-Dự án tạm dừng theo yêu cầu chủ dự án. Khi tiếp tục, bắt đầu từ DATA archive service và manifest
-parser/dry-run cho candidate đã khóa; không làm lại các checkpoint VERIFIED, chưa ghi DATA vào
-database, chưa nối startup và chưa merge `main`.
+Chạy full Maven suite cho DATA archive checkpoint, sửa failure nếu có, rồi tạo/dry-run archive
+thật từ config authoritative để xác nhận giữ nguyên version 7, 43 task group, 131 EXP, payload
+85154 byte và SHA-256 đã khóa; chưa ghi DATA vào database, chưa nối startup và chưa merge `main`.

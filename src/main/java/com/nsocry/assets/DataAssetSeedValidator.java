@@ -12,7 +12,9 @@ public final class DataAssetSeedValidator {
     }
 
     /** Từ chối mọi khác biệt version/count/length/checksum so với đúng bundle được cung cấp. */
-    public static void validate(DataAssetBundle bundle, DataAssetSeedManifest manifest) {
+    public static DataAssetSeedValidationResult validate(
+            DataAssetBundle bundle,
+            DataAssetSeedManifest manifest) {
         Objects.requireNonNull(bundle, "bundle");
         Objects.requireNonNull(manifest, "manifest");
         try {
@@ -21,7 +23,14 @@ public final class DataAssetSeedValidator {
             require(bundle.taskRoutes().size() == manifest.taskGroupCount(), "taskGroupCount");
             require(bundle.experienceThresholds().length == manifest.experienceCount(), "experienceCount");
             require(payload.length == manifest.payloadLength(), "payloadLength");
-            require(sha256(payload).equals(manifest.payloadSha256()), "sha256");
+            String sha256 = sha256(payload);
+            require(sha256.equals(manifest.payloadSha256()), "sha256");
+            return new DataAssetSeedValidationResult(
+                    bundle.version(),
+                    bundle.taskRoutes().size(),
+                    bundle.experienceThresholds().length,
+                    payload.length,
+                    sha256);
         } catch (IOException exception) {
             throw new IllegalArgumentException("Không thể encode DATA để kiểm định", exception);
         }

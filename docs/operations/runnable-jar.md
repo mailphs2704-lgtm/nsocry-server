@@ -19,6 +19,9 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help | In trợ giúp, không mở server/database |
 | java -jar ... server [config-path] | Nạp cấu hình, ghép database/auth và mở TCP listener |
 | java -jar ... create-admin [config-path] | Mở console tương tác tạo administrator đầu tiên |
+| java -jar ... data-seed-dry-run &lt;data-properties-path&gt; | Tái tạo DATA candidate authoritative trong bộ nhớ, không ghi file/database/runtime |
+| java -jar ... data-seed-convert &lt;data-properties-path&gt; | Tạo DATA candidate archive cạnh file properties và tự đọc lại kiểm định |
+| java -jar ... data-seed-archive-dry-run &lt;archive-path&gt; | Decode/encode lại DATA archive, đối chiếu manifest và SHA-256 offline |
 | java -jar ... item-seed-dry-run &lt;archive-path&gt; | Kiểm định ITEM seed archive, chỉ in metadata và không mở database |
 | java -jar ... item-seed-convert &lt;dump-path&gt; | Chuyển hai bảng ITEM trong dump thành candidate archive cạnh file nguồn |
 | java -jar ... item-schema-preflight [config-path] | Chỉ đọc information_schema và báo V002 READY/NOT_READY |
@@ -26,6 +29,19 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar ... item-seed-db-verify &lt;archive-path&gt; | Load lại DB, dựng ITEM payload và so checksum candidate |
 
 Không có argument sẽ in help. Command lạ hoặc quá nhiều argument bị từ chối.
+
+## DATA seed archive
+
+Archive DATA chứa đúng `data.bin` và `data.manifest`. Service giới hạn payload 16 MiB,
+manifest 4 KiB, từ chối entry lạ/trùng/directory và không ghi đè file đã tồn tại. Manifest
+canonical khóa version, task-group count, EXP unsigned count `0..255`, payload length và
+SHA-256. Dry-run phải decode payload, encode lại rồi đối chiếu toàn bộ metadata.
+
+`data-seed-convert` dùng cùng file properties và nguồn authoritative như
+`data-seed-dry-run`; archive được đặt cạnh properties với tên
+`<config>-data-seed-v<version>-candidate.zip`. Command đọc lại archive ngay sau khi ghi và chỉ
+báo `archiveRoundTripVerified=true` khi validation thành công. Cả hai command archive đều giữ
+`databaseChanged=false`, `runtimeSnapshotPublished=false` và `serverStartupWired=false`.
 
 ## Bảo mật đóng gói
 
