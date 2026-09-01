@@ -22,7 +22,7 @@ Xây dựng server game **NSOCry** mới, tương thích với client được c
 - Nhánh phát triển: `agent/document-nsokiss-runtime`; Draft PR #1; chưa merge `main`.
 - Architecture Lock v1 đang hiệu lực; cấm tự đổi package/contract LOCKED.
 - Trạng thái quản trị: `PAUSED_BY_OWNER`; không tự tiếp tục implementation khi chưa có yêu cầu mới.
-- Windows full suite gần nhất: **308/308 VERIFIED**.
+- Windows full suite gần nhất: **314/314 VERIFIED** tại DATA archive checkpoint.
 - ITEM và SKILL seed/database pipeline: VERIFIED_END_TO_END.
 - MAP schema/import/JDBC payload và runtime publish command: VERIFIED; startup ownership chưa nối.
 - DATA authoritative candidate: version 7, 43 task group, 131 EXP, payload 85154 byte,
@@ -53,8 +53,8 @@ Khi cần hiểu hoặc sửa code, bắt đầu tại [developer-manual/README.
 > Không làm lại VERIFIED; phần thiếu evidence phải dùng TRACE_REQUIRED.
 
 Khi STATUS là `PAUSED_BY_OWNER`, chỉ được đọc/giải thích hoặc cập nhật checkpoint theo yêu cầu;
-không tự bắt đầu Next exact action. Khi chủ dự án yêu cầu tiếp tục, bắt đầu từ DATA archive
-service + manifest parser/dry-run, không làm lại candidate và 308 test đã VERIFIED.
+không tự bắt đầu Next exact action. Dự án hiện đã tiếp tục; DATA archive code đạt 314/314,
+không làm lại candidate hoặc full suite nếu input chưa đổi.
 
 ## Trước khi kết thúc mỗi phiên
 

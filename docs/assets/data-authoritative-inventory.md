@@ -98,16 +98,17 @@ ngầm và không mặc định thay đổi dữ liệu.
 - Bốn test command và một route test đã đạt full suite Windows **301/301 VERIFIED**.
 - Config authoritative đã xác nhận `game.data.version=7` và
   `game.upgrade.percent.add=0`; converter không dùng mặc định ngầm.
-- Full suite Windows gần nhất **308/308 VERIFIED** khóa thêm `json-simple 1.1` object
-  compatibility, effect image low-16-bit narrowing và EXP unsigned count 131.
+- Full suite Windows gần nhất **314/314 VERIFIED** khóa thêm DATA manifest parser, archive
+  read-back/tamper gate, defensive payload copy và launcher command bên cạnh các compatibility
+  gate `json-simple 1.1`, effect image low-16-bit narrowing và EXP unsigned count 131.
 
 ## Ranh giới chưa làm
 
 - Đã ghép task route, EXP và progression, tái tạo và xác minh candidate authoritative thực tế.
 - DATA manifest parser canonical, archive service và hai command convert/archive-dry-run đã
-  IMPLEMENTED_PENDING_VERIFY. Archive dùng `data.bin` + `data.manifest`, atomic move, không ghi
-  đè, giới hạn giải nén và decode/encode/checksum read-back; chưa được gọi VERIFIED khi Maven
-  suite chưa chạy.
+  **VERIFIED_BY_FULL_SUITE 314/314**. Archive dùng `data.bin` + `data.manifest`, atomic move,
+  không ghi đè, giới hạn giải nén và decode/encode/checksum read-back. Archive authoritative
+  thật chưa được tạo và dry-run bằng command.
 - Chưa thiết kế schema JDBC DATA, importer, database verifier hoặc runtime publisher.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
@@ -123,6 +124,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy full Maven suite cho DATA archive checkpoint, sửa mọi failure nếu có, sau đó tạo candidate
-archive thật từ config authoritative và xác nhận round-trip giữ nguyên count/length/SHA-256;
-chưa import database hoặc nối startup.
+Tạo candidate archive thật từ config authoritative rồi chạy archive dry-run để xác nhận
+round-trip giữ nguyên count/length/SHA-256; chưa import database hoặc nối startup.
