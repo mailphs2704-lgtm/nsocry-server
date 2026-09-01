@@ -98,7 +98,7 @@ ngầm và không mặc định thay đổi dữ liệu.
 - Bốn test command và một route test đã đạt full suite Windows **301/301 VERIFIED**.
 - Config authoritative đã xác nhận `game.data.version=7` và
   `game.upgrade.percent.add=0`; converter không dùng mặc định ngầm.
-- Full suite Windows gần nhất **314/314 VERIFIED** khóa thêm DATA manifest parser, archive
+- Full suite Windows gần nhất **321/321 VERIFIED** khóa thêm DATA manifest parser, archive
   read-back/tamper gate, defensive payload copy và launcher command bên cạnh các compatibility
   gate `json-simple 1.1`, effect image low-16-bit narrowing và EXP unsigned count 131.
 
@@ -109,7 +109,7 @@ ngầm và không mặc định thay đổi dữ liệu.
   **VERIFIED_END_TO_END_OFFLINE** cùng full suite 314/314. Archive dùng `data.bin` +
   `data.manifest`, atomic move, không ghi đè, giới hạn giải nén và decode/encode/checksum
   read-back. Archive authoritative thật đã tạo và dry-run độc lập, giữ nguyên toàn bộ metadata.
-- Schema V005 draft, contract/inspector/preflight đã IMPLEMENTED_PENDING_VERIFY; importer,
+- Schema V005 draft, contract/inspector/preflight đã VERIFIED_BY_FULL_SUITE 321/321; importer,
   database verifier và runtime publisher chưa làm.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
@@ -125,5 +125,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Chạy full Maven suite cho DATA V005/preflight checkpoint; chưa chạy migration/import database,
-chưa publish runtime hoặc nối startup.
+Chạy DATA schema preflight read-only trên database NSOCry hiện tại và xác nhận NOT_READY cùng
+`databaseChanged=false`; chưa chạy migration/import, chưa publish runtime hoặc nối startup.

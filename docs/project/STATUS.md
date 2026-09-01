@@ -20,7 +20,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows: **314/314**, không failure/error/skipped.
+- Full Maven suite Windows: **321/321**, không failure/error/skipped.
 - ITEM pipeline: version 26, 161 option, 1213 item, payload 66811 byte, JDBC VERIFIED.
 - SKILL pipeline: version 26, 72 option, 7 class, 91 template, 967 level,
   3883 level-option, payload 42402 byte, JDBC VERIFIED.
@@ -30,7 +30,7 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Checkpoint đang xây
 
-- Full Maven suite Windows: **314/314 VERIFIED**.
+- Full Maven suite Windows: **321/321 VERIFIED**.
 - DATA authoritative candidate: **VERIFIED**.
 - Version 7; 43 task group; 131 EXP; payload length 85154 byte.
 - SHA-256: `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
@@ -46,7 +46,8 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
   `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
 - `archiveRoundTripVerified=true`; database/runtime/startup đều false.
 - DATA persistence V005 draft, schema contract, JDBC inspector và preflight command:
-  **IMPLEMENTED_PENDING_VERIFY**; chưa chạy database thật.
+  **VERIFIED_BY_FULL_SUITE 321/321**; chưa chạy database thật.
+- Build đã compile 210 production source và 76 test source trên Java 17.
 
 ## Tác động và giới hạn
 
@@ -60,6 +61,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Chạy full Maven suite cho DATA V005/preflight checkpoint; sửa mọi failure trước khi cân nhắc
-preflight trên database thật. Chưa chạy migration/import, chưa publish runtime, chưa nối startup
-và chưa merge `main`.
+Chạy `data-schema-preflight` read-only trên database NSOCry hiện tại và xác nhận kết quả đúng là
+NOT_READY trước V005, với `databaseChanged=false`. Chưa chạy migration/import, chưa publish
+runtime, chưa nối startup và chưa merge `main`.

@@ -36,7 +36,7 @@ Theo thứ tự:
   kể lại tiến độ đã có trên GitHub.
 - Nếu STATUS là `PAUSED_BY_OWNER`, không tự triển khai Next exact action. Chỉ tiếp tục khi chủ
   dự án yêu cầu rõ; điểm tiếp tục hiện tại là DATA archive service + manifest parser/dry-run.
-- Không làm lại full suite 314/314 hoặc DATA candidate version 7/SHA-256 đã VERIFIED nếu input
+- Không làm lại full suite 321/321 hoặc DATA candidate version 7/SHA-256 đã VERIFIED nếu input
   source và converter chưa thay đổi.
 
 ## 4. Prompt tiếp tục dành cho Chat thường
