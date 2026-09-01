@@ -19,6 +19,7 @@ public final class NsocryLauncher {
             case DATA_SEED_DRY_RUN -> DataAssetSeedDryRunCommand.main(forwarded);
             case DATA_SEED_CONVERT -> DataAssetSeedConvertCommand.main(forwarded);
             case DATA_SEED_ARCHIVE_DRY_RUN -> DataAssetSeedArchiveDryRunCommand.main(forwarded);
+            case DATA_SCHEMA_PREFLIGHT -> DataAssetSchemaPreflightCommand.main(forwarded);
             case ITEM_SEED_CONVERT -> ItemAssetSeedConvertCommand.main(forwarded);
             case ITEM_SEED_DRY_RUN -> ItemAssetSeedDryRunCommand.main(forwarded);
             case ITEM_SEED_IMPORT -> ItemAssetSeedImportCommand.main(forwarded);
@@ -54,6 +55,7 @@ public final class NsocryLauncher {
             case "data-seed-dry-run" -> LaunchCommand.DATA_SEED_DRY_RUN;
             case "data-seed-convert" -> LaunchCommand.DATA_SEED_CONVERT;
             case "data-seed-archive-dry-run" -> LaunchCommand.DATA_SEED_ARCHIVE_DRY_RUN;
+            case "data-schema-preflight" -> LaunchCommand.DATA_SCHEMA_PREFLIGHT;
             case "item-seed-convert" -> LaunchCommand.ITEM_SEED_CONVERT;
             case "item-seed-dry-run" -> LaunchCommand.ITEM_SEED_DRY_RUN;
             case "item-seed-import" -> LaunchCommand.ITEM_SEED_IMPORT;
@@ -88,6 +90,7 @@ public final class NsocryLauncher {
         System.out.println("  java -jar nsocry-server.jar data-seed-dry-run <data-properties-path>");
         System.out.println("  java -jar nsocry-server.jar data-seed-convert <data-properties-path>");
         System.out.println("  java -jar nsocry-server.jar data-seed-archive-dry-run <archive-path>");
+        System.out.println("  java -jar nsocry-server.jar data-schema-preflight [config-path]");
         System.out.println("  java -jar nsocry-server.jar item-seed-convert <dump-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-dry-run <archive-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-import <archive-path>");
@@ -115,6 +118,7 @@ public final class NsocryLauncher {
         DATA_SEED_DRY_RUN,
         DATA_SEED_CONVERT,
         DATA_SEED_ARCHIVE_DRY_RUN,
+        DATA_SCHEMA_PREFLIGHT,
         ITEM_SEED_CONVERT,
         ITEM_SEED_DRY_RUN,
         ITEM_SEED_IMPORT,

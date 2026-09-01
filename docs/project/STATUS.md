@@ -45,6 +45,8 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
   131 EXP, 85154 byte, SHA-256
   `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
 - `archiveRoundTripVerified=true`; database/runtime/startup đều false.
+- DATA persistence V005 draft, schema contract, JDBC inspector và preflight command:
+  **IMPLEMENTED_PENDING_VERIFY**; chưa chạy database thật.
 
 ## Tác động và giới hạn
 
@@ -58,5 +60,6 @@ STATUS chỉ mô tả checkpoint hiện tại; lịch sử chi tiết nằm tron
 
 ## Next exact action
 
-Thiết kế DATA persistence contract và migration V005 draft kèm schema preflight test; chưa chạy
-migration/import trên database thật, chưa publish runtime, chưa nối startup và chưa merge `main`.
+Chạy full Maven suite cho DATA V005/preflight checkpoint; sửa mọi failure trước khi cân nhắc
+preflight trên database thật. Chưa chạy migration/import, chưa publish runtime, chưa nối startup
+và chưa merge `main`.

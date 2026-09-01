@@ -22,6 +22,7 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar ... data-seed-dry-run &lt;data-properties-path&gt; | Tái tạo DATA candidate authoritative trong bộ nhớ, không ghi file/database/runtime |
 | java -jar ... data-seed-convert &lt;data-properties-path&gt; | Tạo DATA candidate archive cạnh file properties và tự đọc lại kiểm định |
 | java -jar ... data-seed-archive-dry-run &lt;archive-path&gt; | Decode/encode lại DATA archive, đối chiếu manifest và SHA-256 offline |
+| java -jar ... data-schema-preflight [config-path] | Chỉ đọc information_schema và báo DATA V005 READY/NOT_READY |
 | java -jar ... item-seed-dry-run &lt;archive-path&gt; | Kiểm định ITEM seed archive, chỉ in metadata và không mở database |
 | java -jar ... item-seed-convert &lt;dump-path&gt; | Chuyển hai bảng ITEM trong dump thành candidate archive cạnh file nguồn |
 | java -jar ... item-schema-preflight [config-path] | Chỉ đọc information_schema và báo V002 READY/NOT_READY |
@@ -47,6 +48,10 @@ Candidate authoritative đã VERIFIED trên Windows với version 7, 43 task gro
 85154 byte và SHA-256
 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`;
 convert báo `archiveRoundTripVerified=true` và archive dry-run độc lập giữ nguyên metadata.
+
+`data-schema-preflight` không chạy migration V005. Trước khi migration được chủ dự án cho phép,
+kết quả đúng trên database hiện tại là `DATA schema preflight NOT_READY` cùng danh sách cột thiếu
+và `databaseChanged=false`.
 
 ## Bảo mật đóng gói
 

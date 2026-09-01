@@ -3,6 +3,8 @@
 ## Thiết kế mới đang hoạt động
 
 - [Tài khoản và xác thực NSOCry](account-authentication.md)
+- [DATA asset persistence V005](client-data-assets.md) — archive payload, migration draft và
+  preflight chỉ đọc; chưa chạy migration/import.
 - [Read model MAP V004](client-map-assets.md) — bốn bảng catalog, migration draft và
   preflight chỉ đọc; chưa chạy migration/import.
 - Script tạo database: database/00-create-database.sql.

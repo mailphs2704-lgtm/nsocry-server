@@ -48,6 +48,12 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesDataSchemaPreflight() {
+        assertEquals(NsocryLauncher.LaunchCommand.DATA_SCHEMA_PREFLIGHT,
+                NsocryLauncher.parse(new String[] {"data-schema-preflight"}).command());
+    }
+
+    @Test
     void parsesItemSeedDryRunArchive() {
         NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
                 new String[] {"item-seed-dry-run", "seed/item.zip"});

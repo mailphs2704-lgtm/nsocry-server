@@ -1081,6 +1081,16 @@
 
 **Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
 
+### `com.nsocry.bootstrap.DataAssetSchemaPreflightCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSchemaPreflightCommand.java`
+- **Vai trò tóm tắt:** Command chỉ đọc kiểm tra database có khớp schema DATA V005 hay không.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class DataAssetSchemaPreflightCommand {`**: Command chỉ đọc kiểm tra database có khớp schema DATA V005 hay không.
+  - **Dòng 19 — `public static void main(String[] args) throws Exception {`**: Nạp config, mở DataSource read-only và trả lỗi khi schema chưa sẵn sàng.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.bootstrap.DataAssetSeedArchiveDryRunCommand`
 
 - **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSeedArchiveDryRunCommand.java`
@@ -1641,6 +1651,34 @@
   - **Dòng 6 — `public AccountPersistenceException(String operation, Throwable cause) {`**: Bọc nguyên nhân JDBC bằng mã thao tác cố định để tầng trên có thể phân loại an toàn.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.persistence.DataAssetSchemaColumn`
+
+- **Source:** `src/main/java/com/nsocry/persistence/DataAssetSchemaColumn.java`
+- **Vai trò tóm tắt:** Metadata một cột schema DATA V005 đọc từ information_schema.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 6 — `public record DataAssetSchemaColumn(`**: Metadata một cột schema DATA V005 đọc từ information_schema.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.persistence.DataAssetSchemaContract`
+
+- **Source:** `src/main/java/com/nsocry/persistence/DataAssetSchemaContract.java`
+- **Vai trò tóm tắt:** Đối chiếu metadata với đúng bảy cột DATA V005 mà không thực hiện DDL.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 12 — `public final class DataAssetSchemaContract {`**: Đối chiếu metadata với đúng bảy cột DATA V005 mà không thực hiện DDL.
+  - **Dòng 19 — `public static DataAssetSchemaPreflightReport evaluate(List<DataAssetSchemaColumn> actualColumns) {`**: Báo cột thiếu, thừa, trùng hoặc sai type/unsigned/nullability.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.persistence.DataAssetSchemaPreflightReport`
+
+- **Source:** `src/main/java/com/nsocry/persistence/DataAssetSchemaPreflightReport.java`
+- **Vai trò tóm tắt:** Kết quả đối chiếu schema DATA V005 chỉ đọc.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 7 — `public record DataAssetSchemaPreflightReport(boolean ready, List<String> differences) {`**: Kết quả đối chiếu schema DATA V005 chỉ đọc.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
 ### `com.nsocry.persistence.ItemAssetSchemaColumn`
 
 - **Source:** `src/main/java/com/nsocry/persistence/ItemAssetSchemaColumn.java`
@@ -1702,6 +1740,17 @@
   - **Dòng 44 — `public Optional<AccountCredential> findByUsername(String username) {`**: Tải đúng một credential theo username phân biệt hoa thường.
   - **Dòng 59 — `public void recordSuccessfulLogin(long accountId, Instant occurredAt) {`**: Đặt lại bộ đếm lỗi, bỏ khóa tạm và ghi thời điểm đăng nhập thành công.
   - **Dòng 69 — `public void recordFailedLogin(long accountId, Instant occurredAt) {`**: Tăng nguyên tử bộ đếm đăng nhập sai; chính sách đặt locked_until thuộc checkpoint kế tiếp.
+- **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
+
+### `com.nsocry.persistence.JdbcDataAssetSchemaInspector`
+
+- **Source:** `src/main/java/com/nsocry/persistence/JdbcDataAssetSchemaInspector.java`
+- **Vai trò tóm tắt:** Đọc information_schema để kiểm tra DATA V005 mà không thay đổi database.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 14 — `public final class JdbcDataAssetSchemaInspector {`**: Đọc information_schema để kiểm tra DATA V005 mà không thay đổi database.
+  - **Dòng 26 — `public JdbcDataAssetSchemaInspector(DataSource dataSource) {`**: Tạo inspector read-only cho đúng DataSource NSOCry.
+  - **Dòng 31 — `public DataAssetSchemaPreflightReport inspect() throws ClientAssetSourceException {`**: Dùng connection read-only, chỉ đọc metadata và không thực hiện DDL/DML.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
 ### `com.nsocry.persistence.JdbcItemAssetSchemaInspector`

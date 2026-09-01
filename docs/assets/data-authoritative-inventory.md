@@ -109,7 +109,8 @@ ngầm và không mặc định thay đổi dữ liệu.
   **VERIFIED_END_TO_END_OFFLINE** cùng full suite 314/314. Archive dùng `data.bin` +
   `data.manifest`, atomic move, không ghi đè, giới hạn giải nén và decode/encode/checksum
   read-back. Archive authoritative thật đã tạo và dry-run độc lập, giữ nguyên toàn bộ metadata.
-- Chưa thiết kế schema JDBC DATA, importer, database verifier hoặc runtime publisher.
+- Schema V005 draft, contract/inspector/preflight đã IMPLEMENTED_PENDING_VERIFY; importer,
+  database verifier và runtime publisher chưa làm.
 - Appearance vẫn là pipeline độc lập, không thuộc converter DATA.
 
 ## DATA candidate authoritative VERIFIED
@@ -124,5 +125,5 @@ ngầm và không mặc định thay đổi dữ liệu.
 
 ## Next exact action
 
-Thiết kế DATA persistence contract và migration V005 draft kèm schema preflight test; chưa chạy
-migration/import database, chưa publish runtime hoặc nối startup.
+Chạy full Maven suite cho DATA V005/preflight checkpoint; chưa chạy migration/import database,
+chưa publish runtime hoặc nối startup.
