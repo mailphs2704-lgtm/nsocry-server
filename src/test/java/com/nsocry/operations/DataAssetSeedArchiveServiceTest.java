@@ -98,7 +98,7 @@ class DataAssetSeedArchiveServiceTest {
         return new DataAssetBundle(
                 (byte) 7,
                 graphics,
-                List.of(new TaskRouteAsset(new byte[] {1}, new byte[] {2})),
+                List.of(List.of(new TaskRouteAsset((byte) 1, (byte) 2))),
                 experience,
                 progression,
                 new byte[] {0});
