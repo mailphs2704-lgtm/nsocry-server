@@ -63,7 +63,9 @@
 - Import safety gate backup/checksum/overwrite: VERIFIED_BY_FULL_SUITE.
 - Git auto-gc suppression: VERIFIED trong đúng lần chạy này.
 - Exact operator confirmation parser và bốn tests: VERIFIED_BY_FULL_SUITE 338/338.
-- Đã thêm import workflow orchestration và bốn tests về order/fail-before-DML/read-back failure; đang chờ full suite.
+- Import workflow orchestration và bốn tests: VERIFIED_BY_FULL_SUITE 342/342.
+- Đã thêm `data-seed-import-plan` offline, launcher route, report test và properties example; đang chờ full suite.
+- Plan command không tạo DataSource và không gọi importer.
 - Workflow chưa route launcher; database không thay đổi.
 - Chưa có import launcher route; database không thay đổi.
 
@@ -75,5 +77,5 @@ file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải l�
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA import workflow orchestration.
-Mục tiêu dự kiến: 342/342 PASS. Chưa chạy import database thật.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA import plan offline.
+Mục tiêu dự kiến: 344/344 PASS. Chưa chạy plan hoặc import database thật.
