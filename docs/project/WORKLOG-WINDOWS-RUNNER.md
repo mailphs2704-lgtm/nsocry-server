@@ -117,3 +117,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - DATA import workflow orchestration chuyển VERIFIED_BY_FULL_SUITE.
 - Thêm `data-seed-import-plan`, properties example, launcher route và side-effect report test.
 - Command chỉ đọc file archive/backup; không nạp database config, không tạo DataSource, không DML.
+
+
+## 2026-09-09 — offline plan 344/344 và BAT option 5
+
+- Báo cáo commit `e986c1da`: BUILD SUCCESS, 344/344 PASS.
+- Offline plan command chuyển VERIFIED_BY_FULL_SUITE.
+- Sửa archive/backup relative path thành `../` vì plan nằm trong config.
+- Thêm menu số 5 chạy plan offline; không tạo database connection hoặc DML.
