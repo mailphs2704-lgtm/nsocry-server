@@ -1081,6 +1081,14 @@
 
 **Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
 
+### `com.nsocry.bootstrap.DataAssetDatabaseVerifyCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetDatabaseVerifyCommand.java`
+- **Vai trò tóm tắt:** Command read-only đối chiếu row DATA database với archive authoritative.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API chính:** `main`, schema READY gate và report khóa database/runtime side effects false.
+- **Khi sửa:** không gọi importer hoặc DML; archive validation và V005 preflight phải chạy trước read-back.
+
 ### `com.nsocry.bootstrap.DataAssetSchemaPreflightCommand`
 
 - **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSchemaPreflightCommand.java`
