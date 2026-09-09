@@ -109,3 +109,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm workflow buộc authorization + schema trước importer và read-back verifier sau commit.
 - Bốn test khóa thứ tự, schema fail, candidate mismatch và read-back failure.
 - Không có launcher route; database không thay đổi.
+
+
+## 2026-09-09 — orchestration 342/342 và offline import plan
+
+- Báo cáo commit `cac0d584`: BUILD SUCCESS, 342/342 PASS.
+- DATA import workflow orchestration chuyển VERIFIED_BY_FULL_SUITE.
+- Thêm `data-seed-import-plan`, properties example, launcher route và side-effect report test.
+- Command chỉ đọc file archive/backup; không nạp database config, không tạo DataSource, không DML.
