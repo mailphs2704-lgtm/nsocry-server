@@ -1089,6 +1089,13 @@
 - **API chính:** `main`, schema READY gate và report khóa database/runtime side effects false.
 - **Khi sửa:** không gọi importer hoặc DML; archive validation và V005 preflight phải chạy trước read-back.
 
+### `com.nsocry.bootstrap.DataAssetImportPlanCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetImportPlanCommand.java`
+- **Vai trò tóm tắt:** Command offline validate archive, backup và operator confirmation, không tạo DataSource.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** output phải giữ databaseConnectionOpened/databaseChanged/dataImported false; cấm gọi importer.
+
 ### `com.nsocry.bootstrap.DataAssetSchemaPreflightCommand`
 
 - **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSchemaPreflightCommand.java`
