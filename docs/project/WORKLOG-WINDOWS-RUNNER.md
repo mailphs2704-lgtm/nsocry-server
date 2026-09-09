@@ -91,3 +91,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Hướng dẫn fail-safe: trả lời `n`, không xóa object hoặc .git.
 - Runner truyền `-c gc.auto=0 -c maintenance.auto=false` cho pull/commit/push.
 - Build 334 chưa có kết quả; database không thay đổi.
+
+
+## 2026-09-09 — safety gate 334/334 và exact confirmation
+
+- Báo cáo commit `631bc9e7`: BUILD SUCCESS, 334/334 PASS; không còn workflow bị auto-gc chặn.
+- Backup/checksum/overwrite safety gate chuyển VERIFIED_BY_FULL_SUITE.
+- Thêm exact confirmation parser với INSERT_ONLY/OVERWRITE, version và toàn SHA-256.
+- Bốn test khóa success và mọi câu thiếu/sai/không rõ nghĩa.
+- Chưa nối launcher/import DML; database không thay đổi.
