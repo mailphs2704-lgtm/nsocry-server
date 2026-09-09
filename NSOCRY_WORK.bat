@@ -17,6 +17,7 @@ echo [1] Pull + build/test + gui bao cao len GitHub  (khuyen dung)
 echo [2] Chi pull code moi
 echo [3] Build/test + gui bao cao, khong pull
 echo [4] Xem bao cao Windows gan nhat tren may
+echo [5] Chay DATA import plan OFFLINE (khong mo database)
 echo [0] Thoat
 echo.
 set /p "NSOCRY_ACTION=Chon mot so: "
@@ -26,6 +27,7 @@ if "%NSOCRY_ACTION%"=="1" goto RUN
 if "%NSOCRY_ACTION%"=="2" goto RUN
 if "%NSOCRY_ACTION%"=="3" goto RUN
 if "%NSOCRY_ACTION%"=="4" goto RUN
+if "%NSOCRY_ACTION%"=="5" goto RUN
 
 echo Lua chon khong hop le.
 pause
