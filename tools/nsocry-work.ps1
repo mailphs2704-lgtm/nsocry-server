@@ -1,4 +1,4 @@
-param(
+﻿param(
     [ValidateSet("1", "2", "3", "4")]
     [string]$Action = "1"
 )
@@ -84,7 +84,7 @@ function New-ReportContent(
     [string]$JavaSummary,
     [string]$MavenSummary
 ) {
-    $tail = (Get-Content -Path $LogPath -Tail 80) -join [Environment]::NewLine
+    $tail = (Get-Content -Path $LogPath -Tail 80 | ForEach-Object { "    " + $_ }) -join [Environment]::NewLine
     return @(
         "# Báo cáo build/test Windows NSOCry",
         "",
@@ -113,9 +113,7 @@ function New-ReportContent(
         "",
         "## Phần cuối Maven log",
         "",
-        ([string][char]96 * 3) + "text",
-        $tail,
-        ([string][char]96 * 3)
+        $tail
     ) -join [Environment]::NewLine
 }
 
