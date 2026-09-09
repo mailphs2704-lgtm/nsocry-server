@@ -1,5 +1,5 @@
 ﻿param(
-    [ValidateSet("1", "2", "3", "4")]
+    [ValidateSet("1", "2", "3", "4", "5")]
     [string]$Action = "1"
 )
 
@@ -202,6 +202,34 @@ function Build-And-Publish {
     exit 0
 }
 
+
+function Invoke-DataImportPlan {
+    Assert-Repository
+    $jar = Join-Path $RepositoryRoot "target\\nsocry-server-0.1.0-SNAPSHOT.jar"
+    $plan = Join-Path $RepositoryRoot "config\\data-import-plan.properties.example"
+    if (-not (Test-Path $jar)) {
+        Stop-Workflow "Chua co JAR. Hay chon 1 de pull va build truoc."
+    }
+    if (-not (Test-Path $plan)) {
+        Stop-Workflow "Thieu config/data-import-plan.properties.example."
+    }
+
+    Write-Host "===== DATA IMPORT PLAN OFFLINE ====="
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & java -jar $jar data-seed-import-plan $plan 2>&1 | ForEach-Object { Write-Host $_ }
+    $planExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    if ($planExitCode -ne 0) {
+        Stop-Workflow "DATA import plan offline khong dat gate." $planExitCode
+    }
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_IMPORT_PLAN_AUTHORIZED_OFFLINE"
+    Write-Host "DATABASE_CONNECTION_OPENED=false"
+    Write-Host "DATABASE_CHANGED=false"
+    Write-Host "DATA_IMPORTED=false"
+}
+
 switch ($Action) {
     "1" {
         Assert-Repository
@@ -219,5 +247,8 @@ switch ($Action) {
     }
     "4" {
         Show-LatestReport
+    }
+    "5" {
+        Invoke-DataImportPlan
     }
 }
