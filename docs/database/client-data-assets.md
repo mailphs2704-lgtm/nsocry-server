@@ -41,7 +41,10 @@ read-only và so đúng type/unsigned/nullability. Command không thực thi V00
 - Sau xác nhận chủ dự án, V005 đã chạy thành công; preflight sau migration `READY VERIFIED`.
 - Full regression sau migration: 321/321 PASS.
 - `databaseChanged=true`, `dataImported=false`, runtime/startup false.
-- Importer, database checksum verifier, runtime publisher và startup wiring: chưa làm.
+- Transactional importer với row lock, rollback và overwrite gate: đã triển khai, chờ Windows full suite.
+- Database read-back/checksum verifier: đã triển khai, chờ test bổ sung và Windows full suite.
+- Chưa có command import thật; database không thể bị thay đổi bởi tranche này.
+- Runtime publisher và startup wiring: chưa làm.
 - Trước khi chạy V005 phải backup, xác nhận database đích và được chủ dự án cho phép riêng.
 
 ## Backup trước V005
@@ -80,3 +83,15 @@ error; script chưa đi tới MariaDB client nên `databaseChanged=false`. Hàm 
 
 Khi sửa V005 phải cập nhật đồng thời migration, expected columns, inspector query, test malformed,
 tài liệu này, STATUS và code catalog. Không sửa contract chỉ để ép preflight READY.
+
+
+## Transactional importer — checkpoint 2026-09-09
+
+`JdbcDataAssetSeedImporter` chỉ nhận `ValidatedDataAssetSeedArchive`, đặt isolation
+`SERIALIZABLE`, khóa row cùng version bằng `SELECT ... FOR UPDATE` rồi thực hiện đúng một
+INSERT hoặc UPDATE. Chế độ mặc định `REJECT_EXISTING` rollback nếu version đã tồn tại;
+`REPLACE_SAME_VERSION` phải được caller chọn rõ ràng.
+
+`JdbcDataAssetSeedVerifier` mở connection read-only, đọc đủ bảy cột, so metadata/payload/
+manifest với archive rồi decode và tính lại checksum canonical. Chưa route hai thành phần này
+ra launcher nên checkpoint hiện tại không có đường chạy import database thật.
