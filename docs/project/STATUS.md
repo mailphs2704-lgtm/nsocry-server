@@ -57,7 +57,15 @@
 - Bốn safety-gate tests đang chờ Windows full suite; chưa có command DML/launcher route.
 - BAT đã đổi để tác vụ tương tác quay lại menu đầu sau khi nhấn phím.
 
-## Sự cố vận hành mới nhất
+## Checkpoint mới nhất
+
+- Windows full suite: **334/334 PASS** tại commit `631bc9e7`.
+- Import safety gate backup/checksum/overwrite: VERIFIED_BY_FULL_SUITE.
+- Git auto-gc suppression: VERIFIED trong đúng lần chạy này.
+- Đã thêm exact operator confirmation parser và bốn tests; đang chờ full suite.
+- Chưa có import launcher route; database không thay đổi.
+
+## Sự cố vận hành đã xử lý
 
 Lựa chọn 1 đã fast-forward đến checkpoint safety gate nhưng Git auto-maintenance bị Windows khóa
 file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải lỗi source/database. Runner đã
@@ -65,5 +73,5 @@ file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải l�
 
 ## Next exact action
 
-Sau khi thoát prompt bằng `n`, chủ dự án chạy bootstrap pull với auto-gc tắt một lần, sau đó mở
-`NSOCRY_WORK.bat` và chọn `1`. Mục tiêu: 334/334 PASS, không còn prompt pack.idx.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng exact operator confirmation.
+Mục tiêu dự kiến: 338/338 PASS. Chưa chạy import database thật.
