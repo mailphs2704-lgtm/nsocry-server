@@ -100,3 +100,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm exact confirmation parser với INSERT_ONLY/OVERWRITE, version và toàn SHA-256.
 - Bốn test khóa success và mọi câu thiếu/sai/không rõ nghĩa.
 - Chưa nối launcher/import DML; database không thay đổi.
+
+
+## 2026-09-09 — confirmation 338/338 và import workflow
+
+- Báo cáo commit `f17f32e8`: BUILD SUCCESS, 338/338 PASS.
+- Exact operator confirmation chuyển VERIFIED_BY_FULL_SUITE.
+- Thêm workflow buộc authorization + schema trước importer và read-back verifier sau commit.
+- Bốn test khóa thứ tự, schema fail, candidate mismatch và read-back failure.
+- Không có launcher route; database không thay đổi.
