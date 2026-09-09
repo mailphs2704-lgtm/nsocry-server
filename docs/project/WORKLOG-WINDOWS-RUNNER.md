@@ -135,3 +135,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Overwrite mode `REJECT_EXISTING`.
 - Database connection/change/import/runtime/startup đều false.
 - Dừng tại authorization boundary; cần quyền riêng mới trước DATA import thật.
+
+
+## 2026-09-09 — nhận quyền DATA v7 REJECT_EXISTING
+
+- Chủ dự án cấp quyền riêng cho DATA v7 import vào database NSOCry bằng REJECT_EXISTING.
+- Thêm command thật với archive/backup/checksum/schema/transaction/read-back gates.
+- Command từ chối OVERWRITE, runtime/startup vẫn false.
+- Thêm hai command tests và launcher route test; chưa chạy DML, đang chờ full suite.
