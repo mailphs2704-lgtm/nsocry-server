@@ -65,3 +65,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Bổ sung ba test trực tiếp cho `JdbcDataAssetSeedVerifier`: success/read-only, missing row,
   altered payload.
 - Không kết nối hoặc thay đổi database thật.
+
+
+## 2026-09-09 — sửa testCompile JDBC verifier
+
+- Báo cáo commit `d6b29fa1`: FAILURE tại testCompile vì test gọi accessor
+  `DataAssetSeedArtifact.validation()` không tồn tại.
+- Production importer/verifier không phát sinh failure; Maven chưa chạy test.
+- Đã sửa fixture dùng `DataAssetCodec.decode` và `DataAssetSeedValidator.validate` với
+  `artifact.manifest()`, đúng API hiện hữu.
+- Database không được mở hoặc thay đổi.
