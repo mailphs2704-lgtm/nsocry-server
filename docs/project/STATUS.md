@@ -84,7 +84,13 @@ Chủ dự án đã cho phép import DATA v7 vào database NSOCry bằng `REJECT
 phép overwrite, runtime publish, startup wiring hoặc merge main. Command thật đã triển khai và
 khóa cứng phạm vi này; chưa chạy database.
 
+## Sự cố vận hành mới nhất
+
+Offline plan vẫn AUTHORIZED và database side effects false, nhưng report commit local
+`ab90b157` bị push reject vì remote đã có command import mới. BAT option 5 đã sửa để pull trước
+khi tạo report.
+
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng command import thật trước DML.
-Mục tiêu dự kiến: 347/347 PASS. Chỉ sau PASS mới thêm BAT option import và chạy trên database.
+Rebase an toàn report-only commit `ab90b157` lên remote, push nó, sau đó chạy menu số 1 để
+kiểm chứng command import. Mục tiêu: 347/347 PASS; chưa chạy import database.
