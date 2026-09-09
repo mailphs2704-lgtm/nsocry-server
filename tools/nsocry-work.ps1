@@ -217,14 +217,39 @@ function Invoke-DataImportPlan {
     Write-Host "===== DATA IMPORT PLAN OFFLINE ====="
     $previousPreference = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
-    & java -jar $jar data-seed-import-plan $plan 2>&1 | ForEach-Object { Write-Host $_ }
+    $planOutput = @(& java -jar $jar data-seed-import-plan $plan 2>&1)
     $planExitCode = $LASTEXITCODE
+    $planOutput | ForEach-Object { Write-Host $_ }
     $ErrorActionPreference = $previousPreference
     if ($planExitCode -ne 0) {
         Stop-Workflow "DATA import plan offline khong dat gate." $planExitCode
     }
+    $planReportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-data-import-plan.md"
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $reportLines = @(
+        "# DATA import plan Windows",
+        "",
+        "- Tested commit: $testedCommit",
+        "- Status: AUTHORIZED_OFFLINE",
+        "- Database connection opened: false",
+        "- Database changed: false",
+        "- DATA imported: false",
+        "",
+        "## Command output",
+        ""
+    ) + ($planOutput | ForEach-Object { "    " + $_ })
+    Set-Content -Path $planReportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
+    Invoke-Git @("add", "--", "reports/windows/latest-data-import-plan.md")
+    Invoke-Git @("commit", "-m", "ops: report DATA import plan offline")
+    $reportCommit = (& git rev-parse HEAD).Trim()
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "DATA plan report da commit local nhung push that bai." $LASTEXITCODE
+    }
+
     Write-Host ""
-    Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_IMPORT_PLAN_AUTHORIZED_OFFLINE"
+    Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_IMPORT_PLAN_REPORT_PUBLISHED"
+    Write-Host "REPORT_COMMIT=$reportCommit"
     Write-Host "DATABASE_CONNECTION_OPENED=false"
     Write-Host "DATABASE_CHANGED=false"
     Write-Host "DATA_IMPORTED=false"
