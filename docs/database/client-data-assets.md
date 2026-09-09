@@ -128,3 +128,13 @@ commit thành công, workflow bắt buộc chạy JDBC read-back verifier và so
 Workflow chưa được route trong `NsocryLauncher`; checkpoint này không tạo command có thể chạy
 DML. Nếu read-back sau commit thất bại, lỗi được báo rõ để vận hành dừng publish/runtime và điều
 tra; không được tuyên bố import VERIFIED.
+
+
+## Quyền import DATA v7 REJECT_EXISTING
+
+Chủ dự án đã xác nhận riêng: `ĐỒNG Ý IMPORT DATA V7 VÀO DATABASE NSOCRY BẰNG REJECT_EXISTING`.
+`DataAssetSeedImportCommand` khóa cứng mode này; confirmation `OVERWRITE` bị từ chối dù
+properties hợp lệ. Command chạy archive/backup/checksum/schema gates, transaction importer và
+read-back verifier. Runtime publish/startup không thuộc quyền này.
+
+Command đang chờ full-suite Windows trước khi được đưa vào BAT để chạy database thật.
