@@ -1568,6 +1568,13 @@
 - **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
 - **Khi sửa:** gate phải giữ offline/fail-closed, checksum constant-time và không mở database.
 
+### `com.nsocry.operations.DataAssetImportWorkflow`
+
+- **Source:** `src/main/java/com/nsocry/operations/DataAssetImportWorkflow.java`
+- **Vai trò tóm tắt:** Ghép authorization, schema READY, transactional importer và read-back verifier theo thứ tự cố định.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** authorization/schema phải fail trước importer; verify luôn chạy sau commit thành công; chưa route launcher.
+
 ### `com.nsocry.operations.DataAssetSeedArchiveService`
 
 - **Source:** `src/main/java/com/nsocry/operations/DataAssetSeedArchiveService.java`
