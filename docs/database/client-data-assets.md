@@ -106,3 +106,14 @@ confirmation phải khớp checksum archive bằng so sánh constant-time; calle
 
 Gate hiện chỉ chạy offline và trả `DataAssetImportAuthorization`; chưa có launcher route hoặc
 command DML, do đó không thể import database ở checkpoint này.
+
+
+## Exact operator confirmation
+
+Câu xác nhận phải đúng một trong hai dạng:
+
+- `IMPORT DATA V7 INSERT_ONLY <candidate-sha256>`
+- `IMPORT DATA V7 OVERWRITE <candidate-sha256>`
+
+Parser đối chiếu toàn chuỗi constant-time và ánh xạ sang overwrite mode. Không có hành động mặc
+định, không chấp nhận prefix hoặc xác nhận gần đúng. Parser chưa được nối launcher.
