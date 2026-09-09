@@ -84,38 +84,39 @@ function New-ReportContent(
     [string]$JavaSummary,
     [string]$MavenSummary
 ) {
-    return @"
-# Báo cáo build/test Windows NSOCry
-
-- Trạng thái: **$Status**
-- Nhánh: `$ExpectedBranch`
-- Commit được kiểm tra: `$TestedCommit`
-- Bắt đầu UTC: `$StartedAt`
-- Kết thúc UTC: `$FinishedAt`
-- Maven exit code: `$MavenExitCode`
-- Tổng hợp test: `$TestSummary`
-- Java: `$JavaSummary`
-- Maven: `$MavenSummary`
-- Lệnh: `mvn clean package`
-- Database changed: `false`
-- DATA imported: `false`
-- Runtime snapshot published: `false`
-- Server startup wired: `false`
-
-## Ý nghĩa
-
-Báo cáo này do `NSOCRY_WORK.bat` tạo trên máy Windows của chủ dự án. Báo cáo xác nhận khả năng compile/package và kết quả test của đúng commit nêu trên. Quy trình không chạy migration, không import DATA và không khởi động server.
-
-## Nhật ký đầy đủ
-
-Nhật ký Maven đầy đủ được giữ cục bộ tại `.nsocry-work/maven-latest.log` để tránh làm repository phình lớn. Khi build lỗi, phần cuối log được chép dưới đây.
-
-## Phần cuối Maven log
-
-```text
-$((Get-Content -Path $LogPath -Tail 80) -join [Environment]::NewLine)
-```
-"@
+    $tail = (Get-Content -Path $LogPath -Tail 80) -join [Environment]::NewLine
+    return @(
+        "# Báo cáo build/test Windows NSOCry",
+        "",
+        "- Trạng thái: **$Status**",
+        "- Nhánh: $ExpectedBranch",
+        "- Commit được kiểm tra: $TestedCommit",
+        "- Bắt đầu UTC: $StartedAt",
+        "- Kết thúc UTC: $FinishedAt",
+        "- Maven exit code: $MavenExitCode",
+        "- Tổng hợp test: $TestSummary",
+        "- Java: $JavaSummary",
+        "- Maven: $MavenSummary",
+        "- Lệnh: mvn clean package",
+        "- Database changed: false",
+        "- DATA imported: false",
+        "- Runtime snapshot published: false",
+        "- Server startup wired: false",
+        "",
+        "## Ý nghĩa",
+        "",
+        "Báo cáo này do NSOCRY_WORK.bat tạo trên máy Windows của chủ dự án. Báo cáo xác nhận khả năng compile/package và kết quả test của đúng commit nêu trên. Quy trình không chạy migration, không import DATA và không khởi động server.",
+        "",
+        "## Nhật ký đầy đủ",
+        "",
+        "Nhật ký Maven đầy đủ được giữ cục bộ tại .nsocry-work/maven-latest.log để tránh làm repository phình lớn. Khi build lỗi, phần cuối log được chép dưới đây.",
+        "",
+        "## Phần cuối Maven log",
+        "",
+        ([string][char]96 * 3) + "text",
+        $tail,
+        ([string][char]96 * 3)
+    ) -join [Environment]::NewLine
 }
 
 function Build-And-Publish {
@@ -128,14 +129,21 @@ function Build-And-Publish {
     $startedAt = (Get-Date).ToUniversalTime().ToString("o")
     $historyPath = Join-Path $HistoryDirectory "$stamp-$shortCommit.md"
 
-    $javaSummary = ((& java -version 2>&1 | Select-Object -First 1) -join " ").Trim()
-    if ($LASTEXITCODE -ne 0) {
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    $javaOutput = @(& java -version 2>&1)
+    $javaExitCode = $LASTEXITCODE
+    $mavenOutput = @(& mvn -version 2>&1)
+    $mavenVersionExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    if ($javaExitCode -ne 0) {
         Stop-Workflow "Khong tim thay Java 17 trong PATH."
     }
-    $mavenSummary = ((& mvn -version 2>&1 | Select-Object -First 1) -join " ").Trim()
-    if ($LASTEXITCODE -ne 0) {
+    if ($mavenVersionExitCode -ne 0) {
         Stop-Workflow "Khong tim thay Maven trong PATH."
     }
+    $javaSummary = (($javaOutput | Select-Object -First 1) -join " ").Trim()
+    $mavenSummary = (($mavenOutput | Select-Object -First 1) -join " ").Trim()
 
     Write-Host "===== MAVEN CLEAN PACKAGE ====="
     $previousPreference = $ErrorActionPreference
@@ -154,8 +162,8 @@ function Build-And-Publish {
     Set-Content -Path $LatestReportPath -Value $report -Encoding UTF8
     Set-Content -Path $historyPath -Value $report -Encoding UTF8
 
-    $name = (& git config user.name).Trim()
-    $email = (& git config user.email).Trim()
+    $name = [string](& git config user.name)
+    $email = [string](& git config user.email)
     if ([string]::IsNullOrWhiteSpace($name) -or [string]::IsNullOrWhiteSpace($email)) {
         Stop-Workflow "Git user.name/user.email chua duoc cau hinh; bao cao da luu local nhung chua commit."
     }
