@@ -56,3 +56,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm `data-seed-db-verify`: archive validation, schema READY, JDBC read-only checksum verify.
 - Thêm launcher route và test output side-effect false.
 - Chưa chạy verifier thật vì DATA chưa import; database không thay đổi.
+
+
+## 2026-09-09 — command 327/327 và JDBC verifier tests
+
+- Báo cáo GitHub đúng commit `1ae33c51`: BUILD SUCCESS, 327/327 PASS.
+- Command read-only và launcher route chuyển sang VERIFIED_BY_FULL_SUITE.
+- Bổ sung ba test trực tiếp cho `JdbcDataAssetSeedVerifier`: success/read-only, missing row,
+  altered payload.
+- Không kết nối hoặc thay đổi database thật.
