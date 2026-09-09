@@ -57,7 +57,13 @@
 - Bốn safety-gate tests đang chờ Windows full suite; chưa có command DML/launcher route.
 - BAT đã đổi để tác vụ tương tác quay lại menu đầu sau khi nhấn phím.
 
+## Sự cố vận hành mới nhất
+
+Lựa chọn 1 đã fast-forward đến checkpoint safety gate nhưng Git auto-maintenance bị Windows khóa
+file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải lỗi source/database. Runner đã
+được sửa để tắt auto-gc/maintenance trong các lệnh pull/commit/push.
+
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng import safety gate offline.
-Mục tiêu dự kiến: 334/334 PASS. Không kết nối hoặc thay đổi database.
+Sau khi thoát prompt bằng `n`, chủ dự án chạy bootstrap pull với auto-gc tắt một lần, sau đó mở
+`NSOCRY_WORK.bat` và chọn `1`. Mục tiêu: 334/334 PASS, không còn prompt pack.idx.
