@@ -32,7 +32,7 @@
 - Menu số `1` thực hiện pull fast-forward, Maven clean package, tạo và push báo cáo PASS/FAIL.
 - Báo cáo gắn `TESTED_COMMIT`, lưu latest và history trên GitHub.
 - Guard khóa đúng nhánh và không tự commit source.
-- Trạng thái runner: `PENDING_OWNER_WINDOWS_RUN`; chưa dùng kết quả 321/321 cũ để tuyên bố runner mới VERIFIED.
+- Windows runner: `VERIFIED_END_TO_END`; báo cáo mới xác nhận đúng commit `3279ce2e`, BUILD SUCCESS và 321/321 PASS.
 - Tài liệu: `docs/operations/windows-work-menu.md`.
 - Worklog: `docs/project/WORKLOG-WINDOWS-RUNNER.md`.
 
@@ -44,6 +44,15 @@
 - `runtimeSnapshotPublished=false`; `serverStartupWired=false`.
 - Client thật chưa vào gameplay; tiến độ gameplay giữ nguyên 18%.
 
+## DATA importer đang xây
+
+- Đã thêm importer transaction SERIALIZABLE, row lock và explicit overwrite policy.
+- Đã thêm database read-back/checksum verifier.
+- Chưa có launcher command; không import database thật.
+- Test importer mới đang chờ Windows full suite.
+
 ## Next exact action
 
-Chủ dự án pull commit runner, chạy `NSOCRY_WORK.bat`, chọn `1`, chờ `REPORT_PUBLISHED` và báo “xong”. AI sẽ đọc `reports/windows/latest.md` trên GitHub; nếu PASS thì triển khai DATA transactional importer không chạy import thật, nếu FAIL thì sửa nguyên nhân và yêu cầu chạy lại cùng lựa chọn `1`.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng tranche DATA importer. Khi báo cáo
+GitHub PASS, bổ sung verifier test và command dry-run/read-only; vẫn chưa tạo đường import thật
+nếu chưa có xác nhận riêng mới.
