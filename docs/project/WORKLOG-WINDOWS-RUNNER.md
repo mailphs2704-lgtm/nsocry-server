@@ -47,3 +47,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Đã bổ sung catalog cho toàn bộ năm production source DATA importer/verifier.
 - Đã đổi nhánh menu tương tác từ exit sang quay lại MENU sau pause; direct-argument vẫn trả exit code.
 - Không có lỗi transaction được ghi nhận; `databaseChanged=false`, `dataImported=false`.
+
+
+## 2026-09-09 — importer 324/324 và DATA verifier command
+
+- GitHub report đúng commit `dcb9401a`: BUILD SUCCESS, 324/324 PASS.
+- Transactional importer chuyển sang VERIFIED_BY_FULL_SUITE.
+- Thêm `data-seed-db-verify`: archive validation, schema READY, JDBC read-only checksum verify.
+- Thêm launcher route và test output side-effect false.
+- Chưa chạy verifier thật vì DATA chưa import; database không thay đổi.
