@@ -1096,6 +1096,13 @@
 - **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
 - **Khi sửa:** output phải giữ databaseConnectionOpened/databaseChanged/dataImported false; cấm gọi importer.
 
+### `com.nsocry.bootstrap.DataAssetSeedImportCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSeedImportCommand.java`
+- **Vai trò tóm tắt:** Command import DATA v7 được cấp quyền riêng, khóa cứng REJECT_EXISTING và read-back verify.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** cấm OVERWRITE; backup/archive/confirmation/schema phải đạt trước workflow; runtime/startup giữ false.
+
 ### `com.nsocry.bootstrap.DataAssetSchemaPreflightCommand`
 
 - **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSchemaPreflightCommand.java`
