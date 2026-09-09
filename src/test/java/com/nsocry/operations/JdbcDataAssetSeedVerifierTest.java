@@ -8,6 +8,9 @@ import com.nsocry.assets.ClientGraphicBlock;
 import com.nsocry.assets.DataAssetBundle;
 import com.nsocry.assets.DataAssetSeedArtifact;
 import com.nsocry.assets.DataAssetSeedArtifactGenerator;
+import com.nsocry.assets.DataAssetCodec;
+import com.nsocry.assets.DataAssetSeedValidationResult;
+import com.nsocry.assets.DataAssetSeedValidator;
 import com.nsocry.assets.ProgressionTable;
 import com.nsocry.assets.TaskRouteAsset;
 import com.nsocry.persistence.DataAssetSeedImportException;
@@ -30,7 +33,7 @@ class JdbcDataAssetSeedVerifierTest {
 
         var result = new JdbcDataAssetSeedVerifier(jdbc.dataSource()).verify(archive(artifact));
 
-        assertEquals(artifact.validation(), result);
+        assertEquals(validation(artifact), result);
         assertTrue(jdbc.readOnly);
         assertEquals(7, jdbc.requestedVersion);
     }
@@ -58,7 +61,16 @@ class JdbcDataAssetSeedVerifierTest {
 
     private static ValidatedDataAssetSeedArchive archive(DataAssetSeedArtifact artifact) {
         return new ValidatedDataAssetSeedArchive(
-                artifact.payload(), artifact.manifestText(), artifact.validation());
+                artifact.payload(), artifact.manifestText(), validation(artifact));
+    }
+
+    private static DataAssetSeedValidationResult validation(DataAssetSeedArtifact artifact) {
+        try {
+            return DataAssetSeedValidator.validate(
+                    DataAssetCodec.decode(artifact.payload()), artifact.manifest());
+        } catch (java.io.IOException exception) {
+            throw new IllegalArgumentException("Test artifact không decode được", exception);
+        }
     }
 
     private static DataAssetBundle bundle() {
@@ -81,6 +93,7 @@ class JdbcDataAssetSeedVerifierTest {
     private static final class FakeJdbc {
         final DataAssetSeedArtifact artifact;
         final boolean exists;
+        final DataAssetSeedValidationResult validation;
         boolean readOnly;
         int requestedVersion;
         byte[] payload;
@@ -88,6 +101,7 @@ class JdbcDataAssetSeedVerifierTest {
         FakeJdbc(DataAssetSeedArtifact artifact, boolean exists) {
             this.artifact = artifact;
             this.exists = exists;
+            this.validation = validation(artifact);
             this.payload = artifact.payload();
         }
 
@@ -130,14 +144,14 @@ class JdbcDataAssetSeedVerifierTest {
                                 return answer;
                             }
                             if (method.getName().equals("getInt")) return switch ((String) args[0]) {
-                                case "version" -> Byte.toUnsignedInt(artifact.validation().version());
-                                case "task_group_count" -> artifact.validation().taskGroupCount();
-                                case "experience_count" -> artifact.validation().experienceCount();
-                                case "payload_length" -> artifact.validation().payloadLength();
+                                case "version" -> Byte.toUnsignedInt(validation.version());
+                                case "task_group_count" -> validation.taskGroupCount();
+                                case "experience_count" -> validation.experienceCount();
+                                case "payload_length" -> validation.payloadLength();
                                 default -> 0;
                             };
                             if (method.getName().equals("getString")) return switch ((String) args[0]) {
-                                case "payload_sha256" -> artifact.validation().payloadSha256();
+                                case "payload_sha256" -> validation.payloadSha256();
                                 case "manifest_text" -> artifact.manifestText();
                                 default -> null;
                             };
