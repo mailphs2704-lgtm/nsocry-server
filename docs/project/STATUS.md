@@ -52,12 +52,11 @@
 - Full suite Windows mới nhất: **324/324 PASS** tại commit `dcb9401a`.
 - Transactional importer và ba test rollback/overwrite: VERIFIED.
 - DATA database verifier command, launcher route và hai command tests: VERIFIED_BY_FULL_SUITE 327/327.
-- Đã thêm ba JDBC verifier tests: row khớp/read-only, row thiếu và payload sai; đang chờ full suite.
+- Lần chạy đầu của ba JDBC verifier tests dừng ở testCompile: test gọi nhầm accessor `artifact.validation()` không tồn tại; production verifier không lỗi.
+- Test đã sửa để decode payload và gọi `DataAssetSeedValidator.validate(..., artifact.manifest())` qua API hiện có; đang chờ chạy lại.
 - BAT đã đổi để tác vụ tương tác quay lại menu đầu sau khi nhấn phím.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng ba JDBC verifier tests mới.
-Mục tiêu dự kiến: 330/330 PASS. Sau PASS, DATA persistence/read-back code hoàn tất; bước kế tiếp
-là thiết kế command import tương tác với backup/checksum/overwrite confirmation, nhưng không chạy
-import thật nếu chưa có xác nhận riêng mới.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để xác minh bản sửa testCompile. Mục tiêu:
+330/330 PASS. Database/import/runtime/startup không thay đổi.
