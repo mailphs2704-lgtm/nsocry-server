@@ -53,6 +53,15 @@ class NsocryLauncherTest {
                 NsocryLauncher.parse(new String[] {"data-schema-preflight"}).command());
     }
 
+
+    @Test
+    void parsesDataDatabaseVerification() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"data-seed-db-verify", "seed/data.zip"});
+        assertEquals(NsocryLauncher.LaunchCommand.DATA_SEED_DB_VERIFY, request.command());
+        assertEquals(Path.of("seed/data.zip"), request.configurationPath());
+    }
+
     @Test
     void parsesItemSeedDryRunArchive() {
         NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
