@@ -43,3 +43,10 @@ echo.
 if not "%NSOCRY_EXIT%"=="0" echo Quy trinh dung voi ma loi %NSOCRY_EXIT%.
 pause
 exit /b %NSOCRY_EXIT%
+
+:DIRECT
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\\tools\\nsocry-work.ps1" -Action "%~1"
+set "NSOCRY_EXIT=%ERRORLEVEL%"
+echo.
+pause
+exit /b %NSOCRY_EXIT%
