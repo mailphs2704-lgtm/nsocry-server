@@ -75,3 +75,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Đã sửa fixture dùng `DataAssetCodec.decode` và `DataAssetSeedValidator.validate` với
   `artifact.manifest()`, đúng API hiện hữu.
 - Database không được mở hoặc thay đổi.
+
+
+## 2026-09-09 — DATA verifier 330/330 và safety gate offline
+
+- GitHub report: BUILD SUCCESS, 330/330 PASS; DATA persistence/read-back hoàn tất.
+- Thêm authorization record và safety gate kiểm tra backup file, size, SHA-256, candidate
+  confirmation constant-time và explicit overwrite mode.
+- Thêm bốn test offline; chưa mở JDBC, chưa tạo command import, database không thay đổi.
