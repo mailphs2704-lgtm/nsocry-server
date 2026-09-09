@@ -3,12 +3,7 @@ setlocal
 chcp 65001 >nul
 cd /d "%~dp0"
 
-if not "%~1"=="" (
-  powershell -NoProfile -ExecutionPolicy Bypass -File ".\tools\nsocry-work.ps1" -Action "%~1"
-  echo.
-  pause
-  exit /b %ERRORLEVEL%
-)
+if not "%~1"=="" goto DIRECT
 
 :MENU
 cls
@@ -45,7 +40,7 @@ pause
 exit /b %NSOCRY_EXIT%
 
 :DIRECT
-powershell -NoProfile -ExecutionPolicy Bypass -File ".\\tools\\nsocry-work.ps1" -Action "%~1"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\tools\nsocry-work.ps1" -Action "%~1"
 set "NSOCRY_EXIT=%ERRORLEVEL%"
 echo.
 pause
