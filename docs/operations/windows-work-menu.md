@@ -23,6 +23,7 @@ Sau đó chọn:
 | 2 | Chỉ pull đúng nhánh làm việc. |
 | 3 | Build/test và push báo cáo mà không pull. Chỉ dùng khi AI yêu cầu rõ. |
 | 4 | Xem báo cáo gần nhất đã lưu trên máy. |
+| 5 | Chạy DATA import plan offline bằng JAR và file example; không mở database. |
 | 0 | Thoát. |
 
 Có thể chạy trực tiếp `NSOCRY_WORK.bat 1`, nhưng chế độ menu dễ dùng hơn.
@@ -78,3 +79,11 @@ Nếu Windows đang giữ file `.git/objects/pack/*.idx`, auto-gc của Git có 
 source hoặc Maven. Runner từ checkpoint này truyền `gc.auto=0` và
 `maintenance.auto=false` cho pull/commit/push để công việc tương tác không bị chặn. Việc
 repack thủ công chỉ thực hiện sau khi đóng IDE/Git process và không thuộc build gate.
+
+
+## Lựa chọn 5 — DATA plan offline
+
+Lựa chọn 5 yêu cầu JAR đã được build và dùng
+`config/data-import-plan.properties.example`. Script chỉ validate archive/backup/confirmation.
+Output thành công phải có `DATA_IMPORT_PLAN_AUTHORIZED_OFFLINE`,
+`DATABASE_CONNECTION_OPENED=false`, `DATABASE_CHANGED=false`, `DATA_IMPORTED=false`.
