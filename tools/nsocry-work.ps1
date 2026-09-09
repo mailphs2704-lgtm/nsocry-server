@@ -274,6 +274,8 @@ switch ($Action) {
         Show-LatestReport
     }
     "5" {
+        Assert-Repository
+        Pull-Branch
         Invoke-DataImportPlan
     }
 }
