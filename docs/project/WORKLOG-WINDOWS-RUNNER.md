@@ -27,3 +27,14 @@
 ### Next exact action
 
 Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPORT_PUBLISHED` rồi báo “xong” để AI kiểm tra báo cáo trên GitHub.
+
+
+## 2026-09-09 — Windows runner VERIFIED và bắt đầu DATA importer
+
+- Báo cáo GitHub xác nhận đúng commit `3279ce2e`: Maven exit code 0, BUILD SUCCESS,
+  321 test, 0 failure/error/skipped; JAR shaded đã tạo.
+- Runner chuyển từ `PENDING_OWNER_WINDOWS_RUN` sang `VERIFIED_END_TO_END`.
+- Phát hiện tiếng Việt mojibake trên PowerShell 5.1; đã thêm UTF-8 BOM và đơn giản hóa khối log.
+- Thêm transactional importer, explicit overwrite mode, rollback và database read-back verifier.
+- Chưa tạo command import; `databaseChanged=false`, `dataImported=false`.
+- Tranche importer mới đang chờ full suite Windows qua menu số 1.
