@@ -1,6 +1,6 @@
 # DATA import plan chỉ chạy offline; không mở database.
-archive.path=data-dry-run-data-seed-v7-candidate.zip
-backup.path=backups/nsocry-before-v005-20260901-174146.sql
+archive.path=../data-dry-run-data-seed-v7-candidate.zip
+backup.path=../backups/nsocry-before-v005-20260901-174146.sql
 backup.sha256=9cea61d3482ec08a727b71f11c4400dd2c6144cc55b9450baf27bd6dd71983c6
 
 # Chọn chính xác INSERT_ONLY hoặc OVERWRITE. Bản mẫu giữ INSERT_ONLY an toàn.
