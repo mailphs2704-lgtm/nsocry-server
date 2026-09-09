@@ -49,12 +49,13 @@
 - Đã thêm importer transaction SERIALIZABLE, row lock và explicit overwrite policy.
 - Đã thêm database read-back/checksum verifier.
 - Chưa có launcher command; không import database thật.
-- Test importer mới: 3/3 PASS; full suite chạy 324 test nhưng có 1 failure ở DocumentationCoverageTest do code catalog thiếu source mới.
-- Code catalog đã bổ sung đủ năm production source; đang chờ chạy lại full suite.
+- Full suite Windows mới nhất: **324/324 PASS** tại commit `dcb9401a`.
+- Transactional importer và ba test rollback/overwrite: VERIFIED.
+- Đã thêm DATA database verifier command chỉ đọc, launcher route và hai command tests; đang chờ full suite tiếp theo.
 - BAT đã đổi để tác vụ tương tác quay lại menu đầu sau khi nhấn phím.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để xác minh bản sửa code catalog và hành vi quay
-lại menu. Mục tiêu gate: 324/324 PASS, REPORT_PUBLISHED và sau `pause` hiển thị lại menu đầu.
-Database/import/runtime/startup vẫn không thay đổi.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA database verifier command.
+Mục tiêu dự kiến: 327/327 PASS. Không chạy `data-seed-db-verify` trên database thật vì DATA
+chưa được import và chưa có quyền import mới.
