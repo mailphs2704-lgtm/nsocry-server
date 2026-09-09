@@ -51,11 +51,13 @@
 - Chưa có launcher command; không import database thật.
 - Full suite Windows mới nhất: **324/324 PASS** tại commit `dcb9401a`.
 - Transactional importer và ba test rollback/overwrite: VERIFIED.
-- Đã thêm DATA database verifier command chỉ đọc, launcher route và hai command tests; đang chờ full suite tiếp theo.
+- DATA database verifier command, launcher route và hai command tests: VERIFIED_BY_FULL_SUITE 327/327.
+- Đã thêm ba JDBC verifier tests: row khớp/read-only, row thiếu và payload sai; đang chờ full suite.
 - BAT đã đổi để tác vụ tương tác quay lại menu đầu sau khi nhấn phím.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA database verifier command.
-Mục tiêu dự kiến: 327/327 PASS. Không chạy `data-seed-db-verify` trên database thật vì DATA
-chưa được import và chưa có quyền import mới.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng ba JDBC verifier tests mới.
+Mục tiêu dự kiến: 330/330 PASS. Sau PASS, DATA persistence/read-back code hoàn tất; bước kế tiếp
+là thiết kế command import tương tác với backup/checksum/overwrite confirmation, nhưng không chạy
+import thật nếu chưa có xác nhận riêng mới.
