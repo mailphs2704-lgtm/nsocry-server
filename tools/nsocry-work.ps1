@@ -1,0 +1,216 @@
+param(
+    [ValidateSet("1", "2", "3", "4")]
+    [string]$Action = "1"
+)
+
+Set-StrictMode -Version Latest
+$ErrorActionPreference = "Stop"
+
+$ExpectedBranch = "agent/document-nsokiss-runtime"
+$RepositoryRoot = (Resolve-Path (Join-Path $PSScriptRoot "..")).Path
+$WorkDirectory = Join-Path $RepositoryRoot ".nsocry-work"
+$LogPath = Join-Path $WorkDirectory "maven-latest.log"
+$LatestReportPath = Join-Path $RepositoryRoot "reports\windows\latest.md"
+$HistoryDirectory = Join-Path $RepositoryRoot "reports\windows\history"
+
+function Stop-Workflow([string]$Message, [int]$Code = 1) {
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=STOPPED"
+    Write-Host "REASON=$Message"
+    Write-Host "DATABASE_CHANGED=false"
+    exit $Code
+}
+
+function Invoke-Git([string[]]$Arguments) {
+    & git @Arguments
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "Lenh git that bai: git $($Arguments -join ' ')" $LASTEXITCODE
+    }
+}
+
+function Assert-Repository {
+    Set-Location $RepositoryRoot
+    & git rev-parse --is-inside-work-tree *> $null
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "Thu muc hien tai khong phai Git repository."
+    }
+
+    $branch = (& git branch --show-current).Trim()
+    if ($LASTEXITCODE -ne 0 -or $branch -ne $ExpectedBranch) {
+        Stop-Workflow "Sai nhanh. Can dung $ExpectedBranch; hien tai la '$branch'."
+    }
+
+    & git diff --quiet
+    $worktreeChanged = $LASTEXITCODE -ne 0
+    & git diff --cached --quiet
+    $indexChanged = $LASTEXITCODE -ne 0
+    if ($worktreeChanged -or $indexChanged) {
+        Stop-Workflow "Co thay doi tracked chua commit. BAT khong tu y commit hoac ghi de source cua ban."
+    }
+
+    $unsafeUntracked = @(& git ls-files --others --exclude-standard |
+        Where-Object { $_ -match '^(src/|tools/|pom\.xml$)' })
+    if ($unsafeUntracked.Count -gt 0) {
+        Stop-Workflow "Co file source/tool chua duoc Git theo doi: $($unsafeUntracked -join ', ')"
+    }
+}
+
+function Pull-Branch {
+    Write-Host "===== PULL FAST-FORWARD ====="
+    Invoke-Git @("pull", "--ff-only", "origin", $ExpectedBranch)
+    Assert-Repository
+    Write-Host "PULL_STATUS=SUCCESS"
+}
+
+function Show-LatestReport {
+    Assert-Repository
+    if (-not (Test-Path $LatestReportPath)) {
+        Stop-Workflow "Chua co reports/windows/latest.md. Hay chon 1 de tao bao cao dau tien."
+    }
+    Write-Host "===== BAO CAO GAN NHAT ====="
+    Get-Content -Path $LatestReportPath
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=REPORT_DISPLAYED"
+    Write-Host "DATABASE_CHANGED=false"
+}
+
+function New-ReportContent(
+    [string]$Status,
+    [int]$MavenExitCode,
+    [string]$TestSummary,
+    [string]$TestedCommit,
+    [string]$StartedAt,
+    [string]$FinishedAt,
+    [string]$JavaSummary,
+    [string]$MavenSummary
+) {
+    return @"
+# Báo cáo build/test Windows NSOCry
+
+- Trạng thái: **$Status**
+- Nhánh: `$ExpectedBranch`
+- Commit được kiểm tra: `$TestedCommit`
+- Bắt đầu UTC: `$StartedAt`
+- Kết thúc UTC: `$FinishedAt`
+- Maven exit code: `$MavenExitCode`
+- Tổng hợp test: `$TestSummary`
+- Java: `$JavaSummary`
+- Maven: `$MavenSummary`
+- Lệnh: `mvn clean package`
+- Database changed: `false`
+- DATA imported: `false`
+- Runtime snapshot published: `false`
+- Server startup wired: `false`
+
+## Ý nghĩa
+
+Báo cáo này do `NSOCRY_WORK.bat` tạo trên máy Windows của chủ dự án. Báo cáo xác nhận khả năng compile/package và kết quả test của đúng commit nêu trên. Quy trình không chạy migration, không import DATA và không khởi động server.
+
+## Nhật ký đầy đủ
+
+Nhật ký Maven đầy đủ được giữ cục bộ tại `.nsocry-work/maven-latest.log` để tránh làm repository phình lớn. Khi build lỗi, phần cuối log được chép dưới đây.
+
+## Phần cuối Maven log
+
+```text
+$((Get-Content -Path $LogPath -Tail 80) -join [Environment]::NewLine)
+```
+"@
+}
+
+function Build-And-Publish {
+    Assert-Repository
+    New-Item -ItemType Directory -Force -Path $WorkDirectory, $HistoryDirectory | Out-Null
+
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $shortCommit = (& git rev-parse --short=8 HEAD).Trim()
+    $stamp = (Get-Date).ToUniversalTime().ToString("yyyyMMdd-HHmmss")
+    $startedAt = (Get-Date).ToUniversalTime().ToString("o")
+    $historyPath = Join-Path $HistoryDirectory "$stamp-$shortCommit.md"
+
+    $javaSummary = ((& java -version 2>&1 | Select-Object -First 1) -join " ").Trim()
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "Khong tim thay Java 17 trong PATH."
+    }
+    $mavenSummary = ((& mvn -version 2>&1 | Select-Object -First 1) -join " ").Trim()
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "Khong tim thay Maven trong PATH."
+    }
+
+    Write-Host "===== MAVEN CLEAN PACKAGE ====="
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & mvn clean package 2>&1 | Tee-Object -FilePath $LogPath
+    $mavenExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+
+    $finishedAt = (Get-Date).ToUniversalTime().ToString("o")
+    $testLines = @(Select-String -Path $LogPath -Pattern 'Tests run:\s*\d+,\s*Failures:\s*\d+,\s*Errors:\s*\d+,\s*Skipped:\s*\d+' |
+        ForEach-Object { $_.Matches.Value })
+    $testSummary = if ($testLines.Count -gt 0) { $testLines[-1] } else { "Khong tim thay dong tong hop test trong Maven log" }
+    $status = if ($mavenExitCode -eq 0) { "SUCCESS" } else { "FAILURE" }
+
+    $report = New-ReportContent $status $mavenExitCode $testSummary $testedCommit $startedAt $finishedAt $javaSummary $mavenSummary
+    Set-Content -Path $LatestReportPath -Value $report -Encoding UTF8
+    Set-Content -Path $historyPath -Value $report -Encoding UTF8
+
+    $name = (& git config user.name).Trim()
+    $email = (& git config user.email).Trim()
+    if ([string]::IsNullOrWhiteSpace($name) -or [string]::IsNullOrWhiteSpace($email)) {
+        Stop-Workflow "Git user.name/user.email chua duoc cau hinh; bao cao da luu local nhung chua commit."
+    }
+
+    Invoke-Git @("add", "--", "reports/windows/latest.md", ($historyPath.Substring($RepositoryRoot.Length + 1).Replace("\", "/")))
+    & git diff --cached --quiet
+    if ($LASTEXITCODE -eq 0) {
+        Stop-Workflow "Bao cao khong co thay doi de commit."
+    }
+
+    Invoke-Git @("commit", "-m", "ci: report Windows build $status $shortCommit")
+    $reportCommit = (& git rev-parse HEAD).Trim()
+
+    Write-Host "===== PUSH REPORT ====="
+    & git push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host ""
+        Write-Host "NSOCRY_WORKFLOW_RESULT=REPORT_COMMITTED_PUSH_FAILED"
+        Write-Host "BUILD_STATUS=$status"
+        Write-Host "TEST_SUMMARY=$testSummary"
+        Write-Host "TESTED_COMMIT=$testedCommit"
+        Write-Host "REPORT_COMMIT=$reportCommit"
+        Write-Host "DATABASE_CHANGED=false"
+        exit 2
+    }
+
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=REPORT_PUBLISHED"
+    Write-Host "BUILD_STATUS=$status"
+    Write-Host "TEST_SUMMARY=$testSummary"
+    Write-Host "TESTED_COMMIT=$testedCommit"
+    Write-Host "REPORT_COMMIT=$reportCommit"
+    Write-Host "DATABASE_CHANGED=false"
+    Write-Host "DATA_IMPORTED=false"
+    Write-Host "RUNTIME_SNAPSHOT_PUBLISHED=false"
+    Write-Host "SERVER_STARTUP_WIRED=false"
+    exit 0
+}
+
+switch ($Action) {
+    "1" {
+        Assert-Repository
+        Pull-Branch
+        Build-And-Publish
+    }
+    "2" {
+        Assert-Repository
+        Pull-Branch
+        Write-Host "NSOCRY_WORKFLOW_RESULT=PULL_COMPLETED"
+        Write-Host "DATABASE_CHANGED=false"
+    }
+    "3" {
+        Build-And-Publish
+    }
+    "4" {
+        Show-LatestReport
+    }
+}

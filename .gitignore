@@ -9,6 +9,7 @@ build/
 
 # Runtime / temporary files
 *.log
+.nsocry-work/
 
 # OS
 .DS_Store
@@ -16,6 +17,7 @@ Thumbs.db
 
 # Local NSOCry generated files
 logs/
+backups/
 
 .gradle/
 
