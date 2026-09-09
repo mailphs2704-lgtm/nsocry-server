@@ -1554,6 +1554,13 @@
 - **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
 - **Khi sửa:** không cho phép backup rỗng hoặc overwrite mode ngầm định.
 
+### `com.nsocry.operations.DataAssetImportConfirmationParser`
+
+- **Source:** `src/main/java/com/nsocry/operations/DataAssetImportConfirmationParser.java`
+- **Vai trò tóm tắt:** Parse exact phrase chứa version, INSERT_ONLY/OVERWRITE và toàn bộ candidate SHA-256.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** không thêm default action, prefix match hoặc fuzzy confirmation.
+
 ### `com.nsocry.operations.DataAssetImportSafetyGate`
 
 - **Source:** `src/main/java/com/nsocry/operations/DataAssetImportSafetyGate.java`
