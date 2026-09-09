@@ -21,6 +21,7 @@ public final class NsocryLauncher {
             case DATA_SEED_ARCHIVE_DRY_RUN -> DataAssetSeedArchiveDryRunCommand.main(forwarded);
             case DATA_SCHEMA_PREFLIGHT -> DataAssetSchemaPreflightCommand.main(forwarded);
             case DATA_SEED_IMPORT_PLAN -> DataAssetImportPlanCommand.main(forwarded);
+            case DATA_SEED_IMPORT -> DataAssetSeedImportCommand.main(forwarded);
             case DATA_SEED_DB_VERIFY -> DataAssetDatabaseVerifyCommand.main(forwarded);
             case ITEM_SEED_CONVERT -> ItemAssetSeedConvertCommand.main(forwarded);
             case ITEM_SEED_DRY_RUN -> ItemAssetSeedDryRunCommand.main(forwarded);
@@ -59,6 +60,7 @@ public final class NsocryLauncher {
             case "data-seed-archive-dry-run" -> LaunchCommand.DATA_SEED_ARCHIVE_DRY_RUN;
             case "data-schema-preflight" -> LaunchCommand.DATA_SCHEMA_PREFLIGHT;
             case "data-seed-import-plan" -> LaunchCommand.DATA_SEED_IMPORT_PLAN;
+            case "data-seed-import" -> LaunchCommand.DATA_SEED_IMPORT;
             case "data-seed-db-verify" -> LaunchCommand.DATA_SEED_DB_VERIFY;
             case "item-seed-convert" -> LaunchCommand.ITEM_SEED_CONVERT;
             case "item-seed-dry-run" -> LaunchCommand.ITEM_SEED_DRY_RUN;
@@ -96,6 +98,7 @@ public final class NsocryLauncher {
         System.out.println("  java -jar nsocry-server.jar data-seed-archive-dry-run <archive-path>");
         System.out.println("  java -jar nsocry-server.jar data-schema-preflight [config-path]");
         System.out.println("  java -jar nsocry-server.jar data-seed-import-plan <plan-properties-path>");
+        System.out.println("  java -jar nsocry-server.jar data-seed-import <plan-properties-path>");
         System.out.println("  java -jar nsocry-server.jar data-seed-db-verify <archive-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-convert <dump-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-dry-run <archive-path>");
@@ -126,6 +129,7 @@ public final class NsocryLauncher {
         DATA_SEED_ARCHIVE_DRY_RUN,
         DATA_SCHEMA_PREFLIGHT,
         DATA_SEED_IMPORT_PLAN,
+        DATA_SEED_IMPORT,
         DATA_SEED_DB_VERIFY,
         ITEM_SEED_CONVERT,
         ITEM_SEED_DRY_RUN,
