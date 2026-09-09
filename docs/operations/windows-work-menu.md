@@ -69,3 +69,12 @@ Nếu báo sai nhánh hoặc working tree bẩn, không xóa file và không res
 Khi chạy bằng menu tương tác, sau khi tác vụ hoàn tất hoặc báo lỗi, nhấn phím tại màn hình
 `pause`; BAT tự quay về trang menu đầu. Chỉ lựa chọn `0` mới đóng BAT. Chế độ gọi trực tiếp
 có argument, ví dụ `NSOCRY_WORK.bat 1`, vẫn kết thúc và trả exit code cho automation.
+
+
+## Git hỏi unlink pack.idx
+
+Nếu Windows đang giữ file `.git/objects/pack/*.idx`, auto-gc của Git có thể hỏi
+`Should I try again? (y/n)`. Trả lời `n`; đây là lỗi dọn object sau pull, không phải lỗi
+source hoặc Maven. Runner từ checkpoint này truyền `gc.auto=0` và
+`maintenance.auto=false` cho pull/commit/push để công việc tương tác không bị chặn. Việc
+repack thủ công chỉ thực hiện sau khi đóng IDE/Git process và không thuộc build gate.
