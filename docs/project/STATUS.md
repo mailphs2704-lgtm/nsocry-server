@@ -78,9 +78,13 @@ Lựa chọn 1 đã fast-forward đến checkpoint safety gate nhưng Git auto-m
 file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải lỗi source/database. Runner đã
 được sửa để tắt auto-gc/maintenance trong các lệnh pull/commit/push.
 
+## Quyền mới đã nhận
+
+Chủ dự án đã cho phép import DATA v7 vào database NSOCry bằng `REJECT_EXISTING`. Không cho
+phép overwrite, runtime publish, startup wiring hoặc merge main. Command thật đã triển khai và
+khóa cứng phạm vi này; chưa chạy database.
+
 ## Next exact action
 
-Dừng tại authorization boundary. Chỉ sau khi chủ dự án xác nhận riêng rõ ràng việc import DATA
-version 7 vào database NSOCry bằng chế độ REJECT_EXISTING, mới được route command import thật,
-chạy preflight rồi thực hiện transaction + read-back. Không dùng quyền migration V005 cũ thay
-cho quyền import DATA mới.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng command import thật trước DML.
+Mục tiêu dự kiến: 347/347 PASS. Chỉ sau PASS mới thêm BAT option import và chạy trên database.
