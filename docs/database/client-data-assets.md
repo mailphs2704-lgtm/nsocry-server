@@ -117,3 +117,14 @@ Câu xác nhận phải đúng một trong hai dạng:
 
 Parser đối chiếu toàn chuỗi constant-time và ánh xạ sang overwrite mode. Không có hành động mặc
 định, không chấp nhận prefix hoặc xác nhận gần đúng. Parser chưa được nối launcher.
+
+
+## Import workflow orchestration
+
+`DataAssetImportWorkflow` chỉ nhận archive đã validate và authorization đã qua backup gate.
+Schema NOT_READY hoặc authorization thuộc checksum khác đều dừng trước importer. Khi transaction
+commit thành công, workflow bắt buộc chạy JDBC read-back verifier và so lại metadata kết quả.
+
+Workflow chưa được route trong `NsocryLauncher`; checkpoint này không tạo command có thể chạy
+DML. Nếu read-back sau commit thất bại, lỗi được báo rõ để vận hành dừng publish/runtime và điều
+tra; không được tuyên bố import VERIFIED.
