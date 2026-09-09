@@ -213,3 +213,17 @@ Command kiểm tra schema V005, đọc đúng row version, so đủ metadata/pay
 checksum canonical. Command luôn báo `databaseChanged=false`, `dataImported=false`,
 `runtimeSnapshotPublished=false`, `serverStartupWired=false`. Ở checkpoint hiện tại DATA
 chưa import nên chưa chạy command này trên database thật.
+
+
+## DATA import plan offline
+
+Sao chép `config/data-import-plan.properties.example` thành file cục bộ, kiểm tra đường dẫn
+archive/backup rồi chạy:
+
+```bat
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar data-seed-import-plan data-import-plan.properties
+```
+
+Kết quả hợp lệ là `DATA import plan AUTHORIZED_OFFLINE` cùng
+`databaseConnectionOpened=false`, `databaseChanged=false`, `dataImported=false`.
+Command này không phải lệnh import và không thay thế quyền import riêng của chủ dự án.
