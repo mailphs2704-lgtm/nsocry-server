@@ -83,3 +83,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm authorization record và safety gate kiểm tra backup file, size, SHA-256, candidate
   confirmation constant-time và explicit overwrite mode.
 - Thêm bốn test offline; chưa mở JDBC, chưa tạo command import, database không thay đổi.
+
+
+## 2026-09-09 — chặn Git auto-maintenance giữ pack.idx
+
+- Option 1 fast-forward source nhưng chưa build vì Git auto-gc hỏi retry khi Windows giữ pack idx.
+- Hướng dẫn fail-safe: trả lời `n`, không xóa object hoặc .git.
+- Runner truyền `-c gc.auto=0 -c maintenance.auto=false` cho pull/commit/push.
+- Build 334 chưa có kết quả; database không thay đổi.
