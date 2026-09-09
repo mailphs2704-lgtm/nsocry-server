@@ -198,3 +198,18 @@ manifest/count/length/SHA-256. Cả hai đều không mở database và không p
 Sau import, `item-seed-db-verify` dùng cùng archive làm nguồn sự thật để xác minh dữ
 liệu database có tái tạo đúng payload. Kết quả thành công vẫn in
 `databaseChanged=false` và `runtimeSnapshotPublished=false`.
+
+
+## DATA database verify — chỉ đọc
+
+Sau khi archive đã validate và database đã có DATA do một quy trình import được cấp phép riêng,
+có thể đối chiếu bằng:
+
+```bat
+java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar data-seed-db-verify data-dry-run-data-seed-v7-candidate.zip
+```
+
+Command kiểm tra schema V005, đọc đúng row version, so đủ metadata/payload/manifest và tính lại
+checksum canonical. Command luôn báo `databaseChanged=false`, `dataImported=false`,
+`runtimeSnapshotPublished=false`, `serverStartupWired=false`. Ở checkpoint hiện tại DATA
+chưa import nên chưa chạy command này trên database thật.
