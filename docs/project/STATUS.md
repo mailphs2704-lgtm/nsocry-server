@@ -65,7 +65,7 @@
 - Exact operator confirmation parser và bốn tests: VERIFIED_BY_FULL_SUITE 338/338.
 - Import workflow orchestration và bốn tests: VERIFIED_BY_FULL_SUITE 342/342.
 - `data-seed-import-plan` offline, launcher route và tests: VERIFIED_BY_FULL_SUITE 344/344.
-- Đã sửa đường dẫn example theo thư mục config và thêm BAT option 5 chạy plan offline; đang chờ Windows execution.
+- Đã sửa đường dẫn example theo thư mục config và thêm BAT option 5 chạy plan offline; option 5 tự push báo cáo GitHub, đang chờ Windows execution.
 - Plan command không tạo DataSource và không gọi importer.
 - Workflow chưa route launcher; database không thay đổi.
 - Chưa có import launcher route; database không thay đổi.
@@ -79,4 +79,5 @@ file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải l�
 ## Next exact action
 
 Chủ dự án dùng menu số 2 để pull bản BAT mới, thoát/reopen BAT rồi chọn số 5. Gate phải báo
-`DATA_IMPORT_PLAN_AUTHORIZED_OFFLINE` và mọi cờ database/import đều false.
+`DATA_IMPORT_PLAN_REPORT_PUBLISHED`; AI đọc `reports/windows/latest-data-import-plan.md`.
+Mọi cờ database connection/change/import phải false.
