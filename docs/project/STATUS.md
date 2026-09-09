@@ -64,7 +64,8 @@
 - Git auto-gc suppression: VERIFIED trong đúng lần chạy này.
 - Exact operator confirmation parser và bốn tests: VERIFIED_BY_FULL_SUITE 338/338.
 - Import workflow orchestration và bốn tests: VERIFIED_BY_FULL_SUITE 342/342.
-- Đã thêm `data-seed-import-plan` offline, launcher route, report test và properties example; đang chờ full suite.
+- `data-seed-import-plan` offline, launcher route và tests: VERIFIED_BY_FULL_SUITE 344/344.
+- Đã sửa đường dẫn example theo thư mục config và thêm BAT option 5 chạy plan offline; đang chờ Windows execution.
 - Plan command không tạo DataSource và không gọi importer.
 - Workflow chưa route launcher; database không thay đổi.
 - Chưa có import launcher route; database không thay đổi.
@@ -77,5 +78,5 @@ file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải l�
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA import plan offline.
-Mục tiêu dự kiến: 344/344 PASS. Chưa chạy plan hoặc import database thật.
+Chủ dự án dùng menu số 2 để pull bản BAT mới, thoát/reopen BAT rồi chọn số 5. Gate phải báo
+`DATA_IMPORT_PLAN_AUTHORIZED_OFFLINE` và mọi cờ database/import đều false.
