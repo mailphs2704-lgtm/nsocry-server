@@ -125,3 +125,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Offline plan command chuyển VERIFIED_BY_FULL_SUITE.
 - Sửa archive/backup relative path thành `../` vì plan nằm trong config.
 - Thêm menu số 5 chạy plan offline; không tạo database connection hoặc DML.
+
+
+## 2026-09-09 — BAT option 5 VERIFIED_END_TO_END
+
+- GitHub report đúng commit `6dfedd5a`, status `AUTHORIZED_OFFLINE`.
+- Candidate DATA v7 SHA-256 khớp authoritative.
+- Backup thật 234839 byte, SHA-256 khớp checkpoint trước V005.
+- Overwrite mode `REJECT_EXISTING`.
+- Database connection/change/import/runtime/startup đều false.
+- Dừng tại authorization boundary; cần quyền riêng mới trước DATA import thật.
