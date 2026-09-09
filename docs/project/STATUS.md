@@ -62,7 +62,9 @@
 - Windows full suite: **334/334 PASS** tại commit `631bc9e7`.
 - Import safety gate backup/checksum/overwrite: VERIFIED_BY_FULL_SUITE.
 - Git auto-gc suppression: VERIFIED trong đúng lần chạy này.
-- Đã thêm exact operator confirmation parser và bốn tests; đang chờ full suite.
+- Exact operator confirmation parser và bốn tests: VERIFIED_BY_FULL_SUITE 338/338.
+- Đã thêm import workflow orchestration và bốn tests về order/fail-before-DML/read-back failure; đang chờ full suite.
+- Workflow chưa route launcher; database không thay đổi.
 - Chưa có import launcher route; database không thay đổi.
 
 ## Sự cố vận hành đã xử lý
@@ -73,5 +75,5 @@ file pack index và hỏi retry. Build 334 chưa bắt đầu; không phải l�
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng exact operator confirmation.
-Mục tiêu dự kiến: 338/338 PASS. Chưa chạy import database thật.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA import workflow orchestration.
+Mục tiêu dự kiến: 342/342 PASS. Chưa chạy import database thật.
