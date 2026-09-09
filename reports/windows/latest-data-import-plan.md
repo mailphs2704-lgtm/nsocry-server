@@ -1,6 +1,6 @@
 ﻿# DATA import plan Windows
 
-- Tested commit: 6dfedd5afa1dbe08fc1755080e5948e93e5732c3
+- Tested commit: b0dfc85b9f3d7a6c180c1cc02384c0bae693ffb3
 - Status: AUTHORIZED_OFFLINE
 - Database connection opened: false
 - Database changed: false
