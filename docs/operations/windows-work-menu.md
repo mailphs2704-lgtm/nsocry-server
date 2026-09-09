@@ -90,3 +90,10 @@ Output thành công phải có `DATA_IMPORT_PLAN_REPORT_PUBLISHED`,
 
 
 Kết quả lựa chọn 5 được commit/push vào `reports/windows/latest-data-import-plan.md` để AI kiểm tra sau khi chủ dự án chỉ cần báo “xong”. Báo cáo không chứa database password hoặc payload.
+
+
+## Tránh report push bị fetch-first
+
+Lựa chọn 5 từ checkpoint này luôn chạy pull fast-forward trước offline plan. Điều này tránh tạo
+commit báo cáo trên branch local cũ khi AI vừa push code mới. Nếu một report-only commit cũ đã
+bị reject, dùng pull --rebase để đặt commit báo cáo lên remote mới; không reset hoặc xóa report.
