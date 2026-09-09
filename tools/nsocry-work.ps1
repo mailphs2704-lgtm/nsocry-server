@@ -22,7 +22,8 @@ function Stop-Workflow([string]$Message, [int]$Code = 1) {
 }
 
 function Invoke-Git([string[]]$Arguments) {
-    & git @Arguments
+    # Không cho Git tự repack/gc trong workflow tương tác; Windows có thể đang khóa pack.idx.
+    & git -c gc.auto=0 -c maintenance.auto=false @Arguments
     if ($LASTEXITCODE -ne 0) {
         Stop-Workflow "Lenh git that bai: git $($Arguments -join ' ')" $LASTEXITCODE
     }
@@ -176,7 +177,7 @@ function Build-And-Publish {
     $reportCommit = (& git rev-parse HEAD).Trim()
 
     Write-Host "===== PUSH REPORT ====="
-    & git push origin $ExpectedBranch
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
     if ($LASTEXITCODE -ne 0) {
         Write-Host ""
         Write-Host "NSOCRY_WORKFLOW_RESULT=REPORT_COMMITTED_PUSH_FAILED"
