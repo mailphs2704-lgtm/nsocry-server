@@ -62,3 +62,10 @@ Nếu báo sai nhánh hoặc working tree bẩn, không xóa file và không res
 ## Tác động dự án
 
 Đây là công cụ vận hành/kiểm chứng, không làm tăng trực tiếp phần trăm gameplay. Nó rút ngắn vòng lặp test Windows và cung cấp bằng chứng có commit SHA, từ đó giảm việc chép log thủ công và tránh kết luận PASS từ log cũ.
+
+
+## Quay lại menu sau tác vụ
+
+Khi chạy bằng menu tương tác, sau khi tác vụ hoàn tất hoặc báo lỗi, nhấn phím tại màn hình
+`pause`; BAT tự quay về trang menu đầu. Chỉ lựa chọn `0` mới đóng BAT. Chế độ gọi trực tiếp
+có argument, ví dụ `NSOCRY_WORK.bat 1`, vẫn kết thúc và trả exit code cho automation.
