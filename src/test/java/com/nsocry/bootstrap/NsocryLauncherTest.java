@@ -63,6 +63,15 @@ class NsocryLauncherTest {
         assertEquals(Path.of("data-import-plan.properties"), request.configurationPath());
     }
 
+
+    @Test
+    void parsesAuthorizedDataSeedImport() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"data-seed-import", "data-import-plan.properties"});
+        assertEquals(NsocryLauncher.LaunchCommand.DATA_SEED_IMPORT, request.command());
+        assertEquals(Path.of("data-import-plan.properties"), request.configurationPath());
+    }
+
     @Test
     void parsesDataDatabaseVerification() {
         NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
