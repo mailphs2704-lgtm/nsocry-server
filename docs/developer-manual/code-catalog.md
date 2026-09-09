@@ -1547,6 +1547,20 @@
 
 **Trạng thái:** `IMPLEMENTED`; bằng chứng chi tiết xem [STATUS](../project/STATUS.md).
 
+### `com.nsocry.operations.DataAssetImportAuthorization`
+
+- **Source:** `src/main/java/com/nsocry/operations/DataAssetImportAuthorization.java`
+- **Vai trò tóm tắt:** Bằng chứng bất biến rằng backup/checksum/overwrite gate offline đã đạt.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** không cho phép backup rỗng hoặc overwrite mode ngầm định.
+
+### `com.nsocry.operations.DataAssetImportSafetyGate`
+
+- **Source:** `src/main/java/com/nsocry/operations/DataAssetImportSafetyGate.java`
+- **Vai trò tóm tắt:** Tính SHA-256 file backup thật, đối chiếu checkpoint và candidate confirmation trước JDBC.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** gate phải giữ offline/fail-closed, checksum constant-time và không mở database.
+
 ### `com.nsocry.operations.DataAssetSeedArchiveService`
 
 - **Source:** `src/main/java/com/nsocry/operations/DataAssetSeedArchiveService.java`
