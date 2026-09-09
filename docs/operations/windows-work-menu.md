@@ -85,5 +85,8 @@ repack thủ công chỉ thực hiện sau khi đóng IDE/Git process và không
 
 Lựa chọn 5 yêu cầu JAR đã được build và dùng
 `config/data-import-plan.properties.example`. Script chỉ validate archive/backup/confirmation.
-Output thành công phải có `DATA_IMPORT_PLAN_AUTHORIZED_OFFLINE`,
+Output thành công phải có `DATA_IMPORT_PLAN_REPORT_PUBLISHED`,
 `DATABASE_CONNECTION_OPENED=false`, `DATABASE_CHANGED=false`, `DATA_IMPORTED=false`.
+
+
+Kết quả lựa chọn 5 được commit/push vào `reports/windows/latest-data-import-plan.md` để AI kiểm tra sau khi chủ dự án chỉ cần báo “xong”. Báo cáo không chứa database password hoặc payload.
