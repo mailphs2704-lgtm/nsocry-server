@@ -1742,6 +1742,43 @@
   - **Dòng 69 — `public void recordFailedLogin(long accountId, Instant occurredAt) {`**: Tăng nguyên tử bộ đếm đăng nhập sai; chính sách đặt locked_until thuộc checkpoint kế tiếp.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.persistence.DataAssetOverwriteMode`
+
+- **Source:** `src/main/java/com/nsocry/persistence/DataAssetOverwriteMode.java`
+- **Vai trò tóm tắt:** Chính sách fail-closed, mặc định từ chối DATA version đã tồn tại và chỉ cho phép thay khi caller chọn rõ.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** giữ mặc định REJECT_EXISTING; không nối command import nếu thiếu xác nhận database riêng.
+
+### `com.nsocry.persistence.DataAssetSeedImportException`
+
+- **Source:** `src/main/java/com/nsocry/persistence/DataAssetSeedImportException.java`
+- **Vai trò tóm tắt:** Lỗi có nguyên nhân gốc cho transaction import và read-back DATA.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** không làm mất SQLException hoặc suppressed rollback failure.
+
+### `com.nsocry.persistence.DataAssetSeedImportResult`
+
+- **Source:** `src/main/java/com/nsocry/persistence/DataAssetSeedImportResult.java`
+- **Vai trò tóm tắt:** Kết quả commit gồm metadata đã validate và cờ row cũ đã bị thay.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** không thêm trạng thái runtime/startup vào persistence result.
+
+### `com.nsocry.persistence.JdbcDataAssetSeedImporter`
+
+- **Source:** `src/main/java/com/nsocry/persistence/JdbcDataAssetSeedImporter.java`
+- **Vai trò tóm tắt:** Import archive DATA đã validate bằng transaction SERIALIZABLE, row lock và explicit overwrite gate.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API chính:** constructor nhận DataSource; `importSeed(ValidatedDataAssetSeedArchive, DataAssetOverwriteMode)`.
+- **Khi sửa:** validation phải xảy ra trước importer; đúng một row được thay đổi hoặc rollback.
+
+### `com.nsocry.persistence.JdbcDataAssetSeedVerifier`
+
+- **Source:** `src/main/java/com/nsocry/persistence/JdbcDataAssetSeedVerifier.java`
+- **Vai trò tóm tắt:** Read-back bảy cột DATA, so archive và tính lại checksum canonical trên connection read-only.
+- **Trạng thái:** `IMPLEMENTED_PENDING_TEST`
+- **API chính:** constructor nhận DataSource; `verify(ValidatedDataAssetSeedArchive)`.
+- **Khi sửa:** giữ so sánh byte payload, manifest, metadata và checksum; không chỉ tin cột SHA lưu sẵn.
+
 ### `com.nsocry.persistence.JdbcDataAssetSchemaInspector`
 
 - **Source:** `src/main/java/com/nsocry/persistence/JdbcDataAssetSchemaInspector.java`
