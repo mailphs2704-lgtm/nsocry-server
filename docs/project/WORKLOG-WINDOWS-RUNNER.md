@@ -38,3 +38,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm transactional importer, explicit overwrite mode, rollback và database read-back verifier.
 - Chưa tạo command import; `databaseChanged=false`, `dataImported=false`.
 - Tranche importer mới đang chờ full suite Windows qua menu số 1.
+
+
+## 2026-09-09 — sửa full-suite 324 và vòng lặp menu
+
+- Báo cáo commit `d549274e`: 324 test, importer 3/3 PASS, tổng suite FAILURE do
+  DocumentationCoverageTest phát hiện code catalog thiếu DataAssetOverwriteMode.
+- Đã bổ sung catalog cho toàn bộ năm production source DATA importer/verifier.
+- Đã đổi nhánh menu tương tác từ exit sang quay lại MENU sau pause; direct-argument vẫn trả exit code.
+- Không có lỗi transaction được ghi nhận; `databaseChanged=false`, `dataImported=false`.
