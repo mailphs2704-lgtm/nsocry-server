@@ -95,3 +95,14 @@ INSERT hoặc UPDATE. Chế độ mặc định `REJECT_EXISTING` rollback nếu
 `JdbcDataAssetSeedVerifier` mở connection read-only, đọc đủ bảy cột, so metadata/payload/
 manifest với archive rồi decode và tính lại checksum canonical. Chưa route hai thành phần này
 ra launcher nên checkpoint hiện tại không có đường chạy import database thật.
+
+
+## Import safety gate — checkpoint 2026-09-09
+
+Trước khi command import tương lai được phép mở JDBC, `DataAssetImportSafetyGate` yêu cầu file
+backup tồn tại, là regular file, không rỗng và có SHA-256 đúng checkpoint đã duyệt. Candidate
+confirmation phải khớp checksum archive bằng so sánh constant-time; caller phải truyền rõ
+`REJECT_EXISTING` hoặc `REPLACE_SAME_VERSION`.
+
+Gate hiện chỉ chạy offline và trả `DataAssetImportAuthorization`; chưa có launcher route hoặc
+command DML, do đó không thể import database ở checkpoint này.
