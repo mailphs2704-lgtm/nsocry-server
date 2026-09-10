@@ -7,6 +7,7 @@ import java.nio.ByteOrder;
 public final class LegacyFrameCodec {
     public static final byte KEY_EXCHANGE_COMMAND = -27;
     public static final byte FULL_SIZE_COMMAND = -32;
+    public static final int LEGACY_SHORT_ROUTING_LIMIT = Short.MAX_VALUE;
 
     private LegacyFrameCodec() {
     }
@@ -22,10 +23,11 @@ public final class LegacyFrameCodec {
         return cipher == null ? frame : cipher.transform(frame);
     }
 
-    /** Tạo frame kích thước đầy đủ dùng command đặc biệt và trường độ dài int. */
-    public static byte[] encodeFullSizeFrame(byte[] payload, RollingXorCipher cipher) {
-        ByteBuffer buffer = ByteBuffer.allocate(5 + payload.length).order(ByteOrder.BIG_ENDIAN);
-        buffer.put(FULL_SIZE_COMMAND).putInt(payload.length).put(payload);
+    /** Tạo frame đầy đủ: -32, command gốc, int length rồi payload. */
+    public static byte[] encodeFullSizeFrame(
+            byte originalCommand, byte[] payload, RollingXorCipher cipher) {
+        ByteBuffer buffer = ByteBuffer.allocate(6 + payload.length).order(ByteOrder.BIG_ENDIAN);
+        buffer.put(FULL_SIZE_COMMAND).put(originalCommand).putInt(payload.length).put(payload);
         byte[] frame = buffer.array();
         return cipher == null ? frame : cipher.transform(frame);
     }
@@ -40,9 +42,10 @@ public final class LegacyFrameCodec {
         byte command = buffer.get();
         int payloadLength;
         if (command == FULL_SIZE_COMMAND) {
-            if (plain.length < 5) {
+            if (plain.length < 6) {
                 throw new IllegalArgumentException("full-size frame is too short");
             }
+            command = buffer.get();
             payloadLength = buffer.getInt();
         } else {
             payloadLength = Short.toUnsignedInt(buffer.getShort());
