@@ -4,7 +4,7 @@
 
 **Trạng thái:** IN_PROGRESS
 
-**Tiến độ đến gameplay cơ bản:** 19%
+**Tiến độ đến gameplay cơ bản:** 20%
 
 **Nguồn lịch sử:** `docs/project/WORKLOG.md` và các worklog checkpoint bổ sung.
 
@@ -114,12 +114,12 @@ khóa cứng phạm vi này; chưa chạy database.
 - Startup readiness gate trong atomic store: **VERIFIED_BY_FULL_SUITE 365/365**.
 - TCP readiness hook: **VERIFIED_BY_FULL_SUITE 368/368**.
 - DATA startup composition: **VERIFIED_BY_FULL_SUITE 370/370**.
-- Production DATA startup wiring: **VERIFIED_BY_FULL_SUITE 372/372**.
+- Production DATA startup wiring: **VERIFIED_END_TO_END_WINDOWS**; 372/372 PASS và smoke `STARTED_READY_AND_STOPPED` tại commit `a9ebc146`.
+- Application đã sở hữu DATA store và chỉ expose `Optional<DataAssetRuntimeSnapshot>` bất biến; hai ownership tests đang chờ full suite.
 - Đã thêm BAT option 8: full build, bounded startup smoke, xác nhận DATA READY/TCP bind, cleanup đúng PID và push report.
 - Smoke test server thật chưa chạy; chưa tuyên bố runtime production READY.
 
 ## Next exact action
 
-Chủ dự án chọn `2` để pull, chọn `0`, mở lại `NSOCRY_WORK.bat` rồi chọn `8`.
-Runner sẽ build, chạy server tạm thời và tự dừng. Sau khi báo “xong”, AI phải kiểm tra
-`reports/windows/latest-data-startup-smoke.md`.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng application ownership của DATA store.
+Mục tiêu dự kiến: **374/374 PASS**. Database không đổi và workflow không khởi động server.
