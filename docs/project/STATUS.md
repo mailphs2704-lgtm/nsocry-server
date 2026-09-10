@@ -114,10 +114,12 @@ khóa cứng phạm vi này; chưa chạy database.
 - Startup readiness gate trong atomic store: **VERIFIED_BY_FULL_SUITE 365/365**.
 - TCP readiness hook: **VERIFIED_BY_FULL_SUITE 368/368**.
 - DATA startup composition: **VERIFIED_BY_FULL_SUITE 370/370**.
-- Production `main` đã tạo store, authoritative v7 JDBC readiness và truyền vào TCP startup hook; hai test identity/factory mới đang chờ full suite.
-- Code đã wired nhưng chưa chạy server smoke test; chưa tuyên bố runtime production READY.
+- Production DATA startup wiring: **VERIFIED_BY_FULL_SUITE 372/372**.
+- Đã thêm BAT option 8: full build, bounded startup smoke, xác nhận DATA READY/TCP bind, cleanup đúng PID và push report.
+- Smoke test server thật chưa chạy; chưa tuyên bố runtime production READY.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng production DATA startup wiring.
-Mục tiêu dự kiến: **372/372 PASS**. Workflow không chạy server; database không đổi.
+Chủ dự án chọn `2` để pull, chọn `0`, mở lại `NSOCRY_WORK.bat` rồi chọn `8`.
+Runner sẽ build, chạy server tạm thời và tự dừng. Sau khi báo “xong”, AI phải kiểm tra
+`reports/windows/latest-data-startup-smoke.md`.
