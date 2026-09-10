@@ -2360,3 +2360,14 @@
 ## Phạm vi chưa có source
 
 Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ để xuất hiện trong catalog. Tra cứu [planned-contracts.tsv](../architecture/planned-contracts.tsv) và [trace-register](trace-register.md).
+
+
+### `com.nsocry.bootstrap.DataAssetServerStartupReadiness`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetServerStartupReadiness.java`
+- **Vai trò tóm tắt:** Điều phối DATA source → validation → atomic publish → identity gate trước TCP bind.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - Constructor nhận `DataAssetSource`, manifest authoritative và store do server lifecycle sở hữu.
+  - `verify()` chỉ trả về khi snapshot hiện hành khớp version/SHA-256; source/validation lỗi đều fail closed.
+- **Khi sửa:** giữ thứ tự publish rồi require identity; không nuốt lỗi và không mở listener khi store rỗng.
