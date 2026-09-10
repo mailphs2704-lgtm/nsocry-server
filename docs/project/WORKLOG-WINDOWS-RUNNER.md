@@ -193,3 +193,15 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - JDBC DATA source chuyển VERIFIED_BY_FULL_SUITE.
 - Thêm isolated runtime publish command, bốn command tests và launcher route test.
 - Chưa chạy command trên database thật; server startup chưa nối.
+
+
+## 2026-09-10 — DATA publish command 361/361 và BAT option 7
+
+- Báo cáo Windows đúng commit `f7fa350b`: BUILD SUCCESS, 361/361 PASS, không skipped.
+- Isolated DATA runtime publish command và launcher route chuyển `VERIFIED_BY_FULL_SUITE`.
+- Thêm BAT option 7: pull, chạy command trên database read-only, kiểm tra
+  `PUBLISHED_ISOLATED` và tự push báo cáo riêng.
+- Runner khóa `databaseChanged=false`, `runtimeSnapshotPublished=true`,
+  `serverStartupWired=false`; store chỉ sống trong process command.
+- Lần chạy thật option 7 trên Windows: `PENDING_OWNER_WINDOWS_RUN`.
+- Tiến độ gameplay giữ 19% vì chưa nối snapshot vào startup/server lifecycle.
