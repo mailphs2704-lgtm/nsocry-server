@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.nsocry.assets.AtomicDataAssetRuntimeSnapshotStore;
 import com.nsocry.configuration.ServerConfiguration;
 import com.nsocry.network.NetworkEventSink;
 import com.nsocry.network.TcpServerConfig;
@@ -69,6 +70,32 @@ class NsocryServerApplicationTest {
                 (login, client) -> AuthenticationDecision.REJECTED,
                 new NoOpEvents(),
                 null));
+    }
+
+    @Test
+    void applicationOwnsProvidedDataStoreWithoutExposingMutation() throws Exception {
+        AtomicDataAssetRuntimeSnapshotStore store = new AtomicDataAssetRuntimeSnapshotStore();
+        NsocryServerApplication application = new NsocryServerApplication(
+                configuration(),
+                (login, client) -> AuthenticationDecision.REJECTED,
+                new NoOpEvents(),
+                store,
+                () -> { });
+        try {
+            assertTrue(application.dataSnapshot().isEmpty());
+        } finally {
+            application.close();
+        }
+    }
+
+    @Test
+    void rejectsMissingOwnedDataStore() {
+        assertThrows(NullPointerException.class, () -> new NsocryServerApplication(
+                configuration(),
+                (login, client) -> AuthenticationDecision.REJECTED,
+                new NoOpEvents(),
+                null,
+                () -> { }));
     }
 
     private static NsocryServerApplication application(
