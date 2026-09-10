@@ -152,3 +152,14 @@ BAT option 6 đã chạy trên database NSOCry và báo `IMPORTED_AND_VERIFIED`:
 - runtime snapshot/startup vẫn false.
 
 Báo cáo bằng chứng: `reports/windows/latest-data-import.md`.
+
+
+## DATA JDBC source và runtime snapshot
+
+`JdbcDataAssetSource` đọc row v7 trong transaction read-only `REPEATABLE_READ`, decode payload
+và đối chiếu lại version/count/length/checksum trước khi trả bundle. Missing row hoặc metadata
+sai phải rollback.
+
+`DataAssetRuntimePublishService` validate bundle với manifest authoritative, tạo snapshot
+defensive-copy và atomic swap vào store. Full suite snapshot/service đạt 353/353; ba JDBC source
+tests đang chờ Windows gate. Startup chưa sở hữu store này và runtime thật chưa publish.
