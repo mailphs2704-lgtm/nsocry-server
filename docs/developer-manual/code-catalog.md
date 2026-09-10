@@ -220,6 +220,24 @@
   - **Dòng 63 — `public static DataAssetBundle decode(byte[] payload) throws IOException {`**: Parse lại container; effect-template là block cuối nên nhận toàn bộ byte còn lại.
 - **Khi sửa:** kiểm tra caller bằng `rg`, cập nhật test + manual module + STATUS/WORKLOG; không đổi contract LOCKED nếu thiếu ADR.
 
+### `com.nsocry.assets.AtomicDataAssetRuntimeSnapshotStore`
+
+- **Source:** `src/main/java/com/nsocry/assets/AtomicDataAssetRuntimeSnapshotStore.java`
+- **Vai trò tóm tắt:** AtomicReference store cho đúng một DATA runtime snapshot hoàn chỉnh.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+
+### `com.nsocry.assets.DataAssetRuntimePublishService`
+
+- **Source:** `src/main/java/com/nsocry/assets/DataAssetRuntimePublishService.java`
+- **Vai trò tóm tắt:** Load source, validate manifest, encode payload và atomic publish.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+
+### `com.nsocry.assets.DataAssetRuntimeSnapshot`
+
+- **Source:** `src/main/java/com/nsocry/assets/DataAssetRuntimeSnapshot.java`
+- **Vai trò tóm tắt:** Snapshot DATA bất biến, defensive-copy và tự khóa length/SHA-256.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+
 ### `com.nsocry.assets.DataAssetSeedArtifact`
 
 - **Source:** `src/main/java/com/nsocry/assets/DataAssetSeedArtifact.java`
@@ -1828,6 +1846,13 @@
 - **Trạng thái:** `IMPLEMENTED_PENDING_TEST`
 - **API chính:** constructor nhận DataSource; `verify(ValidatedDataAssetSeedArchive)`.
 - **Khi sửa:** giữ so sánh byte payload, manifest, metadata và checksum; không chỉ tin cột SHA lưu sẵn.
+
+### `com.nsocry.persistence.JdbcDataAssetSource`
+
+- **Source:** `src/main/java/com/nsocry/persistence/JdbcDataAssetSource.java`
+- **Vai trò tóm tắt:** Đọc DATA row bằng repeatable-read transaction, kiểm định metadata/payload/checksum rồi trả bundle.
+- **Trạng thái:** `IMPLEMENTED_PENDING_JDBC_TEST`
+- **Khi sửa:** connection phải read-only; missing/tampered row rollback và không trả bundle.
 
 ### `com.nsocry.persistence.JdbcDataAssetSchemaInspector`
 
