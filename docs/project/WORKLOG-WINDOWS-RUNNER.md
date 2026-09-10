@@ -256,3 +256,15 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
   đúng PID trong `finally`.
 - Success yêu cầu đồng thời DATA READY version 7, TCP started, process từng chạy và đã được dừng.
 - Database chỉ đọc; smoke thật đang chờ chủ dự án chạy.
+
+
+## 2026-09-10 — production startup smoke VERIFIED và application ownership
+
+- Smoke report commit `a9ebc146`: `STARTED_READY_AND_STOPPED`.
+- Server bind `0.0.0.0:14444`, DATA snapshot READY version 7, stderr rỗng.
+- Runner dừng đúng PID; database không đổi, không import lại.
+- Tiến độ gameplay cơ bản tăng 19% → 20% vì DATA đã thực sự tham gia production startup.
+- Chuyển atomic DATA store thành tài nguyên do `NsocryServerApplication` sở hữu.
+- Application chỉ expose `Optional<DataAssetRuntimeSnapshot>`; không expose hàm publish/mutation
+  cho session/gameplay.
+- Hai ownership tests mới đang chờ full suite Windows.
