@@ -25,22 +25,37 @@ import javax.sql.DataSource;
 /** Điểm ghép và vòng đời tối thiểu để chạy TCP server NSOCry từ cấu hình. */
 public final class NsocryServerApplication implements Closeable {
     private final TcpServer server;
+    private final StartupReadiness startupReadiness;
 
     /** Ghép cấu hình, xác thực và event sink thành server nhưng chưa tự động start. */
     public NsocryServerApplication(
             ServerConfiguration configuration,
             AuthenticationPort authentication,
             NetworkEventSink events) {
+        this(configuration, authentication, events, () -> { });
+    }
+
+    /**
+     * Ghép thêm readiness gate production; gate chạy ngay trước khi listener bind.
+     * Constructor này chưa tự chạy gate hoặc mở socket.
+     */
+    public NsocryServerApplication(
+            ServerConfiguration configuration,
+            AuthenticationPort authentication,
+            NetworkEventSink events,
+            StartupReadiness startupReadiness) {
         Objects.requireNonNull(configuration, "configuration");
         LegacyHandshakeConnectionHandler handler = new LegacyHandshakeConnectionHandler(
                 ProtocolLimits.DEFAULT,
                 new SecureRandomSessionKeyProvider(configuration.sessionKeyLength()),
                 Objects.requireNonNull(authentication, "authentication"));
         server = new TcpServer(configuration.tcp(), handler, Objects.requireNonNull(events, "events"));
+        this.startupReadiness = Objects.requireNonNull(startupReadiness, "startupReadiness");
     }
 
-    /** Khởi động TCP listener sau khi toàn bộ dependency đã được tạo thành công. */
+    /** Khởi động TCP listener chỉ sau khi readiness gate hoàn tất không lỗi. */
     public void start() throws IOException {
+        startupReadiness.verify();
         server.start();
     }
 
@@ -83,6 +98,12 @@ public final class NsocryServerApplication implements Closeable {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> closeQuietly(application), "nsocry-shutdown"));
         application.start();
         System.out.println("NSOCry server started on " + application.server().localAddress());
+    }
+
+    /** Gate đồng bộ, fail-closed, không được mở listener khi verify ném lỗi. */
+    @FunctionalInterface
+    public interface StartupReadiness {
+        void verify();
     }
 
     /** Đóng application trong shutdown hook mà không che khuất quá trình JVM đang dừng. */
