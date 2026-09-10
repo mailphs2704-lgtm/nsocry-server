@@ -80,6 +80,15 @@ class NsocryLauncherTest {
         assertEquals(Path.of("seed/data.zip"), request.configurationPath());
     }
 
+
+    @Test
+    void parsesDataRuntimePublish() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"data-runtime-publish", "seed/data.zip"});
+        assertEquals(NsocryLauncher.LaunchCommand.DATA_RUNTIME_PUBLISH, request.command());
+        assertEquals(Path.of("seed/data.zip"), request.configurationPath());
+    }
+
     @Test
     void parsesItemSeedDryRunArchive() {
         NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
