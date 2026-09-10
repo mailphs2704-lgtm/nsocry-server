@@ -163,3 +163,11 @@ sai phải rollback.
 `DataAssetRuntimePublishService` validate bundle với manifest authoritative, tạo snapshot
 defensive-copy và atomic swap vào store. Full suite snapshot/service đạt 353/353; ba JDBC source
 tests đang chờ Windows gate. Startup chưa sở hữu store này và runtime thật chưa publish.
+
+
+## DATA runtime publish command cô lập
+
+`data-runtime-publish <archive-path>` validate archive và schema, đọc row v7 qua
+`JdbcDataAssetSource`, validate lại rồi atomic publish vào store cục bộ của command. Output dùng
+`PUBLISHED_ISOLATED` để không nhầm với server startup. Command không ghi database; snapshot biến
+mất khi process command kết thúc.
