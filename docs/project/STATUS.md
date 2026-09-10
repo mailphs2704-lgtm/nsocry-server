@@ -108,11 +108,11 @@ khóa cứng phạm vi này; chưa chạy database.
 
 - Full suite Windows: **353/353 PASS** tại commit `bbb62e16`.
 - Runtime snapshot, defensive copy, atomic store và publish service: VERIFIED_BY_FULL_SUITE.
-- JDBC DATA source production đã compile; thêm ba tests cho valid row/read-only snapshot,
-  missing row rollback và metadata mismatch rollback.
+- JDBC DATA source và ba tests: VERIFIED_BY_FULL_SUITE 356/356.
+- Đã thêm DATA runtime publish command cô lập, bốn command tests và launcher route test; đang chờ full suite.
 - Chưa chạy runtime publish command thật; startup chưa nối.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng JDBC DATA source.
-Mục tiêu dự kiến: 356/356 PASS.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA runtime publish command.
+Mục tiêu dự kiến: 361/361 PASS. Chưa chạy command trên database thật và startup chưa nối.
