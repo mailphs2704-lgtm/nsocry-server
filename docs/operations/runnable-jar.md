@@ -227,3 +227,16 @@ java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar data-seed-import-plan data-imp
 Kết quả hợp lệ là `DATA import plan AUTHORIZED_OFFLINE` cùng
 `databaseConnectionOpened=false`, `databaseChanged=false`, `dataImported=false`.
 Command này không phải lệnh import và không thay thế quyền import riêng của chủ dự án.
+
+
+## DATA v7 bắt buộc trước khi server bind
+
+Production command `server` từ checkpoint này dựng `JdbcDataAssetSource` cho version 7 và
+publish vào atomic store thông qua readiness hook. TCP listener chỉ bind sau khi row database
+khớp 43 task group, 131 EXP, payload 85154 byte và SHA-256
+`242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+
+Nếu database không kết nối được, schema sai, thiếu row hoặc checksum lệch, startup phải kết thúc
+bằng lỗi trước khi mở cổng. Command chỉ đọc DATA; không chạy migration/import/overwrite. Chưa
+được chạy smoke test server thật cho đến khi full suite của wiring đạt và chủ dự án thực hiện
+qua tác vụ vận hành có timeout/cleanup rõ ràng.
