@@ -41,7 +41,10 @@ public final class PostLoginAssetSyncService {
         Objects.requireNonNull(limits, "limits");
         ProtocolFrame response = respond(request);
         int length = response.payload().length;
-        if (length <= limits.maxShortPayload()) {
+        int shortRoutingLimit = Math.min(
+                limits.maxShortPayload(),
+                com.nsocry.protocol.compat.LegacyFrameCodec.LEGACY_SHORT_ROUTING_LIMIT);
+        if (length <= shortRoutingLimit) {
             limits.requireAllowed(length, false);
             return new ResponsePlan(response, Delivery.SHORT);
         }
