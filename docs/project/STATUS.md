@@ -104,13 +104,15 @@ khóa cứng phạm vi này; chưa chạy database.
 - DATA runtime tranche: đã thêm JDBC source, immutable snapshot, atomic store, publish service và 6 unit tests; đang chờ full suite.
 - DataAssetSource contract đã tồn tại và được tái sử dụng, không tạo contract trùng.
 
-## DATA runtime testCompile checkpoint
+## DATA runtime pipeline
 
-Lần chạy commit `296bad67` compile production thành công nhưng dừng tại testCompile do typo
-tên `DataAssetSeedArtifactGenerator` trong fixture. Typo đã sửa tại `a6ee910f`; database và
-runtime không thay đổi trong lần build thất bại.
+- Full suite Windows: **353/353 PASS** tại commit `bbb62e16`.
+- Runtime snapshot, defensive copy, atomic store và publish service: VERIFIED_BY_FULL_SUITE.
+- JDBC DATA source production đã compile; thêm ba tests cho valid row/read-only snapshot,
+  missing row rollback và metadata mismatch rollback.
+- Chưa chạy runtime publish command thật; startup chưa nối.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để chạy lại DATA runtime snapshot gate.
-Mục tiêu: 353/353 PASS.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng JDBC DATA source.
+Mục tiêu dự kiến: 356/356 PASS.
