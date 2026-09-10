@@ -90,6 +90,48 @@ class DataAssetRuntimePublishServiceTest {
                 () -> DataAssetRuntimeSnapshot.verified(validation, changed));
     }
 
+    @Test
+    void startupReadinessReturnsExactPublishedSnapshot() throws Exception {
+        DataAssetBundle bundle = bundle();
+        DataAssetSeedArtifact artifact = DataAssetSeedArtifactGenerator.generate(bundle);
+        AtomicDataAssetRuntimeSnapshotStore store = new AtomicDataAssetRuntimeSnapshotStore();
+        DataAssetRuntimeSnapshot published = new DataAssetRuntimePublishService(
+                () -> bundle, artifact.manifest(), store).rebuildAndPublish();
+
+        assertSame(published, store.requireCurrent(
+                artifact.manifest().version(), artifact.manifest().payloadSha256()));
+    }
+
+    @Test
+    void startupReadinessFailsClosedWithoutSnapshot() {
+        AtomicDataAssetRuntimeSnapshotStore store = new AtomicDataAssetRuntimeSnapshotStore();
+
+        assertThrows(IllegalStateException.class,
+                () -> store.requireCurrent((byte) 7, "0".repeat(64)));
+    }
+
+    @Test
+    void startupReadinessRejectsWrongAuthoritativeIdentity() throws Exception {
+        DataAssetBundle bundle = bundle();
+        DataAssetSeedArtifact artifact = DataAssetSeedArtifactGenerator.generate(bundle);
+        AtomicDataAssetRuntimeSnapshotStore store = new AtomicDataAssetRuntimeSnapshotStore();
+        new DataAssetRuntimePublishService(
+                () -> bundle, artifact.manifest(), store).rebuildAndPublish();
+
+        assertThrows(IllegalStateException.class,
+                () -> store.requireCurrent((byte) 6, artifact.manifest().payloadSha256()));
+        assertThrows(IllegalStateException.class,
+                () -> store.requireCurrent((byte) 7, "0".repeat(64)));
+    }
+
+    @Test
+    void startupReadinessRejectsNullChecksum() {
+        AtomicDataAssetRuntimeSnapshotStore store = new AtomicDataAssetRuntimeSnapshotStore();
+
+        assertThrows(NullPointerException.class,
+                () -> store.requireCurrent((byte) 7, null));
+    }
+
     private static DataAssetBundle bundle() {
         EnumMap<ClientGraphicBlock, byte[]> graphics = new EnumMap<>(ClientGraphicBlock.class);
         for (ClientGraphicBlock block : ClientGraphicBlock.values()) {
