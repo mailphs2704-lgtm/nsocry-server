@@ -84,13 +84,16 @@ Chủ dự án đã cho phép import DATA v7 vào database NSOCry bằng `REJECT
 phép overwrite, runtime publish, startup wiring hoặc merge main. Command thật đã triển khai và
 khóa cứng phạm vi này; chưa chạy database.
 
-## Sự cố vận hành mới nhất
+## Gate trước import
 
-Offline plan vẫn AUTHORIZED và database side effects false, nhưng report commit local
-`ab90b157` bị push reject vì remote đã có command import mới. BAT option 5 đã sửa để pull trước
-khi tạo report.
+- Local divergence đã recovery bằng rebase; báo cáo GitHub đúng commit `a04c6f9c`.
+- Full suite Windows: **347/347 PASS**.
+- Command DATA import REJECT_EXISTING: VERIFIED_BY_FULL_SUITE.
+- BAT option 6 đã thêm: pull, full build lại, import, read-back và auto-publish report.
+- Database chưa import tại thời điểm cập nhật này.
 
 ## Next exact action
 
-Rebase an toàn report-only commit `ab90b157` lên remote, push nó, sau đó chạy menu số 1 để
-kiểm chứng command import. Mục tiêu: 347/347 PASS; chưa chạy import database.
+Chủ dự án dùng menu số 2 để pull BAT mới, thoát/reopen rồi chọn số 6. Chỉ chấp nhận thành công
+khi GitHub report báo `IMPORTED_AND_VERIFIED`, `overwritten=false`,
+`databaseChanged=true`, `dataImported=true`; runtime/startup phải false.
