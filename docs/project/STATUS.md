@@ -92,8 +92,12 @@ khóa cứng phạm vi này; chưa chạy database.
 - BAT option 6 đã thêm: pull, full build lại, import, read-back và auto-publish report.
 - Database chưa import tại thời điểm cập nhật này.
 
+## Sự cố BAT self-update
+
+Pull đến `40fbc409` thành công nhưng CMD đọc lệch file BAT vừa bị pull thay đổi, tạo lỗi
+`rofile is not recognized`. Database import chưa chạy. BAT đã sửa để chạy từ bản sao %TEMP%.
+
 ## Next exact action
 
-Chủ dự án dùng menu số 2 để pull BAT mới, thoát/reopen rồi chọn số 6. Chỉ chấp nhận thành công
-khi GitHub report báo `IMPORTED_AND_VERIFIED`, `overwritten=false`,
-`databaseChanged=true`, `dataImported=true`; runtime/startup phải false.
+Chủ dự án đóng BAT, pull bản sửa self-update bằng CMD bên ngoài, mở lại BAT và chọn số 6.
+Import chỉ hợp lệ khi report GitHub xác nhận IMPORTED_AND_VERIFIED và overwritten=false.
