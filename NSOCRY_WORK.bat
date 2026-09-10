@@ -18,6 +18,7 @@ echo [2] Chi pull code moi
 echo [3] Build/test + gui bao cao, khong pull
 echo [4] Xem bao cao Windows gan nhat tren may
 echo [5] Chay DATA import plan OFFLINE (khong mo database)
+echo [6] IMPORT DATA V7 vao NSOCry (REJECT_EXISTING)
 echo [0] Thoat
 echo.
 set /p "NSOCRY_ACTION=Chon mot so: "
@@ -28,6 +29,7 @@ if "%NSOCRY_ACTION%"=="2" goto RUN
 if "%NSOCRY_ACTION%"=="3" goto RUN
 if "%NSOCRY_ACTION%"=="4" goto RUN
 if "%NSOCRY_ACTION%"=="5" goto RUN
+if "%NSOCRY_ACTION%"=="6" goto RUN
 
 echo Lua chon khong hop le.
 pause
