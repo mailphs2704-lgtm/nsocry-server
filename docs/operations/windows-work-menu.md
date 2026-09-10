@@ -110,3 +110,11 @@ pull, chạy lại `mvn clean package`, sau đó mới gọi `data-seed-import`.
 Báo cáo được push tại `reports/windows/latest-data-import.md`. Nếu exit/output không chứng minh
 cả import và read-back, trạng thái là `FAILED_OR_UNCERTAIN`; không publish runtime/startup và
 phải dừng điều tra.
+
+
+## BAT tự cập nhật giữa lúc chạy
+
+CMD đọc batch file theo vị trí trong file. Nếu `git pull` thay đổi chính BAT đang chạy, vị trí
+đọc có thể lệch và biến `powershell -NoProfile` thành chuỗi lỗi như `rofile`. BAT từ
+checkpoint này tự sao chép vào `%TEMP%`, chạy toàn bộ menu từ bản sao ổn định rồi xóa file tạm
+khi thoát. Pull vẫn cập nhật file gốc nhưng không thể làm hỏng tiến trình hiện tại.
