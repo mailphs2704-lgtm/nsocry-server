@@ -4,7 +4,7 @@
 
 `NSOCRY_WORK.bat` tạo một điểm chạy duy nhất cho chủ dự án. Khi AI yêu cầu kiểm chứng trên Windows, người dùng mở file BAT và chọn một số; script sẽ tự pull đúng nhánh, build/test và gửi báo cáo gọn lên GitHub.
 
-Công cụ này không chạy migration, không import DATA, không publish runtime snapshot và không khởi động server.
+Công cụ này không tự chạy migration hoặc khởi động server. Các tác vụ thay đổi database chỉ có ở mục được cấp quyền riêng; mục 7 chỉ đọc database và publish snapshot trong tiến trình command cô lập.
 
 ## Cách chạy
 
@@ -25,6 +25,7 @@ Sau đó chọn:
 | 4 | Xem báo cáo gần nhất đã lưu trên máy. |
 | 5 | Chạy DATA import plan offline bằng JAR và file example; không mở database. |
 | 6 | Sau quyền riêng và gate 347/347, build lại rồi import DATA v7 bằng REJECT_EXISTING và push báo cáo. |
+| 7 | Pull rồi publish DATA snapshot cô lập từ database (read-only), kiểm tra output và push báo cáo. Không nối startup. |
 | 0 | Thoát. |
 
 Có thể chạy trực tiếp `NSOCRY_WORK.bat 1`, nhưng chế độ menu dễ dùng hơn.
@@ -118,3 +119,18 @@ CMD đọc batch file theo vị trí trong file. Nếu `git pull` thay đổi ch
 đọc có thể lệch và biến `powershell -NoProfile` thành chuỗi lỗi như `rofile`. BAT từ
 checkpoint này tự sao chép vào `%TEMP%`, chạy toàn bộ menu từ bản sao ổn định rồi xóa file tạm
 khi thoát. Pull vẫn cập nhật file gốc nhưng không thể làm hỏng tiến trình hiện tại.
+
+
+## Lựa chọn 7 — publish DATA runtime cô lập
+
+Lựa chọn 7 dùng JAR đã build và archive DATA v7 authoritative. Script pull fast-forward trước,
+sau đó gọi `data-runtime-publish`. Command mở database ở chế độ chỉ đọc, đối chiếu schema,
+metadata, payload và SHA-256 rồi publish vào atomic store chỉ tồn tại trong tiến trình command.
+Snapshot này biến mất khi command kết thúc và không được server startup sử dụng.
+
+Thành công bắt buộc có `DATA runtime snapshot PUBLISHED_ISOLATED` và
+`serverStartupWired=false`. Báo cáo được commit/push tại
+`reports/windows/latest-data-runtime-publish.md`. Các cờ tác động phải là
+`DATABASE_CHANGED=false`, `RUNTIME_SNAPSHOT_PUBLISHED=true`,
+`SERVER_STARTUP_WIRED=false`. Nếu JAR/archive thiếu, command lỗi hoặc output không đủ bằng
+chứng, runner dừng fail-closed và không tuyên bố publish thành công.
