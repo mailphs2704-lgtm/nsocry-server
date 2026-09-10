@@ -143,3 +143,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm command thật với archive/backup/checksum/schema/transaction/read-back gates.
 - Command từ chối OVERWRITE, runtime/startup vẫn false.
 - Thêm hai command tests và launcher route test; chưa chạy DML, đang chờ full suite.
+
+
+## 2026-09-10 — command import 347/347 và BAT option 6
+
+- Rebase recovery thành công; GitHub report đúng commit `a04c6f9c`, BUILD SUCCESS 347/347.
+- Command DATA v7 REJECT_EXISTING chuyển VERIFIED_BY_FULL_SUITE.
+- Thêm BAT option 6: pull, full pre-import build, command import, read-back và report push.
+- Failure sau khi command bắt đầu được phân loại FAILED_OR_UNCERTAIN; runtime/startup không nối.
+- Tại checkpoint code này DATA chưa được import.
