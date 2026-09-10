@@ -170,3 +170,10 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm immutable snapshot, atomic store và publish service.
 - Thêm sáu unit tests về publish gate, checksum failure, source failure và defensive copy.
 - Chưa publish runtime thật hoặc nối startup; database không đổi trong tranche này.
+
+
+## 2026-09-10 — sửa typo DATA runtime testCompile
+
+- Báo cáo commit `296bad67`: production compile đạt, testCompile fail do tên generator typo.
+- Sửa về đúng `DataAssetSeedArtifactGenerator`.
+- Maven chưa chạy sáu runtime tests; database/runtime không thay đổi.
