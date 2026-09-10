@@ -74,12 +74,12 @@ public final class LegacySessionTransport implements Closeable {
     }
 
     /** Gửi payload full-size mã hóa cho client bằng con trỏ chiều ra. */
-    public void sendFullSizePayload(byte[] payload) throws IOException {
+    public void sendFullSizeFrame(ProtocolFrame frame) throws IOException {
         requireOpen();
         if (outboundCipher == null) {
             throw new IOException("handshake is not complete");
         }
-        writer.writeEncryptedFullSizeFrame(payload, outboundCipher);
+        writer.writeEncryptedFullSizeFrame(frame, outboundCipher);
     }
 
     /** Trả state machine thuộc transport để processor điều phối phase. */
