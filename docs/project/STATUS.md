@@ -101,8 +101,10 @@ khóa cứng phạm vi này; chưa chạy database.
 - `overwritten=false`, `databaseChanged=true`, `dataImported=true`.
 - Transaction commit và database read-back checksum đều đạt.
 - `runtimeSnapshotPublished=false`, `serverStartupWired=false`.
+- DATA runtime tranche: đã thêm JDBC source, immutable snapshot, atomic store, publish service và 6 unit tests; đang chờ full suite.
+- DataAssetSource contract đã tồn tại và được tái sử dụng, không tạo contract trùng.
 
 ## Next exact action
 
-Xây DATA JDBC source/runtime snapshot publisher và unit tests từ row v7 đã import. Chưa gọi
-runtime publish trên server thật và chưa nối startup nếu thiếu quyền riêng mới.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA runtime snapshot tranche.
+Mục tiêu dự kiến: 353/353 PASS. Không chạy runtime publish command hoặc nối startup.
