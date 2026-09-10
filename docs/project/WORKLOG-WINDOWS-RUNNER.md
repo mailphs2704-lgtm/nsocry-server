@@ -236,3 +236,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
   require đúng version/SHA-256 trước khi trả quyền bind.
 - Hai test khóa success và database/source failure giữ store rỗng.
 - Production main chưa inject component; không kết nối database hoặc khởi động server trong tranche.
+
+
+## 2026-09-10 — composition 370/370 và production main wiring
+
+- Báo cáo commit `946fbf87`: BUILD SUCCESS, 370/370 PASS.
+- DATA startup composition chuyển `VERIFIED_BY_FULL_SUITE`.
+- Khóa identity authoritative v7: 43 task group, 131 EXP, 85154 byte và SHA-256 checkpoint.
+- Production `main` tạo atomic store, JDBC readiness và truyền vào application trước TCP bind.
+- Server chỉ in DATA READY sau khi store vượt version/checksum gate.
+- Chưa chạy server smoke test; database không đổi trong build/test.
