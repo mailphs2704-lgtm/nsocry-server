@@ -104,7 +104,13 @@ khóa cứng phạm vi này; chưa chạy database.
 - DATA runtime tranche: đã thêm JDBC source, immutable snapshot, atomic store, publish service và 6 unit tests; đang chờ full suite.
 - DataAssetSource contract đã tồn tại và được tái sử dụng, không tạo contract trùng.
 
+## DATA runtime testCompile checkpoint
+
+Lần chạy commit `296bad67` compile production thành công nhưng dừng tại testCompile do typo
+tên `DataAssetSeedArtifactGenerator` trong fixture. Typo đã sửa tại `a6ee910f`; database và
+runtime không thay đổi trong lần build thất bại.
+
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA runtime snapshot tranche.
-Mục tiêu dự kiến: 353/353 PASS. Không chạy runtime publish command hoặc nối startup.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để chạy lại DATA runtime snapshot gate.
+Mục tiêu: 353/353 PASS.
