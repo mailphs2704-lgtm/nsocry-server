@@ -1,5 +1,5 @@
 ﻿param(
-    [ValidateSet("1", "2", "3", "4", "5", "6")]
+    [ValidateSet("1", "2", "3", "4", "5", "6", "7")]
     [string]$Action = "1"
 )
 
@@ -330,6 +330,73 @@ function Invoke-AuthorizedDataImport {
     Write-Host "SERVER_STARTUP_WIRED=false"
 }
 
+
+function Invoke-IsolatedDataRuntimePublish {
+    Assert-Repository
+    Pull-Branch
+    $jar = Join-Path $RepositoryRoot "target\\nsocry-server-0.1.0-SNAPSHOT.jar"
+    $archive = Join-Path $RepositoryRoot "data-dry-run-data-seed-v7-candidate.zip"
+    if (-not (Test-Path $jar)) {
+        Stop-Workflow "Chua co JAR. Hay chon 1 de build truoc."
+    }
+    if (-not (Test-Path $archive)) {
+        Stop-Workflow "Thieu DATA v7 candidate archive."
+    }
+
+    Write-Host "===== DATA RUNTIME PUBLISH ISOLATED ====="
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    $publishOutput = @(& java -jar $jar data-runtime-publish $archive 2>&1)
+    $publishExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    $publishOutput | ForEach-Object { Write-Host $_ }
+
+    $joinedOutput = $publishOutput -join [Environment]::NewLine
+    $success = ($publishExitCode -eq 0) -and
+        $joinedOutput.Contains("DATA runtime snapshot PUBLISHED_ISOLATED") -and
+        $joinedOutput.Contains("serverStartupWired=false")
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $reportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-data-runtime-publish.md"
+    $status = if ($success) { "PUBLISHED_ISOLATED" } else { "FAILED" }
+    $reportLines = @(
+        "# DATA runtime publish Windows",
+        "",
+        "- Tested commit: $testedCommit",
+        "- Command exit code: $publishExitCode",
+        "- Status: $status",
+        "- Database changed: false",
+        "- Server startup wired: false",
+        "",
+        "## Command output",
+        ""
+    ) + ($publishOutput | ForEach-Object { "    " + $_ })
+    Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
+    Invoke-Git @("add", "--", "reports/windows/latest-data-runtime-publish.md")
+    $commitMessage = if ($success) {
+        "ops: report DATA runtime publish isolated"
+    } else {
+        "ops: report DATA runtime publish failure"
+    }
+    Invoke-Git @("commit", "-m", $commitMessage)
+    $reportCommit = (& git rev-parse HEAD).Trim()
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "DATA runtime report da commit local nhung push that bai." $LASTEXITCODE
+    }
+    if (-not $success) {
+        Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_RUNTIME_PUBLISH_FAILED"
+        Write-Host "REPORT_COMMIT=$reportCommit"
+        exit 4
+    }
+
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_RUNTIME_PUBLISHED_ISOLATED"
+    Write-Host "REPORT_COMMIT=$reportCommit"
+    Write-Host "DATABASE_CHANGED=false"
+    Write-Host "RUNTIME_SNAPSHOT_PUBLISHED=true"
+    Write-Host "SERVER_STARTUP_WIRED=false"
+}
+
 switch ($Action) {
     "1" {
         Assert-Repository
@@ -355,5 +422,8 @@ switch ($Action) {
     }
     "6" {
         Invoke-AuthorizedDataImport
+    }
+    "7" {
+        Invoke-IsolatedDataRuntimePublish
     }
 }
