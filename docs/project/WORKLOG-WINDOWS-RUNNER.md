@@ -246,3 +246,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Production `main` tạo atomic store, JDBC readiness và truyền vào application trước TCP bind.
 - Server chỉ in DATA READY sau khi store vượt version/checksum gate.
 - Chưa chạy server smoke test; database không đổi trong build/test.
+
+
+## 2026-09-10 — production wiring 372/372 và BAT option 8
+
+- Báo cáo commit `a5858bfe`: BUILD SUCCESS, 372/372 PASS.
+- Production DATA startup wiring chuyển `VERIFIED_BY_FULL_SUITE`.
+- Thêm BAT option 8 với full pre-smoke build, timeout 15 giây, stdout/stderr riêng và cleanup
+  đúng PID trong `finally`.
+- Success yêu cầu đồng thời DATA READY version 7, TCP started, process từng chạy và đã được dừng.
+- Database chỉ đọc; smoke thật đang chờ chủ dự án chạy.
