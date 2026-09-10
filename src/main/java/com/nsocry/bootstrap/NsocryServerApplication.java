@@ -1,5 +1,6 @@
 package com.nsocry.bootstrap;
 
+import com.nsocry.assets.AtomicDataAssetRuntimeSnapshotStore;
 import com.nsocry.configuration.ServerConfiguration;
 import com.nsocry.configuration.ServerConfigurationLoader;
 import com.nsocry.configuration.DatabaseConfiguration;
@@ -93,11 +94,19 @@ public final class NsocryServerApplication implements Closeable {
                 java.time.Clock.systemUTC(),
                 missingAccountHash);
         SanitizedNetworkEventSink events = new SanitizedNetworkEventSink(System.err::println);
+        AtomicDataAssetRuntimeSnapshotStore dataStore =
+                new AtomicDataAssetRuntimeSnapshotStore();
+        DataAssetServerStartupReadiness dataReadiness =
+                DataAssetServerStartupReadiness.authoritativeV7(dataSource, dataStore);
         NsocryServerApplication application = new NsocryServerApplication(
-                configuration, authentication, events);
+                configuration, authentication, events, dataReadiness);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> closeQuietly(application), "nsocry-shutdown"));
         application.start();
         System.out.println("NSOCry server started on " + application.server().localAddress());
+        System.out.println("DATA runtime snapshot READY version="
+                + Byte.toUnsignedInt(dataStore.requireCurrent(
+                        DataAssetServerStartupReadiness.AUTHORITATIVE_VERSION,
+                        DataAssetServerStartupReadiness.AUTHORITATIVE_PAYLOAD_SHA256).version()));
     }
 
     /** Gate đồng bộ, fail-closed, không được mở listener khi verify ném lỗi. */
