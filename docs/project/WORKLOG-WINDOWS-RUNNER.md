@@ -205,3 +205,14 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
   `serverStartupWired=false`; store chỉ sống trong process command.
 - Lần chạy thật option 7 trên Windows: `PENDING_OWNER_WINDOWS_RUN`.
 - Tiến độ gameplay giữ 19% vì chưa nối snapshot vào startup/server lifecycle.
+
+
+## 2026-09-10 — BAT option 7 VERIFIED và readiness gate
+
+- Báo cáo thật tại `reports/windows/latest-data-runtime-publish.md`: exit 0,
+  `PUBLISHED_ISOLATED`, DATA v7/count/length/SHA-256 đều khớp authoritative.
+- `databaseChanged=false`, `runtimeSnapshotPublished=true`, `serverStartupWired=false`.
+- BAT option 7 chuyển `VERIFIED_END_TO_END`.
+- Thêm `AtomicDataAssetRuntimeSnapshotStore.requireCurrent`: fail closed nếu store rỗng,
+  version sai hoặc checksum sai; đúng identity mới trả snapshot hiện hành.
+- Bốn test readiness mới đang chờ full suite Windows; chưa gắn gate vào TCP listener.
