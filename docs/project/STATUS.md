@@ -4,7 +4,7 @@
 
 **Trạng thái:** IN_PROGRESS
 
-**Tiến độ đến gameplay cơ bản:** 18%
+**Tiến độ đến gameplay cơ bản:** 19%
 
 **Nguồn lịch sử:** `docs/project/WORKLOG.md` và các worklog checkpoint bổ sung.
 
@@ -92,12 +92,17 @@ khóa cứng phạm vi này; chưa chạy database.
 - BAT option 6 đã thêm: pull, full build lại, import, read-back và auto-publish report.
 - Database chưa import tại thời điểm cập nhật này.
 
-## Sự cố BAT self-update
+## DATA v7 database import
 
-Pull đến `40fbc409` thành công nhưng CMD đọc lệch file BAT vừa bị pull thay đổi, tạo lỗi
-`rofile is not recognized`. Database import chưa chạy. BAT đã sửa để chạy từ bản sao %TEMP%.
+- Windows pre-import full suite: 347/347 PASS.
+- Import report đúng commit `0b956467`, exit code 0, `IMPORTED_AND_VERIFIED`.
+- Version 7, 43 task group, 131 EXP, payload 85154 byte.
+- SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`.
+- `overwritten=false`, `databaseChanged=true`, `dataImported=true`.
+- Transaction commit và database read-back checksum đều đạt.
+- `runtimeSnapshotPublished=false`, `serverStartupWired=false`.
 
 ## Next exact action
 
-Chủ dự án đóng BAT, pull bản sửa self-update bằng CMD bên ngoài, mở lại BAT và chọn số 6.
-Import chỉ hợp lệ khi report GitHub xác nhận IMPORTED_AND_VERIFIED và overwritten=false.
+Xây DATA JDBC source/runtime snapshot publisher và unit tests từ row v7 đã import. Chưa gọi
+runtime publish trên server thật và chưa nối startup nếu thiếu quyền riêng mới.
