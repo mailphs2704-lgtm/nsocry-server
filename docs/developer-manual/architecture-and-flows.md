@@ -129,3 +129,16 @@ Mọi thay đổi database bắt buộc:
 9. JDBC encode → checksum verification.
 
 Thiếu bất kỳ bước nào thì trạng thái phải là PENDING/NOT_READY.
+
+
+## DATA readiness trước TCP listener
+
+`NsocryServerApplication.start()` có một ranh giới `StartupReadiness` đồng bộ chạy trước
+`TcpServer.start()`. Nếu gate ném lỗi, listener chưa bind và trạng thái server vẫn dừng. Điều
+này tạo điểm ghép fail-closed cho DATA snapshot mà không buộc network layer biết JDBC, manifest
+hoặc checksum.
+
+Constructor ba tham số hiện giữ no-op readiness cho composition/test cũ. Production chỉ được
+chuyển sang trạng thái `serverStartupWired=true` sau khi `main` publish DATA vào store, truyền
+gate kiểm tra version/SHA-256 vào constructor bốn tham số và vượt full suite cùng Windows smoke
+test riêng.
