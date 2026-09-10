@@ -185,3 +185,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Snapshot/store/publish service chuyển VERIFIED_BY_FULL_SUITE.
 - Thêm ba test JdbcDataAssetSource cho read-only repeatable-read, missing row và metadata mismatch.
 - Chưa publish runtime thật; database không thay đổi thêm; startup chưa nối.
+
+
+## 2026-09-10 — JDBC source 356/356 và DATA publish command
+
+- Báo cáo commit `2ac17c8f`: BUILD SUCCESS, 356/356 PASS.
+- JDBC DATA source chuyển VERIFIED_BY_FULL_SUITE.
+- Thêm isolated runtime publish command, bốn command tests và launcher route test.
+- Chưa chạy command trên database thật; server startup chưa nối.
