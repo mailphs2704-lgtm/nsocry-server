@@ -112,11 +112,11 @@ khóa cứng phạm vi này; chưa chạy database.
 - DATA runtime publish command cô lập, bốn command tests và launcher route: **VERIFIED_BY_FULL_SUITE 361/361**.
 - BAT option 7: **VERIFIED_END_TO_END** trên Windows; report exit 0, DATA v7/checksum authoritative, database read-only và `PUBLISHED_ISOLATED`.
 - Startup readiness gate trong atomic store: **VERIFIED_BY_FULL_SUITE 365/365**.
-- `NsocryServerApplication` đã có readiness hook chạy trước TCP bind; ba test khóa success, fail-closed và dependency null đang chờ full suite.
-- Production `main` chưa truyền DATA gate vào hook và chưa sở hữu store; chưa mở server.
+- TCP readiness hook: **VERIFIED_BY_FULL_SUITE 368/368**.
+- Đã thêm `DataAssetServerStartupReadiness` điều phối source→validate→publish→identity gate và hai test; đang chờ full suite.
+- Production `main` chưa tạo JDBC source/manifest/store để truyền readiness; chưa mở server.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng readiness hook trước TCP bind.
-Mục tiêu dự kiến: **368/368 PASS**. Workflow chỉ build/test; database không đổi và không khởi
-động server thật.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA startup composition.
+Mục tiêu dự kiến: **370/370 PASS**. Workflow không mở database và không khởi động server thật.
