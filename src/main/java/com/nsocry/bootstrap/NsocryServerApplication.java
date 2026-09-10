@@ -1,6 +1,7 @@
 package com.nsocry.bootstrap;
 
 import com.nsocry.assets.AtomicDataAssetRuntimeSnapshotStore;
+import com.nsocry.assets.DataAssetRuntimeSnapshot;
 import com.nsocry.configuration.ServerConfiguration;
 import com.nsocry.configuration.ServerConfigurationLoader;
 import com.nsocry.configuration.DatabaseConfiguration;
@@ -20,6 +21,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Arrays;
 import javax.sql.DataSource;
 
@@ -27,13 +29,15 @@ import javax.sql.DataSource;
 public final class NsocryServerApplication implements Closeable {
     private final TcpServer server;
     private final StartupReadiness startupReadiness;
+    private final AtomicDataAssetRuntimeSnapshotStore dataStore;
 
     /** Ghép cấu hình, xác thực và event sink thành server nhưng chưa tự động start. */
     public NsocryServerApplication(
             ServerConfiguration configuration,
             AuthenticationPort authentication,
             NetworkEventSink events) {
-        this(configuration, authentication, events, () -> { });
+        this(configuration, authentication, events,
+                new AtomicDataAssetRuntimeSnapshotStore(), () -> { });
     }
 
     /**
@@ -45,7 +49,21 @@ public final class NsocryServerApplication implements Closeable {
             AuthenticationPort authentication,
             NetworkEventSink events,
             StartupReadiness startupReadiness) {
+        this(configuration, authentication, events,
+                new AtomicDataAssetRuntimeSnapshotStore(), startupReadiness);
+    }
+
+    /**
+     * Ghép store do application sở hữu cùng readiness dùng chính store đó.
+     */
+    public NsocryServerApplication(
+            ServerConfiguration configuration,
+            AuthenticationPort authentication,
+            NetworkEventSink events,
+            AtomicDataAssetRuntimeSnapshotStore dataStore,
+            StartupReadiness startupReadiness) {
         Objects.requireNonNull(configuration, "configuration");
+        this.dataStore = Objects.requireNonNull(dataStore, "dataStore");
         LegacyHandshakeConnectionHandler handler = new LegacyHandshakeConnectionHandler(
                 ProtocolLimits.DEFAULT,
                 new SecureRandomSessionKeyProvider(configuration.sessionKeyLength()),
@@ -63,6 +81,11 @@ public final class NsocryServerApplication implements Closeable {
     /** Trả server đang được application sở hữu để kiểm tra trạng thái và địa chỉ bind. */
     public TcpServer server() {
         return server;
+    }
+
+    /** Trả DATA snapshot bất biến hiện hành cho composition gameplay; rỗng trước readiness. */
+    public Optional<DataAssetRuntimeSnapshot> dataSnapshot() {
+        return dataStore.currentSnapshot();
     }
 
     /** Dừng toàn bộ tài nguyên runtime thuộc application. */
@@ -99,7 +122,7 @@ public final class NsocryServerApplication implements Closeable {
         DataAssetServerStartupReadiness dataReadiness =
                 DataAssetServerStartupReadiness.authoritativeV7(dataSource, dataStore);
         NsocryServerApplication application = new NsocryServerApplication(
-                configuration, authentication, events, dataReadiness);
+                configuration, authentication, events, dataStore, dataReadiness);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> closeQuietly(application), "nsocry-shutdown"));
         application.start();
         System.out.println("NSOCry server started on " + application.server().localAddress());
