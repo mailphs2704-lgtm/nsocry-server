@@ -23,6 +23,7 @@ public final class NsocryLauncher {
             case DATA_SEED_IMPORT_PLAN -> DataAssetImportPlanCommand.main(forwarded);
             case DATA_SEED_IMPORT -> DataAssetSeedImportCommand.main(forwarded);
             case DATA_SEED_DB_VERIFY -> DataAssetDatabaseVerifyCommand.main(forwarded);
+            case DATA_RUNTIME_PUBLISH -> DataAssetRuntimePublishCommand.main(forwarded);
             case ITEM_SEED_CONVERT -> ItemAssetSeedConvertCommand.main(forwarded);
             case ITEM_SEED_DRY_RUN -> ItemAssetSeedDryRunCommand.main(forwarded);
             case ITEM_SEED_IMPORT -> ItemAssetSeedImportCommand.main(forwarded);
@@ -62,6 +63,7 @@ public final class NsocryLauncher {
             case "data-seed-import-plan" -> LaunchCommand.DATA_SEED_IMPORT_PLAN;
             case "data-seed-import" -> LaunchCommand.DATA_SEED_IMPORT;
             case "data-seed-db-verify" -> LaunchCommand.DATA_SEED_DB_VERIFY;
+            case "data-runtime-publish" -> LaunchCommand.DATA_RUNTIME_PUBLISH;
             case "item-seed-convert" -> LaunchCommand.ITEM_SEED_CONVERT;
             case "item-seed-dry-run" -> LaunchCommand.ITEM_SEED_DRY_RUN;
             case "item-seed-import" -> LaunchCommand.ITEM_SEED_IMPORT;
@@ -100,6 +102,7 @@ public final class NsocryLauncher {
         System.out.println("  java -jar nsocry-server.jar data-seed-import-plan <plan-properties-path>");
         System.out.println("  java -jar nsocry-server.jar data-seed-import <plan-properties-path>");
         System.out.println("  java -jar nsocry-server.jar data-seed-db-verify <archive-path>");
+        System.out.println("  java -jar nsocry-server.jar data-runtime-publish <archive-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-convert <dump-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-dry-run <archive-path>");
         System.out.println("  java -jar nsocry-server.jar item-seed-import <archive-path>");
@@ -131,6 +134,7 @@ public final class NsocryLauncher {
         DATA_SEED_IMPORT_PLAN,
         DATA_SEED_IMPORT,
         DATA_SEED_DB_VERIFY,
+        DATA_RUNTIME_PUBLISH,
         ITEM_SEED_CONVERT,
         ITEM_SEED_DRY_RUN,
         ITEM_SEED_IMPORT,
