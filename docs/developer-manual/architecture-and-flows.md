@@ -154,3 +154,14 @@ do đó consumer không thể sửa dữ liệu dùng chung.
 Production `main` truyền cùng một store vào readiness và application, tránh lỗi publish vào
 một instance nhưng gameplay đọc instance khác. Ownership này là nền để đưa DATA vào post-login
 payload; chưa có nghĩa mọi session đã gửi DATA cho client.
+
+
+## DATA post-login request boundary
+
+Client V7 yêu cầu DATA bằng envelope `-28` với nested command `-122` sau authentication.
+`PostLoginDataSyncService` giải mã request bằng codec hiện hữu rồi đọc snapshot bất biến từ
+application. Response giữ envelope `-28`, nested command `-122` và payload canonical có byte
+version 7 ở đầu.
+
+Service không truy database, không sở hữu publisher và không xử lý MAP/SKILL/ITEM. Tranche này
+chưa nối transport loop; mục tiêu là khóa boundary/payload trước khi thay đổi vòng đời socket.
