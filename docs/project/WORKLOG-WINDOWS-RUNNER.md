@@ -278,3 +278,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Service chỉ nhận envelope -28/request -122, trả nested DATA response từ payload defensive copy.
 - MAP/SKILL/ITEM, malformed request và snapshot rỗng đều fail closed.
 - Bốn test mới đang chờ Windows full suite; chưa nối socket/session loop.
+
+
+## 2026-09-10 — DATA sync 378/378 và full asset sync orchestration
+
+- Báo cáo commit `6e825090`: BUILD SUCCESS, 378/378 PASS.
+- DATA-only post-login service chuyển `VERIFIED_BY_FULL_SUITE`.
+- Thêm `PostLoginAssetSyncService` dùng full `ClientAssetSnapshotProvider`.
+- Service gửi UPDATE_VERSION gồm bốn version + appearance và trả đúng payload cho bốn request.
+- Mỗi operation đọc provider đúng một lần; malformed request fail trước khi đọc snapshot.
+- Bốn test mới đang chờ Windows full suite; transport loop chưa nối.
