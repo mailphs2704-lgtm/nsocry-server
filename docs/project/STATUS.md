@@ -1,6 +1,6 @@
 # Trạng thái hiện tại của NSOCry
 
-**Cập nhật:** 2026-09-09 UTC
+**Cập nhật:** 2026-09-10 UTC
 
 **Trạng thái:** IN_PROGRESS
 
@@ -17,7 +17,7 @@
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows: **321/321**, không failure/error/skipped.
+- Full Maven suite Windows mới nhất: **361/361**, không failure/error/skipped, đúng commit `f7fa350b`.
 - ITEM pipeline: JDBC VERIFIED.
 - SKILL pipeline: JDBC VERIFIED.
 - MAP pipeline và runtime publish command: VERIFIED; startup ownership chưa nối.
@@ -109,10 +109,13 @@ khóa cứng phạm vi này; chưa chạy database.
 - Full suite Windows: **353/353 PASS** tại commit `bbb62e16`.
 - Runtime snapshot, defensive copy, atomic store và publish service: VERIFIED_BY_FULL_SUITE.
 - JDBC DATA source và ba tests: VERIFIED_BY_FULL_SUITE 356/356.
-- Đã thêm DATA runtime publish command cô lập, bốn command tests và launcher route test; đang chờ full suite.
-- Chưa chạy runtime publish command thật; startup chưa nối.
+- DATA runtime publish command cô lập, bốn command tests và launcher route: **VERIFIED_BY_FULL_SUITE 361/361**.
+- Đã thêm BAT option 7 để chạy command read-only trên database và tự push báo cáo; đang chờ lần chạy thật Windows.
+- Chưa có bằng chứng command thật từ option 7; startup chưa nối.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng DATA runtime publish command.
-Mục tiêu dự kiến: 361/361 PASS. Chưa chạy command trên database thật và startup chưa nối.
+Chủ dự án chọn `2` trong BAT hiện tại để pull, chọn `0`, mở lại `NSOCRY_WORK.bat` rồi chọn
+`7`. Mục tiêu: báo cáo `DATA_RUNTIME_PUBLISHED_ISOLATED`, database không đổi và
+`serverStartupWired=false`. Sau khi báo “xong”, AI kiểm tra report GitHub trước khi thực hiện
+tranche nối ownership vào startup.
