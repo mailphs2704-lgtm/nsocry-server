@@ -1,5 +1,6 @@
 package com.nsocry.bootstrap;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -43,6 +44,24 @@ class DataAssetServerStartupReadinessTest {
         assertThrows(IllegalStateException.class, readiness::verify);
         assertThrows(IllegalStateException.class, () -> store.requireCurrent(
                 artifact.manifest().version(), artifact.manifest().payloadSha256()));
+    }
+
+    @Test
+    void authoritativeIdentityMatchesImportedDataV7() {
+        assertEquals(7, Byte.toUnsignedInt(
+                DataAssetServerStartupReadiness.AUTHORITATIVE_VERSION));
+        assertEquals(43, DataAssetServerStartupReadiness.AUTHORITATIVE_TASK_GROUP_COUNT);
+        assertEquals(131, DataAssetServerStartupReadiness.AUTHORITATIVE_EXPERIENCE_COUNT);
+        assertEquals(85154, DataAssetServerStartupReadiness.AUTHORITATIVE_PAYLOAD_LENGTH);
+        assertEquals("242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b",
+                DataAssetServerStartupReadiness.AUTHORITATIVE_PAYLOAD_SHA256);
+    }
+
+    @Test
+    void authoritativeFactoryRejectsMissingDependencies() {
+        AtomicDataAssetRuntimeSnapshotStore store = new AtomicDataAssetRuntimeSnapshotStore();
+        assertThrows(NullPointerException.class,
+                () -> DataAssetServerStartupReadiness.authoritativeV7(null, store));
     }
 
     private static DataAssetBundle bundle() {
