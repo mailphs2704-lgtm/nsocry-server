@@ -26,6 +26,7 @@ Sau đó chọn:
 | 5 | Chạy DATA import plan offline bằng JAR và file example; không mở database. |
 | 6 | Sau quyền riêng và gate 347/347, build lại rồi import DATA v7 bằng REJECT_EXISTING và push báo cáo. |
 | 7 | Pull rồi publish DATA snapshot cô lập từ database (read-only), kiểm tra output và push báo cáo. Không nối startup. |
+| 8 | Pull, full build, smoke-test production DATA startup, xác nhận listener rồi tự dừng đúng process và push báo cáo. |
 | 0 | Thoát. |
 
 Có thể chạy trực tiếp `NSOCRY_WORK.bat 1`, nhưng chế độ menu dễ dùng hơn.
@@ -134,3 +135,15 @@ Thành công bắt buộc có `DATA runtime snapshot PUBLISHED_ISOLATED` và
 `DATABASE_CHANGED=false`, `RUNTIME_SNAPSHOT_PUBLISHED=true`,
 `SERVER_STARTUP_WIRED=false`. Nếu JAR/archive thiếu, command lỗi hoặc output không đủ bằng
 chứng, runner dừng fail-closed và không tuyên bố publish thành công.
+
+
+## Lựa chọn 8 — smoke test production DATA startup
+
+Lựa chọn 8 pull fast-forward và chạy lại full Maven suite trước khi mở process. Runner redirect
+stdout/stderr vào `.nsocry-work`, chờ tối đa 15 giây để thấy cả
+`NSOCry server started on` và `DATA runtime snapshot READY version=7`, sau đó luôn dừng đúng
+PID trong khối cleanup. Không dùng `taskkill /IM java.exe` nên không ảnh hưởng Java process khác.
+
+Báo cáo nằm tại `reports/windows/latest-data-startup-smoke.md`. Thành công có trạng thái
+`STARTED_READY_AND_STOPPED`, `SERVER_STARTUP_WIRED=true` và
+`SERVER_PROCESS_STOPPED=true`. Database chỉ đọc; workflow không migration/import/overwrite.
