@@ -186,3 +186,17 @@ Logical DATA response gồm nested command cộng payload authoritative nên l�
 Gate này cố ý chưa quyết định byte layout của command `-32`. Source hiện có chỉ chứng minh
 full-size header, chưa chứng minh logical envelope `-28` được đặt ở đâu trong payload. Transport
 không được nối bằng suy đoán; cần fixture/reference trace trước.
+
+
+## Full-size wire evidence
+
+Reference `source-reference/NSOKISS/src/main/java/com/nsoz/network/Session.java`,
+`doSendMessage` dòng 136–175, xác nhận payload lớn hơn `Short.MAX_VALUE` được gửi theo thứ tự:
+
+1. command vận chuyển `-32`;
+2. command logic gốc, ví dụ `-28`;
+3. độ dài payload int32 big-endian;
+4. payload logic.
+
+Mọi byte dùng liên tục cùng outbound rolling cipher. NSOCry reader trả lại command logic gốc,
+không đẩy `-32` lên session layer. Fixture 32768 byte đã được tính lại theo layout này.
