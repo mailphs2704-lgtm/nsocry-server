@@ -24,6 +24,7 @@ Sau đó chọn:
 | 3 | Build/test và push báo cáo mà không pull. Chỉ dùng khi AI yêu cầu rõ. |
 | 4 | Xem báo cáo gần nhất đã lưu trên máy. |
 | 5 | Chạy DATA import plan offline bằng JAR và file example; không mở database. |
+| 6 | Sau quyền riêng và gate 347/347, build lại rồi import DATA v7 bằng REJECT_EXISTING và push báo cáo. |
 | 0 | Thoát. |
 
 Có thể chạy trực tiếp `NSOCRY_WORK.bat 1`, nhưng chế độ menu dễ dùng hơn.
@@ -97,3 +98,15 @@ Kết quả lựa chọn 5 được commit/push vào `reports/windows/latest-dat
 Lựa chọn 5 từ checkpoint này luôn chạy pull fast-forward trước offline plan. Điều này tránh tạo
 commit báo cáo trên branch local cũ khi AI vừa push code mới. Nếu một report-only commit cũ đã
 bị reject, dùng pull --rebase để đặt commit báo cáo lên remote mới; không reset hoặc xóa report.
+
+
+## Lựa chọn 6 — DATA v7 import được cấp quyền
+
+Lựa chọn 6 chỉ được thêm sau xác nhận riêng của chủ dự án và full suite 347/347 PASS. Script tự
+pull, chạy lại `mvn clean package`, sau đó mới gọi `data-seed-import`. Command khóa
+`REJECT_EXISTING`; nếu version 7 đã tồn tại sẽ fail thay vì overwrite. Thành công bắt buộc có
+`DATA seed IMPORTED_AND_VERIFIED` và `overwritten=false`.
+
+Báo cáo được push tại `reports/windows/latest-data-import.md`. Nếu exit/output không chứng minh
+cả import và read-back, trạng thái là `FAILED_OR_UNCERTAIN`; không publish runtime/startup và
+phải dừng điều tra.
