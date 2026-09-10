@@ -182,3 +182,14 @@ và gửi `reports/windows/latest-data-runtime-publish.md` lên GitHub.
 Việc command in `runtimeSnapshotPublished=true` chỉ có nghĩa atomic store nội bộ của tiến trình
 đã nhận snapshot hợp lệ. Nó không có nghĩa server đang phục vụ DATA: process kết thúc thì store
 mất; `serverStartupWired=false` cho đến một tranche có thiết kế ownership/lifecycle và gate riêng.
+
+
+## Kết quả publish cô lập thật và readiness gate
+
+BAT option 7 đã chạy thành công trên Windows: DATA v7 được đọc read-only từ database, kiểm tra
+43 task group, 131 EXP, 85154 byte và checksum authoritative rồi publish vào store cô lập.
+Database không đổi và startup vẫn chưa nối.
+
+Bước kế tiếp đã thêm gate `requireCurrent` vào atomic store. Gate chỉ cho lifecycle tiếp tục khi
+snapshot tồn tại và khớp chính xác version/SHA-256 mong đợi; mọi trạng thái rỗng hoặc lệch đều
+ném lỗi trước listener. Bốn test mới cần full suite Windows trước khi tích hợp vào startup.
