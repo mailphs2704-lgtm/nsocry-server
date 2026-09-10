@@ -2371,3 +2371,14 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
   - Constructor nhận `DataAssetSource`, manifest authoritative và store do server lifecycle sở hữu.
   - `verify()` chỉ trả về khi snapshot hiện hành khớp version/SHA-256; source/validation lỗi đều fail closed.
 - **Khi sửa:** giữ thứ tự publish rồi require identity; không nuốt lỗi và không mở listener khi store rỗng.
+
+
+### `com.nsocry.session.PostLoginDataSyncService`
+
+- **Source:** `src/main/java/com/nsocry/session/PostLoginDataSyncService.java`
+- **Vai trò tóm tắt:** Chuyển request DATA hậu đăng nhập của client V7 thành response từ runtime snapshot bất biến.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - Constructor nhận `Supplier<Optional<DataAssetRuntimeSnapshot>>` read-only.
+  - `respond(ProtocolFrame)` chỉ phục vụ request DATA `-122` trong envelope `-28`.
+- **Khi sửa:** không truy JDBC, không publish store, không nhận dataset khác và luôn decode request trước khi đọc snapshot.
