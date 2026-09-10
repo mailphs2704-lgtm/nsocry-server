@@ -125,5 +125,5 @@ khóa cứng phạm vi này; chưa chạy database.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng response sizing plan.
-Mục tiêu dự kiến: **385/385 PASS**. Chưa gửi payload qua socket và database không đổi.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng full-size codec theo fixture
+authoritative. Mục tiêu dự kiến: **386/386 PASS**. Chưa nối production session loop.
