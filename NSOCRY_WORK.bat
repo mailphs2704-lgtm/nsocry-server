@@ -1,9 +1,24 @@
 @echo off
 setlocal
 chcp 65001 >nul
-cd /d "%~dp0"
 
-if not "%~1"=="" goto DIRECT
+rem Chay menu tu ban sao tam de git pull co the cap nhat BAT goc an toan.
+if /I "%~1"=="__NSOCRY_TEMP__" goto TEMP_START
+set "NSOCRY_TEMP_BAT=%TEMP%\nsocry-work-%RANDOM%-%RANDOM%.bat"
+copy /y "%~f0" "%NSOCRY_TEMP_BAT%" >nul
+if errorlevel 1 (
+  echo Khong the tao ban sao BAT tam.
+  pause
+  exit /b 1
+)
+call "%NSOCRY_TEMP_BAT%" __NSOCRY_TEMP__ "%~dp0" "%~1"
+set "NSOCRY_EXIT=%ERRORLEVEL%"
+del /q "%NSOCRY_TEMP_BAT%" >nul 2>&1
+exit /b %NSOCRY_EXIT%
+
+:TEMP_START
+cd /d "%~2"
+if not "%~3"=="" goto DIRECT
 
 :MENU
 cls
@@ -44,7 +59,7 @@ pause
 goto MENU
 
 :DIRECT
-powershell -NoProfile -ExecutionPolicy Bypass -File ".\tools\nsocry-work.ps1" -Action "%~1"
+powershell -NoProfile -ExecutionPolicy Bypass -File ".\tools\nsocry-work.ps1" -Action "%~3"
 set "NSOCRY_EXIT=%ERRORLEVEL%"
 echo.
 pause
