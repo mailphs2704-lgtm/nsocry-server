@@ -86,12 +86,13 @@
   },
   "serverToClientFullSize": {
     "initialCursor": 0,
-    "decodedCommandSigned": -32,
+    "transportCommandSigned": -32,
+    "decodedCommandSigned": -28,
     "payloadLength": 32768,
     "payloadPattern": "all zero bytes",
-    "plainHeaderHex": "E0 00 00 80 00",
-    "encryptedHeaderHex": "A3 72 79 D4 65",
-    "encryptedFrameByteLength": 32773,
-    "encryptedFrameSha256": "40e7b93f17d5318417174f2f5ce321e1b2078cd7e2420f24e91073a772fe278c"
+    "plainHeaderHex": "E0 E4 00 00 80 00",
+    "encryptedHeaderHex": "A3 96 79 54 E5 73",
+    "encryptedFrameByteLength": 32774,
+    "encryptedFrameSha256": "84bfb85439bd0cedd6e850d79a425db9e3448597b83eda5b8b639fa4950de3c8"
   }
 }
