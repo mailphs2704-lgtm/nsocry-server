@@ -407,6 +407,17 @@ function Invoke-DataStartupSmokeTest {
     }
 
     New-Item -ItemType Directory -Force -Path $WorkDirectory | Out-Null
+    $smokeBuildLog = Join-Path $WorkDirectory "server-smoke-build.log"
+    Write-Host "===== PRE-SMOKE FULL BUILD ====="
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & mvn clean package 2>&1 | Tee-Object -FilePath $smokeBuildLog
+    $buildExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    if ($buildExitCode -ne 0) {
+        Stop-Workflow "Pre-smoke build/test that bai; server chua duoc khoi dong." $buildExitCode
+    }
+
     $stdoutPath = Join-Path $WorkDirectory "server-smoke-stdout.log"
     $stderrPath = Join-Path $WorkDirectory "server-smoke-stderr.log"
     Remove-Item -Force -ErrorAction SilentlyContinue $stdoutPath, $stderrPath
