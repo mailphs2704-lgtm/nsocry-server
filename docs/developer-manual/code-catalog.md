@@ -1121,6 +1121,13 @@
 - **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
 - **Khi sửa:** cấm OVERWRITE; backup/archive/confirmation/schema phải đạt trước workflow; runtime/startup giữ false.
 
+### `com.nsocry.bootstrap.DataAssetRuntimePublishCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetRuntimePublishCommand.java`
+- **Vai trò tóm tắt:** Publish DATA snapshot cô lập từ JDBC vào atomic store chỉ sống trong command.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** schema/archive/checksum phải đạt; output phải phân biệt isolated publish với startup wiring.
+
 ### `com.nsocry.bootstrap.DataAssetSchemaPreflightCommand`
 
 - **Source:** `src/main/java/com/nsocry/bootstrap/DataAssetSchemaPreflightCommand.java`
