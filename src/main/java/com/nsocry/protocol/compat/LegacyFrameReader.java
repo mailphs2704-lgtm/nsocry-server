@@ -33,6 +33,9 @@ public final class LegacyFrameReader {
         if (fullSize && !allowFullSize) {
             throw new IOException("full-size frame is not allowed in this direction");
         }
+        if (fullSize) {
+            command = cipher.transform(input.readByte());
+        }
         int length = fullSize ? readEncryptedInt(cipher) : readEncryptedUnsignedShort(cipher);
         try {
             limits.requireAllowed(length, fullSize);
