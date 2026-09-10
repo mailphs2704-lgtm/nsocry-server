@@ -142,3 +142,15 @@ Constructor ba tham số hiện giữ no-op readiness cho composition/test cũ. 
 chuyển sang trạng thái `serverStartupWired=true` sau khi `main` publish DATA vào store, truyền
 gate kiểm tra version/SHA-256 vào constructor bốn tham số và vượt full suite cùng Windows smoke
 test riêng.
+
+
+## Ownership DATA runtime trong application
+
+`NsocryServerApplication` giữ cùng atomic store mà production readiness dùng để publish trước
+TCP bind. Consumer chỉ nhận `Optional<DataAssetRuntimeSnapshot>` qua `dataSnapshot()`; API
+application không cho session gọi publish hoặc thay store. Snapshot tự defensive-copy payload,
+do đó consumer không thể sửa dữ liệu dùng chung.
+
+Production `main` truyền cùng một store vào readiness và application, tránh lỗi publish vào
+một instance nhưng gameplay đọc instance khác. Ownership này là nền để đưa DATA vào post-login
+payload; chưa có nghĩa mọi session đã gửi DATA cho client.
