@@ -216,3 +216,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm `AtomicDataAssetRuntimeSnapshotStore.requireCurrent`: fail closed nếu store rỗng,
   version sai hoặc checksum sai; đúng identity mới trả snapshot hiện hành.
 - Bốn test readiness mới đang chờ full suite Windows; chưa gắn gate vào TCP listener.
+
+
+## 2026-09-10 — readiness 365/365 và TCP startup hook
+
+- Báo cáo commit `8458c327`: BUILD SUCCESS, 365/365 PASS.
+- Atomic store readiness gate chuyển `VERIFIED_BY_FULL_SUITE`.
+- Thêm `StartupReadiness` vào `NsocryServerApplication`; `start()` gọi gate trước
+  `TcpServer.start()`.
+- Ba test khóa gate chạy trước bind, lỗi gate giữ listener đóng và dependency null bị từ chối.
+- Production main chưa inject DATA readiness; database không đổi, server thật chưa khởi động.
