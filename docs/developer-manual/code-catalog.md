@@ -2382,3 +2382,14 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
   - Constructor nhận `Supplier<Optional<DataAssetRuntimeSnapshot>>` read-only.
   - `respond(ProtocolFrame)` chỉ phục vụ request DATA `-122` trong envelope `-28`.
 - **Khi sửa:** không truy JDBC, không publish store, không nhận dataset khác và luôn decode request trước khi đọc snapshot.
+
+
+### `com.nsocry.session.PostLoginAssetSyncService`
+
+- **Source:** `src/main/java/com/nsocry/session/PostLoginAssetSyncService.java`
+- **Vai trò tóm tắt:** Điều phối UPDATE_VERSION và response DATA/MAP/SKILL/ITEM từ một full client snapshot.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - `versionAnnouncement()` tạo manifest bốn version cùng appearance.
+  - `respond(ProtocolFrame)` decode request rồi trả đúng dataset payload.
+- **Khi sửa:** mỗi operation chỉ đọc provider một lần; malformed request phải fail trước khi đọc snapshot.
