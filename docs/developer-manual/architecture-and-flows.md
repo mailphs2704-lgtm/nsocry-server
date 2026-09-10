@@ -165,3 +165,13 @@ version 7 ở đầu.
 
 Service không truy database, không sở hữu publisher và không xử lý MAP/SKILL/ITEM. Tranche này
 chưa nối transport loop; mục tiêu là khóa boundary/payload trước khi thay đổi vòng đời socket.
+
+
+## Full post-login asset sync boundary
+
+`PostLoginAssetSyncService` dùng `ClientAssetSnapshotProvider` để giữ DATA/MAP/SKILL/ITEM và
+appearance đồng bộ. Sau authentication, service có thể tạo UPDATE_VERSION; mỗi request tiếp theo
+được decode thành dataset rồi trả payload từ đúng một snapshot đọc tại đầu operation.
+
+Boundary này chưa sở hữu socket hoặc vòng lặp session. Chỉ khi full snapshot production cho cả
+bốn asset family và appearance được VERIFIED mới được inject service vào connection handler.
