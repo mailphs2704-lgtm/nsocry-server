@@ -177,3 +177,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Báo cáo commit `296bad67`: production compile đạt, testCompile fail do tên generator typo.
 - Sửa về đúng `DataAssetSeedArtifactGenerator`.
 - Maven chưa chạy sáu runtime tests; database/runtime không thay đổi.
+
+
+## 2026-09-10 — DATA runtime snapshot 353/353 và JDBC source tests
+
+- Báo cáo commit `bbb62e16`: BUILD SUCCESS, 353/353 PASS.
+- Snapshot/store/publish service chuyển VERIFIED_BY_FULL_SUITE.
+- Thêm ba test JdbcDataAssetSource cho read-only repeatable-read, missing row và metadata mismatch.
+- Chưa publish runtime thật; database không thay đổi thêm; startup chưa nối.
