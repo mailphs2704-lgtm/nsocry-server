@@ -1,5 +1,5 @@
 ﻿param(
-    [ValidateSet("1", "2", "3", "4", "5", "6", "7")]
+    [ValidateSet("1", "2", "3", "4", "5", "6", "7", "8")]
     [string]$Action = "1"
 )
 
@@ -397,6 +397,104 @@ function Invoke-IsolatedDataRuntimePublish {
     Write-Host "SERVER_STARTUP_WIRED=false"
 }
 
+
+function Invoke-DataStartupSmokeTest {
+    Assert-Repository
+    Pull-Branch
+    $jar = Join-Path $RepositoryRoot "target\\nsocry-server-0.1.0-SNAPSHOT.jar"
+    if (-not (Test-Path $jar)) {
+        Stop-Workflow "Chua co JAR. Hay chon 1 de build truoc."
+    }
+
+    New-Item -ItemType Directory -Force -Path $WorkDirectory | Out-Null
+    $stdoutPath = Join-Path $WorkDirectory "server-smoke-stdout.log"
+    $stderrPath = Join-Path $WorkDirectory "server-smoke-stderr.log"
+    Remove-Item -Force -ErrorAction SilentlyContinue $stdoutPath, $stderrPath
+    $process = $null
+    $processWasRunning = $false
+    try {
+        Write-Host "===== SERVER DATA STARTUP SMOKE TEST ====="
+        $arguments = "-jar `"$jar`" server"
+        $process = Start-Process -FilePath "java" -ArgumentList $arguments -WorkingDirectory $RepositoryRoot -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -PassThru
+        for ($attempt = 0; $attempt -lt 30; $attempt++) {
+            Start-Sleep -Milliseconds 500
+            $process.Refresh()
+            if ($process.HasExited) { break }
+            $stdout = if (Test-Path $stdoutPath) { Get-Content $stdoutPath -Raw } else { "" }
+            if ($stdout.Contains("NSOCry server started on") -and
+                    $stdout.Contains("DATA runtime snapshot READY version=7")) {
+                $processWasRunning = $true
+                break
+            }
+        }
+        $process.Refresh()
+        if (-not $process.HasExited) {
+            $processWasRunning = $true
+        }
+    } finally {
+        if ($null -ne $process) {
+            $process.Refresh()
+            if (-not $process.HasExited) {
+                Stop-Process -Id $process.Id -Force
+                $process.WaitForExit()
+            }
+        }
+    }
+
+    $stdoutLines = if (Test-Path $stdoutPath) { @(Get-Content $stdoutPath) } else { @() }
+    $stderrLines = if (Test-Path $stderrPath) { @(Get-Content $stderrPath) } else { @() }
+    $joinedOutput = $stdoutLines -join [Environment]::NewLine
+    $success = $processWasRunning -and
+        $joinedOutput.Contains("NSOCry server started on") -and
+        $joinedOutput.Contains("DATA runtime snapshot READY version=7")
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $reportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-data-startup-smoke.md"
+    $status = if ($success) { "STARTED_READY_AND_STOPPED" } else { "FAILED" }
+    $reportLines = @(
+        "# DATA production startup smoke Windows",
+        "",
+        "- Tested commit: $testedCommit",
+        "- Status: $status",
+        "- Process observed running: $processWasRunning",
+        "- Process stopped by runner: true",
+        "- Database changed: false",
+        "- DATA imported: false",
+        "",
+        "## Standard output",
+        ""
+    ) + ($stdoutLines | ForEach-Object { "    " + $_ }) + @(
+        "",
+        "## Standard error",
+        ""
+    ) + ($stderrLines | ForEach-Object { "    " + $_ })
+    Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
+    Invoke-Git @("add", "--", "reports/windows/latest-data-startup-smoke.md")
+    $commitMessage = if ($success) {
+        "ops: report DATA production startup smoke verified"
+    } else {
+        "ops: report DATA production startup smoke failure"
+    }
+    Invoke-Git @("commit", "-m", $commitMessage)
+    $reportCommit = (& git rev-parse HEAD).Trim()
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "Startup smoke report da commit local nhung push that bai." $LASTEXITCODE
+    }
+    if (-not $success) {
+        Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_STARTUP_SMOKE_FAILED"
+        Write-Host "REPORT_COMMIT=$reportCommit"
+        exit 5
+    }
+
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_STARTUP_SMOKE_VERIFIED"
+    Write-Host "REPORT_COMMIT=$reportCommit"
+    Write-Host "DATABASE_CHANGED=false"
+    Write-Host "RUNTIME_SNAPSHOT_PUBLISHED=true"
+    Write-Host "SERVER_STARTUP_WIRED=true"
+    Write-Host "SERVER_PROCESS_STOPPED=true"
+}
+
 switch ($Action) {
     "1" {
         Assert-Repository
@@ -425,5 +523,8 @@ switch ($Action) {
     }
     "7" {
         Invoke-IsolatedDataRuntimePublish
+    }
+    "8" {
+        Invoke-DataStartupSmokeTest
     }
 }
