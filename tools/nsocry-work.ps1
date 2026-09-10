@@ -57,10 +57,45 @@ function Assert-Repository {
 }
 
 function Pull-Branch {
-    Write-Host "===== PULL FAST-FORWARD ====="
-    Invoke-Git @("pull", "--ff-only", "origin", $ExpectedBranch)
+    Write-Host "===== FETCH + SAFE UPDATE ====="
+    Invoke-Git @("fetch", "origin", $ExpectedBranch)
+    $remoteRef = "origin/$ExpectedBranch"
+
+    & git merge-base --is-ancestor HEAD $remoteRef
+    if ($LASTEXITCODE -eq 0) {
+        Invoke-Git @("merge", "--ff-only", $remoteRef)
+        Assert-Repository
+        Write-Host "PULL_STATUS=SUCCESS_FAST_FORWARD"
+        return
+    }
+
+    & git merge-base --is-ancestor $remoteRef HEAD
+    if ($LASTEXITCODE -eq 0) {
+        Assert-Repository
+        Write-Host "PULL_STATUS=LOCAL_AHEAD"
+        return
+    }
+
+    $localCommits = @(& git rev-list "$remoteRef..HEAD")
+    if ($LASTEXITCODE -ne 0 -or $localCommits.Count -eq 0) {
+        Stop-Workflow "Nhanh local/remote diverged va khong xac dinh duoc commit local."
+    }
+    $unsafePaths = @()
+    foreach ($commit in $localCommits) {
+        $paths = @(& git diff-tree --no-commit-id --name-only -r $commit)
+        if ($LASTEXITCODE -ne 0) {
+            Stop-Workflow "Khong doc duoc noi dung commit local $commit."
+        }
+        $unsafePaths += @($paths | Where-Object { $_ -notmatch '^reports/windows/' })
+    }
+    if ($unsafePaths.Count -gt 0) {
+        Stop-Workflow "Nhanh diverged co source local; khong tu rebase: $($unsafePaths -join ', ')"
+    }
+
+    Write-Host "SAFE_RECOVERY=REBASING_REPORT_ONLY_COMMITS"
+    Invoke-Git @("rebase", $remoteRef)
     Assert-Repository
-    Write-Host "PULL_STATUS=SUCCESS"
+    Write-Host "PULL_STATUS=SUCCESS_REPORT_REBASE"
 }
 
 function Show-LatestReport {
