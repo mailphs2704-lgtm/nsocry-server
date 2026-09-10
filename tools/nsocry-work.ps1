@@ -1,5 +1,5 @@
 ﻿param(
-    [ValidateSet("1", "2", "3", "4", "5")]
+    [ValidateSet("1", "2", "3", "4", "5", "6")]
     [string]$Action = "1"
 )
 
@@ -255,6 +255,81 @@ function Invoke-DataImportPlan {
     Write-Host "DATA_IMPORTED=false"
 }
 
+
+function Invoke-AuthorizedDataImport {
+    Assert-Repository
+    Pull-Branch
+
+    $jar = Join-Path $RepositoryRoot "target\\nsocry-server-0.1.0-SNAPSHOT.jar"
+    $plan = Join-Path $RepositoryRoot "config\\data-import-plan.properties.example"
+    New-Item -ItemType Directory -Force -Path $WorkDirectory | Out-Null
+    $preImportLog = Join-Path $WorkDirectory "data-import-prebuild.log"
+
+    Write-Host "===== PRE-IMPORT FULL BUILD ====="
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & mvn clean package 2>&1 | Tee-Object -FilePath $preImportLog
+    $buildExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    if ($buildExitCode -ne 0) {
+        Stop-Workflow "Pre-import build/test that bai; DATA import chua duoc chay." $buildExitCode
+    }
+
+    Write-Host "===== AUTHORIZED DATA V7 IMPORT: REJECT_EXISTING ====="
+    $ErrorActionPreference = "Continue"
+    $importOutput = @(& java -jar $jar data-seed-import $plan 2>&1)
+    $importExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    $importOutput | ForEach-Object { Write-Host $_ }
+
+    $joinedOutput = $importOutput -join [Environment]::NewLine
+    $success = ($importExitCode -eq 0) -and
+        $joinedOutput.Contains("DATA seed IMPORTED_AND_VERIFIED") -and
+        $joinedOutput.Contains("overwritten=false")
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $reportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-data-import.md"
+    $status = if ($success) { "IMPORTED_AND_VERIFIED" } else { "FAILED_OR_UNCERTAIN" }
+    $reportLines = @(
+        "# DATA v7 import Windows",
+        "",
+        "- Tested commit: $testedCommit",
+        "- Command exit code: $importExitCode",
+        "- Status: $status",
+        "- Authorized mode: REJECT_EXISTING",
+        "- Runtime snapshot published: false",
+        "- Server startup wired: false",
+        "",
+        "## Command output",
+        ""
+    ) + ($importOutput | ForEach-Object { "    " + $_ })
+    Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
+    Invoke-Git @("add", "--", "reports/windows/latest-data-import.md")
+    $commitMessage = if ($success) {
+        "ops: report DATA v7 import verified"
+    } else {
+        "ops: report DATA v7 import failed or uncertain"
+    }
+    Invoke-Git @("commit", "-m", $commitMessage)
+    $reportCommit = (& git rev-parse HEAD).Trim()
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "DATA import report da commit local nhung push that bai." $LASTEXITCODE
+    }
+    if (-not $success) {
+        Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_IMPORT_FAILED_OR_UNCERTAIN"
+        Write-Host "REPORT_COMMIT=$reportCommit"
+        exit 3
+    }
+
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=DATA_V7_IMPORTED_AND_VERIFIED"
+    Write-Host "REPORT_COMMIT=$reportCommit"
+    Write-Host "DATABASE_CHANGED=true"
+    Write-Host "DATA_IMPORTED=true"
+    Write-Host "RUNTIME_SNAPSHOT_PUBLISHED=false"
+    Write-Host "SERVER_STARTUP_WIRED=false"
+}
+
 switch ($Action) {
     "1" {
         Assert-Repository
@@ -277,5 +352,8 @@ switch ($Action) {
         Assert-Repository
         Pull-Branch
         Invoke-DataImportPlan
+    }
+    "6" {
+        Invoke-AuthorizedDataImport
     }
 }
