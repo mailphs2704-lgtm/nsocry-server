@@ -161,3 +161,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - `overwritten=false`; row mới được transaction commit và read-back xác minh.
 - `databaseChanged=true`, `dataImported=true`.
 - Runtime snapshot/startup vẫn false; tiến độ gameplay tăng 18% -> 19%.
+
+
+## 2026-09-10 — bắt đầu DATA runtime snapshot
+
+- Tái sử dụng DataAssetSource port đã tồn tại.
+- Thêm JdbcDataAssetSource repeatable-read/read-only với metadata/checksum validation.
+- Thêm immutable snapshot, atomic store và publish service.
+- Thêm sáu unit tests về publish gate, checksum failure, source failure và defensive copy.
+- Chưa publish runtime thật hoặc nối startup; database không đổi trong tranche này.
