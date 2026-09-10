@@ -17,7 +17,7 @@
 
 ## VERIFIED gần nhất
 
-- Full Maven suite Windows mới nhất: **361/361**, không failure/error/skipped, đúng commit `f7fa350b`.
+- Full Maven suite Windows mới nhất: **365/365**, không failure/error/skipped, đúng commit `8458c327`.
 - ITEM pipeline: JDBC VERIFIED.
 - SKILL pipeline: JDBC VERIFIED.
 - MAP pipeline và runtime publish command: VERIFIED; startup ownership chưa nối.
@@ -111,11 +111,12 @@ khóa cứng phạm vi này; chưa chạy database.
 - JDBC DATA source và ba tests: VERIFIED_BY_FULL_SUITE 356/356.
 - DATA runtime publish command cô lập, bốn command tests và launcher route: **VERIFIED_BY_FULL_SUITE 361/361**.
 - BAT option 7: **VERIFIED_END_TO_END** trên Windows; report exit 0, DATA v7/checksum authoritative, database read-only và `PUBLISHED_ISOLATED`.
-- Đã thêm startup readiness gate vào atomic store: bắt buộc snapshot tồn tại và khớp version/SHA-256 trước listener; bốn test mới đang chờ full suite.
-- Startup chưa gọi gate và chưa sở hữu store; chưa mở server.
+- Startup readiness gate trong atomic store: **VERIFIED_BY_FULL_SUITE 365/365**.
+- `NsocryServerApplication` đã có readiness hook chạy trước TCP bind; ba test khóa success, fail-closed và dependency null đang chờ full suite.
+- Production `main` chưa truyền DATA gate vào hook và chưa sở hữu store; chưa mở server.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để pull và kiểm chứng startup readiness gate.
-Mục tiêu dự kiến: **365/365 PASS**. Đây vẫn là gate thuần bộ nhớ/test; database không đổi và
-server startup chưa được bật.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng readiness hook trước TCP bind.
+Mục tiêu dự kiến: **368/368 PASS**. Workflow chỉ build/test; database không đổi và không khởi
+động server thật.
