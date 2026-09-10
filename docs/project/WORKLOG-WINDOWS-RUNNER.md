@@ -288,3 +288,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Service gửi UPDATE_VERSION gồm bốn version + appearance và trả đúng payload cho bốn request.
 - Mỗi operation đọc provider đúng một lần; malformed request fail trước khi đọc snapshot.
 - Bốn test mới đang chờ Windows full suite; transport loop chưa nối.
+
+
+## 2026-09-10 — full sync 382/382 và response sizing plan
+
+- Báo cáo commit `fb1bf820`: BUILD SUCCESS, 382/382 PASS.
+- Full post-login asset sync chuyển `VERIFIED_BY_FULL_SUITE`.
+- DATA authoritative 85154 byte vượt short payload 65535 nên bắt buộc full-size transport.
+- Thêm `ResponsePlan`: chọn SHORT/FULL_SIZE theo `ProtocolLimits`, từ chối vượt max full.
+- Ba test khóa small, large 65537-byte logical response và over-limit.
+- Chưa encode/gửi command -32 vì layout wrapper cần evidence từ reference; không đoán wire.
