@@ -117,11 +117,13 @@ khóa cứng phạm vi này; chưa chạy database.
 - Production DATA startup wiring: **VERIFIED_END_TO_END_WINDOWS**; 372/372 PASS và smoke `STARTED_READY_AND_STOPPED` tại commit `a9ebc146`.
 - Application DATA ownership: **VERIFIED_BY_FULL_SUITE 374/374**.
 - `PostLoginDataSyncService`: **VERIFIED_BY_FULL_SUITE 378/378**.
-- Đã thêm `PostLoginAssetSyncService` cho UPDATE_VERSION và đủ DATA/MAP/SKILL/ITEM từ một snapshot; bốn test đang chờ full suite.
+- Full post-login asset sync: **VERIFIED_BY_FULL_SUITE 382/382**.
+- Đã thêm response sizing plan: short ≤65535, full-size trong configured limit; ba test đang chờ full suite.
+- Layout wire bên trong command `-32` vẫn TRACE_REQUIRED; chưa nối transport.
 - Đã thêm BAT option 8: full build, bounded startup smoke, xác nhận DATA READY/TCP bind, cleanup đúng PID và push report.
 - Smoke test server thật chưa chạy; chưa tuyên bố runtime production READY.
 
 ## Next exact action
 
-Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng full post-login asset sync.
-Mục tiêu dự kiến: **382/382 PASS**. Chưa nối transport loop hoặc gửi packet tới client thật.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng response sizing plan.
+Mục tiêu dự kiến: **385/385 PASS**. Chưa gửi payload qua socket và database không đổi.
