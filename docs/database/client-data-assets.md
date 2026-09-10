@@ -138,3 +138,17 @@ properties hợp lệ. Command chạy archive/backup/checksum/schema gates, tran
 read-back verifier. Runtime publish/startup không thuộc quyền này.
 
 Command đang chờ full-suite Windows trước khi được đưa vào BAT để chạy database thật.
+
+
+## Kết quả import thật — 2026-09-10
+
+BAT option 6 đã chạy trên database NSOCry và báo `IMPORTED_AND_VERIFIED`:
+
+- version 7; 43 task group; 131 EXP; payload 85154 byte;
+- SHA-256 `242a3551cc110c4eda9f8e40f06fcd0f0b0b2d32bcab6f1b07669dbd0c9b148b`;
+- `overwritten=false`;
+- `databaseChanged=true`, `dataImported=true`;
+- transaction commit và read-back verifier cùng đạt;
+- runtime snapshot/startup vẫn false.
+
+Báo cáo bằng chứng: `reports/windows/latest-data-import.md`.
