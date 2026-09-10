@@ -226,3 +226,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
   `TcpServer.start()`.
 - Ba test khóa gate chạy trước bind, lỗi gate giữ listener đóng và dependency null bị từ chối.
 - Production main chưa inject DATA readiness; database không đổi, server thật chưa khởi động.
+
+
+## 2026-09-10 — TCP hook 368/368 và DATA startup composition
+
+- Báo cáo commit `fa0662a2`: BUILD SUCCESS, 368/368 PASS.
+- TCP readiness hook chuyển `VERIFIED_BY_FULL_SUITE`.
+- Thêm `DataAssetServerStartupReadiness`: publish từ source, validate manifest, atomic swap và
+  require đúng version/SHA-256 trước khi trả quyền bind.
+- Hai test khóa success và database/source failure giữ store rỗng.
+- Production main chưa inject component; không kết nối database hoặc khởi động server trong tranche.
