@@ -5,6 +5,7 @@ import com.nsocry.assets.ClientAssetSnapshotProvider;
 import com.nsocry.protocol.compat.ClientDataSet;
 import com.nsocry.protocol.compat.PostLoginVersionPayloadCodec;
 import com.nsocry.protocol.compat.ProtocolFrame;
+import com.nsocry.protocol.compat.ProtocolLimits;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -30,6 +31,36 @@ public final class PostLoginAssetSyncService {
         ClientAssetSnapshot snapshot = current();
         return PostLoginVersionPayloadCodec.encodeDataResponse(
                 dataSet, snapshot.payload(dataSet));
+    }
+
+    /**
+     * Chọn short/full-size theo độ dài mà chưa quyết định layout wire của command -32.
+     */
+    public ResponsePlan planResponse(
+            ProtocolFrame request, ProtocolLimits limits) throws IOException {
+        Objects.requireNonNull(limits, "limits");
+        ProtocolFrame response = respond(request);
+        int length = response.payload().length;
+        if (length <= limits.maxShortPayload()) {
+            limits.requireAllowed(length, false);
+            return new ResponsePlan(response, Delivery.SHORT);
+        }
+        limits.requireAllowed(length, true);
+        return new ResponsePlan(response, Delivery.FULL_SIZE);
+    }
+
+    /** Phương thức vận chuyển được chọn sau khi kiểm tra giới hạn payload. */
+    public enum Delivery {
+        SHORT,
+        FULL_SIZE
+    }
+
+    /** Logical response và phương thức vận chuyển; chưa encode command -32. */
+    public record ResponsePlan(ProtocolFrame frame, Delivery delivery) {
+        public ResponsePlan {
+            Objects.requireNonNull(frame, "frame");
+            Objects.requireNonNull(delivery, "delivery");
+        }
     }
 
     private ClientAssetSnapshot current() {
