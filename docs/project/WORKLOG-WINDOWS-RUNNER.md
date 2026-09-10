@@ -152,3 +152,12 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm BAT option 6: pull, full pre-import build, command import, read-back và report push.
 - Failure sau khi command bắt đầu được phân loại FAILED_OR_UNCERTAIN; runtime/startup không nối.
 - Tại checkpoint code này DATA chưa được import.
+
+
+## 2026-09-10 — DATA v7 IMPORTED_AND_VERIFIED
+
+- BAT option 6 chạy đúng commit `0b956467`; pre-import gate trước đó 347/347 PASS.
+- Command exit 0; version 7, 43 task group, 131 EXP, 85154 byte, checksum authoritative.
+- `overwritten=false`; row mới được transaction commit và read-back xác minh.
+- `databaseChanged=true`, `dataImported=true`.
+- Runtime snapshot/startup vẫn false; tiến độ gameplay tăng 18% -> 19%.
