@@ -171,3 +171,14 @@ tests đang chờ Windows gate. Startup chưa sở hữu store này và runtime 
 `JdbcDataAssetSource`, validate lại rồi atomic publish vào store cục bộ của command. Output dùng
 `PUBLISHED_ISOLATED` để không nhầm với server startup. Command không ghi database; snapshot biến
 mất khi process command kết thúc.
+
+
+## Gate 361 và vận hành qua BAT
+
+Full suite Windows tại commit `f7fa350b` đạt 361/361, xác minh command cô lập, JDBC source,
+validation, atomic store và launcher route. Menu số 7 chạy command này trên database read-only
+và gửi `reports/windows/latest-data-runtime-publish.md` lên GitHub.
+
+Việc command in `runtimeSnapshotPublished=true` chỉ có nghĩa atomic store nội bộ của tiến trình
+đã nhận snapshot hợp lệ. Nó không có nghĩa server đang phục vụ DATA: process kết thúc thì store
+mất; `serverStartupWired=false` cho đến một tranche có thiết kế ownership/lifecycle và gate riêng.
