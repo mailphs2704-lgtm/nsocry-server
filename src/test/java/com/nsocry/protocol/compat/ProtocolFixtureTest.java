@@ -49,15 +49,15 @@ class ProtocolFixtureTest {
     void fullSizeServerFrameMatchesFixtureHash() throws Exception {
         String fixture = Files.readString(FIXTURE);
         byte[] encrypted = LegacyFrameCodec.encodeFullSizeFrame(
-                new byte[32768], new RollingXorCipher(KEY));
+                (byte) -28, new byte[32768], new RollingXorCipher(KEY));
 
         assertEquals(intValue(fixture, "encryptedFrameByteLength"), encrypted.length);
-        assertArrayEquals(hex(stringValue(fixture, "encryptedHeaderHex")), slice(encrypted, 0, 5));
+        assertArrayEquals(hex(stringValue(fixture, "encryptedHeaderHex")), slice(encrypted, 0, 6));
         assertEquals(stringValue(fixture, "encryptedFrameSha256"),
                 HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(encrypted)));
 
         ProtocolFrame decoded = LegacyFrameCodec.decodeFrame(encrypted, new RollingXorCipher(KEY));
-        assertEquals(LegacyFrameCodec.FULL_SIZE_COMMAND, decoded.command());
+        assertEquals(-28, decoded.command());
         assertEquals(32768, decoded.payload().length);
     }
 
