@@ -59,7 +59,7 @@ class DataAssetRuntimePublishServiceTest {
     @Test
     void snapshotPayloadIsDefensivelyCopied() throws Exception {
         DataAssetBundle bundle = bundle();
-        DataAssetSeedArtifact artifact = DataAssetSeedArtifactGeneratornymous_generateDelegate.generate(bundle);
+        DataAssetSeedArtifact artifact = DataAssetSeedArtifactGenerator.generate(bundle);
         DataAssetRuntimeSnapshot snapshot = new DataAssetRuntimePublishService(
                 () -> bundle, artifact.manifest(), new AtomicDataAssetRuntimeSnapshotStore())
                 .rebuildAndPublish();
