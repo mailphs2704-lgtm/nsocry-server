@@ -110,12 +110,12 @@ khóa cứng phạm vi này; chưa chạy database.
 - Runtime snapshot, defensive copy, atomic store và publish service: VERIFIED_BY_FULL_SUITE.
 - JDBC DATA source và ba tests: VERIFIED_BY_FULL_SUITE 356/356.
 - DATA runtime publish command cô lập, bốn command tests và launcher route: **VERIFIED_BY_FULL_SUITE 361/361**.
-- Đã thêm BAT option 7 để chạy command read-only trên database và tự push báo cáo; đang chờ lần chạy thật Windows.
-- Chưa có bằng chứng command thật từ option 7; startup chưa nối.
+- BAT option 7: **VERIFIED_END_TO_END** trên Windows; report exit 0, DATA v7/checksum authoritative, database read-only và `PUBLISHED_ISOLATED`.
+- Đã thêm startup readiness gate vào atomic store: bắt buộc snapshot tồn tại và khớp version/SHA-256 trước listener; bốn test mới đang chờ full suite.
+- Startup chưa gọi gate và chưa sở hữu store; chưa mở server.
 
 ## Next exact action
 
-Chủ dự án chọn `2` trong BAT hiện tại để pull, chọn `0`, mở lại `NSOCRY_WORK.bat` rồi chọn
-`7`. Mục tiêu: báo cáo `DATA_RUNTIME_PUBLISHED_ISOLATED`, database không đổi và
-`serverStartupWired=false`. Sau khi báo “xong”, AI kiểm tra report GitHub trước khi thực hiện
-tranche nối ownership vào startup.
+Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để pull và kiểm chứng startup readiness gate.
+Mục tiêu dự kiến: **365/365 PASS**. Đây vẫn là gate thuần bộ nhớ/test; database không đổi và
+server startup chưa được bật.
