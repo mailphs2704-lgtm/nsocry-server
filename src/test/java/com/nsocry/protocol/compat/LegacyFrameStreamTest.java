@@ -33,12 +33,26 @@ class LegacyFrameStreamTest {
 
     @Test
     void rejectsFullSizeFrameFromClientDirection() {
-        byte[] wire = LegacyFrameCodec.encodeFullSizeFrame(new byte[8], new RollingXorCipher(KEY));
+        byte[] wire = LegacyFrameCodec.encodeFullSizeFrame((byte) -28, new byte[8], new RollingXorCipher(KEY));
         LegacyFrameReader reader = new LegacyFrameReader(
                 new ByteArrayInputStream(wire), ProtocolLimits.DEFAULT);
 
         assertThrows(IOException.class,
                 () -> reader.readEncryptedFrame(new RollingXorCipher(KEY), false));
+    }
+
+    @Test
+    void readsAllowedFullSizeAndRestoresOriginalCommand() throws Exception {
+        byte[] wire = LegacyFrameCodec.encodeFullSizeFrame(
+                (byte) -28, new byte[] {-122, 7}, new RollingXorCipher(KEY));
+        LegacyFrameReader reader = new LegacyFrameReader(
+                new ByteArrayInputStream(wire), ProtocolLimits.DEFAULT);
+
+        ProtocolFrame decoded =
+                reader.readEncryptedFrame(new RollingXorCipher(KEY), true);
+
+        assertEquals(-28, decoded.command());
+        assertArrayEquals(new byte[] {-122, 7}, decoded.payload());
     }
 
     @Test
