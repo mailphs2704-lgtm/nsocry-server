@@ -298,3 +298,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Thêm `ResponsePlan`: chọn SHORT/FULL_SIZE theo `ProtocolLimits`, từ chối vượt max full.
 - Ba test khóa small, large 65537-byte logical response và over-limit.
 - Chưa encode/gửi command -32 vì layout wrapper cần evidence từ reference; không đoán wire.
+
+
+## 2026-09-10 — sizing 385/385 và sửa full-size wire từ reference
+
+- Báo cáo commit `2f46c234`: BUILD SUCCESS, 385/385 PASS.
+- Đối chiếu `source-reference/NSOKISS/.../Session.java:136-175`.
+- Routing threshold authoritative là `Short.MAX_VALUE` 32767.
+- Full-size layout: encrypted -32, encrypted original command, encrypted int32 length, encrypted payload.
+- Sửa codec/writer/reader/transport để giữ command gốc; update fixture 32768-byte SHA-256.
+- Thêm reader round-trip test; đang chờ Windows full suite, chưa nối production session loop.
