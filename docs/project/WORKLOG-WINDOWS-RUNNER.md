@@ -268,3 +268,13 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Application chỉ expose `Optional<DataAssetRuntimeSnapshot>`; không expose hàm publish/mutation
   cho session/gameplay.
 - Hai ownership tests mới đang chờ full suite Windows.
+
+
+## 2026-09-10 — DATA ownership 374/374 và post-login sync service
+
+- Sau recovery report-only divergence, báo cáo commit `e175a37b`: BUILD SUCCESS, 374/374 PASS.
+- Application DATA ownership chuyển `VERIFIED_BY_FULL_SUITE`.
+- Thêm `PostLoginDataSyncService` dùng accessor snapshot read-only; không giữ DataSource/store publisher.
+- Service chỉ nhận envelope -28/request -122, trả nested DATA response từ payload defensive copy.
+- MAP/SKILL/ITEM, malformed request và snapshot rỗng đều fail closed.
+- Bốn test mới đang chờ Windows full suite; chưa nối socket/session loop.
