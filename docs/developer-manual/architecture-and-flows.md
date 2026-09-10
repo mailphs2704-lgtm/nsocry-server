@@ -175,3 +175,14 @@ appearance đồng bộ. Sau authentication, service có thể tạo UPDATE_VERS
 
 Boundary này chưa sở hữu socket hoặc vòng lặp session. Chỉ khi full snapshot production cho cả
 bốn asset family và appearance được VERIFIED mới được inject service vào connection handler.
+
+
+## Post-login response sizing gate
+
+Logical DATA response gồm nested command cộng payload authoritative nên lớn hơn 65535 byte.
+`PostLoginAssetSyncService.planResponse` phân loại SHORT hoặc FULL_SIZE bằng
+`ProtocolLimits` và từ chối payload vượt giới hạn full trước I/O.
+
+Gate này cố ý chưa quyết định byte layout của command `-32`. Source hiện có chỉ chứng minh
+full-size header, chưa chứng minh logical envelope `-28` được đặt ở đâu trong payload. Transport
+không được nối bằng suy đoán; cần fixture/reference trace trước.
