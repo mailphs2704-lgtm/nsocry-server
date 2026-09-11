@@ -155,6 +155,12 @@ function New-ReportContent(
 
 function Build-And-Publish {
     Assert-Repository
+    if ($null -eq (Get-Command java -ErrorAction SilentlyContinue)) {
+        Stop-Workflow "Khong tim thay Java trong PATH."
+    }
+    if ($null -eq (Get-Command mvn -ErrorAction SilentlyContinue)) {
+        Stop-Workflow "Khong tim thay Maven trong PATH. Can cai Maven va mo lai CMD."
+    }
     New-Item -ItemType Directory -Force -Path $WorkDirectory, $HistoryDirectory | Out-Null
 
     $testedCommit = (& git rev-parse HEAD).Trim()
@@ -171,10 +177,10 @@ function Build-And-Publish {
     $mavenVersionExitCode = $LASTEXITCODE
     $ErrorActionPreference = $previousPreference
     if ($javaExitCode -ne 0) {
-        Stop-Workflow "Khong tim thay Java 17 trong PATH."
+        Stop-Workflow "Java ton tai nhung java -version that bai."
     }
     if ($mavenVersionExitCode -ne 0) {
-        Stop-Workflow "Khong tim thay Maven trong PATH."
+        Stop-Workflow "Maven ton tai nhung mvn -version that bai."
     }
     $javaSummary = (($javaOutput | Select-Object -First 1) -join " ").Trim()
     $mavenSummary = (($mavenOutput | Select-Object -First 1) -join " ").Trim()
