@@ -2404,3 +2404,25 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
   - **Dòng 15 — `public final class ResetAdministratorPasswordCommand {`**: Điều phối nhập password kín và cập nhật đúng một administrator.
   - **Dòng 31 — `public static void main(String[] args) throws Exception {`**: Nạp cấu hình, hash password mới và reset bộ đếm đăng nhập lỗi.
 - **Khi sửa:** kiểm tra command route, password lifecycle, prepared statement, test + manual module + STATUS/WORKLOG.
+
+### `com.nsocry.session.PostLoginSessionTransport`
+
+- **Source:** `src/main/java/com/nsocry/session/PostLoginSessionTransport.java`
+- **Vai trò tóm tắt:** Ranh giới I/O frame tối thiểu cho vòng lặp phiên sau xác thực.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - `readClientFrame()` đọc frame mã hóa tiếp theo.
+  - `sendShortFrame(...)` và `sendFullSizeFrame(...)` gửi theo layout đã chọn.
+- **Khi sửa:** không đưa nghiệp vụ hoặc snapshot vào transport; giữ cipher hai chiều liên tục sau handshake.
+
+
+### `com.nsocry.session.PostLoginAssetSessionLoop`
+
+- **Source:** `src/main/java/com/nsocry/session/PostLoginAssetSessionLoop.java`
+- **Vai trò tóm tắt:** Gửi UPDATE_VERSION và phục vụ tuần tự yêu cầu DATA/MAP/SKILL/ITEM đến khi client ngắt.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - Constructor nhận transport, `PostLoginAssetSyncService` và giới hạn protocol.
+  - `run()` công bố version trước rồi chọn short/full-size cho từng response.
+- **Khi sửa:** EOF là ngắt kết nối bình thường; malformed/unknown request phải fail closed và không được làm lệch cipher.
+
