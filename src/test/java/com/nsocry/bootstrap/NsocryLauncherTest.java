@@ -56,6 +56,14 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesAppearanceSeedConvert() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"appearance-seed-convert", "data.properties"});
+        assertEquals(NsocryLauncher.LaunchCommand.APPEARANCE_SEED_CONVERT, request.command());
+        assertEquals(Path.of("data.properties"), request.configurationPath());
+    }
+
+    @Test
     void parsesDataSchemaPreflight() {
         assertEquals(NsocryLauncher.LaunchCommand.DATA_SCHEMA_PREFLIGHT,
                 NsocryLauncher.parse(new String[] {"data-schema-preflight"}).command());
