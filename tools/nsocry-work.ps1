@@ -741,21 +741,20 @@ function Invoke-V9ClientAnalysis {
         $archive.Dispose()
     }
 
-    $patterns = "bipush\s+-?(27|29|30|125|127)|sipush\s+14444|writeUTF|readUTF|java/net/Socket|connect:|DataOutputStream|DataInputStream"
+    $patterns = 'writeUTF|new\\s+#[0-9]+\\s+// class bR|Method bR\\..*<init>|Field bR\\.Y:B|lookupswitch|tableswitch|java/net/Socket|SocketConnection'
     $evidence = New-Object System.Collections.Generic.List[string]
     foreach ($className in ($candidateNames | Select-Object -First 80)) {
         $previousPreference = $ErrorActionPreference
         $ErrorActionPreference = "Continue"
         $disassembly = @(& javap -classpath $clientJar -c -p $className 2>&1)
         $ErrorActionPreference = $previousPreference
-        $matches = @($disassembly | Select-String -Pattern $patterns -Context 5,10)
+        $matches = @($disassembly | Select-String -Pattern $patterns -Context 8,16 | Select-Object -First 80)
         if ($matches.Count -gt 0) {
             $evidence.Add("### $className")
             foreach ($match in $matches) {
                 $evidence.Add(($match.ToString()))
             }
         }
-        if ($evidence.Count -ge 1200) { break }
     }
 
     $hash = (Get-FileHash -LiteralPath $clientJar -Algorithm SHA256).Hash.ToLowerInvariant()
