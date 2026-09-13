@@ -16,7 +16,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /** Sở hữu I/O frame, trạng thái mã hóa hai chiều và thao tác đóng của một client. */
-public final class LegacySessionTransport implements Closeable {
+public final class LegacySessionTransport implements Closeable, PostLoginSessionTransport {
     private final LegacyFrameReader reader;
     private final LegacyFrameWriter writer;
     private final HandshakeStateMachine state = new HandshakeStateMachine();
