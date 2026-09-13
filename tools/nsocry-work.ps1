@@ -757,6 +757,35 @@ function Invoke-V9ClientAnalysis {
         }
     }
 
+    $dispatcherDetail = New-Object System.Collections.Generic.List[string]
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    $alDisassembly = @(& javap -classpath $clientJar -c -p al 2>&1)
+    $ErrorActionPreference = $previousPreference
+    $switchIndex = -1
+    for ($index = 0; $index -lt $alDisassembly.Count; $index++) {
+        if ([string]$alDisassembly[$index] -match "tableswitch.*-30 to 126") {
+            $switchIndex = $index
+            break
+        }
+    }
+    if ($switchIndex -ge 0) {
+        $handlerIndex = -1
+        for ($index = $switchIndex; $index -lt $alDisassembly.Count; $index++) {
+            if ([string]$alDisassembly[$index] -match "^\\s*700:") {
+                $handlerIndex = $index
+                break
+            }
+        }
+        if ($handlerIndex -ge 0) {
+            $detailStart = [Math]::Max($switchIndex, $handlerIndex - 8)
+            $detailEnd = [Math]::Min($alDisassembly.Count - 1, $handlerIndex + 90)
+            for ($index = $detailStart; $index -le $detailEnd; $index++) {
+                $dispatcherDetail.Add([string]$alDisassembly[$index])
+            }
+        }
+    }
+
     $hash = (Get-FileHash -LiteralPath $clientJar -Algorithm SHA256).Hash.ToLowerInvariant()
     $size = (Get-Item -LiteralPath $clientJar).Length
     $testedCommit = (& git rev-parse HEAD).Trim()
@@ -788,6 +817,12 @@ function Invoke-V9ClientAnalysis {
         "",
         '```text'
     ) + ($evidence | Select-Object -First 1200) + @(
+        '```',
+        "",
+        "## Dispatcher command -30 detail",
+        "",
+        '```text'
+    ) + $dispatcherDetail + @(
         '```'
     )
     Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
