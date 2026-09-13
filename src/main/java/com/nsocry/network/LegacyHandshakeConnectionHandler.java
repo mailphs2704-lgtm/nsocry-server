@@ -14,15 +14,26 @@ public final class LegacyHandshakeConnectionHandler implements SessionConnection
     private final ProtocolLimits limits;
     private final SessionKeyProvider keys;
     private final AuthenticationPort authentication;
+    private final NetworkEventSink events;
 
     /** Tạo handler bằng giới hạn protocol, nguồn khóa phiên và port xác thực bắt buộc. */
     public LegacyHandshakeConnectionHandler(
             ProtocolLimits limits,
             SessionKeyProvider keys,
             AuthenticationPort authentication) {
+        this(limits, keys, authentication, null);
+    }
+
+    /** Tạo handler có observability terminal; null giữ tương thích cho composition/test cũ. */
+    public LegacyHandshakeConnectionHandler(
+            ProtocolLimits limits,
+            SessionKeyProvider keys,
+            AuthenticationPort authentication,
+            NetworkEventSink events) {
         this.limits = Objects.requireNonNull(limits, "limits");
         this.keys = Objects.requireNonNull(keys, "keys");
         this.authentication = Objects.requireNonNull(authentication, "authentication");
+        this.events = events;
     }
 
     @Override
@@ -38,6 +49,9 @@ public final class LegacyHandshakeConnectionHandler implements SessionConnection
         HandshakeEvent login = processor.receiveNext(authentication);
         if (login != HandshakeEvent.AUTHENTICATED && login != HandshakeEvent.LOGIN_REJECTED) {
             throw new IllegalStateException("unexpected terminal handshake event " + login);
+        }
+        if (events != null) {
+            events.handshakeCompleted(socket.getRemoteSocketAddress(), login);
         }
     }
 
