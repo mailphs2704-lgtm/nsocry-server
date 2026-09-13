@@ -808,7 +808,26 @@ function Invoke-V9ClientAnalysis {
     $loginHandlerDetail = New-Object System.Collections.Generic.List[string]
     $loginHandlerStart = -1
     for ($index = 0; $index -lt $alDisassembly.Count; $index++) {
-        if (([string]$alDisassembly[$index]) -match '^\s*(private|public|protected).*\sh\(bR\);\s*
+        if (([string]$alDisassembly[$index]) -match '^\s*(private|public|protected).*\sh\(bR\);') {
+            $loginHandlerStart = $index
+            break
+        }
+    }
+    if ($loginHandlerStart -ge 0) {
+        $loginHandlerEnd = [Math]::Min($alDisassembly.Count - 1, $loginHandlerStart + 350)
+        for ($index = $loginHandlerStart; $index -le $loginHandlerEnd; $index++) {
+            $line = [string]$alDisassembly[$index]
+            if ($index -gt $loginHandlerStart -and
+                    $line -match '^\s{2}(private|public|protected).+\);') {
+                break
+            }
+            $loginHandlerDetail.Add($line)
+        }
+    } else {
+        $loginHandlerDetail.Add("Khong tim thay method h(bR) cua command -30.")
+    }
+
+    $hash = (Get-FileHash -LiteralPath $clientJar -Algorithm SHA256).Hash.ToLowerInvariant()
     $size = (Get-Item -LiteralPath $clientJar).Length
     $testedCommit = (& git rev-parse HEAD).Trim()
     $reportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-v9-client-analysis.md"
