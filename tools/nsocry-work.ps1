@@ -189,9 +189,7 @@ function Build-And-Publish {
     if ($null -eq (Get-Command java -ErrorAction SilentlyContinue)) {
         Stop-Workflow "Khong tim thay Java trong PATH."
     }
-    if ($null -eq (Get-Command mvn -ErrorAction SilentlyContinue)) {
-        Stop-Workflow "Khong tim thay Maven trong PATH. Can cai Maven va mo lai CMD."
-    }
+    $mavenCommand = Resolve-MavenCommand
     New-Item -ItemType Directory -Force -Path $WorkDirectory, $HistoryDirectory | Out-Null
 
     $testedCommit = (& git rev-parse HEAD).Trim()
@@ -204,7 +202,7 @@ function Build-And-Publish {
     $ErrorActionPreference = "Continue"
     $javaOutput = @(& java -version 2>&1)
     $javaExitCode = $LASTEXITCODE
-    $mavenOutput = @(& mvn -version 2>&1)
+    $mavenOutput = @(& $mavenCommand -version 2>&1)
     $mavenVersionExitCode = $LASTEXITCODE
     $ErrorActionPreference = $previousPreference
     if ($javaExitCode -ne 0) {
@@ -219,7 +217,7 @@ function Build-And-Publish {
     Write-Host "===== MAVEN CLEAN PACKAGE ====="
     $previousPreference = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
-    & mvn clean package 2>&1 | Tee-Object -FilePath $LogPath
+    & $mavenCommand clean package 2>&1 | Tee-Object -FilePath $LogPath
     $mavenExitCode = $LASTEXITCODE
     $ErrorActionPreference = $previousPreference
 
@@ -331,6 +329,10 @@ function Invoke-DataImportPlan {
 function Invoke-AuthorizedDataImport {
     Assert-Repository
     Pull-Branch
+    if ($null -eq (Get-Command java -ErrorAction SilentlyContinue)) {
+        Stop-Workflow "Khong tim thay Java trong PATH; DATA import chua duoc chay."
+    }
+    $mavenCommand = Resolve-MavenCommand
 
     $jar = Join-Path $RepositoryRoot "target\\nsocry-server-0.1.0-SNAPSHOT.jar"
     $plan = Join-Path $RepositoryRoot "config\\data-import-plan.properties.example"
@@ -340,7 +342,7 @@ function Invoke-AuthorizedDataImport {
     Write-Host "===== PRE-IMPORT FULL BUILD ====="
     $previousPreference = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
-    & mvn clean package 2>&1 | Tee-Object -FilePath $preImportLog
+    & $mavenCommand clean package 2>&1 | Tee-Object -FilePath $preImportLog
     $buildExitCode = $LASTEXITCODE
     $ErrorActionPreference = $previousPreference
     if ($buildExitCode -ne 0) {
