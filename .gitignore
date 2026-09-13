@@ -9,6 +9,7 @@ build/
 
 # Runtime / temporary files
 *.log
+.nsocry-work/
 
 # OS
 .DS_Store
@@ -16,7 +17,11 @@ Thumbs.db
 
 # Local NSOCry generated files
 logs/
+backups/
 
 .gradle/
 
 source-reference/NSOKISS.zip
+
+# Cấu hình cục bộ có thể chứa database secret.
+config/nsocry.properties
