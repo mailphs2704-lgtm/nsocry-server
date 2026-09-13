@@ -975,6 +975,80 @@ function Invoke-V9ClientAnalysis {
     Write-Host "DATABASE_CHANGED=false"
 }
 
+function Invoke-AppearanceSeedConvert {
+    Assert-Repository
+    Pull-Branch
+    $mavenCommand = Resolve-MavenCommand
+    New-Item -ItemType Directory -Force -Path $WorkDirectory | Out-Null
+    $buildLog = Join-Path $WorkDirectory "appearance-seed-build.log"
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & $mavenCommand clean package 2>&1 | Tee-Object -FilePath $buildLog
+    $buildExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    if ($buildExitCode -ne 0) {
+        Stop-Workflow "Build/test truoc appearance convert that bai." $buildExitCode
+    }
+
+    $jar = Join-Path $RepositoryRoot "target\\nsocry-server-0.1.0-SNAPSHOT.jar"
+    $configuration = Join-Path $RepositoryRoot "data-dry-run.properties"
+    if (-not (Test-Path -LiteralPath $configuration -PathType Leaf)) {
+        Stop-Workflow "Thieu data-dry-run.properties."
+    }
+    $archive = Join-Path $RepositoryRoot "data-dry-run-appearance-seed-candidate.zip"
+    if (Test-Path -LiteralPath $archive) {
+        Stop-Workflow "Appearance candidate da ton tai; khong ghi de: $archive"
+    }
+
+    $ErrorActionPreference = "Continue"
+    $convertOutput = @(& java -jar $jar appearance-seed-convert $configuration 2>&1)
+    $convertExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    $convertOutput | ForEach-Object { Write-Host $_ }
+    $joined = $convertOutput -join [Environment]::NewLine
+    $success = ($convertExitCode -eq 0) -and
+        $joined.Contains("APPEARANCE seed candidate VERIFIED") -and
+        $joined.Contains("archiveRoundTripVerified=true") -and
+        $joined.Contains("databaseChanged=false")
+
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $reportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-appearance-seed-convert.md"
+    $status = if ($success) { "VERIFIED" } else { "FAILED" }
+    $reportLines = @(
+        "# Appearance seed convert Windows",
+        "",
+        "- Tested commit: $testedCommit",
+        "- Status: $status",
+        "- Command exit code: $convertExitCode",
+        "- Archive committed: false",
+        "- Database changed: false",
+        "- Runtime snapshot published: false",
+        "- Server startup wired: false",
+        "",
+        "## Command output",
+        ""
+    ) + ($convertOutput | ForEach-Object { "    " + $_ })
+    Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
+    Invoke-Git @("add", "--", "reports/windows/latest-appearance-seed-convert.md")
+    Invoke-Git @("commit", "-m", "ops: report appearance seed convert")
+    $reportCommit = (& git rev-parse HEAD).Trim()
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "Appearance report da commit local nhung push that bai." $LASTEXITCODE
+    }
+    if (-not $success) {
+        Write-Host "NSOCRY_WORKFLOW_RESULT=APPEARANCE_SEED_CONVERT_FAILED"
+        Write-Host "REPORT_COMMIT=$reportCommit"
+        exit 6
+    }
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=APPEARANCE_SEED_CONVERT_VERIFIED"
+    Write-Host "TESTED_COMMIT=$testedCommit"
+    Write-Host "REPORT_COMMIT=$reportCommit"
+    Write-Host "ARCHIVE_COMMITTED=false"
+    Write-Host "DATABASE_CHANGED=false"
+}
+
 switch ($Action) {
     "1" {
         Assert-Repository
@@ -1012,5 +1086,8 @@ switch ($Action) {
     }
     "10" {
         Invoke-V9ClientAnalysis
+    }
+    "11" {
+        Invoke-AppearanceSeedConvert
     }
 }
