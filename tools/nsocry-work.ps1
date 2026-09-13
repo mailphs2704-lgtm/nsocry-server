@@ -1,5 +1,5 @@
 ﻿param(
-    [ValidateSet("1", "2", "3", "4", "5", "6", "7", "8")]
+    [ValidateSet("1", "2", "3", "4", "5", "6", "7", "8", "9")]
     [string]$Action = "1"
 )
 
@@ -586,6 +586,104 @@ function Invoke-DataStartupSmokeTest {
     Write-Host "SERVER_PROCESS_STOPPED=true"
 }
 
+
+function Invoke-V9HandshakeCapture {
+    Assert-Repository
+    Pull-Branch
+    $jar = Join-Path $RepositoryRoot "target\\nsocry-server-0.1.0-SNAPSHOT.jar"
+    if (-not (Test-Path $jar)) {
+        Stop-Workflow "Chua co JAR. Hay chon 1 de pull va build truoc."
+    }
+    if ($null -eq (Get-Command java -ErrorAction SilentlyContinue)) {
+        Stop-Workflow "Khong tim thay Java trong PATH."
+    }
+
+    New-Item -ItemType Directory -Force -Path $WorkDirectory, $HistoryDirectory | Out-Null
+    $stdoutPath = Join-Path $WorkDirectory "v9-handshake-stdout.log"
+    $stderrPath = Join-Path $WorkDirectory "v9-handshake-stderr.log"
+    Remove-Item -Force -ErrorAction SilentlyContinue $stdoutPath, $stderrPath
+    $process = $null
+    $ready = $false
+    try {
+        Write-Host "===== V9 HANDSHAKE CAPTURE ====="
+        $arguments = "-jar `"$jar`" server config\\nsocry.properties"
+        $process = Start-Process -FilePath "java" -ArgumentList $arguments -WorkingDirectory $RepositoryRoot -RedirectStandardOutput $stdoutPath -RedirectStandardError $stderrPath -PassThru
+        for ($attempt = 0; $attempt -lt 30; $attempt++) {
+            Start-Sleep -Milliseconds 500
+            $process.Refresh()
+            if ($process.HasExited) { break }
+            $stdout = if (Test-Path $stdoutPath) { [string](Get-Content $stdoutPath -Raw) } else { "" }
+            if ($null -eq $stdout) { $stdout = "" }
+            if ($stdout.Contains("NSOCry server started on") -and
+                    $stdout.Contains("DATA runtime snapshot READY version=7")) {
+                $ready = $true
+                break
+            }
+        }
+        if (-not $ready) {
+            Write-Host "Server khong dat READY; runner se thu log va dung."
+        } else {
+            Write-Host ""
+            Write-Host "Server READY. Hay mo client V9, thu dang nhap DUNG MOT LAN."
+            [void](Read-Host "Sau khi client khong phan ung hoac ngat ket noi, nhan Enter")
+            Start-Sleep -Seconds 2
+        }
+    } finally {
+        if ($null -ne $process) {
+            $process.Refresh()
+            if (-not $process.HasExited) {
+                Stop-Process -Id $process.Id -Force
+                $process.WaitForExit()
+            }
+        }
+    }
+
+    $stdoutLines = if (Test-Path $stdoutPath) { @(Get-Content $stdoutPath) } else { @() }
+    $stderrLines = if (Test-Path $stderrPath) { @(Get-Content $stderrPath) } else { @() }
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $stamp = (Get-Date).ToUniversalTime().ToString("yyyyMMdd-HHmmss")
+    $shortCommit = (& git rev-parse --short=8 HEAD).Trim()
+    $reportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-v9-handshake.md"
+    $historyPath = Join-Path $HistoryDirectory "$stamp-$shortCommit-v9-handshake.md"
+    $status = if ($ready) { "CAPTURED" } else { "STARTUP_FAILED" }
+    $reportLines = @(
+        "# Client V9 handshake capture Windows",
+        "",
+        "- Tested commit: $testedCommit",
+        "- Status: $status",
+        "- Server READY before client attempt: $ready",
+        "- Server process stopped by runner: true",
+        "- Database migration/import performed: false",
+        "- Authentication audit fields may change if login reached AuthenticationService: true",
+        "",
+        "## Standard output",
+        ""
+    ) + ($stdoutLines | ForEach-Object { "    " + $_ }) + @(
+        "",
+        "## Sanitized standard error",
+        ""
+    ) + ($stderrLines | ForEach-Object { "    " + $_ })
+    $report = $reportLines -join [Environment]::NewLine
+    Set-Content -Path $reportPath -Value $report -Encoding UTF8
+    Set-Content -Path $historyPath -Value $report -Encoding UTF8
+
+    Invoke-Git @("add", "--", "reports/windows/latest-v9-handshake.md", ($historyPath.Substring($RepositoryRoot.Length + 1).Replace("\\", "/")))
+    Invoke-Git @("commit", "-m", "ops: report client v9 handshake capture")
+    $reportCommit = (& git rev-parse HEAD).Trim()
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "V9 handshake report da commit local nhung push that bai." $LASTEXITCODE
+    }
+
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=V9_HANDSHAKE_REPORT_PUBLISHED"
+    Write-Host "CAPTURE_STATUS=$status"
+    Write-Host "TESTED_COMMIT=$testedCommit"
+    Write-Host "REPORT_COMMIT=$reportCommit"
+    Write-Host "SERVER_PROCESS_STOPPED=true"
+    Write-Host "DATABASE_MIGRATION_OR_IMPORT=false"
+}
+
 switch ($Action) {
     "1" {
         Assert-Repository
@@ -617,5 +715,8 @@ switch ($Action) {
     }
     "8" {
         Invoke-DataStartupSmokeTest
+    }
+    "9" {
+        Invoke-V9HandshakeCapture
     }
 }
