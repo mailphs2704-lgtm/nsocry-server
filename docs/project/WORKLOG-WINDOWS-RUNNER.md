@@ -308,3 +308,11 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Full-size layout: encrypted -32, encrypted original command, encrypted int32 length, encrypted payload.
 - Sửa codec/writer/reader/transport để giữ command gốc; update fixture 32768-byte SHA-256.
 - Thêm reader round-trip test; đang chờ Windows full suite, chưa nối production session loop.
+
+## 2026-09-13 — máy mới: sửa startup smoke khi Maven không có trong PATH
+
+- Database mới đã dựng V001–V005 và ITEM/SKILL/MAP/DATA đã được import/read-back thành công cục bộ.
+- Lần chạy mục 8 dừng trước startup vì PowerShell không tìm thấy `mvn`; database không đổi và server chưa mở.
+- Lỗi phụ `Contains` trên stdout null đã được xác định.
+- Commit `a6b5f625` thêm Maven auto-discovery từ PATH, MAVEN_HOME hoặc thư mục tools cùng ổ repo, kiểm tra Java trước build và xử lý stdout rỗng an toàn.
+- Trạng thái: chờ chủ dự án pull và chạy lại mục 8 trên Windows; chưa tuyên bố smoke PASS từ thay đổi này.
