@@ -16,6 +16,7 @@ public final class NsocryLauncher {
         switch (request.command()) {
             case SERVER -> NsocryServerApplication.main(forwarded);
             case CREATE_ADMIN -> FirstAdministratorCommand.main(forwarded);
+            case RESET_ADMIN_PASSWORD -> ResetAdministratorPasswordCommand.main(forwarded);
             case DATA_SEED_DRY_RUN -> DataAssetSeedDryRunCommand.main(forwarded);
             case DATA_SEED_CONVERT -> DataAssetSeedConvertCommand.main(forwarded);
             case DATA_SEED_ARCHIVE_DRY_RUN -> DataAssetSeedArchiveDryRunCommand.main(forwarded);
@@ -56,6 +57,7 @@ public final class NsocryLauncher {
         LaunchCommand command = switch (args[0]) {
             case "server" -> LaunchCommand.SERVER;
             case "create-admin" -> LaunchCommand.CREATE_ADMIN;
+            case "reset-admin-password" -> LaunchCommand.RESET_ADMIN_PASSWORD;
             case "data-seed-dry-run" -> LaunchCommand.DATA_SEED_DRY_RUN;
             case "data-seed-convert" -> LaunchCommand.DATA_SEED_CONVERT;
             case "data-seed-archive-dry-run" -> LaunchCommand.DATA_SEED_ARCHIVE_DRY_RUN;
@@ -95,6 +97,7 @@ public final class NsocryLauncher {
         System.out.println("NSOCry commands:");
         System.out.println("  java -jar nsocry-server.jar server [config-path]");
         System.out.println("  java -jar nsocry-server.jar create-admin [config-path]");
+        System.out.println("  java -jar nsocry-server.jar reset-admin-password [config-path]");
         System.out.println("  java -jar nsocry-server.jar data-seed-dry-run <data-properties-path>");
         System.out.println("  java -jar nsocry-server.jar data-seed-convert <data-properties-path>");
         System.out.println("  java -jar nsocry-server.jar data-seed-archive-dry-run <archive-path>");
@@ -127,6 +130,7 @@ public final class NsocryLauncher {
     enum LaunchCommand {
         SERVER,
         CREATE_ADMIN,
+        RESET_ADMIN_PASSWORD,
         DATA_SEED_DRY_RUN,
         DATA_SEED_CONVERT,
         DATA_SEED_ARCHIVE_DRY_RUN,
