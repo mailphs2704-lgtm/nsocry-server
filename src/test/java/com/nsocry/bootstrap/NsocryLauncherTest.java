@@ -30,6 +30,14 @@ class NsocryLauncherTest {
     }
 
     @Test
+    void parsesResetAdministratorPasswordCommand() {
+        NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
+                new String[] {"reset-admin-password", "config/local.properties"});
+        assertEquals(NsocryLauncher.LaunchCommand.RESET_ADMIN_PASSWORD, request.command());
+        assertEquals(Path.of("config/local.properties"), request.configurationPath());
+    }
+
+    @Test
     void parsesDataSeedDryRunConfiguration() {
         NsocryLauncher.LaunchRequest request = NsocryLauncher.parse(
                 new String[] {"data-seed-dry-run", "config/data.properties"});
