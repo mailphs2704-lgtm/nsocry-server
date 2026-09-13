@@ -2435,3 +2435,20 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
   - `convert(String)` trả `AppearanceAssetBundle` đầy đủ, không mở database hoặc publish runtime.
 - **Khi sửa:** giữ đúng thứ tự head/leg/body/mount trên wire; thiếu row, sai kiểu JSON hoặc giá trị vượt short phải fail closed.
 
+### `com.nsocry.assets.AppearanceAssetSeedArtifact`
+
+- **Source:** `src/main/java/com/nsocry/assets/AppearanceAssetSeedArtifact.java`
+- **Vai trò tóm tắt:** Candidate appearance bất biến chứa payload đã kiểm định cùng độ dài và SHA-256.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** luôn trả defensive copy; checksum phải thuộc đúng payload đã round-trip.
+
+
+### `com.nsocry.assets.AppearanceAssetSeedArtifactGenerator`
+
+- **Source:** `src/main/java/com/nsocry/assets/AppearanceAssetSeedArtifactGenerator.java`
+- **Vai trò tóm tắt:** Encode/decode/encode appearance và từ chối candidate không ổn định trước persistence.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - `generate(AppearanceAssetBundle)` trả artifact chỉ sau round-trip byte-identical.
+- **Khi sửa:** không mở database, không publish runtime và không bỏ kiểm tra bundle equality/checksum.
+
