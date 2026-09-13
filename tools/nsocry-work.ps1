@@ -741,7 +741,7 @@ function Invoke-V9ClientAnalysis {
         $archive.Dispose()
     }
 
-    $patterns = "bipush\\s+-?(27|29|30|125|127)|sipush\\s+14444|writeUTF|readUTF|java/net/Socket|connect:|DataOutputStream|DataInputStream"
+    $patterns = "bipush\s+-?(27|29|30|125|127)|sipush\s+14444|writeUTF|readUTF|java/net/Socket|connect:|DataOutputStream|DataInputStream"
     $evidence = New-Object System.Collections.Generic.List[string]
     foreach ($className in ($candidateNames | Select-Object -First 80)) {
         $previousPreference = $ErrorActionPreference
