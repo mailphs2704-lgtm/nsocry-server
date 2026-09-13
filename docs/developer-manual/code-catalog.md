@@ -2482,3 +2482,13 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
 - **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
 - **Khi sửa:** chỉ chấp nhận đúng hai entry, không ghi đè và không mở database/runtime.
 
+
+
+### `com.nsocry.bootstrap.AppearanceAssetSeedConvertCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/AppearanceAssetSeedConvertCommand.java`
+- **Vai trò tóm tắt:** Chuyển appearance từ DATA dump authoritative thành archive candidate và tự dry-run đọc lại.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - `main(String[])` nhận đúng một DATA properties path có `dump.path`.
+- **Khi sửa:** giữ bounded input, không ghi đè archive, không mở database/runtime và chỉ báo VERIFIED sau read-back.
