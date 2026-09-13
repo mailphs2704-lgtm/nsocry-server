@@ -1,6 +1,6 @@
 ﻿# Phân tích bytecode client V9 Windows
 
-- Tested commit: 31fe926b9ee5096b823ad052672788fa4d55309b
+- Tested commit: 24c7d4fa958efd4ec75ce2c6bafc002423c8ca86
 - Client file: V9_NsoCry_x1.jar
 - Client size: 1573045
 - Client SHA-256: a6dc5c4a6f5314ddd9d8c8f0e03a9077dc3668775533e658562edeb9abe4a3ae
@@ -2082,4 +2082,9 @@ MicroEdition-Profile: MIDP-2.0
         54: invokevirtual #67                 // Method bR.hx:()V
         57: aload_3
         58: athrow
+```
+
+## Dispatcher command -30 detail
+
+```text
 ```
