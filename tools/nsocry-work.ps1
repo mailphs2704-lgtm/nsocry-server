@@ -21,6 +21,37 @@ function Stop-Workflow([string]$Message, [int]$Code = 1) {
     exit $Code
 }
 
+function Resolve-MavenCommand {
+    $command = Get-Command mvn.cmd -ErrorAction SilentlyContinue
+    if ($null -eq $command) {
+        $command = Get-Command mvn -ErrorAction SilentlyContinue
+    }
+    if ($null -ne $command) {
+        return $command.Source
+    }
+
+    $candidates = @()
+    if (-not [string]::IsNullOrWhiteSpace($env:MAVEN_HOME)) {
+        $candidates += Join-Path $env:MAVEN_HOME "bin\\mvn.cmd"
+    }
+    $drive = Split-Path -Qualifier $RepositoryRoot
+    $toolsRoot = Join-Path $drive "tools"
+    if (Test-Path $toolsRoot) {
+        $candidates += @(Get-ChildItem -Path $toolsRoot -Directory -Filter "apache-maven-*" -ErrorAction SilentlyContinue |
+            Sort-Object Name -Descending |
+            ForEach-Object { Join-Path $_.FullName "bin\\mvn.cmd" })
+    }
+    foreach ($candidate in $candidates) {
+        if (Test-Path $candidate) {
+            $env:MAVEN_HOME = Split-Path (Split-Path $candidate -Parent) -Parent
+            $env:PATH = (Split-Path $candidate -Parent) + ";" + $env:PATH
+            Write-Host "MAVEN_AUTO_DISCOVERED=$candidate"
+            return $candidate
+        }
+    }
+    Stop-Workflow "Khong tim thay Maven trong PATH, MAVEN_HOME hoac thu muc tools tren o dia repository."
+}
+
 function Invoke-Git([string[]]$Arguments) {
     # Không cho Git tự repack/gc trong workflow tương tác; Windows có thể đang khóa pack.idx.
     & git -c gc.auto=0 -c maintenance.auto=false @Arguments
@@ -447,12 +478,17 @@ function Invoke-DataStartupSmokeTest {
         Stop-Workflow "Chua co JAR. Hay chon 1 de build truoc."
     }
 
+    if ($null -eq (Get-Command java -ErrorAction SilentlyContinue)) {
+        Stop-Workflow "Khong tim thay Java trong PATH; server chua duoc khoi dong."
+    }
+    $mavenCommand = Resolve-MavenCommand
+
     New-Item -ItemType Directory -Force -Path $WorkDirectory | Out-Null
     $smokeBuildLog = Join-Path $WorkDirectory "server-smoke-build.log"
     Write-Host "===== PRE-SMOKE FULL BUILD ====="
     $previousPreference = $ErrorActionPreference
     $ErrorActionPreference = "Continue"
-    & mvn clean package 2>&1 | Tee-Object -FilePath $smokeBuildLog
+    & $mavenCommand clean package 2>&1 | Tee-Object -FilePath $smokeBuildLog
     $buildExitCode = $LASTEXITCODE
     $ErrorActionPreference = $previousPreference
     if ($buildExitCode -ne 0) {
@@ -472,7 +508,8 @@ function Invoke-DataStartupSmokeTest {
             Start-Sleep -Milliseconds 500
             $process.Refresh()
             if ($process.HasExited) { break }
-            $stdout = if (Test-Path $stdoutPath) { Get-Content $stdoutPath -Raw } else { "" }
+            $stdout = if (Test-Path $stdoutPath) { [string](Get-Content $stdoutPath -Raw) } else { "" }
+            if ($null -eq $stdout) { $stdout = "" }
             if ($stdout.Contains("NSOCry server started on") -and
                     $stdout.Contains("DATA runtime snapshot READY version=7")) {
                 $processWasRunning = $true
