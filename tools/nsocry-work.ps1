@@ -1,5 +1,5 @@
 ﻿param(
-    [ValidateSet("1", "2", "3", "4", "5", "6", "7", "8", "9")]
+    [ValidateSet("1", "2", "3", "4", "5", "6", "7", "8", "9", "10")]
     [string]$Action = "1"
 )
 
@@ -695,6 +695,120 @@ function Invoke-V9HandshakeCapture {
     Write-Host "DATABASE_MIGRATION_OR_IMPORT=false"
 }
 
+
+function Invoke-V9ClientAnalysis {
+    Assert-Repository
+    Pull-Branch
+    $clientJar = Join-Path $RepositoryRoot "source-reference\\V9_NsoCry_x1.jar"
+    if (-not (Test-Path -LiteralPath $clientJar -PathType Leaf)) {
+        Stop-Workflow "Thieu source-reference/V9_NsoCry_x1.jar."
+    }
+    foreach ($tool in @("java", "jar", "javap")) {
+        if ($null -eq (Get-Command $tool -ErrorAction SilentlyContinue)) {
+            Stop-Workflow "Khong tim thay JDK tool: $tool."
+        }
+    }
+
+    Add-Type -AssemblyName System.IO.Compression.FileSystem
+    $archive = [System.IO.Compression.ZipFile]::OpenRead($clientJar)
+    try {
+        $entries = @($archive.Entries)
+        $classes = @($entries | Where-Object { $_.FullName.EndsWith(".class") })
+        $manifestEntry = $entries | Where-Object { $_.FullName -ieq "META-INF/MANIFEST.MF" } | Select-Object -First 1
+        $manifest = "(khong co manifest)"
+        if ($null -ne $manifestEntry) {
+            $reader = New-Object System.IO.StreamReader($manifestEntry.Open())
+            try { $manifest = $reader.ReadToEnd() } finally { $reader.Dispose() }
+        }
+
+        $latin1 = [Text.Encoding]::GetEncoding(28591)
+        $candidateNames = New-Object System.Collections.Generic.List[string]
+        foreach ($entry in $classes) {
+            $stream = $entry.Open()
+            $memory = New-Object System.IO.MemoryStream
+            try {
+                $stream.CopyTo($memory)
+                $constantPoolText = $latin1.GetString($memory.ToArray())
+            } finally {
+                $memory.Dispose()
+                $stream.Dispose()
+            }
+            if ($constantPoolText -match "java/net/Socket|writeUTF|readUTF|DataOutputStream|DataInputStream|14444|127\.0\.0\.1") {
+                $candidateNames.Add(($entry.FullName.Substring(0, $entry.FullName.Length - 6) -replace "/", "."))
+            }
+        }
+    } finally {
+        $archive.Dispose()
+    }
+
+    $patterns = "bipush\\s+-?(27|29|30|125|127)|sipush\\s+14444|writeUTF|readUTF|java/net/Socket|connect:|DataOutputStream|DataInputStream"
+    $evidence = New-Object System.Collections.Generic.List[string]
+    foreach ($className in ($candidateNames | Select-Object -First 80)) {
+        $previousPreference = $ErrorActionPreference
+        $ErrorActionPreference = "Continue"
+        $disassembly = @(& javap -classpath $clientJar -c -p $className 2>&1)
+        $ErrorActionPreference = $previousPreference
+        $matches = @($disassembly | Select-String -Pattern $patterns -Context 5,10)
+        if ($matches.Count -gt 0) {
+            $evidence.Add("### $className")
+            foreach ($match in $matches) {
+                $evidence.Add(($match.ToString()))
+            }
+        }
+        if ($evidence.Count -ge 1200) { break }
+    }
+
+    $hash = (Get-FileHash -LiteralPath $clientJar -Algorithm SHA256).Hash.ToLowerInvariant()
+    $size = (Get-Item -LiteralPath $clientJar).Length
+    $testedCommit = (& git rev-parse HEAD).Trim()
+    $reportPath = Join-Path $RepositoryRoot "reports\\windows\\latest-v9-client-analysis.md"
+    $reportLines = @(
+        "# Phân tích bytecode client V9 Windows",
+        "",
+        "- Tested commit: $testedCommit",
+        "- Client file: V9_NsoCry_x1.jar",
+        "- Client size: $size",
+        "- Client SHA-256: $hash",
+        "- Archive entries: $($entries.Count)",
+        "- Class count: $($classes.Count)",
+        "- Network candidates: $($candidateNames.Count)",
+        "- Client JAR committed: false",
+        "- Database changed: false",
+        "",
+        "## Manifest",
+        "",
+        "```text",
+        $manifest.TrimEnd(),
+        "```",
+        "",
+        "## Candidate classes",
+        ""
+    ) + ($candidateNames | Select-Object -First 80 | ForEach-Object { "- `$_`" }) + @(
+        "",
+        "## Bytecode evidence",
+        "",
+        "```text"
+    ) + ($evidence | Select-Object -First 1200) + @(
+        "```"
+    )
+    Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
+
+    Invoke-Git @("add", "--", "reports/windows/latest-v9-client-analysis.md")
+    Invoke-Git @("commit", "-m", "ops: report client v9 bytecode analysis")
+    $reportCommit = (& git rev-parse HEAD).Trim()
+    & git -c gc.auto=0 -c maintenance.auto=false push origin $ExpectedBranch
+    if ($LASTEXITCODE -ne 0) {
+        Stop-Workflow "V9 client analysis report da commit local nhung push that bai." $LASTEXITCODE
+    }
+
+    Write-Host ""
+    Write-Host "NSOCRY_WORKFLOW_RESULT=V9_CLIENT_ANALYSIS_PUBLISHED"
+    Write-Host "TESTED_COMMIT=$testedCommit"
+    Write-Host "REPORT_COMMIT=$reportCommit"
+    Write-Host "CLIENT_JAR_COMMITTED=false"
+    Write-Host "DATABASE_CHANGED=false"
+}
+
 switch ($Action) {
     "1" {
         Assert-Repository
@@ -729,5 +843,8 @@ switch ($Action) {
     }
     "9" {
         Invoke-V9HandshakeCapture
+    }
+    "10" {
+        Invoke-V9ClientAnalysis
     }
 }
