@@ -2393,3 +2393,14 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
   - `versionAnnouncement()` tạo manifest bốn version cùng appearance.
   - `respond(ProtocolFrame)` decode request rồi trả đúng dataset payload.
 - **Khi sửa:** mỗi operation chỉ đọc provider một lần; malformed request phải fail trước khi đọc snapshot.
+
+
+### `com.nsocry.bootstrap.ResetAdministratorPasswordCommand`
+
+- **Source:** `src/main/java/com/nsocry/bootstrap/ResetAdministratorPasswordCommand.java`
+- **Vai trò tóm tắt:** Command console đổi password administrator bằng PBKDF2, giữ nguyên account và xóa trạng thái khóa tạm.
+- **Trạng thái:** `IMPLEMENTED`
+- **API public/protected phát hiện được:**
+  - **Dòng 15 — `public final class ResetAdministratorPasswordCommand {`**: Điều phối nhập password kín và cập nhật đúng một administrator.
+  - **Dòng 31 — `public static void main(String[] args) throws Exception {`**: Nạp cấu hình, hash password mới và reset bộ đếm đăng nhập lỗi.
+- **Khi sửa:** kiểm tra command route, password lifecycle, prepared statement, test + manual module + STATUS/WORKLOG.
