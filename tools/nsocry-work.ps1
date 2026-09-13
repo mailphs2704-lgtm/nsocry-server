@@ -860,6 +860,46 @@ function Invoke-V9ClientAnalysis {
     if ($nestedMinus123Detail.Count -eq 0) {
         $nestedMinus123Detail.Add("Khong tim thay handler nested command -123 trong al.h(bR).")
     }
+    $versionHandlerDetail = New-Object System.Collections.Generic.List[string]
+    $versionMethodStart = -1
+    for ($index = 0; $index -lt $alDisassembly.Count; $index++) {
+        if (([string]$alDisassembly[$index]) -match '^\s*(private|public|protected).*\se\(bR\);') {
+            $versionMethodStart = $index
+            break
+        }
+    }
+    $versionNestedOffset = $null
+    if ($versionMethodStart -ge 0) {
+        for ($index = $versionMethodStart; $index -lt $alDisassembly.Count; $index++) {
+            $line = [string]$alDisassembly[$index]
+            if ($line -match '^\s*-123:\s+(\d+)') {
+                $versionNestedOffset = $Matches[1]
+                break
+            }
+            if ($line -match '^\s*default:') {
+                break
+            }
+        }
+    }
+    if ($null -ne $versionNestedOffset) {
+        $versionNestedPattern = '^\s*' + [Regex]::Escape($versionNestedOffset) + ':'
+        $versionNestedIndex = -1
+        for ($index = $versionMethodStart; $index -lt $alDisassembly.Count; $index++) {
+            if (([string]$alDisassembly[$index]) -match $versionNestedPattern) {
+                $versionNestedIndex = $index
+                break
+            }
+        }
+        if ($versionNestedIndex -ge 0) {
+            $versionNestedEnd = [Math]::Min($alDisassembly.Count - 1, $versionNestedIndex + 220)
+            for ($index = $versionNestedIndex; $index -le $versionNestedEnd; $index++) {
+                $versionHandlerDetail.Add(([string]$alDisassembly[$index]))
+            }
+        }
+    }
+    if ($versionHandlerDetail.Count -eq 0) {
+        $versionHandlerDetail.Add("Khong tim thay nested command -123 trong al.e(bR).")
+    }
     $hash = (Get-FileHash -LiteralPath $clientJar -Algorithm SHA256).Hash.ToLowerInvariant()
     $size = (Get-Item -LiteralPath $clientJar).Length
     $testedCommit = (& git rev-parse HEAD).Trim()
@@ -909,6 +949,12 @@ function Invoke-V9ClientAnalysis {
         "",
         '```text'
     ) + $nestedMinus123Detail + @(
+        '```',
+        "",
+        "## Version command -123 handler in al.e(bR)",
+        "",
+        '```text'
+    ) + $versionHandlerDetail + @(
         '```'
     )
     Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
