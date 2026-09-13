@@ -16,6 +16,14 @@ set "NSOCRY_EXIT=%ERRORLEVEL%"
 del /q "%NSOCRY_TEMP_BAT%" >nul 2>&1
 exit /b %NSOCRY_EXIT%
 
+:DIRECT_PULL
+git pull --ff-only origin agent/document-nsokiss-runtime
+set "NSOCRY_EXIT=%ERRORLEVEL%"
+echo.
+if "%NSOCRY_EXIT%"=="0" echo NSOCRY_WORKFLOW_RESULT=PULL_COMPLETED
+pause
+exit /b %NSOCRY_EXIT%
+
 :TEMP_START
 cd /d "%~2"
 if not "%~3"=="" goto DIRECT
@@ -44,7 +52,7 @@ set /p "NSOCRY_ACTION=Chon mot so: "
 
 if "%NSOCRY_ACTION%"=="0" exit /b 0
 if "%NSOCRY_ACTION%"=="1" goto RUN
-if "%NSOCRY_ACTION%"=="2" goto RUN
+if "%NSOCRY_ACTION%"=="2" goto PULL_DIRECT
 if "%NSOCRY_ACTION%"=="3" goto RUN
 if "%NSOCRY_ACTION%"=="4" goto RUN
 if "%NSOCRY_ACTION%"=="5" goto RUN
@@ -58,6 +66,15 @@ echo Lua chon khong hop le.
 pause
 goto MENU
 
+:PULL_DIRECT
+git pull --ff-only origin agent/document-nsokiss-runtime
+set "NSOCRY_EXIT=%ERRORLEVEL%"
+echo.
+if not "%NSOCRY_EXIT%"=="0" echo Git pull dung voi ma loi %NSOCRY_EXIT%.
+if "%NSOCRY_EXIT%"=="0" echo NSOCRY_WORKFLOW_RESULT=PULL_COMPLETED
+pause
+goto MENU
+
 :RUN
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\tools\nsocry-work.ps1" -Action "%NSOCRY_ACTION%"
 set "NSOCRY_EXIT=%ERRORLEVEL%"
@@ -67,6 +84,7 @@ pause
 goto MENU
 
 :DIRECT
+if "%~3"=="2" goto DIRECT_PULL
 powershell -NoProfile -ExecutionPolicy Bypass -File ".\tools\nsocry-work.ps1" -Action "%~3"
 set "NSOCRY_EXIT=%ERRORLEVEL%"
 echo.
