@@ -67,8 +67,9 @@ public final class NsocryServerApplication implements Closeable {
         LegacyHandshakeConnectionHandler handler = new LegacyHandshakeConnectionHandler(
                 ProtocolLimits.DEFAULT,
                 new SecureRandomSessionKeyProvider(configuration.sessionKeyLength()),
-                Objects.requireNonNull(authentication, "authentication"));
-        server = new TcpServer(configuration.tcp(), handler, Objects.requireNonNull(events, "events"));
+                Objects.requireNonNull(authentication, "authentication"),
+                Objects.requireNonNull(events, "events"));
+        server = new TcpServer(configuration.tcp(), handler, events);
         this.startupReadiness = Objects.requireNonNull(startupReadiness, "startupReadiness");
     }
 
