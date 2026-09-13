@@ -316,3 +316,10 @@ Chủ dự án pull commit này, mở `NSOCRY_WORK.bat`, chọn `1`, chờ `REPO
 - Lỗi phụ `Contains` trên stdout null đã được xác định.
 - Commit `a6b5f625` thêm Maven auto-discovery từ PATH, MAVEN_HOME hoặc thư mục tools cùng ổ repo, kiểm tra Java trước build và xử lý stdout rỗng an toàn.
 - Trạng thái: chờ chủ dự án pull và chạy lại mục 8 trên Windows; chưa tuyên bố smoke PASS từ thay đổi này.
+
+## 2026-09-13 — mở rộng Maven auto-discovery cho toàn bộ build menu
+
+- Lần xác minh sau fix đầu tiên người vận hành chọn mục 1; mục này vẫn dùng kiểm tra PATH cũ nên dừng với `Khong tim thay Maven trong PATH`.
+- Workflow dừng trước build, không chạy migration/import/startup và database không đổi.
+- Commit `d1cccdaf` dùng cùng `Resolve-MavenCommand` cho build/report (mục 1 và 3), DATA import prebuild (mục 6) và startup smoke (mục 8).
+- Chờ Windows chạy lại mục 1; sau PASS chạy mục 8.
