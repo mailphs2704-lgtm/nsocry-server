@@ -40,9 +40,8 @@ public final class ReferenceAppearanceAssetConverter {
         for (Object value : ReferenceDataDumpInventoryParser.array(json, field)) {
             Map<?, ?> object = ReferenceDataDumpInventoryParser.object(value, field);
             List<AppearanceLayerAsset> layers = new ArrayList<>();
-            for (Object item : ReferenceDataDumpInventoryParser.array(
-                    string(ReferenceDataDumpInventoryParser.required(object, "item"), field + ".item"),
-                    field + ".item")) {
+            for (Object item : list(
+                    ReferenceDataDumpInventoryParser.required(object, "item"), field + ".item")) {
                 Map<?, ?> layer = ReferenceDataDumpInventoryParser.object(item, field + ".item");
                 layers.add(new AppearanceLayerAsset(
                         shortValue(layer, "id", field),
@@ -97,11 +96,11 @@ public final class ReferenceAppearanceAssetConverter {
         return (short) value;
     }
 
-    private static String string(Object value, String field) {
-        if (!(value instanceof String text)) {
-            throw new IllegalArgumentException(field + " phải là JSON string");
+    private static List<?> list(Object value, String field) {
+        if (!(value instanceof List<?> values)) {
+            throw new IllegalArgumentException(field + " phải là JSON array");
         }
-        return text;
+        return values;
     }
 
     private static String required(Map<String, String> rows, String name) {
