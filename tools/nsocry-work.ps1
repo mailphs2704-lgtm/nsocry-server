@@ -764,26 +764,45 @@ function Invoke-V9ClientAnalysis {
     $ErrorActionPreference = $previousPreference
     $switchIndex = -1
     for ($index = 0; $index -lt $alDisassembly.Count; $index++) {
-        if ([string]$alDisassembly[$index] -match "tableswitch.*-30 to 126") {
+        if (([string]$alDisassembly[$index]) -match 'tableswitch.*-30 to 126') {
             $switchIndex = $index
             break
         }
     }
     if ($switchIndex -ge 0) {
-        $handlerIndex = -1
-        for ($index = $switchIndex; $index -lt $alDisassembly.Count; $index++) {
-            if ([string]$alDisassembly[$index] -match "^\\s*700:") {
-                $handlerIndex = $index
+        $handlerOffset = $null
+        for ($index = $switchIndex + 1; $index -lt $alDisassembly.Count; $index++) {
+            $line = [string]$alDisassembly[$index]
+            if ($line -match '^\s*-30:\s+(\d+)') {
+                $handlerOffset = $Matches[1]
+                break
+            }
+            if ($line -match '^\s*default:') {
                 break
             }
         }
-        if ($handlerIndex -ge 0) {
-            $detailStart = [Math]::Max($switchIndex, $handlerIndex - 8)
-            $detailEnd = [Math]::Min($alDisassembly.Count - 1, $handlerIndex + 90)
-            for ($index = $detailStart; $index -le $detailEnd; $index++) {
-                $dispatcherDetail.Add([string]$alDisassembly[$index])
+
+        $handlerIndex = -1
+        if ($null -ne $handlerOffset) {
+            $handlerPattern = '^\s*' + [Regex]::Escape($handlerOffset) + ':'
+            for ($index = $switchIndex; $index -lt $alDisassembly.Count; $index++) {
+                if (([string]$alDisassembly[$index]) -match $handlerPattern) {
+                    $handlerIndex = $index
+                    break
+                }
             }
         }
+        if ($handlerIndex -ge 0) {
+            $detailStart = [Math]::Max(0, $handlerIndex - 8)
+            $detailEnd = [Math]::Min($alDisassembly.Count - 1, $handlerIndex + 90)
+            for ($index = $detailStart; $index -le $detailEnd; $index++) {
+                $dispatcherDetail.Add(([string]$alDisassembly[$index]))
+            }
+        } else {
+            $dispatcherDetail.Add("Khong tim thay bytecode handler cho command -30.")
+        }
+    } else {
+        $dispatcherDetail.Add("Khong tim thay tableswitch dispatcher -30..126 trong class al.")
     }
 
     $hash = (Get-FileHash -LiteralPath $clientJar -Algorithm SHA256).Hash.ToLowerInvariant()
