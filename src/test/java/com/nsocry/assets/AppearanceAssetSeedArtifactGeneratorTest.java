@@ -15,7 +15,7 @@ class AppearanceAssetSeedArtifactGeneratorTest {
         AppearanceAssetSeedArtifact artifact =
                 AppearanceAssetSeedArtifactGenerator.generate(bundle);
 
-        assertEquals(45, artifact.payloadLength());
+        assertEquals(84, artifact.payloadLength());
         assertEquals(64, artifact.payloadSha256().length());
         assertEquals(bundle, AppearanceAssetCodec.decode(artifact.payload()));
     }
