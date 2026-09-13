@@ -1,6 +1,7 @@
 package com.nsocry.observability;
 
 import com.nsocry.network.NetworkEventSink;
+import com.nsocry.session.HandshakeEvent;
 import java.io.IOException;
 import java.net.SocketAddress;
 import java.util.Objects;
@@ -20,6 +21,13 @@ public final class SanitizedNetworkEventSink implements NetworkEventSink {
     public void sessionFailed(SocketAddress remoteAddress, Exception failure) {
         output.accept("SESSION_FAILED remote=" + safeAddress(remoteAddress)
                 + " type=" + safeType(failure));
+    }
+
+    /** Ghi outcome enum của handshake, không ghi username, password hoặc payload. */
+    @Override
+    public void handshakeCompleted(SocketAddress remoteAddress, HandshakeEvent outcome) {
+        output.accept("HANDSHAKE_COMPLETED remote=" + safeAddress(remoteAddress)
+                + " outcome=" + (outcome == null ? "UNKNOWN" : outcome.name()));
     }
 
     /** Ghi sự kiện từ chối do đạt giới hạn phiên. */
