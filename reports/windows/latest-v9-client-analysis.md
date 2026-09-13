@@ -1,6 +1,6 @@
 ﻿# Phân tích bytecode client V9 Windows
 
-- Tested commit: 2d4cc4222e84c73252ad0a8af121a5f37a0379bf
+- Tested commit: 155f9cff69facb0c452a0e2904875b7bf5dcecdd
 - Client file: V9_NsoCry_x1.jar
 - Client size: 1573045
 - Client SHA-256: a6dc5c4a6f5314ddd9d8c8f0e03a9077dc3668775533e658562edeb9abe4a3ae
@@ -2708,4 +2708,230 @@ MicroEdition-Profile: MIDP-2.0
     4608: aload_1
     4609: ifnull        4616
     4612: aload_1
+```
+
+## Version command -123 handler in al.e(bR)
+
+```text
+     966: aload_1
+     967: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+     970: invokevirtual #203                // Method java/io/DataInputStream.readByte:()B
+     973: putstatic     #2671               // Field ba.K:B
+     976: aload_1
+     977: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+     980: invokevirtual #203                // Method java/io/DataInputStream.readByte:()B
+     983: putstatic     #2673               // Field ba.L:B
+     986: aload_1
+     987: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+     990: invokevirtual #203                // Method java/io/DataInputStream.readByte:()B
+     993: putstatic     #2675               // Field ba.M:B
+     996: aload_1
+     997: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1000: invokevirtual #203                // Method java/io/DataInputStream.readByte:()B
+    1003: putstatic     #2677               // Field ba.N:B
+    1006: invokestatic  #2681               // Method cC.hR:()V
+    1009: getstatic     #2671               // Field ba.K:B
+    1012: getstatic     #1018               // Field ba.G:B
+    1015: if_icmpeq     1027
+    1018: invokestatic  #1569               // Method cK.a:()LcK;
+    1021: invokevirtual #2683               // Method cK.ii:()V
+    1024: goto          1069
+    1027: new           #199                // class java/io/DataInputStream
+    1030: dup
+    1031: new           #992                // class java/io/ByteArrayInputStream
+    1034: dup
+    1035: getstatic     #389                // Field $s_A9F43a:Ljava/lang/String;
+    1038: invokestatic  #2686               // Method RMS.a:(Ljava/lang/String;)[B
+    1041: invokespecial #994                // Method java/io/ByteArrayInputStream."<init>":([B)V
+    1044: invokespecial #997                // Method java/io/DataInputStream."<init>":(Ljava/io/InputStream;)V
+    1047: invokestatic  #2688               // Method d:(Ljava/io/DataInputStream;)V
+    1050: goto          1069
+    1053: pop
+    1054: getstatic     #159                // Field $np_yHPk8p:[I
+    1057: bipush        17
+    1059: iaload
+    1060: putstatic     #1018               // Field ba.G:B
+    1063: invokestatic  #1569               // Method cK.a:()LcK;
+    1066: invokevirtual #2683               // Method cK.ii:()V
+    1069: getstatic     #2673               // Field ba.L:B
+    1072: getstatic     #1318               // Field ba.H:B
+    1075: if_icmpeq     1087
+    1078: invokestatic  #1569               // Method cK.a:()LcK;
+    1081: invokevirtual #2691               // Method cK.ij:()V
+    1084: goto          1129
+    1087: new           #199                // class java/io/DataInputStream
+    1090: dup
+    1091: new           #992                // class java/io/ByteArrayInputStream
+    1094: dup
+    1095: getstatic     #391                // Field $s_njKbSI:Ljava/lang/String;
+    1098: invokestatic  #2686               // Method RMS.a:(Ljava/lang/String;)[B
+    1101: invokespecial #994                // Method java/io/ByteArrayInputStream."<init>":([B)V
+    1104: invokespecial #997                // Method java/io/DataInputStream."<init>":(Ljava/io/InputStream;)V
+    1107: invokestatic  #2693               // Method c:(Ljava/io/DataInputStream;)V
+    1110: goto          1129
+    1113: pop
+    1114: getstatic     #159                // Field $np_yHPk8p:[I
+    1117: bipush        17
+    1119: iaload
+    1120: putstatic     #1318               // Field ba.H:B
+    1123: invokestatic  #1569               // Method cK.a:()LcK;
+    1126: invokevirtual #2691               // Method cK.ij:()V
+    1129: getstatic     #2675               // Field ba.M:B
+    1132: getstatic     #1365               // Field ba.I:B
+    1135: if_icmpeq     1147
+    1138: invokestatic  #1569               // Method cK.a:()LcK;
+    1141: invokevirtual #2695               // Method cK.ik:()V
+    1144: goto          1189
+    1147: new           #199                // class java/io/DataInputStream
+    1150: dup
+    1151: new           #992                // class java/io/ByteArrayInputStream
+    1154: dup
+    1155: getstatic     #393                // Field $s_A1ka9b:Ljava/lang/String;
+    1158: invokestatic  #2686               // Method RMS.a:(Ljava/lang/String;)[B
+    1161: invokespecial #994                // Method java/io/ByteArrayInputStream."<init>":([B)V
+    1164: invokespecial #997                // Method java/io/DataInputStream."<init>":(Ljava/io/InputStream;)V
+    1167: invokestatic  #2697               // Method b:(Ljava/io/DataInputStream;)V
+    1170: goto          1189
+    1173: pop
+    1174: getstatic     #159                // Field $np_yHPk8p:[I
+    1177: bipush        17
+    1179: iaload
+    1180: putstatic     #1365               // Field ba.I:B
+    1183: invokestatic  #1569               // Method cK.a:()LcK;
+    1186: invokevirtual #2695               // Method cK.ik:()V
+    1189: getstatic     #2677               // Field ba.N:B
+    1192: getstatic     #208                // Field ba.J:B
+    1195: if_icmpeq     1207
+    1198: invokestatic  #1569               // Method cK.a:()LcK;
+    1201: invokevirtual #2699               // Method cK.il:()V
+    1204: goto          1249
+    1207: new           #199                // class java/io/DataInputStream
+    1210: dup
+    1211: new           #992                // class java/io/ByteArrayInputStream
+    1214: dup
+    1215: getstatic     #395                // Field $s_TbLNmp:Ljava/lang/String;
+    1218: invokestatic  #2686               // Method RMS.a:(Ljava/lang/String;)[B
+    1221: invokespecial #994                // Method java/io/ByteArrayInputStream."<init>":([B)V
+    1224: invokespecial #997                // Method java/io/DataInputStream."<init>":(Ljava/io/InputStream;)V
+    1227: invokestatic  #2701               // Method a:(Ljava/io/DataInputStream;)V
+    1230: goto          1249
+    1233: pop
+    1234: getstatic     #159                // Field $np_yHPk8p:[I
+    1237: bipush        17
+    1239: iaload
+    1240: putstatic     #208                // Field ba.J:B
+    1243: invokestatic  #1569               // Method cK.a:()LcK;
+    1246: invokevirtual #2699               // Method cK.il:()V
+    1249: getstatic     #2671               // Field ba.K:B
+    1252: getstatic     #1018               // Field ba.G:B
+    1255: if_icmpne     1312
+    1258: getstatic     #2673               // Field ba.L:B
+    1261: getstatic     #1318               // Field ba.H:B
+    1264: if_icmpne     1312
+    1267: getstatic     #2675               // Field ba.M:B
+    1270: getstatic     #1365               // Field ba.I:B
+    1273: if_icmpne     1312
+    1276: getstatic     #2677               // Field ba.N:B
+    1279: getstatic     #208                // Field ba.J:B
+    1282: if_icmpne     1312
+    1285: invokestatic  #634                // Method ba.a:()Lba;
+    1288: pop
+    1289: invokestatic  #2702               // Method ba.bb:()V
+    1292: invokestatic  #634                // Method ba.a:()Lba;
+    1295: pop
+    1296: invokestatic  #2703               // Method ba.bc:()V
+    1299: invokestatic  #634                // Method ba.a:()Lba;
+    1302: pop
+    1303: invokestatic  #2705               // Method ba.au:()V
+    1306: invokestatic  #1569               // Method cK.a:()LcK;
+    1309: invokevirtual #2708               // Method cK.im:()V
+    1312: aload_1
+    1313: invokestatic  #2710               // Method O.a:(LbR;)V
+    1316: aload_1
+    1317: ifnull        1324
+    1320: aload_1
+    1321: invokevirtual #1093               // Method bR.hx:()V
+    1324: return
+    1325: aload_1
+    1326: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1329: getstatic     #159                // Field $np_yHPk8p:[I
+    1332: bipush        81
+    1334: iaload
+    1335: invokevirtual #2713               // Method java/io/DataInputStream.mark:(I)V
+    1338: aload_1
+    1339: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1342: invokestatic  #2688               // Method d:(Ljava/io/DataInputStream;)V
+    1345: aload_1
+    1346: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1349: invokevirtual #2716               // Method java/io/DataInputStream.reset:()V
+    1352: aload_1
+    1353: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1356: invokevirtual #980                // Method java/io/DataInputStream.available:()I
+    1359: newarray       byte
+    1361: astore        15
+    1363: aload_1
+    1364: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1367: aload         15
+    1369: invokevirtual #984                // Method java/io/DataInputStream.readFully:([B)V
+    1372: getstatic     #389                // Field $s_A9F43a:Ljava/lang/String;
+    1375: aload         15
+    1377: invokestatic  #1026               // Method RMS.a:(Ljava/lang/String;[B)V
+    1380: getstatic     #159                // Field $np_yHPk8p:[I
+    1383: iconst_0
+    1384: iaload
+    1385: newarray       byte
+    1387: dup
+    1388: getstatic     #159                // Field $np_yHPk8p:[I
+    1391: iconst_1
+    1392: iaload
+    1393: getstatic     #1018               // Field ba.G:B
+    1396: bastore
+    1397: astore        16
+    1399: getstatic     #397                // Field $s_oljmeJ:Ljava/lang/String;
+    1402: aload         16
+    1404: invokestatic  #1026               // Method RMS.a:(Ljava/lang/String;[B)V
+    1407: getstatic     #2671               // Field ba.K:B
+    1410: getstatic     #1018               // Field ba.G:B
+    1413: if_icmpne     1443
+    1416: getstatic     #2673               // Field ba.L:B
+    1419: getstatic     #1318               // Field ba.H:B
+    1422: if_icmpne     1443
+    1425: getstatic     #2675               // Field ba.M:B
+    1428: getstatic     #1365               // Field ba.I:B
+    1431: if_icmpne     1443
+    1434: getstatic     #2677               // Field ba.N:B
+    1437: getstatic     #208                // Field ba.J:B
+    1440: if_icmpeq     1452
+    1443: aload_1
+    1444: ifnull        1451
+    1447: aload_1
+    1448: invokevirtual #1093               // Method bR.hx:()V
+    1451: return
+    1452: invokestatic  #634                // Method ba.a:()Lba;
+    1455: pop
+    1456: invokestatic  #2702               // Method ba.bb:()V
+    1459: invokestatic  #634                // Method ba.a:()Lba;
+    1462: pop
+    1463: invokestatic  #2703               // Method ba.bc:()V
+    1466: invokestatic  #634                // Method ba.a:()Lba;
+    1469: pop
+    1470: invokestatic  #2705               // Method ba.au:()V
+    1473: invokestatic  #1569               // Method cK.a:()LcK;
+    1476: invokevirtual #2708               // Method cK.im:()V
+    1479: aload_1
+    1480: ifnull        1487
+    1483: aload_1
+    1484: invokevirtual #1093               // Method bR.hx:()V
+    1487: return
+    1488: aload_1
+    1489: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1492: getstatic     #159                // Field $np_yHPk8p:[I
+    1495: bipush        81
+    1497: iaload
+    1498: invokevirtual #2713               // Method java/io/DataInputStream.mark:(I)V
+    1501: aload_1
+    1502: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    1505: invokestatic  #2693               // Method c:(Ljava/io/DataInputStream;)V
+    1508: aload_1
+    1509: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
 ```
