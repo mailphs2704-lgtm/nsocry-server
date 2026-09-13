@@ -1,6 +1,6 @@
 ﻿# Phân tích bytecode client V9 Windows
 
-- Tested commit: 7d2936a34f1363748542c61c53d77c4bf74fe7e2
+- Tested commit: 2d4cc4222e84c73252ad0a8af121a5f37a0379bf
 - Client file: V9_NsoCry_x1.jar
 - Client size: 1573045
 - Client SHA-256: a6dc5c4a6f5314ddd9d8c8f0e03a9077dc3668775533e658562edeb9abe4a3ae
@@ -2542,4 +2542,170 @@ MicroEdition-Profile: MIDP-2.0
                     40: 4504
 
                     41: 4504
+```
+
+## Nested command -123 handler in al.h(bR)
+
+```text
+    4250: invokestatic  #628                // Method N.f:()LN;
+    4253: aload_1
+    4254: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4257: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4260: putfield      #931                // Field N.ci:I
+    4263: invokestatic  #628                // Method N.f:()LN;
+    4266: aload_1
+    4267: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4270: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4273: putfield      #934                // Field N.ck:I
+    4276: invokestatic  #628                // Method N.f:()LN;
+    4279: aload_1
+    4280: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4283: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4286: putfield      #928                // Field N.cl:I
+    4289: invokestatic  #628                // Method N.f:()LN;
+    4292: aload_1
+    4293: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4296: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4299: putfield      #544                // Field N.bB:I
+    4302: invokestatic  #628                // Method N.f:()LN;
+    4305: aload_1
+    4306: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4309: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4312: putfield      #1545               // Field N.bz:I
+    4315: aload_1
+    4316: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4319: invokevirtual #203                // Method java/io/DataInputStream.readByte:()B
+    4322: getstatic     #159                // Field $np_yHPk8p:[I
+    4325: iconst_0
+    4326: iaload
+    4327: if_icmpne     4350
+    4330: invokestatic  #634                // Method ba.a:()Lba;
+    4333: invokevirtual #2913               // Method ba.gz:()V
+    4336: invokestatic  #628                // Method N.f:()LN;
+    4339: getstatic     #159                // Field $np_yHPk8p:[I
+    4342: iconst_0
+    4343: iaload
+    4344: putfield      #2914               // Field N.au:Z
+    4347: goto          4361
+    4350: invokestatic  #628                // Method N.f:()LN;
+    4353: getstatic     #159                // Field $np_yHPk8p:[I
+    4356: iconst_1
+    4357: iaload
+    4358: putfield      #2914               // Field N.au:Z
+    4361: aload_1
+    4362: ifnull        4369
+    4365: aload_1
+    4366: invokevirtual #1093               // Method bR.hx:()V
+    4369: return
+    4370: invokestatic  #628                // Method N.f:()LN;
+    4373: aload_1
+    4374: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4377: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4380: putfield      #544                // Field N.bB:I
+    4383: aload_1
+    4384: ifnull        4391
+    4387: aload_1
+    4388: invokevirtual #1093               // Method bR.hx:()V
+    4391: return
+    4392: invokestatic  #628                // Method N.f:()LN;
+    4395: aload_1
+    4396: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4399: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4402: putfield      #1545               // Field N.bz:I
+    4405: aload_1
+    4406: ifnull        4413
+    4409: aload_1
+    4410: invokevirtual #1093               // Method bR.hx:()V
+    4413: return
+    4414: aload_1
+    4415: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4418: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4421: invokestatic  #1621               // Method ba.a:(I)LN;
+    4424: dup
+    4425: astore        12
+    4427: ifnull        4437
+    4430: aload         12
+    4432: aload_1
+    4433: invokestatic  #1888               // Method a:(LN;LbR;)Z
+    4436: pop
+    4437: aload_1
+    4438: ifnull        4445
+    4441: aload_1
+    4442: invokevirtual #1093               // Method bR.hx:()V
+    4445: return
+    4446: aload_1
+    4447: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4450: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4453: invokestatic  #1621               // Method ba.a:(I)LN;
+    4456: dup
+    4457: astore        12
+    4459: ifnonnull     4471
+    4462: aload_1
+    4463: ifnull        4470
+    4466: aload_1
+    4467: invokevirtual #1093               // Method bR.hx:()V
+    4470: return
+    4471: aload         12
+    4473: aload_1
+    4474: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4477: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4480: putfield      #544                // Field N.bB:I
+    4483: aload         12
+    4485: aload_1
+    4486: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4489: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4492: putfield      #547                // Field N.bD:I
+    4495: aload_1
+    4496: ifnull        4503
+    4499: aload_1
+    4500: invokevirtual #1093               // Method bR.hx:()V
+    4503: return
+    4504: aload_1
+    4505: ifnull        4512
+    4508: aload_1
+    4509: invokevirtual #1093               // Method bR.hx:()V
+    4512: return
+    4513: aload_1
+    4514: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4517: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4520: invokestatic  #1621               // Method ba.a:(I)LN;
+    4523: dup
+    4524: astore        12
+    4526: ifnull        4617
+    4529: aload         12
+    4531: aload_1
+    4532: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4535: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4538: putfield      #544                // Field N.bB:I
+    4541: aload         12
+    4543: aload_1
+    4544: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4547: invokevirtual #541                // Method java/io/DataInputStream.readInt:()I
+    4550: putfield      #547                // Field N.bD:I
+    4553: aload         12
+    4555: aload_1
+    4556: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4559: invokevirtual #235                // Method java/io/DataInputStream.readShort:()S
+    4562: putfield      #594                // Field N.bF:I
+    4565: aload         12
+    4567: aload_1
+    4568: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4571: invokevirtual #235                // Method java/io/DataInputStream.readShort:()S
+    4574: putfield      #597                // Field N.bG:I
+    4577: aload         12
+    4579: aload_1
+    4580: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+    4583: invokevirtual #235                // Method java/io/DataInputStream.readShort:()S
+    4586: putfield      #553                // Field N.p:S
+    4589: aload         12
+    4591: getfield      #553                // Field N.p:S
+    4594: getstatic     #159                // Field $np_yHPk8p:[I
+    4597: bipush        17
+    4599: iaload
+    4600: if_icmpne     4608
+    4603: aload         12
+    4605: invokevirtual #561                // Method N.bb:()V
+    4608: aload_1
+    4609: ifnull        4616
+    4612: aload_1
 ```
