@@ -827,6 +827,39 @@ function Invoke-V9ClientAnalysis {
         $loginHandlerDetail.Add("Khong tim thay method h(bR) cua command -30.")
     }
 
+    $nestedMinus123Detail = New-Object System.Collections.Generic.List[string]
+    $nestedMinus123Offset = $null
+    if ($loginHandlerStart -ge 0) {
+        for ($index = $loginHandlerStart; $index -lt $alDisassembly.Count; $index++) {
+            $line = [string]$alDisassembly[$index]
+            if ($line -match '^\s*-123:\s+(\d+)') {
+                $nestedMinus123Offset = $Matches[1]
+                break
+            }
+            if ($line -match '^\s*default:') {
+                break
+            }
+        }
+    }
+    if ($null -ne $nestedMinus123Offset) {
+        $nestedMinus123Pattern = '^\s*' + [Regex]::Escape($nestedMinus123Offset) + ':'
+        $nestedMinus123Index = -1
+        for ($index = $loginHandlerStart; $index -lt $alDisassembly.Count; $index++) {
+            if (([string]$alDisassembly[$index]) -match $nestedMinus123Pattern) {
+                $nestedMinus123Index = $index
+                break
+            }
+        }
+        if ($nestedMinus123Index -ge 0) {
+            $nestedMinus123End = [Math]::Min($alDisassembly.Count - 1, $nestedMinus123Index + 160)
+            for ($index = $nestedMinus123Index; $index -le $nestedMinus123End; $index++) {
+                $nestedMinus123Detail.Add(([string]$alDisassembly[$index]))
+            }
+        }
+    }
+    if ($nestedMinus123Detail.Count -eq 0) {
+        $nestedMinus123Detail.Add("Khong tim thay handler nested command -123 trong al.h(bR).")
+    }
     $hash = (Get-FileHash -LiteralPath $clientJar -Algorithm SHA256).Hash.ToLowerInvariant()
     $size = (Get-Item -LiteralPath $clientJar).Length
     $testedCommit = (& git rev-parse HEAD).Trim()
@@ -870,6 +903,12 @@ function Invoke-V9ClientAnalysis {
         "",
         '```text'
     ) + $loginHandlerDetail + @(
+        '```',
+        "",
+        "## Nested command -123 handler in al.h(bR)",
+        "",
+        '```text'
+    ) + $nestedMinus123Detail + @(
         '```'
     )
     Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
