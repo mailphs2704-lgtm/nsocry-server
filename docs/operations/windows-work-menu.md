@@ -147,3 +147,9 @@ PID trong khối cleanup. Không dùng `taskkill /IM java.exe` nên không ảnh
 Báo cáo nằm tại `reports/windows/latest-data-startup-smoke.md`. Thành công có trạng thái
 `STARTED_READY_AND_STOPPED`, `SERVER_STARTUP_WIRED=true` và
 `SERVER_PROCESS_STOPPED=true`. Database chỉ đọc; workflow không migration/import/overwrite.
+
+## Phục hồi Maven cho startup smoke trên máy mới
+
+Mục 8 từng tiếp tục sang startup sau khi PowerShell không tìm thấy lệnh `mvn`, rồi lỗi phụ khi file stdout rỗng trả về `null`. Từ commit `a6b5f625`, runner tự tìm `mvn.cmd` theo thứ tự: PATH, MAVEN_HOME và thư mục `tools/apache-maven-*` trên cùng ổ đĩa với repository. Nếu vẫn thiếu Maven hoặc Java, workflow dừng fail-closed trước khi mở server.
+
+Vòng chờ startup cũng chuẩn hóa stdout rỗng thành chuỗi rỗng trước khi kiểm tra marker. Sửa đổi không chạy migration, không import dữ liệu và không tự khởi động server; cần Windows chạy lại mục 8 để xác minh end-to-end.
