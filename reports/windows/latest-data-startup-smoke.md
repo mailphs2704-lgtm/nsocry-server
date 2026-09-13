@@ -1,6 +1,6 @@
 ﻿# DATA production startup smoke Windows
 
-- Tested commit: a9ebc146742d3208936b637d1d1b7948f29b90e0
+- Tested commit: d1cccdaf7697b149259be3e88039e75eb9f8f4d4
 - Status: STARTED_READY_AND_STOPPED
 - Process observed running: True
 - Process stopped by runner: true
