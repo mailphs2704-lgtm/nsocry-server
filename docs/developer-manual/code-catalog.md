@@ -2426,3 +2426,12 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
   - `run()` công bố version trước rồi chọn short/full-size cho từng response.
 - **Khi sửa:** EOF là ngắt kết nối bình thường; malformed/unknown request phải fail closed và không được làm lệch cipher.
 
+### `com.nsocry.assets.conversion.ReferenceAppearanceAssetConverter`
+
+- **Source:** `src/main/java/com/nsocry/assets/conversion/ReferenceAppearanceAssetConverter.java`
+- **Vai trò tóm tắt:** Tái tạo appearance payload của UPDATE_VERSION từ bảy row `others` và hai mount cố định của source tham chiếu.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **API public/protected phát hiện được:**
+  - `convert(String)` trả `AppearanceAssetBundle` đầy đủ, không mở database hoặc publish runtime.
+- **Khi sửa:** giữ đúng thứ tự head/leg/body/mount trên wire; thiếu row, sai kiểu JSON hoặc giá trị vượt short phải fail closed.
+
