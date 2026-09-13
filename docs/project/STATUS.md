@@ -1,6 +1,6 @@
 # Trạng thái hiện tại của NSOCry
 
-**Cập nhật:** 2026-09-10 UTC
+**Cập nhật:** 2026-09-13 UTC
 
 **Trạng thái:** IN_PROGRESS
 
@@ -127,3 +127,13 @@ khóa cứng phạm vi này; chưa chạy database.
 
 Chủ dự án mở `NSOCRY_WORK.bat`, chọn `1` để kiểm chứng full-size codec theo fixture
 authoritative. Mục tiêu dự kiến: **386/386 PASS**. Chưa nối production session loop.
+
+## Phục hồi máy Windows mới — VERIFIED
+
+- Repo mới tại `D:\nsocry-server` đã nối đúng nhánh và build bằng Temurin 17/Maven 3.9.16.
+- MySQL 8.0.30 đã dựng database `nsocry` sạch với V001–V005 và 13 bảng; bốn schema preflight READY.
+- Backup schema trước import: 15.691 byte, SHA-256 `57da0355c176e6b632435fb928204baede35022e8910727eeb29742037c2bf1a`.
+- ITEM v26, SKILL v26, MAP v7 và DATA v7 đã import và database read-back VERIFIED; DATA khóa `REJECT_EXISTING`, `overwritten=false`.
+- Windows full suite: **386/386 PASS**. Startup smoke report commit `95ca540d`: `STARTED_READY_AND_STOPPED`, DATA v7 READY, TCP 14444 bind, stderr rỗng và đúng process đã dừng.
+- Không có SQL dữ liệu người chơi từ máy cũ, vì vậy accounts/characters cũ không thuộc phần đã phục hồi.
+- Chi tiết: [phục hồi database máy mới](../operations/new-machine-database-recovery-2026-09-13.md).
