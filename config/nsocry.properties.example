@@ -1,0 +1,19 @@
+# Địa chỉ và cổng TCP của NSOCry.
+nsocry.server.host=0.0.0.0
+nsocry.server.port=14444
+
+# Giới hạn listener và số phiên chạy đồng thời.
+nsocry.server.backlog=128
+nsocry.server.max-sessions=500
+
+# Timeout tính bằng mili giây.
+nsocry.server.read-timeout-millis=15000
+nsocry.server.shutdown-timeout-millis=5000
+
+# Độ dài khóa tương thích V7, hợp lệ từ 1 đến 255 byte.
+nsocry.session.key-length=32
+
+# Database riêng của NSOCry. Không ghi password thật vào file được commit.
+nsocry.database.url=jdbc:mariadb://127.0.0.1:3306/nsocry
+nsocry.database.user=nsocry
+# Password bắt buộc lấy từ biến môi trường NSOCRY_DB_PASSWORD.
