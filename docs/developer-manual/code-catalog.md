@@ -2452,3 +2452,33 @@ Các package gameplay RESERVED/TRACE_REQUIRED không được tạo stub chỉ �
   - `generate(AppearanceAssetBundle)` trả artifact chỉ sau round-trip byte-identical.
 - **Khi sửa:** không mở database, không publish runtime và không bỏ kiểm tra bundle equality/checksum.
 
+### `com.nsocry.assets.AppearanceAssetSeedArtifact`
+
+- **Source:** `src/main/java/com/nsocry/assets/AppearanceAssetSeedArtifact.java`
+- **Vai trò tóm tắt:** Candidate appearance bất biến đã khóa payload, length và SHA-256.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** luôn trả defensive copy và không cho phép metadata tách khỏi payload.
+
+
+### `com.nsocry.assets.AppearanceAssetSeedArtifactGenerator`
+
+- **Source:** `src/main/java/com/nsocry/assets/AppearanceAssetSeedArtifactGenerator.java`
+- **Vai trò tóm tắt:** Encode/decode/encode để bắt buộc appearance codec round-trip byte-identical.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** không tạo artifact nếu round-trip hoặc checksum chưa được xác minh.
+
+
+### `com.nsocry.operations.AppearanceAssetArchiveValidationResult`
+
+- **Source:** `src/main/java/com/nsocry/operations/AppearanceAssetArchiveValidationResult.java`
+- **Vai trò tóm tắt:** Metadata kết quả kiểm định archive appearance.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+
+
+### `com.nsocry.operations.AppearanceAssetSeedArchiveService`
+
+- **Source:** `src/main/java/com/nsocry/operations/AppearanceAssetSeedArchiveService.java`
+- **Vai trò tóm tắt:** Xuất và đọc lại ZIP appearance offline, giới hạn entry và kiểm tra checksum/round-trip.
+- **Trạng thái:** `IMPLEMENTED_PENDING_FULL_SUITE`
+- **Khi sửa:** chỉ chấp nhận đúng hai entry, không ghi đè và không mở database/runtime.
+
