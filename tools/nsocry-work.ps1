@@ -597,8 +597,19 @@ function Invoke-V9HandshakeCapture {
     if ($null -eq (Get-Command java -ErrorAction SilentlyContinue)) {
         Stop-Workflow "Khong tim thay Java trong PATH."
     }
-
+    $mavenCommand = Resolve-MavenCommand
     New-Item -ItemType Directory -Force -Path $WorkDirectory, $HistoryDirectory | Out-Null
+    $captureBuildLog = Join-Path $WorkDirectory "v9-handshake-build.log"
+    Write-Host "===== PRE-CAPTURE FULL BUILD ====="
+    $previousPreference = $ErrorActionPreference
+    $ErrorActionPreference = "Continue"
+    & $mavenCommand clean package 2>&1 | Tee-Object -FilePath $captureBuildLog
+    $buildExitCode = $LASTEXITCODE
+    $ErrorActionPreference = $previousPreference
+    if ($buildExitCode -ne 0) {
+        Stop-Workflow "Pre-capture build/test that bai; server chua duoc khoi dong." $buildExitCode
+    }
+
     $stdoutPath = Join-Path $WorkDirectory "v9-handshake-stdout.log"
     $stderrPath = Join-Path $WorkDirectory "v9-handshake-stderr.log"
     Remove-Item -Force -ErrorAction SilentlyContinue $stdoutPath, $stderrPath
