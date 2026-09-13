@@ -37,6 +37,7 @@ echo [6] IMPORT DATA V7 vao NSOCry (REJECT_EXISTING)
 echo [7] Publish DATA snapshot CO LAP (database read-only)
 echo [8] Smoke test server DATA startup (tu dong dung)
 echo [9] Thu handshake client V9 + gui bao cao GitHub
+echo [10] Phan tich bytecode client V9 (khong day JAR)
 echo [0] Thoat
 echo.
 set /p "NSOCRY_ACTION=Chon mot so: "
@@ -51,6 +52,7 @@ if "%NSOCRY_ACTION%"=="6" goto RUN
 if "%NSOCRY_ACTION%"=="7" goto RUN
 if "%NSOCRY_ACTION%"=="8" goto RUN
 if "%NSOCRY_ACTION%"=="9" goto RUN
+if "%NSOCRY_ACTION%"=="10" goto RUN
 
 echo Lua chon khong hop le.
 pause
