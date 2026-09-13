@@ -1,6 +1,6 @@
 ﻿# Phân tích bytecode client V9 Windows
 
-- Tested commit: 24c7d4fa958efd4ec75ce2c6bafc002423c8ca86
+- Tested commit: 98843f7218679b8aa037a987c1611e8187d5902a
 - Client file: V9_NsoCry_x1.jar
 - Client size: 1573045
 - Client SHA-256: a6dc5c4a6f5314ddd9d8c8f0e03a9077dc3668775533e658562edeb9abe4a3ae
@@ -2087,4 +2087,103 @@ MicroEdition-Profile: MIDP-2.0
 ## Dispatcher command -30 detail
 
 ```text
+
+                   124: 24469
+
+                   125: 24482
+
+                   126: 24564
+               default: 741
+          }
+     700: aload_0
+     701: aload_1
+     702: invokespecial #1476               // Method h:(LbR;)V
+     705: aload_1
+     706: ifnull        713
+     709: aload_1
+     710: invokevirtual #1093               // Method bR.hx:()V
+     713: return
+     714: aload_1
+     715: invokestatic  #1478               // Method g:(LbR;)V
+     718: aload_1
+     719: ifnull        726
+     722: aload_1
+     723: invokevirtual #1093               // Method bR.hx:()V
+     726: return
+     727: aload_0
+     728: aload_1
+     729: invokespecial #1480               // Method e:(LbR;)V
+     732: aload_1
+     733: ifnull        740
+     736: aload_1
+     737: invokevirtual #1093               // Method bR.hx:()V
+     740: return
+     741: aload_1
+     742: ifnull        749
+     745: aload_1
+     746: invokevirtual #1093               // Method bR.hx:()V
+     749: return
+     750: aload_1
+     751: invokevirtual #499                // Method bR.a:()Ljava/io/DataInputStream;
+     754: invokevirtual #225                // Method java/io/DataInputStream.readUTF:()Ljava/lang/String;
+     757: astore        24
+     759: new           #673                // class java/lang/StringBuilder
+     762: dup
+     763: getstatic     #263                // Field $s_FgCXw9:Ljava/lang/String;
+     766: invokespecial #676                // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+     769: aload         24
+     771: invokevirtual #683                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     774: ldc_w         #1482               // String \"
+     777: invokevirtual #683                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     780: invokevirtual #895                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     783: invokestatic  #908                // Method dt.g:(Ljava/lang/String;)V
+     786: aload         24
+     788: ifnull        829
+     791: aload         24
+     793: getstatic     #265                // Field $s_9LBgsk:Ljava/lang/String;
+     796: invokevirtual #1357               // Method java/lang/String.indexOf:(Ljava/lang/String;)I
+     799: iflt          829
+     802: new           #673                // class java/lang/StringBuilder
+     805: dup
+     806: getstatic     #267                // Field $s_NqkeLh:Ljava/lang/String;
+     809: invokespecial #676                // Method java/lang/StringBuilder."<init>":(Ljava/lang/String;)V
+     812: aload         24
+     814: invokevirtual #683                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     817: ldc_w         #1482               // String \"
+     820: invokevirtual #683                // Method java/lang/StringBuilder.append:(Ljava/lang/String;)Ljava/lang/StringBuilder;
+     823: invokevirtual #895                // Method java/lang/StringBuilder.toString:()Ljava/lang/String;
+     826: invokestatic  #1484               // Method f.h:(Ljava/lang/String;)V
+     829: aload         24
+     831: ifnull        933
+     834: aload         24
+     836: getstatic     #167                // Field s:[Ljava/lang/String;
+     839: getstatic     #159                // Field $np_yHPk8p:[I
+     842: iconst_1
+     843: iaload
+     844: aaload
+     845: invokevirtual #1261               // Method java/lang/String.startsWith:(Ljava/lang/String;)Z
+     848: ifeq          933
+     851: aload         24
+     853: getstatic     #167                // Field s:[Ljava/lang/String;
+     856: getstatic     #159                // Field $np_yHPk8p:[I
+     859: iconst_0
+     860: iaload
+     861: aaload
+     862: invokevirtual #1357               // Method java/lang/String.indexOf:(Ljava/lang/String;)I
+     865: dup
+     866: istore        61
+     868: getstatic     #167                // Field s:[Ljava/lang/String;
+     871: getstatic     #159                // Field $np_yHPk8p:[I
+     874: iconst_1
+     875: iaload
+     876: aaload
+     877: invokevirtual #1360               // Method java/lang/String.length:()I
+     880: if_icmple     929
+     883: aload         24
+     885: getstatic     #167                // Field s:[Ljava/lang/String;
+     888: getstatic     #159                // Field $np_yHPk8p:[I
+     891: iconst_1
+     892: iaload
+     893: aaload
+     894: invokevirtual #1360               // Method java/lang/String.length:()I
 ```
