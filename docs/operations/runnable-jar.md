@@ -19,6 +19,7 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar target/nsocry-server-0.1.0-SNAPSHOT.jar help | In trợ giúp, không mở server/database |
 | java -jar ... server [config-path] | Nạp cấu hình, ghép database/auth và mở TCP listener |
 | java -jar ... create-admin [config-path] | Mở console tương tác tạo administrator đầu tiên |
+| java -jar ... reset-admin-password [config-path] | Đổi password một administrator qua console kín, giữ nguyên account |
 | java -jar ... data-seed-dry-run &lt;data-properties-path&gt; | Tái tạo DATA candidate authoritative trong bộ nhớ, không ghi file/database/runtime |
 | java -jar ... data-seed-convert &lt;data-properties-path&gt; | Tạo DATA candidate archive cạnh file properties và tự đọc lại kiểm định |
 | java -jar ... data-seed-archive-dry-run &lt;archive-path&gt; | Decode/encode lại DATA archive, đối chiếu manifest và SHA-256 offline |
@@ -30,6 +31,20 @@ target/nsocry-server-0.1.0-SNAPSHOT.jar
 | java -jar ... item-seed-db-verify &lt;archive-path&gt; | Load lại DB, dựng ITEM payload và so checksum candidate |
 
 Không có argument sẽ in help. Command lạ hoặc quá nhiều argument bị từ chối.
+
+## Reset password administrator
+
+Chỉ chạy khi production server đã dừng và đã có backup database. Lệnh không nhận password qua
+argument; username được nhập tương tác, password mới cùng phần xác nhận được đọc kín từ console.
+Password được hash lại bằng PBKDF2-HMAC-SHA256 với salt mới. Update yêu cầu đúng một row có
+role `ADMINISTRATOR`; nếu không tìm thấy hoặc có nhiều row trùng điều kiện, command dừng lỗi.
+Thao tác giữ nguyên id, username, role, status và activated; đồng thời đặt
+`failed_login_count=0`, `locked_until=NULL`.
+
+```bat
+java -jar target\nsocry-server-0.1.0-SNAPSHOT.jar reset-admin-password config\nsocry.properties
+```
+
 
 ## DATA seed archive
 
