@@ -777,19 +777,19 @@ function Invoke-V9ClientAnalysis {
         "",
         "## Manifest",
         "",
-        "```text",
+        '```text',
         $manifest.TrimEnd(),
-        "```",
+        '```',
         "",
         "## Candidate classes",
         ""
-    ) + ($candidateNames | Select-Object -First 80 | ForEach-Object { "- `$_`" }) + @(
+    ) + ($candidateNames | Select-Object -First 80 | ForEach-Object { "- " + $_ }) + @(
         "",
         "## Bytecode evidence",
         "",
-        "```text"
+        '```text'
     ) + ($evidence | Select-Object -First 1200) + @(
-        "```"
+        '```'
     )
     Set-Content -Path $reportPath -Value ($reportLines -join [Environment]::NewLine) -Encoding UTF8
 
